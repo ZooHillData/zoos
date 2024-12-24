@@ -19,12 +19,33 @@ module.exports = {
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
+          accent: "var(--primary-accent)",
+          muted: "var(--primary-muted)",
         },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
+          accent: "var(--secondary-accent)",
+          muted: "var(--secondary-muted)",
         },
-        // border: { DEFAULT: "var(--border)" },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+          accent: "var(--destructive-accent)",
+          muted: "var(--destructive-muted)",
+        },
+        warning: {
+          DEFAULT: "var(--warning)",
+          foreground: "var(--warning-foreground)",
+          accent: "var(--warning-accent)",
+          muted: "var(--warning-muted)",
+        },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+          accent: "var(--success-accent)",
+          muted: "var(--success-muted)",
+        },
       },
       borderColor: { DEFAULT: "var(--border)" },
       keyframes: {

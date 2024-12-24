@@ -5,25 +5,73 @@
 
 @layer base {
   :root {
-    --background: hsl(200, 100%, 99%);
     --foreground: hsl(0, 0%, 10%);
+    --background: hsl(200, 100%, 99%);
 
-    --primary: hsl(212, 80%, 42%);
     --primary-foreground: hsl(0, 0%, 100%);
-    --secondary: hsl(209, 61%, 52%);
+    --primary: hsl(212, 80%, 42%);
+    --primary-muted: color-mix(in srgb, white 40%, var(--primary) 60%);
+    --primary-accent: color-mix(in srgb, black 20%, var(--primary) 80%);
+
     --secondary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(209, 61%, 52%);
+    --secondary-muted: color-mix(in srgb, white 40%, var(--secondary) 60%);
+    --secondary-accent: color-mix(in srgb, black 20%, var(--secondary) 80%);
+
+    --destructive-foreground: hsl(0, 0%, 100%);
+    --destructive: hsl(359, 76%, 54%);
+    --destructive-muted: color-mix(in srgb, white 40%, var(--destructive) 60%);
+    --destructive-accent: color-mix(in srgb, black 20%, var(--destructive) 80%);
+
+    --warning-foreground: hsl(0, 0%, 100%);
+    --warning: hsl(38, 92%, 50%);
+    --warning-muted: color-mix(in srgb, white 40%, var(--warning) 60%);
+    --warning-accent: color-mix(in srgb, black 20%, var(--warning) 80%);
+
+    --success-foreground: hsl(0, 0%, 100%);
+    --success: hsl(160, 84%, 39%);
+    --success-muted: color-mix(in srgb, white 40%, var(--success) 60%);
+    --success-accent: color-mix(in srgb, black 20%, var(--success) 80%);
 
     --border: hsl(0, 0%, 89.8%);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: hsl(221, 59%, 11%);
       --foreground: hsl(220, 13%, 75%);
+      --background: hsl(221, 59%, 11%);
 
-      --primary: hsl(212, 80%, 42%);
       --primary-foreground: hsl(220, 13%, 91%);
-      --secondary: hsl(209, 61%, 52%);
+      --primary: hsl(212, 80%, 42%);
+      --primary-muted: color-mix(in srgb, white 40%, var(--primary) 60%);
+      --primary-accent: color-mix(in srgb, white 20%, var(--primary) 80%);
+
       --secondary-foreground: hsl(220, 13%, 91%);
+      --secondary: hsl(209, 61%, 52%);
+      --secondary-muted: color-mix(in srgb, black 40%, var(--secondary) 60%);
+      --secondary-accent: color-mix(in srgb, white 20%, var(--secondary) 80%);
+
+      --destructive-foreground: hsl(0, 0%, 100%);
+      --destructive: hsl(359, 76%, 54%);
+      --destructive-muted: color-mix(
+        in srgb,
+        black 40%,
+        var(--destructive) 60%
+      );
+      --destructive-accent: color-mix(
+        in srgb,
+        white 20%,
+        var(--destructive) 80%
+      );
+
+      --warning-foreground: hsl(0, 0%, 100%);
+      --warning: hsl(38, 92%, 50%);
+      --warning-muted: color-mix(in srgb, black 40%, var(--warning) 60%);
+      --warning-accent: color-mix(in srgb, white 20%, var(--warning) 80%);
+
+      --success-foreground: hsl(0, 0%, 100%);
+      --success: hsl(160, 84%, 39%);
+      --success-muted: color-mix(in srgb, black 40%, var(--success) 60%);
+      --success-accent: color-mix(in srgb, white 20%, var(--success) 80%);
 
       --border: hsl(217, 56%, 24%);
     }
