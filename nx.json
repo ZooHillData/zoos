@@ -67,5 +67,8 @@
         "unitTestRunner": "vitest"
       }
     }
+  },
+  "release": {
+    "projects": ["*", "!zoos", "!zoos-e2e"]
   }
 }
