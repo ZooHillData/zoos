@@ -13,7 +13,7 @@ jobs:
       - name: Lint
         run: npx nx run-many -t lint
       - name: Test
-        run: npx nx run-many -t test --configuration=ci
+        run: npx nx run-many -t test --configuration=ci --passWithNoTests
       - name: Release
         run: npx semantic-release
         env:
