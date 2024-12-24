@@ -21,9 +21,9 @@ import {
   DialogTrigger,
 } from "@zoos/ui-shad";
 
-import alex from "~/assets/alex-snail.svg";
-import bryce from "~/assets/bryce-dolphin.svg";
-import borst from "~/assets/borst-turtle.svg";
+import alex from "../assets/alex-snail.svg";
+import bryce from "../assets/bryce-dolphin.svg";
+import borst from "../assets/borst-turtle.svg";
 
 function RouteComponent() {
   const [open, setOpen] = React.useState(false);
