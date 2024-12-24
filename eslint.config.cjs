@@ -37,13 +37,4 @@ module.exports = [
     // Override or add rules here
     rules: {},
   },
-  // Tanstack router should be able to import
-  // Route Component modules in the middle of
-  // the file
-  {
-    files: ["./src/routes/*.{tsx}"],
-    rules: {
-      "import/first": "off",
-    },
-  },
 ];
