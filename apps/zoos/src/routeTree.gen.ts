@@ -11,20 +11,20 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ShadImport } from './routes/shad'
 import { Route as IndexImport } from './routes/index'
+import { Route as UiShadButtonImport } from './routes/ui-shad/button'
 
 // Create/Update Routes
-
-const ShadRoute = ShadImport.update({
-  id: '/shad',
-  path: '/shad',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UiShadButtonRoute = UiShadButtonImport.update({
+  id: '/ui-shad/button',
+  path: '/ui-shad/button',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +39,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/shad': {
-      id: '/shad'
-      path: '/shad'
-      fullPath: '/shad'
-      preLoaderRoute: typeof ShadImport
+    '/ui-shad/button': {
+      id: '/ui-shad/button'
+      path: '/ui-shad/button'
+      fullPath: '/ui-shad/button'
+      preLoaderRoute: typeof UiShadButtonImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/shad': typeof ShadRoute
+  '/ui-shad/button': typeof UiShadButtonRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/shad': typeof ShadRoute
+  '/ui-shad/button': typeof UiShadButtonRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/shad': typeof ShadRoute
+  '/ui-shad/button': typeof UiShadButtonRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/shad'
+  fullPaths: '/' | '/ui-shad/button'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shad'
-  id: '__root__' | '/' | '/shad'
+  to: '/' | '/ui-shad/button'
+  id: '__root__' | '/' | '/ui-shad/button'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ShadRoute: typeof ShadRoute
+  UiShadButtonRoute: typeof UiShadButtonRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ShadRoute: ShadRoute,
+  UiShadButtonRoute: UiShadButtonRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +97,14 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/shad"
+        "/ui-shad/button"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/shad": {
-      "filePath": "shad.tsx"
+    "/ui-shad/button": {
+      "filePath": "ui-shad/button.tsx"
     }
   }
 }

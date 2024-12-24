@@ -46,6 +46,14 @@ module.exports = {
           accent: "var(--success-accent)",
           muted: "var(--success-muted)",
         },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
       },
       borderColor: { DEFAULT: "var(--border)" },
       keyframes: {
