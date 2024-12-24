@@ -24,20 +24,26 @@ const variants = [
 
 const sizes = ["lg", "default", "sm", "icon"] as const;
 
-function RouteComponent() {
+export function RouteComponent() {
   return (
     <div className="flex w-[500px] flex-col gap-2 rounded border p-4">
       <div className="flex w-full items-center justify-between gap-2 border-b">
         {sizes.map((size) => (
-          <p className={cn(buttonVariants({ variant: "ghost", size }))}>
+          <p
+            key={size}
+            className={cn(buttonVariants({ variant: "ghost", size }))}
+          >
             {size}
           </p>
         ))}
       </div>
       {variants.map((variant) => (
-        <div className="flex w-full items-center justify-between gap-2">
+        <div
+          key={variant}
+          className="flex w-full items-center justify-between gap-2"
+        >
           {sizes.map((size) => (
-            <Button size={size} variant={variant}>
+            <Button key={size} size={size} variant={variant}>
               {size === "icon" ? <HandHeartIcon /> : variant}
             </Button>
           ))}
