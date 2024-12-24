@@ -1,0 +1,60 @@
+{
+  ///
+  // For Python formatting
+  ///
+  "[python]": {
+    "editor.defaultFormatter": "eeyore.yapf"
+  },
+
+  ///
+  // For Rust formatting
+  ///
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "rust-analyzer.linkedProjects": ["./zoos/Cargo.toml"],
+
+  ///
+  // For prettier styling on save
+  ///
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  ///
+  // Tailwind Intellisense plugin
+  ///
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "typescript": "typescript",
+    "html": "HTML"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["tv\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+
+  ///
+  // For excluding certain files from the search
+  ///
+  "search.useIgnoreFiles": true,
+  "search.useGlobalIgnoreFiles": true,
+
+  // Put the paths in here you want to ignore from
+  // search. This is especially helpful in the turbo
+  // repo.
+  "search.exclude": {
+    // "apps/demo": true
+  },
+
+  ///
+  // Custom preferences (shouldn't be project specific necessarilly)
+  ///
+  // ! Important - don't use this is if you are debugging...
+  // Hide the debug column line breakpoint selector in the gutter.
+  // (this will hide the ability to set breakpoints for the debugger in the gutter)
+  "editor.glyphMargin": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  }
+}
