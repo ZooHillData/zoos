@@ -6,7 +6,11 @@ module.exports = [
   ...nx.configs["flat/react"],
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    // Override or add rules here
-    rules: {},
+    rules: {
+      // To check whether the dependencies in the library
+      // match the root dependencies
+      // TODO - ensure this is working properly
+      "@nx/dependency-checks": "error",
+    },
   },
 ];

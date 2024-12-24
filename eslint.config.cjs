@@ -23,6 +23,11 @@ module.exports = [
           ],
         },
       ],
+      // To check whether the dependencies in the library
+      // match the root dependencies
+      // TODO - ensure this is working properly
+      // Is this required here and in the package?
+      "@nx/dependency-checks": "error",
     },
   },
   {
