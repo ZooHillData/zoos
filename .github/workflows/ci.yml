@@ -2,10 +2,10 @@ name: CI
 on:
   push:
     branches:
-      - '*'
-      - '*/*'
-      - '**'
-      - '!main'
+      - "*"
+      - "*/*"
+      - "**"
+      - "!main"
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -19,6 +19,6 @@ jobs:
       - name: Lint affected
         run: npx nx affected -t lint
       - name: Test affected
-        run: npx nx affected -t test --configuration=ci
+        run: npx nx affected -t test --configuration=ci --passWithNoTests
       - name: Build affected
         run: npx nx affected -t build
