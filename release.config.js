@@ -13,7 +13,11 @@ module.exports = {
       { type: "test", hidden: true },
     ],
   },
-  releaseRules: [{ type: "refactor", release: "patch" }],
+  releaseRules: [
+    { type: "refactor", release: "patch" },
+    { type: "fix", release: "patch" },
+    { type: "feat", release: "minor" },
+  ],
   plugins: [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",

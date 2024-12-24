@@ -1,7 +1,18 @@
-# ui-shad
+# @zoos/ui-shad
 
-This library was generated with [Nx](https://nx.dev).
+Very simple wrapper around shadcn UI components.
 
-## Running unit tests
+## Features
 
-Run `nx test ui-shad` to execute the unit tests via [Vitest](https://vitest.dev/).
+### Small extensions / mods to Shad
+
+- add `"success"` and `"warning"` variants to `Button`.
+
+### Better CSS variable control
+
+- Provided by default with Shad
+  - `--primary` - primary background color (default with Shad)
+  - `--primary-foreground` - primary foreground color (default with Shad)
+- **New with `@zoos/ui-shad`**
+  - `--primary-accent` - primary accent color, used for hover
+  - `--primary-muted` - primary muted color, used for disabled
