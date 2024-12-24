@@ -7,11 +7,25 @@
   :root {
     --background: hsl(200, 100%, 99%);
     --foreground: hsl(0, 0%, 10%);
+
+    --primary: hsl(212, 80%, 42%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --secondary: hsl(209, 61%, 52%);
+    --secondary-foreground: hsl(0, 0%, 100%);
+
+    --border: hsl(0, 0%, 89.8%);
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --background: hsl(221, 59%, 11%);
       --foreground: hsl(220, 13%, 75%);
+
+      --primary: hsl(212, 80%, 42%);
+      --primary-foreground: hsl(220, 13%, 91%);
+      --secondary: hsl(209, 61%, 52%);
+      --secondary-foreground: hsl(220, 13%, 91%);
+
+      --border: hsl(217, 56%, 24%);
     }
   }
 }

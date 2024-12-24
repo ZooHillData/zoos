@@ -5,18 +5,19 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest"],
+    // For local imports
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "@zoos/ui-shad": ["packages/ui-shad/src/index.ts"]
+      "@zoos/ui-shad": ["../../packages/ui-shad/src/index.ts"]
     }
   },
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.lib.json"
     },
     {
       "path": "./tsconfig.spec.json"

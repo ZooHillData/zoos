@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "apps/zoos/tailwind.config.js",
+    "css": "apps/zoos/src/styles.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "packages/ui-shad/src/components",
+    "utils": "~/lib/utils",
+    "ui": "packages/ui-shad/src/components",
+    "lib": "~/lib",
+    "hooks": "packages/ui-shad/src/hooks"
+  }
+}

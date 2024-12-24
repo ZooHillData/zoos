@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@zoos/ui-shad": ["packages/ui-shad/src/index.ts"],
+      "@zoos/ui-shad/*": ["packages/ui-shad/src/*"]
+    }
+  }
+}

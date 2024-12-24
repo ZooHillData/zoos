@@ -23,17 +23,18 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
-  resolve: {
-    alias: {
-      "~": path.resolve(__dirname, "./src"),
-    },
-  },
   build: {
     outDir: "../../dist/apps/zoos",
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
+    },
+  },
+  // For local imports
+  resolve: {
+    alias: {
+      "~": path.resolve(__dirname, "./src"),
     },
   },
 });
