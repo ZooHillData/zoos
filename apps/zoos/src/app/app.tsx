@@ -1,6 +1,6 @@
-import alex from "../assets/alex-snail.svg";
-import bryce from "../assets/bryce-dolphin.svg";
-import borst from "../assets/borst-turtle.svg";
+import alex from "~/assets/alex-snail.svg";
+import bryce from "~/assets/bryce-dolphin.svg";
+import borst from "~/assets/borst-turtle.svg";
 
 export function App() {
   return (

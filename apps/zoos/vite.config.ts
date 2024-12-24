@@ -1,27 +1,35 @@
 /// <reference types='vitest' />
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
+import path from "path";
+
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
+import { nxCopyAssetsPlugin } from "@nx/vite/plugins/nx-copy-assets.plugin";
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/zoos',
+  cacheDir: "../../node_modules/.vite/apps/zoos",
   server: {
     port: 4200,
-    host: 'localhost',
+    host: "localhost",
   },
   preview: {
     port: 4300,
-    host: 'localhost',
+    host: "localhost",
   },
-  plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  plugins: [react(), nxViteTsPaths(), nxCopyAssetsPlugin(["*.md"])],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  resolve: {
+    alias: {
+      "~": path.resolve(__dirname, "./src"),
+    },
+  },
   build: {
-    outDir: '../../dist/apps/zoos',
+    outDir: "../../dist/apps/zoos",
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
