@@ -1,7 +1,12 @@
 {
   "name": "@zoos/ui-shad",
   "version": "1.3.0",
-  "repository": "https://github.com/zoohilldata/zoos",
+  "repository": {
+    "url": "https://github.com/zoohilldata/zoos"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
@@ -9,9 +14,6 @@
       "import": "./index.mjs",
       "require": "./index.js"
     }
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",

@@ -20,14 +20,15 @@ Add to `package.json`
 
 ```json
 {
-  "repository": "https://github.com/zoohilldata/zoos.git",
+  "version": "0.0.0",
+  "repository": { "url": "https://github.com/zoohilldata/zoos.git" },
   "publishConfig": {
     "access": "public"
   }
 }
 ```
 
-Add to `project.json`
+Add to `project.json`, replacing `<LIBRARY_NAME>`
 
 ```json
 {
@@ -35,7 +36,7 @@ Add to `project.json`
     "release": {
       "executor": "nx-release:build-update-publish",
       "options": {
-        "libName": "ui-shad"
+        "libName": "<LIBRARY_NAME>"
       }
     }
   }
