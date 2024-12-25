@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/zoohilldata/zoos/compare/v1.0.1...v1.1.0) (2024-12-25)
+
+### Features
+
+* start packages/ui-form + start developer docs ([#6](https://github.com/zoohilldata/zoos/issues/6)) ([7ef3e1f](https://github.com/zoohilldata/zoos/commit/7ef3e1f461221b6be6c3f21ec176be9242a26d1b))
+* update ui-form package.json for publishing ([#7](https://github.com/zoohilldata/zoos/issues/7)) ([42c7fd4](https://github.com/zoohilldata/zoos/commit/42c7fd4d1080dc7fd639552406d07f11028cfbe7))
+
 ## [1.0.1](https://github.com/zoohilldata/zoos/compare/v1.0.0...v1.0.1) (2024-12-24)
 
 ### Bug Fixes
