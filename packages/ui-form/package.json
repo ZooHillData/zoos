@@ -8,5 +8,9 @@
       "import": "./index.mjs",
       "require": "./index.js"
     }
+  },
+  "repository": "https://github.com/zoohilldata/zoos",
+  "publishConfig": {
+    "access": "public"
   }
 }
