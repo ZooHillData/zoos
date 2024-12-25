@@ -6,11 +6,5 @@
   "tags": [],
   "// targets": "to see all targets run: nx show project ui-shad --web",
   "targets": {
-    "release": {
-      "executor": "nx-release:build-update-publish",
-      "options": {
-        "libName": "ui-shad"
-      }
-    }
   }
 }
