@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/zoohilldata/zoos/compare/v1.2.0...v1.3.0) (2024-12-25)
+
+### Features
+
+* fix checkbox-with-label id's, checkbox-group and update ui-form package.json for publishing ([238880e](https://github.com/zoohilldata/zoos/commit/238880ead0af75fa62c50803276fd83ce4b8398d))
+
 ## [1.2.0](https://github.com/zoohilldata/zoos/compare/v1.1.0...v1.2.0) (2024-12-25)
 
 ### Features

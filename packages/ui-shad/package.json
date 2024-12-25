@@ -1,6 +1,6 @@
 {
   "name": "@zoos/ui-shad",
-  "version": "1.0.1",
+  "version": "1.3.0",
   "repository": "https://github.com/zoohilldata/zoos",
   "main": "./index.js",
   "types": "./index.d.ts",
