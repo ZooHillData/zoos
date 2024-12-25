@@ -1,7 +1,7 @@
 # What is Zoos?
 
 [NPM Packages](https://www.npmjs.com/~alexryanterry)
-[Docs](./docs/index.md)
+[Docs](./docs)
 
 Monorepo of composable libraries and methods to build React web apps.
 
