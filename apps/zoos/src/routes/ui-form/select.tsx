@@ -23,6 +23,7 @@ function RouteComponent() {
       onChange={(value) => setValue(value)}
       className="w-[200px]"
       options={options}
+      sort={true}
       placeholder="Optional placeholder"
     />
   );

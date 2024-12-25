@@ -1,0 +1,9 @@
+{
+  "name": "react-form",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-form/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project react-form --web",
+  "targets": {}
+}

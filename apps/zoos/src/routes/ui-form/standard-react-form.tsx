@@ -60,6 +60,7 @@ function RouteComponent() {
           <label className="block space-y-2">
             <div>Variable</div>
             <Select
+              sort={true}
               options={getSelectOptions({ values: data?.variables || [] })}
               value={field.state.value}
               onChange={(value) => field.setValue(value)}
@@ -95,6 +96,7 @@ function RouteComponent() {
                     <label className="block space-y-2">
                       <div>Set Type</div>
                       <Select
+                        sort={true}
                         options={getSelectOptions({
                           values: data?.setTypes || [],
                         })}
@@ -131,6 +133,7 @@ function RouteComponent() {
                     <label className="block space-y-2">
                       <div>Sets</div>
                       <Select
+                        sort={true}
                         options={getSelectOptions({
                           values: setsFiltered || [],
                         })}

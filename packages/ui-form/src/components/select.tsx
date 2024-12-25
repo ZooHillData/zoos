@@ -30,7 +30,12 @@ const Select = (props: {
   onChange?: (value: string) => void;
   className?: string;
   placeholder?: string;
+  sort?: boolean;
 }) => {
+  const options = props.sort
+    ? props.options.sort((a, b) => a.label.localeCompare(b.label))
+    : props.options;
+
   return (
     <SelectPrimitive value={props.value} onValueChange={props.onChange}>
       <SelectTrigger className={props.className}>
@@ -38,7 +43,7 @@ const Select = (props: {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {props.options.map((option) => (
+          {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
