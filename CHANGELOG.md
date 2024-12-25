@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/zoohilldata/zoos/compare/v1.1.0...v1.2.0) (2024-12-25)
+
+### Features
+
+* add select option sorting ([af6a108](https://github.com/zoohilldata/zoos/commit/af6a108cb6952ca0f0835f4cd4ab7f6a57185060))
+
 ## [1.1.0](https://github.com/zoohilldata/zoos/compare/v1.0.1...v1.1.0) (2024-12-25)
 
 ### Features
