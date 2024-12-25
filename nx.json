@@ -48,12 +48,6 @@
   "targetDefaults": {
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
-    },
-    "build": {
-      "executor": "@nx/webpack:webpack",
-      "options": {
-        "generatePackageJson": true
-      }
     }
   },
   "generators": {
