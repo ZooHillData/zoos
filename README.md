@@ -1,9 +1,12 @@
 # What is Zoos?
 
-Monorepo of composable libraries and methods to build React web apps. [Docs](./docs/index.md)
+[NPM Packages](https://www.npmjs.com/~alexryanterry)
+[Docs](./docs/index.md)
+
+Monorepo of composable libraries and methods to build React web apps.
 
 - **Zoos App -** A Vite / React / Tanstack Router app composing core React libraries into a full app - with lots of documentation / examples
-- **React Libraries -** - small, focused, highly composable React libraries
+- **React Libraries -** small, focused, highly composable React libraries
 
 ## Zoos App
 
@@ -17,7 +20,7 @@ The entrypoint into the app.
 
 ### Features
 
-## Tanstack Router standard setup\*\*
+#### Tanstack Router standard setup
 
 Standard Tanstack Router setup will include:
 
@@ -34,11 +37,9 @@ Defined in `apps/zoos/src/routes`. They provide:
 - Playgrounds and documentation for the core Zoos libraries
 - Examples composing Zoos libraries into standard features
 
-## React Libraries
+#### React Libraries
 
 - Work well independently but really shine when used together
 - Packages are simple, focused and highly composable
 - Designed for incremental adoption
 - Releases will maintain full interoperability through the Zoos App
-
-[@zoos packages on npm](https://www.npmjs.com/settings/zoos/packages)
