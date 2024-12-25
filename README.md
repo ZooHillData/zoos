@@ -1,6 +1,6 @@
 # What is Zoos?
 
-Monorepo of composable libraries and methods to build React web apps.
+Monorepo of composable libraries and methods to build React web apps. [Docs](./docs/index.md)
 
 - **Zoos App -** A Vite / React / Tanstack Router app composing core React libraries into a full app - with lots of documentation / examples
 - **React Libraries -** - small, focused, highly composable React libraries
