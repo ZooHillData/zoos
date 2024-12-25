@@ -10,8 +10,8 @@ export const Route = createFileRoute("/ui-form/standard-react-form")({
 
 import { unique } from "remeda";
 import { formOptions, useForm } from "@tanstack/react-form";
-import { CheckboxWithLabel, Select, getSelectOptions } from "@zoos/ui-form";
-import { Button } from "@zoos/ui-shad";
+import { CheckboxWithLabel, Select, getOptions } from "@zoos/ui-form";
+import { Button, Label } from "@zoos/ui-shad";
 
 const getFormData = () => {
   const sets = [
@@ -57,28 +57,26 @@ function RouteComponent() {
     >
       <form.Field name="variable">
         {(field) => (
-          <label className="block space-y-2">
+          <Label className="block space-y-2">
             <div>Variable</div>
             <Select
               sort={true}
-              options={getSelectOptions({ values: data?.variables || [] })}
+              options={getOptions({ values: data?.variables || [] })}
               value={field.state.value}
               onChange={(value) => field.setValue(value)}
             />
-          </label>
+          </Label>
         )}
       </form.Field>
 
       <form.Field name="setFilter">
         {(field) => (
-          <label>
-            <CheckboxWithLabel
-              id="set-filter"
-              label="Filter by set?"
-              checked={field.state.value}
-              onCheckedChange={(checked) => field.setValue(Boolean(checked))}
-            />
-          </label>
+          <CheckboxWithLabel
+            id="set-filter"
+            label="Filter by set?"
+            checked={field.state.value}
+            onCheckedChange={(checked) => field.setValue(Boolean(checked))}
+          />
         )}
       </form.Field>
 
@@ -93,17 +91,17 @@ function RouteComponent() {
               return (
                 <form.Field name="setType">
                   {(field) => (
-                    <label className="block space-y-2">
+                    <Label className="block space-y-2">
                       <div>Set Type</div>
                       <Select
                         sort={true}
-                        options={getSelectOptions({
+                        options={getOptions({
                           values: data?.setTypes || [],
                         })}
                         value={field.state.value}
                         onChange={(value) => field.setValue(value)}
                       />
-                    </label>
+                    </Label>
                   )}
                 </form.Field>
               );
@@ -130,17 +128,17 @@ function RouteComponent() {
               return (
                 <form.Field name="sets">
                   {(field) => (
-                    <label className="block space-y-2">
+                    <Label className="block space-y-2">
                       <div>Sets</div>
                       <Select
                         sort={true}
-                        options={getSelectOptions({
+                        options={getOptions({
                           values: setsFiltered || [],
                         })}
                         value={field.state.value}
                         onChange={(value) => field.setValue(value)}
                       />
-                    </label>
+                    </Label>
                   )}
                 </form.Field>
               );

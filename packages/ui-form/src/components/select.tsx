@@ -7,25 +7,10 @@ import {
   SelectItem,
 } from "@zoos/ui-shad";
 
-type SelectOption = { value: string; label: string };
-type SelectOptions = SelectOption[];
-
-/**
- * Helper function to convert an array of strings to SelectOptions
- * expected by the Select component
- */
-const getSelectOptions = ({
-  values,
-  getLabel = (value: string) => value,
-}: {
-  values: string[];
-  getLabel?: (value: string) => string;
-}): SelectOptions => {
-  return values.map((value) => ({ value, label: getLabel(value) }));
-};
+import { type Options } from "../lib/get-options";
 
 const Select = (props: {
-  options: SelectOptions;
+  options: Options;
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
@@ -54,4 +39,4 @@ const Select = (props: {
   );
 };
 
-export { Select, getSelectOptions };
+export { Select };

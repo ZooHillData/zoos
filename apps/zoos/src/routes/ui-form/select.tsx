@@ -5,11 +5,11 @@ export const Route = createFileRoute("/ui-form/select")({
 });
 
 import React from "react";
-import { Select, getSelectOptions } from "@zoos/ui-form";
+import { Select, getOptions } from "@zoos/ui-form";
 
-const options = getSelectOptions({
+const options = getOptions({
   values: ["1", "2", "3", "4"],
-  // Optional get label function
+  // Optional getLabel function
   // (defaults to (value) => value)
   getLabel: (value) => `Option ${value}`,
 });

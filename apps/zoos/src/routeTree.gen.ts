@@ -18,6 +18,7 @@ import { Route as UiShadButtonImport } from './routes/ui-shad/button'
 import { Route as UiFormStandardReactFormImport } from './routes/ui-form/standard-react-form'
 import { Route as UiFormSelectImport } from './routes/ui-form/select'
 import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
+import { Route as UiFormCheckboxGroupImport } from './routes/ui-form/checkbox-group'
 
 // Create/Update Routes
 
@@ -63,6 +64,12 @@ const UiFormCheckboxWithLabelRoute = UiFormCheckboxWithLabelImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const UiFormCheckboxGroupRoute = UiFormCheckboxGroupImport.update({
+  id: '/ui-form/checkbox-group',
+  path: '/ui-form/checkbox-group',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -72,6 +79,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/ui-form/checkbox-group': {
+      id: '/ui-form/checkbox-group'
+      path: '/ui-form/checkbox-group'
+      fullPath: '/ui-form/checkbox-group'
+      preLoaderRoute: typeof UiFormCheckboxGroupImport
       parentRoute: typeof rootRoute
     }
     '/ui-form/checkbox-with-label': {
@@ -123,6 +137,7 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
@@ -133,6 +148,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
@@ -144,6 +160,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
@@ -156,6 +173,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
@@ -165,6 +183,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
@@ -174,6 +193,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
@@ -185,6 +205,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  UiFormCheckboxGroupRoute: typeof UiFormCheckboxGroupRoute
   UiFormCheckboxWithLabelRoute: typeof UiFormCheckboxWithLabelRoute
   UiFormSelectRoute: typeof UiFormSelectRoute
   UiFormStandardReactFormRoute: typeof UiFormStandardReactFormRoute
@@ -195,6 +216,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  UiFormCheckboxGroupRoute: UiFormCheckboxGroupRoute,
   UiFormCheckboxWithLabelRoute: UiFormCheckboxWithLabelRoute,
   UiFormSelectRoute: UiFormSelectRoute,
   UiFormStandardReactFormRoute: UiFormStandardReactFormRoute,
@@ -214,6 +236,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/ui-form/checkbox-group",
         "/ui-form/checkbox-with-label",
         "/ui-form/select",
         "/ui-form/standard-react-form",
@@ -224,6 +247,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/ui-form/checkbox-group": {
+      "filePath": "ui-form/checkbox-group.tsx"
     },
     "/ui-form/checkbox-with-label": {
       "filePath": "ui-form/checkbox-with-label.tsx"

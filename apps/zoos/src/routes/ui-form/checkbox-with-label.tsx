@@ -15,7 +15,6 @@ function RouteComponent() {
   return (
     // Same props as standard `Checkbox` from `@zoos/ui-shad`
     <CheckboxWithLabel
-      id="check"
       label="Check me"
       checked={value}
       onCheckedChange={(checked) => setValue(Boolean(checked))}

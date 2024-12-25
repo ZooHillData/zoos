@@ -2,6 +2,8 @@
 
 ## Add a library
 
+Generate library
+
 ```bash
 name="react-form"
 
@@ -14,14 +16,39 @@ npx nx g @nx/react:lib "@zoos/${name}"  \
     --dry-run # Remove --dry-run to execute
 ```
 
-### Set up for release
+Add to `package.json`
 
-- Add `repository` and `publishConfig` to `package.json` (see existing library)
-- Test the local build
+```json
+{
+  "repository": "https://github.com/zoohilldata/zoos.git",
+  "publishConfig": {
+    "access": "public"
+  }
+}
+```
 
-  ```bash
-  # Testing separately b/c we are allowing no tests (for now)
-  npx nx run-many -t test --passWithNoTests
-  # Lint and build
-  npx nx run-many -t lint,build
-  ```
+Add to `project.json`
+
+```json
+{
+  "targets": {
+    "release": {
+      "executor": "nx-release:build-update-publish",
+      "options": {
+        "libName": "ui-shad"
+      }
+    }
+  }
+}
+```
+
+### Test release
+
+```bash
+# Testing separately b/c we are allowing no tests (for now)
+npx nx run-many -t test --passWithNoTests
+# Lint and build
+npx nx run-many -t lint,build,release
+#
+npx semantic-release
+```
