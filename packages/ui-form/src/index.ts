@@ -1,6 +1,9 @@
 // Main API, form
 export * from "./form/components/form";
 
+// Types
+export * from "./form/types";
+
 // Cleaner API on core ui-shad components
 export * from "./components/checkbox-with-label";
 export * from "./components/select";

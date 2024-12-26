@@ -76,7 +76,7 @@ const Form = <Form extends object, Context>(props: {
                 containerProps={props.fieldContainerProps}
               >
                 {/* Input component */}
-                <form.Field name={fieldConfig.name}>
+                <form.Field name={fieldConfig.name} {...fieldConfig.fieldProps}>
                   {inputComponent}
                 </form.Field>
               </FieldWrapper>

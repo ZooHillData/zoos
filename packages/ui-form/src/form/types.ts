@@ -2,6 +2,7 @@ import type {
   FormOptions,
   FieldComponent,
   DeepKeys,
+  ReactFormExtendedApi,
 } from "@tanstack/react-form";
 
 type FieldName<Form> = DeepKeys<Form>;
@@ -24,6 +25,10 @@ type FieldType =
   | "select-multi"
   | "boolean";
 
+type FieldProps<Form> = Partial<
+  React.ComponentProps<ReactFormExtendedApi<Form>["Field"]>
+>;
+
 type FieldAccessor<Form, Context, Value = unknown> = (data: {
   values: Form;
   context: Context;
@@ -33,6 +38,7 @@ type FieldConfig<Form, Context, Value = unknown> = {
   name: FieldName<Form>;
   type: FieldType;
 } & Partial<{
+  fieldProps: FieldProps<Form>;
   disabled: (data: { values: Form; context: Context }) => boolean;
   required: (data: { values: Form; context: Context }) => boolean;
   hidden: (data: { values: Form; context: Context }) => boolean;
@@ -68,4 +74,5 @@ export type {
   FieldAccessor,
   FieldName,
   FieldRenderComponent,
+  FieldProps,
 };
