@@ -1,7 +1,6 @@
 # What is Zoos?
 
-[NPM Packages](https://www.npmjs.com/~alexryanterry)
-[Docs](./docs)
+[Docs](./docs) | [Ideas, Feedback, Bugs](https://github.com/ZooHillData/zoos/discussions/new?category=ideas) | [NPM Packages](https://www.npmjs.com/~alexryanterry)
 
 Monorepo of composable libraries and methods to build React web apps.
 
@@ -24,7 +23,7 @@ Entrypoint into core libraries.
 
 Standard Tanstack Router setup will include:
 
-- **`@tanstack/react-router-with-query` -** React Query / Router integration
+- **React Router With Query -** - set up using `@tanstack/react-router-with-query`
 - **Auto-generated navigation -** from routeTree.gen.ts (or Router API)
 - **Dialogs, Toasts -** state management in zustand store w/ component shells placed in `__root.tsx` (toast, dialog, etc.)
 - **Global Zustand store -** - with `immer`, `local persist` plugins, type inference, auto useShallow and other DX enhancements
@@ -43,3 +42,7 @@ Defined in `apps/zoos/src/routes`. They provide:
 - Packages are simple, focused and highly composable
 - Designed for incremental adoption
 - Releases will maintain full interoperability through the Zoos App
+
+### Incremental Adoption
+
+Libraries are intentionally designed for easy incremental adoption. If you feel there is unnecessary friction for incremental adoption, please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
