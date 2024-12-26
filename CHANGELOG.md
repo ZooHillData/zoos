@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/zoohilldata/zoos/compare/v1.4.0...v1.5.0) (2024-12-26)
+
+### Features
+
+* **ui-form:** pass FormOptions into FormConfig (onSuccess handler) ([b5f4149](https://github.com/zoohilldata/zoos/commit/b5f4149c401055bc2238502fb88b670524a75f9f))
+
 ## [1.4.0](https://github.com/zoohilldata/zoos/compare/v1.3.0...v1.4.0) (2024-12-26)
 
 ### Features
