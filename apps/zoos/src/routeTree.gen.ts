@@ -15,6 +15,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as UiShadSelectImport } from './routes/ui-shad/select'
 import { Route as UiShadCheckboxImport } from './routes/ui-shad/checkbox'
 import { Route as UiShadButtonImport } from './routes/ui-shad/button'
+import { Route as UiFormWithZoosFormImport } from './routes/ui-form/with-zoos-form'
 import { Route as UiFormStandardReactFormImport } from './routes/ui-form/standard-react-form'
 import { Route as UiFormSelectImport } from './routes/ui-form/select'
 import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
@@ -43,6 +44,12 @@ const UiShadCheckboxRoute = UiShadCheckboxImport.update({
 const UiShadButtonRoute = UiShadButtonImport.update({
   id: '/ui-shad/button',
   path: '/ui-shad/button',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UiFormWithZoosFormRoute = UiFormWithZoosFormImport.update({
+  id: '/ui-form/with-zoos-form',
+  path: '/ui-form/with-zoos-form',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -109,6 +116,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiFormStandardReactFormImport
       parentRoute: typeof rootRoute
     }
+    '/ui-form/with-zoos-form': {
+      id: '/ui-form/with-zoos-form'
+      path: '/ui-form/with-zoos-form'
+      fullPath: '/ui-form/with-zoos-form'
+      preLoaderRoute: typeof UiFormWithZoosFormImport
+      parentRoute: typeof rootRoute
+    }
     '/ui-shad/button': {
       id: '/ui-shad/button'
       path: '/ui-shad/button'
@@ -141,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
+  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/select': typeof UiShadSelectRoute
@@ -152,6 +167,7 @@ export interface FileRoutesByTo {
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
+  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/select': typeof UiShadSelectRoute
@@ -164,6 +180,7 @@ export interface FileRoutesById {
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
   '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
+  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/select': typeof UiShadSelectRoute
@@ -177,6 +194,7 @@ export interface FileRouteTypes {
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
+    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/select'
@@ -187,6 +205,7 @@ export interface FileRouteTypes {
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
+    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/select'
@@ -197,6 +216,7 @@ export interface FileRouteTypes {
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
     | '/ui-form/standard-react-form'
+    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/select'
@@ -209,6 +229,7 @@ export interface RootRouteChildren {
   UiFormCheckboxWithLabelRoute: typeof UiFormCheckboxWithLabelRoute
   UiFormSelectRoute: typeof UiFormSelectRoute
   UiFormStandardReactFormRoute: typeof UiFormStandardReactFormRoute
+  UiFormWithZoosFormRoute: typeof UiFormWithZoosFormRoute
   UiShadButtonRoute: typeof UiShadButtonRoute
   UiShadCheckboxRoute: typeof UiShadCheckboxRoute
   UiShadSelectRoute: typeof UiShadSelectRoute
@@ -220,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   UiFormCheckboxWithLabelRoute: UiFormCheckboxWithLabelRoute,
   UiFormSelectRoute: UiFormSelectRoute,
   UiFormStandardReactFormRoute: UiFormStandardReactFormRoute,
+  UiFormWithZoosFormRoute: UiFormWithZoosFormRoute,
   UiShadButtonRoute: UiShadButtonRoute,
   UiShadCheckboxRoute: UiShadCheckboxRoute,
   UiShadSelectRoute: UiShadSelectRoute,
@@ -240,6 +262,7 @@ export const routeTree = rootRoute
         "/ui-form/checkbox-with-label",
         "/ui-form/select",
         "/ui-form/standard-react-form",
+        "/ui-form/with-zoos-form",
         "/ui-shad/button",
         "/ui-shad/checkbox",
         "/ui-shad/select"
@@ -259,6 +282,9 @@ export const routeTree = rootRoute
     },
     "/ui-form/standard-react-form": {
       "filePath": "ui-form/standard-react-form.tsx"
+    },
+    "/ui-form/with-zoos-form": {
+      "filePath": "ui-form/with-zoos-form.tsx"
     },
     "/ui-shad/button": {
       "filePath": "ui-shad/button.tsx"

@@ -14,5 +14,8 @@
       "import": "./index.mjs",
       "require": "./index.js"
     }
+  },
+  "dependencies": {
+    "@tanstack/react-form": "^0.40.4"
   }
 }

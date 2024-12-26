@@ -5,12 +5,12 @@
 
 Monorepo of composable libraries and methods to build React web apps.
 
-- **Zoos App -** A Vite / React / Tanstack Router app composing core React libraries into a full app - with lots of documentation / examples
+- **Zoos App -** A Vite, Tanstack Router app composing core React libraries - lots of examples and documentation
 - **React Libraries -** small, focused, highly composable React libraries
 
 ## Zoos App
 
-The entrypoint into the app.
+Entrypoint into core libraries.
 
 ### Quick Start
 
