@@ -1,3 +1,9 @@
+## [1.4.0](https://github.com/zoohilldata/zoos/compare/v1.3.0...v1.4.0) (2024-12-26)
+
+### Features
+
+* **ui-form:** enhancements unlock full-feature push ([8eef9f2](https://github.com/zoohilldata/zoos/commit/8eef9f26bcbbf831bd844a2b93487df2dbc9c022))
+
 ## [1.3.0](https://github.com/zoohilldata/zoos/compare/v1.2.0...v1.3.0) (2024-12-25)
 
 ### Features
