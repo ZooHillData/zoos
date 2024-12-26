@@ -1,3 +1,9 @@
+## [1.6.0](https://github.com/zoohilldata/zoos/compare/v1.5.0...v1.6.0) (2024-12-26)
+
+### Features
+
+* **ui-form:** fieldProps passed into <form.Field />, curried type inference in ([7d2f467](https://github.com/zoohilldata/zoos/commit/7d2f467fd201a693d7c7cd3ff8501aea6e56be50))
+
 ## [1.5.0](https://github.com/zoohilldata/zoos/compare/v1.4.0...v1.5.0) (2024-12-26)
 
 ### Features
