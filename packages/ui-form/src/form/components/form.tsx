@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { type FormOptions, useForm } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { Button } from "@zoos/ui-shad";
 
 import type { FormConfig } from "../types";
@@ -18,28 +18,31 @@ import { FieldWrapper } from "./field-wrapper";
  */
 const Form = <Form extends object, Context>(props: {
   config: FormConfig<Form, Context>;
-  context: Context;
-  formOptions?: FormOptions<Form>;
+  context: Partial<Context>;
   formProps?: React.ComponentProps<"form">;
   fieldContainerProps?: React.ComponentProps<"div">;
   submitButtonLabel?: string;
 }) => {
-  const { submitButtonLabel = "Submit" } = props;
+  const { submitButtonLabel = "Submit", config } = props;
 
   const form = useForm({
-    defaultValues: props.config.initialValues,
-    ...props.formOptions,
+    ...config.formOptions,
   });
+
+  const context = React.useMemo(
+    () => ({ ...config.context, ...props.context }),
+    [config.context, props.context],
+  );
 
   // An object that maps all form fields (by name) to a form
   // FieldApi-to-input components, e.g. (field) => <Input />
   const fieldInputs = React.useMemo(() => {
     return getInputComponents({
-      config: props.config,
-      context: props.context,
+      config,
+      context,
       values: form.state.values,
     });
-  }, [props.config, props.context, form.state.values]);
+  }, [context, form.state.values, config]);
 
   return (
     <form
@@ -68,7 +71,7 @@ const Form = <Form extends object, Context>(props: {
               <FieldWrapper
                 formConfig={props.config}
                 fieldConfig={fieldConfig}
-                context={props.context}
+                context={context}
                 values={values}
                 containerProps={props.fieldContainerProps}
               >

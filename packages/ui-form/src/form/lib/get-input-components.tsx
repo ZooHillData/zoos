@@ -22,12 +22,13 @@ import type {
 const getInputComponents = <Form extends object, Context>(data: {
   config: FormConfig<Form, Context>;
   values: Form;
-  context: Context;
+  context: Partial<Context>;
   // Overrides aren't implemented
   _typeOverrides?: Record<FieldType, FieldComponent<Form>>;
   _fieldOverrides?: Record<FieldName<Form>, FieldComponent<Form>>;
 }) => {
   const { config } = data;
+  const context = { ...config.context, ...data.context };
 
   // Map over fields in form config and return a map between
   // field name and the field to render
@@ -52,7 +53,7 @@ const getInputComponents = <Form extends object, Context>(data: {
                   values:
                     field.options?.({
                       values: data.values,
-                      context: data.context,
+                      context,
                     }) || [],
                 })}
                 value={fieldApi.state.value as string}
@@ -70,7 +71,7 @@ const getInputComponents = <Form extends object, Context>(data: {
                   values:
                     field.options?.({
                       values: data.values,
-                      context: data.context,
+                      context,
                     }) || [],
                 })}
                 value={fieldApi.state.value as string[]}

@@ -30,18 +30,23 @@ const getContext = () => {
 // Have to provide type hints when passing
 //  [], {} and others where inference is not possible
 const formConfig = getFormConfig({
-  initialValues: {
-    variable: "",
-    setFilter: false,
-    setType: "",
-    // Type hint on required on empty arrays
-    sets: [] as string[],
+  formOptions: {
+    defaultValues: {
+      variable: "",
+      setFilter: false,
+      setType: "",
+      // Type hint on required on empty arrays
+      sets: [] as string[],
+    },
+    onSubmit: ({ value }) => {
+      window.alert(JSON.stringify(value));
+    },
   },
   // ??? Context
   // Context is passed as a prop into the form
   // and can be accessed in all field config
   // configuration callback functions
-  initialContext: {
+  context: {
     // Type hint required on empty arrays
     sets: [] as string[],
     setTypes: [] as string[],

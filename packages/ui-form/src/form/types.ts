@@ -1,4 +1,8 @@
-import { FieldComponent, type DeepKeys } from "@tanstack/react-form";
+import type {
+  FormOptions,
+  FieldComponent,
+  DeepKeys,
+} from "@tanstack/react-form";
 
 type FieldName<Form> = DeepKeys<Form>;
 /** The render component which is the child of <form.Field /> */
@@ -7,8 +11,9 @@ type FieldRenderComponent<Form> = React.ComponentProps<
 >["children"];
 
 type FormConfig<Form extends object, Context = void> = {
-  initialValues: Form;
-  initialContext: Context;
+  // initialValues: Form;
+  context: Context;
+  formOptions: FormOptions<Form>;
   fields: FieldConfig<Form, Context>[];
 };
 
