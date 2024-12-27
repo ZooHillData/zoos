@@ -82,7 +82,7 @@ const Form = <Form extends object, Context>(props: {
       {...props.config.layout?.formContainerProps}
     >
       {layoutData.rows.map((row) => (
-        // Map over each row
+        // Map over each row in the layout
         <div
           {...mergeStyleProps({
             first: config.layout?.rowContainerProps,
@@ -91,6 +91,7 @@ const Form = <Form extends object, Context>(props: {
           {...row.props}
         >
           {Object.entries(row.fields).map(([fieldName, fieldProps]) => {
+            // Map over each field in the row
             const fieldConfig = config.fields.find(
               (field) => field.name === fieldName,
             );
@@ -98,7 +99,11 @@ const Form = <Form extends object, Context>(props: {
               throw new Error(`Field ${fieldName} not found in form config`);
             }
 
+            // Get the input component, e.g. <Input />, <Select />
+            // This will change in future, esp when "bring your own"
+            // components.
             const inputComponent = fieldInputs[fieldConfig.name];
+
             return (
               // Here, we subscribe to the form values and re-render every
               // input on every change. If this is not a performance or UX
@@ -118,13 +123,10 @@ const Form = <Form extends object, Context>(props: {
                     fieldConfig={fieldConfig}
                     context={context}
                     values={values}
-                    containerProps={(() => {
-                      console.log({ first: row.props, second: fieldProps });
-                      return mergeStyleProps({
-                        first: config.layout?.fieldContainerProps,
-                        second: fieldProps,
-                      });
-                    })()}
+                    containerProps={mergeStyleProps({
+                      first: config.layout?.fieldContainerProps,
+                      second: fieldProps,
+                    })}
                   >
                     {/* Input component */}
                     <form.Field

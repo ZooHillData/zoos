@@ -2,7 +2,9 @@
 
 [Docs](./docs) | [Ideas, Feedback, Bugs](https://github.com/ZooHillData/zoos/discussions/new?category=ideas) | [NPM Packages](https://www.npmjs.com/~alexryanterry)
 
-Monorepo of composable libraries and methods to build React web apps.
+[Tanstack](https://tanstack.com) and [ShadCN](https://ui.shadcn.com/) are powerful libraries for building apps. They are a bit _too powerful_ in some cases. Zoos is a monorepo of composable libraries and methods that provide a slightly more user-friendly and opinionated API on top of these and other foundational libraries (like [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)).
+
+## Architecture
 
 - **Zoos App -** A Vite, Tanstack Router app composing core React libraries - lots of examples and documentation
 - **React Libraries -** small, focused, highly composable React libraries
