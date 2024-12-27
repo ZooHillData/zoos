@@ -36,13 +36,33 @@ Defined in `apps/zoos/src/routes`. They provide:
 - Playgrounds and documentation for the core Zoos libraries
 - Examples composing Zoos libraries into standard features
 
-#### React Libraries
+## React Libraries
 
-- Work well independently but really shine when used together
-- Packages are simple, focused and highly composable
+React libraries are documented in the Zoos app, one folder in `routes` per library.
+
+Library API documentation in Route files: [Route files](https://github.com/zoohilldata/zoos/tree/main/apps/zoos/src/routes)
+
+[NPM Packages](https://www.npmjs.com/~alexryanterry)
+
+### Philosophy
+
+- Work well independently, built as a whole
 - Designed for incremental adoption
-- Releases will maintain full interoperability through the Zoos App
+- All versions package versions upgrade together
+- Maintain high degree of interoperability between versions
 
 ### Incremental Adoption
 
-Libraries are intentionally designed for easy incremental adoption. If you feel there is unnecessary friction for incremental adoption, please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
+Libraries specifically designed for:
+
+- incremental adoption and wide version interoperability
+- value adding features for every app
+  (by providing entrypoints into the abstractions up the chain)
+
+If you have an ideas to...
+
+- remove an assumption so your use case is met
+- reduce friction in adopting this library
+- make upgrading to take advantage of latest features easy
+
+, please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
