@@ -1,3 +1,9 @@
+## [1.7.0](https://github.com/zoohilldata/zoos/compare/v1.6.0...v1.7.0) (2024-12-27)
+
+### Features
+
+* **ui-form:** layout options ([a0c9549](https://github.com/zoohilldata/zoos/commit/a0c954914277cf2e8c44e4081b4a1c6e1195e3d0))
+
 ## [1.6.0](https://github.com/zoohilldata/zoos/compare/v1.5.0...v1.6.0) (2024-12-26)
 
 ### Features
