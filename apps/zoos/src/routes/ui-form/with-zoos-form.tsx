@@ -4,6 +4,7 @@ export const Route = createFileRoute("/ui-form/with-zoos-form")({
   component: RouteComponent,
 });
 
+import { Label } from "@zoos/ui-shad";
 import { Form, getFormConfig } from "@zoos/ui-form";
 
 /*
@@ -34,24 +35,21 @@ pass in default values and context and returned
 type inferred function for actual creation
 */
 const formConfig = getFormConfig({
+  // ! Types inferred from `defaultValues` and `context`
   /*
-  ~ defaultValues
-  ! Type inferred from this field
-  Form data default values. Form type inferred from
-  this value
+  ~ defaultValues - which data / fields are there
+  Form data default values (passed to `useForm`)
   */
   defaultValues: {
     variable: "",
-    setFilter: false,
-    setType: "",
+    set_filter: false,
+    set_type: "",
     // Type hint on required on empty arrays
     sets: [] as string[],
   },
   /*
   ~
   ~ Context
-  ! Type inferred from this field
-  
   Along with `values`, `context` is passed into all
   field attribute callbacks (e.g. `hidden`).
   
@@ -60,7 +58,7 @@ const formConfig = getFormConfig({
   `<Form context={context} />`
   */
   context: {
-    // ! Type hint required on empty arrays
+    // Type hint required on empty arrays
     sets: [] as string[],
     setTypes: ["node", "surface", "edge", "volume"],
     variables: [] as string[],
@@ -76,11 +74,68 @@ const formConfig = getFormConfig({
       window.alert(JSON.stringify(value));
     },
   },
+  /*
+  ~ layout
+  How the form fields are laid out and other auxillary components
+  */
+  layout: {
+    /*
+    `minWidth`:
+      When specified, the layout will not take affect when the <form /> is
+      narrower than this many pixels. In this event, the form will render
+      each field group on a new line with `w-full`
+    ! Not implemented
+    */
+    minWidth: 500,
+    /*
+    Container props
+    ---------------
+    (all are merged with deeper layout field/row-level overrides)
+
+    - `formContainerProps` - passed to form container
+    - `rowContainerProps` - passed to row container
+    - `fieldContainerProps` - passed to field container
+    */
+    rowContainerProps: { className: "py-2" },
+    fieldContainerProps: { className: "space-y-1" },
+    formContainerProps: { className: "space-y-4" },
+    /*
+    Component overrides
+    ------------------------
+    - `labelComponent` - override the label component for all fields
+    */
+    labelComponent:
+      () =>
+      ({ name }) => (
+        <Label className="uppercase">{name.split("_").join(" ")}</Label>
+      ),
+    // If you specify layout, only field names specified in
+    // one of the fields arrays will be rendered
+    rows: [
+      /*
+      `row.fields`:
+          The fields option allocates space, e.g. ["va1", "var1", "var2"]
+          gives 2/3 to var1 and 1/3 to var2
+
+          The keys are the field names. By convention, these are passed first
+          in the row objects so you can see the structure at a glance.
+      */
+      // ! Currently, `fields` arrays are not strongly typed .. soon?
+      { fields: ["variable"] },
+      // Override container "w-1/2" custom class, this row only.
+      { fields: ["set_filter"], containerProps: { className: "w-1/2" } },
+      {
+        fields: ["set_type", "sets"],
+        containerProps: {
+          className: "flex w-full gap-4",
+        },
+      },
+    ],
+  },
   fields: [
     {
       name: "variable",
       type: "select-single",
-      accessor: ({ values }) => JSON.stringify(values.variable),
       options: ({ context }) => context.variables,
       /*
       ~
@@ -100,41 +155,31 @@ const formConfig = getFormConfig({
       },
     },
     {
-      name: "setFilter",
+      name: "set_filter",
       type: "boolean",
-      accessor: ({ values }) => JSON.stringify(values.setFilter),
     },
     {
       name: "sets",
       type: "select-multi",
-      accessor: ({ values }) => JSON.stringify(values.sets),
       /*
       ~
       ~ Field attribute callbacks
       ~ -------------------------
       All field attribute callbacks receive `values` and `context`
-      ~
-      ~ `options`
-      Options for select based on `context` and then filtered
-      based on `values`
       */
+      // `options` - used by dropdown fields like <Select />
       options: ({ context, values }) =>
         context.sets.filter(
-          (set) => !values.setType || set.includes(values.setType),
+          (set) => !values.set_type || set.includes(values.set_type),
         ),
-      /*
-      ~
-      ~ `hidden`
-      Whether to show or hide the field
-      */
-      hidden: ({ values }) => !values.setFilter,
+      // `hidden` - Whether to show or hide the field
+      hidden: ({ values }) => !values.set_filter,
     },
     {
-      name: "setType",
+      name: "set_type",
       type: "select-single",
-      accessor: ({ values }) => JSON.stringify(values.setType),
       options: ({ context }) => context.setTypes,
-      hidden: ({ values }) => !values.setFilter,
+      hidden: ({ values }) => !values.set_filter,
     },
   ],
 });
@@ -145,30 +190,10 @@ function RouteComponent() {
   return (
     <div className="h-full w-full max-w-[300px]">
       <Form
-        /*
-         ~ Render-time context
-         Pass in Partial<Context> that will get merged
-         into the context passed into `getFormConfig`
-        */
+        // `context` - pass in render-time context that's merged with the
+        // context in the `getFormConfig` call
         context={context}
         config={formConfig}
-        /*
-        ~
-        ~ Component Props
-        ~ ---------------
-        Pass props into individual components to customize
-        their rendering (mostly for overriding styles)
-        ~
-        ~`fieldContainerProps` passed to <form />
-        passed to <div /> around the field group
-        Field group is the Label, Input, and Error
-        */
-        fieldContainerProps={{ className: "space-y-1" }}
-        /*
-        ~
-        ~`formProps` passed to <form />
-        */
-        formProps={{ className: "w-full flex flex-col gap-4" }}
       />
     </div>
   );

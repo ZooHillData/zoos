@@ -1,26 +1,25 @@
-import { type FormOptions } from "@tanstack/react-form";
-import type { FieldConfig, FormConfig } from "../types";
+import type { FormConfig } from "../types";
 
-type FormOptionsEnh<Form> = Omit<FormOptions<Form>, "defaultValues"> & {
-  defaultValues: Form;
-};
+/** Params accepted by the curried function */
+type CurriedParams<Form extends object, Context> = Omit<
+  FormConfig<Form, Context>,
+  "defaultValues" | "context"
+>;
 
 /** Helper function for type inference on the form config */
 const getFormConfig = <Form extends object, Context>(props: {
-  context: Context;
   defaultValues: Form;
-  // formOptions: FormOptionsEnh<Form>;
-  // fields: FieldConfig<Form, Context>[];
+  context: Context;
 }) => {
   const { context, defaultValues } = props;
 
-  return (props: {
-    formOptions: FormOptions<Form>;
-    fields: FieldConfig<Form, Context>[];
-  }) => {
-    const { formOptions, fields } = props;
-
-    return { context, defaultValues, formOptions, fields };
+  return ({ formOptions, ...curriedParams }: CurriedParams<Form, Context>) => {
+    return {
+      context,
+      defaultValues,
+      formOptions: { defaultValues, ...formOptions },
+      ...curriedParams,
+    };
   };
 };
 

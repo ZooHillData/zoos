@@ -15,10 +15,12 @@ const FieldWrapper = <Form extends object, Context>(props: {
   containerProps?: Omit<React.ComponentProps<"div">, "children">;
   children: React.ReactNode;
 }) => {
-  const { fieldConfig, context, values, containerProps, children } = props;
+  const { fieldConfig, formConfig, context, values, containerProps, children } =
+    props;
 
   const LabelComponent =
-    fieldConfig.label?.({ values, context }) || DefaultLabel;
+    formConfig.layout?.labelComponent?.({ fieldConfig, values, context }) ||
+    DefaultLabel;
 
   if (fieldConfig.hidden?.({ values, context })) {
     return null;
