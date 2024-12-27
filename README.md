@@ -38,11 +38,9 @@ Defined in `apps/zoos/src/routes`. They provide:
 
 ## React Libraries
 
-React libraries are documented in the Zoos app, one folder in `routes` per library.
+- `@zoos/ui-shad` ([Docs](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/ui-shad) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/ui-shad) | [NPM](https://www.npmjs.com/package/@zoos/ui-shad)) - Simple wrapper around Shad UI
 
-Library API documentation in Route files: [Route files](https://github.com/zoohilldata/zoos/tree/main/apps/zoos/src/routes)
-
-[NPM Packages](https://www.npmjs.com/~alexryanterry)
+- `@zoos/ui-form` ([Docs](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/ui-form) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/ui-form) | [NPM](https://www.npmjs.com/package/@zoos/ui-form)) - Render forms with Tanstack Form, better input components composing @zoos/shad-ui
 
 ### Philosophy
 
