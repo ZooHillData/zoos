@@ -2,6 +2,8 @@
 
 Very simple wrapper around shadcn UI components.
 
+Currently, Tailwind and CSS is stored in the Zoos app. This package should also export the styling portion of the solution for easy integration.
+
 ## Features
 
 ### Small extensions / mods to Shad

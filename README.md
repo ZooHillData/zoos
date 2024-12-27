@@ -29,7 +29,7 @@ Standard Tanstack Router setup will include:
 - **Global Zustand store -** - with `immer`, `local persist` plugins, type inference, auto useShallow and other DX enhancements
 - **Authentication Routes -** routes (login, forgot password, ..), react-query options with invalidation / query key wiring, login, signup components and redirects wired up
 
-**Routes Examples**
+#### Routes Examples
 
 Defined in `apps/zoos/src/routes`. They provide:
 
@@ -53,16 +53,13 @@ Library API documentation in Route files: [Route files](https://github.com/zoohi
 
 ### Incremental Adoption
 
-Libraries specifically designed for:
+Libraries are designed specifically for incremental, low effort adoption and wide version interoperatbility.
 
-- incremental adoption and wide version interoperability
-- value adding features for every app
-  (by providing entrypoints into the abstractions up the chain)
-
-If you have an ideas to...
+If you have ideas to...
 
 - remove an assumption so your use case is met
 - reduce friction in adopting this library
 - make upgrading to take advantage of latest features easy
+- make the library simpler or more flexible
 
 , please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
