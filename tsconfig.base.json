@@ -17,6 +17,7 @@
     "paths": {
       "@zoos/react-form": ["packages/react-form/src/index.ts"],
       "@zoos/ui-form": ["packages/ui-form/src/index.ts"],
+      "@zoos/ui-navigation": ["packages/ui-navigation/src/index.ts"],
       "@zoos/ui-shad": ["packages/ui-shad/src/index.ts"]
     }
   },
