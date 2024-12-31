@@ -2,7 +2,7 @@
 
 ## Add a library
 
-Generate library
+### Generate library
 
 ```bash
 name="react-form"
@@ -16,7 +16,11 @@ npx nx g @nx/react:lib "@zoos/${name}"  \
     --dry-run # Remove --dry-run to execute
 ```
 
-Add to `package.json`
+### Installing dependencies:
+
+**Note -** when installing dependencies in new library, make sure to run `npm install` at monorepo root to init the workspace. Once workspace initialized, can install with `npm install --workspace=@zoos/react-table` <package>`
+
+### Add to `package.json`
 
 ```json
 {
@@ -28,7 +32,7 @@ Add to `package.json`
 }
 ```
 
-Add to `project.json`, replacing `<LIBRARY_NAME>`
+### Add to `project.json`, replacing `<LIBRARY_NAME>`
 
 ```json
 {

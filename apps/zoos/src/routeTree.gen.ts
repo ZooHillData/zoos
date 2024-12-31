@@ -11,6 +11,9 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UiShadRouteImport } from './routes/ui-shad/route'
+import { Route as UiFormRouteImport } from './routes/ui-form/route'
+import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UiShadSelectImport } from './routes/ui-shad/select'
 import { Route as UiShadCheckboxImport } from './routes/ui-shad/checkbox'
@@ -20,8 +23,28 @@ import { Route as UiFormStandardReactFormImport } from './routes/ui-form/standar
 import { Route as UiFormSelectImport } from './routes/ui-form/select'
 import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
 import { Route as UiFormCheckboxGroupImport } from './routes/ui-form/checkbox-group'
+import { Route as ReactTableSimpleVirtualImport } from './routes/react-table/simple-virtual'
+import { Route as ReactTableSimpleControlledImport } from './routes/react-table/simple-controlled'
 
 // Create/Update Routes
+
+const UiShadRouteRoute = UiShadRouteImport.update({
+  id: '/ui-shad',
+  path: '/ui-shad',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UiFormRouteRoute = UiFormRouteImport.update({
+  id: '/ui-form',
+  path: '/ui-form',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ReactTableRouteRoute = ReactTableRouteImport.update({
+  id: '/react-table',
+  path: '/react-table',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -30,52 +53,66 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const UiShadSelectRoute = UiShadSelectImport.update({
-  id: '/ui-shad/select',
-  path: '/ui-shad/select',
-  getParentRoute: () => rootRoute,
+  id: '/select',
+  path: '/select',
+  getParentRoute: () => UiShadRouteRoute,
 } as any)
 
 const UiShadCheckboxRoute = UiShadCheckboxImport.update({
-  id: '/ui-shad/checkbox',
-  path: '/ui-shad/checkbox',
-  getParentRoute: () => rootRoute,
+  id: '/checkbox',
+  path: '/checkbox',
+  getParentRoute: () => UiShadRouteRoute,
 } as any)
 
 const UiShadButtonRoute = UiShadButtonImport.update({
-  id: '/ui-shad/button',
-  path: '/ui-shad/button',
-  getParentRoute: () => rootRoute,
+  id: '/button',
+  path: '/button',
+  getParentRoute: () => UiShadRouteRoute,
 } as any)
 
 const UiFormWithZoosFormRoute = UiFormWithZoosFormImport.update({
-  id: '/ui-form/with-zoos-form',
-  path: '/ui-form/with-zoos-form',
-  getParentRoute: () => rootRoute,
+  id: '/with-zoos-form',
+  path: '/with-zoos-form',
+  getParentRoute: () => UiFormRouteRoute,
 } as any)
 
 const UiFormStandardReactFormRoute = UiFormStandardReactFormImport.update({
-  id: '/ui-form/standard-react-form',
-  path: '/ui-form/standard-react-form',
-  getParentRoute: () => rootRoute,
+  id: '/standard-react-form',
+  path: '/standard-react-form',
+  getParentRoute: () => UiFormRouteRoute,
 } as any)
 
 const UiFormSelectRoute = UiFormSelectImport.update({
-  id: '/ui-form/select',
-  path: '/ui-form/select',
-  getParentRoute: () => rootRoute,
+  id: '/select',
+  path: '/select',
+  getParentRoute: () => UiFormRouteRoute,
 } as any)
 
 const UiFormCheckboxWithLabelRoute = UiFormCheckboxWithLabelImport.update({
-  id: '/ui-form/checkbox-with-label',
-  path: '/ui-form/checkbox-with-label',
-  getParentRoute: () => rootRoute,
+  id: '/checkbox-with-label',
+  path: '/checkbox-with-label',
+  getParentRoute: () => UiFormRouteRoute,
 } as any)
 
 const UiFormCheckboxGroupRoute = UiFormCheckboxGroupImport.update({
-  id: '/ui-form/checkbox-group',
-  path: '/ui-form/checkbox-group',
-  getParentRoute: () => rootRoute,
+  id: '/checkbox-group',
+  path: '/checkbox-group',
+  getParentRoute: () => UiFormRouteRoute,
 } as any)
+
+const ReactTableSimpleVirtualRoute = ReactTableSimpleVirtualImport.update({
+  id: '/simple-virtual',
+  path: '/simple-virtual',
+  getParentRoute: () => ReactTableRouteRoute,
+} as any)
+
+const ReactTableSimpleControlledRoute = ReactTableSimpleControlledImport.update(
+  {
+    id: '/simple-controlled',
+    path: '/simple-controlled',
+    getParentRoute: () => ReactTableRouteRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -88,69 +125,159 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/react-table': {
+      id: '/react-table'
+      path: '/react-table'
+      fullPath: '/react-table'
+      preLoaderRoute: typeof ReactTableRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/ui-form': {
+      id: '/ui-form'
+      path: '/ui-form'
+      fullPath: '/ui-form'
+      preLoaderRoute: typeof UiFormRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/ui-shad': {
+      id: '/ui-shad'
+      path: '/ui-shad'
+      fullPath: '/ui-shad'
+      preLoaderRoute: typeof UiShadRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/react-table/simple-controlled': {
+      id: '/react-table/simple-controlled'
+      path: '/simple-controlled'
+      fullPath: '/react-table/simple-controlled'
+      preLoaderRoute: typeof ReactTableSimpleControlledImport
+      parentRoute: typeof ReactTableRouteImport
+    }
+    '/react-table/simple-virtual': {
+      id: '/react-table/simple-virtual'
+      path: '/simple-virtual'
+      fullPath: '/react-table/simple-virtual'
+      preLoaderRoute: typeof ReactTableSimpleVirtualImport
+      parentRoute: typeof ReactTableRouteImport
+    }
     '/ui-form/checkbox-group': {
       id: '/ui-form/checkbox-group'
-      path: '/ui-form/checkbox-group'
+      path: '/checkbox-group'
       fullPath: '/ui-form/checkbox-group'
       preLoaderRoute: typeof UiFormCheckboxGroupImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiFormRouteImport
     }
     '/ui-form/checkbox-with-label': {
       id: '/ui-form/checkbox-with-label'
-      path: '/ui-form/checkbox-with-label'
+      path: '/checkbox-with-label'
       fullPath: '/ui-form/checkbox-with-label'
       preLoaderRoute: typeof UiFormCheckboxWithLabelImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiFormRouteImport
     }
     '/ui-form/select': {
       id: '/ui-form/select'
-      path: '/ui-form/select'
+      path: '/select'
       fullPath: '/ui-form/select'
       preLoaderRoute: typeof UiFormSelectImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiFormRouteImport
     }
     '/ui-form/standard-react-form': {
       id: '/ui-form/standard-react-form'
-      path: '/ui-form/standard-react-form'
+      path: '/standard-react-form'
       fullPath: '/ui-form/standard-react-form'
       preLoaderRoute: typeof UiFormStandardReactFormImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiFormRouteImport
     }
     '/ui-form/with-zoos-form': {
       id: '/ui-form/with-zoos-form'
-      path: '/ui-form/with-zoos-form'
+      path: '/with-zoos-form'
       fullPath: '/ui-form/with-zoos-form'
       preLoaderRoute: typeof UiFormWithZoosFormImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiFormRouteImport
     }
     '/ui-shad/button': {
       id: '/ui-shad/button'
-      path: '/ui-shad/button'
+      path: '/button'
       fullPath: '/ui-shad/button'
       preLoaderRoute: typeof UiShadButtonImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiShadRouteImport
     }
     '/ui-shad/checkbox': {
       id: '/ui-shad/checkbox'
-      path: '/ui-shad/checkbox'
+      path: '/checkbox'
       fullPath: '/ui-shad/checkbox'
       preLoaderRoute: typeof UiShadCheckboxImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiShadRouteImport
     }
     '/ui-shad/select': {
       id: '/ui-shad/select'
-      path: '/ui-shad/select'
+      path: '/select'
       fullPath: '/ui-shad/select'
       preLoaderRoute: typeof UiShadSelectImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof UiShadRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface ReactTableRouteRouteChildren {
+  ReactTableSimpleControlledRoute: typeof ReactTableSimpleControlledRoute
+  ReactTableSimpleVirtualRoute: typeof ReactTableSimpleVirtualRoute
+}
+
+const ReactTableRouteRouteChildren: ReactTableRouteRouteChildren = {
+  ReactTableSimpleControlledRoute: ReactTableSimpleControlledRoute,
+  ReactTableSimpleVirtualRoute: ReactTableSimpleVirtualRoute,
+}
+
+const ReactTableRouteRouteWithChildren = ReactTableRouteRoute._addFileChildren(
+  ReactTableRouteRouteChildren,
+)
+
+interface UiFormRouteRouteChildren {
+  UiFormCheckboxGroupRoute: typeof UiFormCheckboxGroupRoute
+  UiFormCheckboxWithLabelRoute: typeof UiFormCheckboxWithLabelRoute
+  UiFormSelectRoute: typeof UiFormSelectRoute
+  UiFormStandardReactFormRoute: typeof UiFormStandardReactFormRoute
+  UiFormWithZoosFormRoute: typeof UiFormWithZoosFormRoute
+}
+
+const UiFormRouteRouteChildren: UiFormRouteRouteChildren = {
+  UiFormCheckboxGroupRoute: UiFormCheckboxGroupRoute,
+  UiFormCheckboxWithLabelRoute: UiFormCheckboxWithLabelRoute,
+  UiFormSelectRoute: UiFormSelectRoute,
+  UiFormStandardReactFormRoute: UiFormStandardReactFormRoute,
+  UiFormWithZoosFormRoute: UiFormWithZoosFormRoute,
+}
+
+const UiFormRouteRouteWithChildren = UiFormRouteRoute._addFileChildren(
+  UiFormRouteRouteChildren,
+)
+
+interface UiShadRouteRouteChildren {
+  UiShadButtonRoute: typeof UiShadButtonRoute
+  UiShadCheckboxRoute: typeof UiShadCheckboxRoute
+  UiShadSelectRoute: typeof UiShadSelectRoute
+}
+
+const UiShadRouteRouteChildren: UiShadRouteRouteChildren = {
+  UiShadButtonRoute: UiShadButtonRoute,
+  UiShadCheckboxRoute: UiShadCheckboxRoute,
+  UiShadSelectRoute: UiShadSelectRoute,
+}
+
+const UiShadRouteRouteWithChildren = UiShadRouteRoute._addFileChildren(
+  UiShadRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/react-table': typeof ReactTableRouteRouteWithChildren
+  '/ui-form': typeof UiFormRouteRouteWithChildren
+  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
+  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -163,6 +290,11 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/react-table': typeof ReactTableRouteRouteWithChildren
+  '/ui-form': typeof UiFormRouteRouteWithChildren
+  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
+  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -176,6 +308,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/react-table': typeof ReactTableRouteRouteWithChildren
+  '/ui-form': typeof UiFormRouteRouteWithChildren
+  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
+  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -190,6 +327,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/react-table'
+    | '/ui-form'
+    | '/ui-shad'
+    | '/react-table/simple-controlled'
+    | '/react-table/simple-virtual'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -201,6 +343,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/react-table'
+    | '/ui-form'
+    | '/ui-shad'
+    | '/react-table/simple-controlled'
+    | '/react-table/simple-virtual'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -212,6 +359,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/react-table'
+    | '/ui-form'
+    | '/ui-shad'
+    | '/react-table/simple-controlled'
+    | '/react-table/simple-virtual'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -225,26 +377,16 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  UiFormCheckboxGroupRoute: typeof UiFormCheckboxGroupRoute
-  UiFormCheckboxWithLabelRoute: typeof UiFormCheckboxWithLabelRoute
-  UiFormSelectRoute: typeof UiFormSelectRoute
-  UiFormStandardReactFormRoute: typeof UiFormStandardReactFormRoute
-  UiFormWithZoosFormRoute: typeof UiFormWithZoosFormRoute
-  UiShadButtonRoute: typeof UiShadButtonRoute
-  UiShadCheckboxRoute: typeof UiShadCheckboxRoute
-  UiShadSelectRoute: typeof UiShadSelectRoute
+  ReactTableRouteRoute: typeof ReactTableRouteRouteWithChildren
+  UiFormRouteRoute: typeof UiFormRouteRouteWithChildren
+  UiShadRouteRoute: typeof UiShadRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  UiFormCheckboxGroupRoute: UiFormCheckboxGroupRoute,
-  UiFormCheckboxWithLabelRoute: UiFormCheckboxWithLabelRoute,
-  UiFormSelectRoute: UiFormSelectRoute,
-  UiFormStandardReactFormRoute: UiFormStandardReactFormRoute,
-  UiFormWithZoosFormRoute: UiFormWithZoosFormRoute,
-  UiShadButtonRoute: UiShadButtonRoute,
-  UiShadCheckboxRoute: UiShadCheckboxRoute,
-  UiShadSelectRoute: UiShadSelectRoute,
+  ReactTableRouteRoute: ReactTableRouteRouteWithChildren,
+  UiFormRouteRoute: UiFormRouteRouteWithChildren,
+  UiShadRouteRoute: UiShadRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -258,42 +400,78 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/ui-form/checkbox-group",
-        "/ui-form/checkbox-with-label",
-        "/ui-form/select",
-        "/ui-form/standard-react-form",
-        "/ui-form/with-zoos-form",
-        "/ui-shad/button",
-        "/ui-shad/checkbox",
-        "/ui-shad/select"
+        "/react-table",
+        "/ui-form",
+        "/ui-shad"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/react-table": {
+      "filePath": "react-table/route.tsx",
+      "children": [
+        "/react-table/simple-controlled",
+        "/react-table/simple-virtual"
+      ]
+    },
+    "/ui-form": {
+      "filePath": "ui-form/route.tsx",
+      "children": [
+        "/ui-form/checkbox-group",
+        "/ui-form/checkbox-with-label",
+        "/ui-form/select",
+        "/ui-form/standard-react-form",
+        "/ui-form/with-zoos-form"
+      ]
+    },
+    "/ui-shad": {
+      "filePath": "ui-shad/route.tsx",
+      "children": [
+        "/ui-shad/button",
+        "/ui-shad/checkbox",
+        "/ui-shad/select"
+      ]
+    },
+    "/react-table/simple-controlled": {
+      "filePath": "react-table/simple-controlled.tsx",
+      "parent": "/react-table"
+    },
+    "/react-table/simple-virtual": {
+      "filePath": "react-table/simple-virtual.tsx",
+      "parent": "/react-table"
+    },
     "/ui-form/checkbox-group": {
-      "filePath": "ui-form/checkbox-group.tsx"
+      "filePath": "ui-form/checkbox-group.tsx",
+      "parent": "/ui-form"
     },
     "/ui-form/checkbox-with-label": {
-      "filePath": "ui-form/checkbox-with-label.tsx"
+      "filePath": "ui-form/checkbox-with-label.tsx",
+      "parent": "/ui-form"
     },
     "/ui-form/select": {
-      "filePath": "ui-form/select.tsx"
+      "filePath": "ui-form/select.tsx",
+      "parent": "/ui-form"
     },
     "/ui-form/standard-react-form": {
-      "filePath": "ui-form/standard-react-form.tsx"
+      "filePath": "ui-form/standard-react-form.tsx",
+      "parent": "/ui-form"
     },
     "/ui-form/with-zoos-form": {
-      "filePath": "ui-form/with-zoos-form.tsx"
+      "filePath": "ui-form/with-zoos-form.tsx",
+      "parent": "/ui-form"
     },
     "/ui-shad/button": {
-      "filePath": "ui-shad/button.tsx"
+      "filePath": "ui-shad/button.tsx",
+      "parent": "/ui-shad"
     },
     "/ui-shad/checkbox": {
-      "filePath": "ui-shad/checkbox.tsx"
+      "filePath": "ui-shad/checkbox.tsx",
+      "parent": "/ui-shad"
     },
     "/ui-shad/select": {
-      "filePath": "ui-shad/select.tsx"
+      "filePath": "ui-shad/select.tsx",
+      "parent": "/ui-shad"
     }
   }
 }
