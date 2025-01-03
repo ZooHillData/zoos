@@ -42,27 +42,27 @@ type DeepPartial<T> = {
  * });
  */
 type SubcomponentProps<TData> = Partial<{
-  container: React.HTMLAttributes<HTMLDivElement>;
-  table: React.TableHTMLAttributes<HTMLTableElement>;
+  container: { style: React.CSSProperties };
+  table: { style: React.CSSProperties };
   // thead
-  thead: React.HTMLAttributes<HTMLTableSectionElement>;
-  thead_tr: (params: {
-    headerGroup: HeaderGroup<TData>;
-  }) => React.HTMLAttributes<HTMLTableRowElement>;
-  th: (params: {
-    header: Header<TData, unknown>;
-  }) => React.ThHTMLAttributes<HTMLTableCellElement>;
+  thead: { style: React.CSSProperties };
+  thead_tr: (params: { headerGroup: HeaderGroup<TData> }) => {
+    style: React.CSSProperties;
+  };
+  th: (params: { header: Header<TData, unknown> }) => {
+    style: React.CSSProperties;
+  };
   // tbody
-  tbody: React.HTMLAttributes<HTMLTableSectionElement>;
-  tbody_tr: (params: {
-    row: Row<TData>;
-    virtualRow: VirtualItem;
-  }) => React.HTMLAttributes<HTMLTableRowElement>;
-  td: (params: {
-    cell: Cell<TData, unknown>;
-  }) => React.TdHTMLAttributes<HTMLTableCellElement>;
+  tbody: { style: React.CSSProperties };
+  tbody_tr: (params: { row: Row<TData>; virtualRow: VirtualItem }) => {
+    "data-index": number;
+    ref: (node: HTMLTableRowElement) => void;
+    style: React.CSSProperties;
+  };
+  td: (params: { cell: Cell<TData, unknown> }) => {
+    style: React.CSSProperties;
+  };
 }>;
-
 /**
  * Passed to the base hook: `useControlledTable`
  *

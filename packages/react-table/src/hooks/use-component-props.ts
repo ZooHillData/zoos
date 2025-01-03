@@ -4,14 +4,17 @@ import * as R from "remeda";
 
 import type { Table, TableState } from "@tanstack/react-table";
 import type { SubcomponentProps } from "../types";
+import { Virtualizer } from "@tanstack/react-virtual";
 
 const useComponentProps = <TData>({
   table,
-  getComponentProps,
+  rowVirtualizer,
+  features = {},
 }: {
   table: Table<TData>;
-  getComponentProps?: (tableState: TableState) => SubcomponentProps<TData>;
-}): SubcomponentProps<TData> => {
+  rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
+  features?: Partial<{ stickyHeader: boolean; resizeColumnNoSelect: boolean }>;
+}) => {
   const tableState = table.getState();
 
   return React.useMemo(() => {
@@ -21,44 +24,62 @@ const useComponentProps = <TData>({
 
     const defaultComponentProps: SubcomponentProps<TData> = {
       container: {
-        className: "relative h-fit max-h-full max-w-fit overflow-auto",
+        style: {
+          position: "relative",
+          height: "fit-content",
+          maxHeight: "100%",
+          maxWidth: "fit-content",
+          overflow: "auto",
+        },
       },
       table: {
-        className: isResizingColumn ? "grid w-full select-none" : "grid w-full",
-      },
-      thead: { className: "bg-background sticky top-0 z-10" },
-      thead_tr: () => ({ className: "flex w-full" }),
-      th: ({ header }) => ({
-        className: "flex",
         style: {
+          display: "grid",
+          width: "100%",
+          userSelect:
+            features.resizeColumnNoSelect && isResizingColumn
+              ? "none"
+              : undefined,
+        },
+      },
+      thead: {
+        style: features.stickyHeader
+          ? {
+              top: 0,
+              position: "sticky",
+              zIndex: 10,
+              background: "var(--background)",
+            }
+          : {},
+      },
+
+      thead_tr: () => ({ style: { display: "flex", width: "100%" } }),
+      th: ({ header }) => ({
+        style: {
+          display: "flex",
           left: header.getStart(),
           width: header.getSize(),
         },
       }),
-      tbody: {},
+      tbody: { style: { height: `${rowVirtualizer.getTotalSize()}px` } },
       tbody_tr: ({ row, virtualRow }) => ({
-        className: "absolute flex",
-        style: { transform: `translateY(${virtualRow.start}px)` },
-        onClick: () => {
-          console.log({ row });
+        "data-index": virtualRow.index,
+        ref: (node) => rowVirtualizer.measureElement(node),
+        style: {
+          position: "absolute",
+          display: "flex",
+          transform: `translateY(${virtualRow.start}px)`,
         },
       }),
       td: ({ cell }) => ({
-        className: "",
         style: {
           width: cell.column.getSize(),
         },
       }),
     };
 
-    const userOverrides = getComponentProps?.(tableState);
-    if (userOverrides) {
-      return R.mergeDeep(defaultComponentProps)(
-        userOverrides,
-      ) as SubcomponentProps<TData>;
-    }
     return defaultComponentProps;
-  }, [tableState, getComponentProps]);
+  }, [tableState, rowVirtualizer, features]);
 };
 
 export { useComponentProps };

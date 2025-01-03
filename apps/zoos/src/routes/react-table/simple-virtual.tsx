@@ -7,6 +7,7 @@ export const Route = createFileRoute("/react-table/simple-virtual")({
 import React from "react";
 // Create fake user data
 import { type User } from "../../lib/fake-data";
+import { mergeStyleProps } from "@zoos/ui-shad";
 
 import {
   createColumnHelper,
@@ -47,6 +48,8 @@ function RouteComponent() {
 
   const [state, setState] = React.useState({} as TableState);
 
+  // Hook #1: Create table with single `state` / `onStateChange` entrypoint
+  // pre-optimized for performance
   const { table } = useControlledTable({
     data,
     columns,
@@ -54,8 +57,9 @@ function RouteComponent() {
     onStateChange: (state) => setState(state),
   });
 
-  const { scrollContainerRef, rowVirtualizer, virtualRows, virtualHeight } =
-    useVirtualization({
+  // Hook #2: Row and column virtualization
+  const { scrollContainerRef, rowVirtualizer, virtualRows } = useVirtualization(
+    {
       table,
       rowOptions: {
         estimateSize: () => 20,
@@ -64,15 +68,22 @@ function RouteComponent() {
       columnOptions: {
         overscan: 3,
       },
-    });
+    },
+  );
 
+  // Hook #3: Quickly get base component props to enable selected features
+  // (reactive to table state, virtualizer and features selected)
   const componentProps = useComponentProps({
     table,
-    getComponentProps: () => ({
-      tbody: {
-        style: { height: `${virtualHeight}px` },
-      },
-    }),
+    rowVirtualizer,
+    features: {
+      // Enable sticky header
+      // ==> this applies CSS to `<thead />`:
+      //    `top: 0; position: sticky; z-index: 10; background: var(--background);`)
+      stickyHeader: true,
+      // When resizing column, apply CSS to `<table />`: `user-select: none;`
+      resizeColumnNoSelect: true,
+    },
   });
 
   return (
@@ -103,13 +114,53 @@ function RouteComponent() {
               const row = table.getRowModel().rows[virtualRow.index];
               return (
                 <tr
-                  data-index={virtualRow.index} // for dynamic row height
-                  ref={(node) => rowVirtualizer.measureElement(node)} // measure dynamic row height
                   key={virtualRow.index}
                   {...componentProps.tbody_tr?.({ row, virtualRow })}
+                  /*
+                  ~ Overriding component props
+                  Use case: Row striping + custom `onClick` applied to the row
+
+                  In this example, we:
+                  1. override the styles on the table row using `className`
+                     to apply row striping (different background color on every other row)
+                  2. Include a custom `onClick` handler when row is clicked
+
+                  ! Some overrides can break default feature behavior
+                  If overriding styles via `className` or event handlers, you can edit the props directly. Some 
+                  overrides can break the default styes. E.g. 
+
+                    - `style` is the channel for styling supplied for core features (e.g. row virtualization / sticky header)
+                    - `data-index`, `ref` on `<tr />` within `<tbody />` is used for row virtualization
+
+                  If overriding `style`, use `mergeStyleProps` utility (see section "Merging with `mergeStyleProps`" section below)
+                  */
+                  // 1. override styles on table row using `className`
+                  className={
+                    virtualRow.index % 2 === 0 ? "bg-primary-muted" : ""
+                  }
+                  // 2. Include a custom `onClick` handler when row is clicked
+                  onClick={() => {
+                    console.log(`Row clicked: "${row.id}"`);
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} {...componentProps.td?.({ cell })}>
+                    <td
+                      key={cell.id}
+                      /*
+                      ~ Merging with `mergeStyleProps`
+                      For some reason, we want to style with `style` prop here.. 🤷🏼 
+
+                      In this situation, use the `mergeStyleProps` utility from `ui-shad` 
+                      to merge the `style` (with spread) and `className` (via `cn`) 
+                      properties automatically. 
+
+                      (or you can spread the styles yourself, but it's a bit clunky)
+                      */
+                      {...mergeStyleProps({
+                        first: componentProps.td?.({ cell }),
+                        second: { style: { borderRight: "2px solid green" } },
+                      })}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
