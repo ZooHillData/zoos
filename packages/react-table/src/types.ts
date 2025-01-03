@@ -9,6 +9,7 @@ import type {
   TableState,
   TableOptions,
 } from "@tanstack/react-table";
+import { type VirtualItem } from "@tanstack/react-virtual";
 
 declare module "@tanstack/react-table" {
   interface FilterFns {
@@ -17,33 +18,58 @@ declare module "@tanstack/react-table" {
   }
 }
 
-type SubcomponentProps<TData> = {
-  container: React.ComponentProps<"div">;
-  table: React.ComponentProps<"table">;
-  head: {
-    thead: React.ComponentProps<"thead">;
-    tr: (params: {
-      headerGroup: HeaderGroup<TData>;
-    }) => React.ComponentProps<"tr">;
-    th: (params: {
-      header: Header<TData, unknown>;
-    }) => React.ComponentProps<"th">;
-  };
-  body: {
-    tbody: React.ComponentProps<"tbody">;
-    tr: (params: { row: Row<TData> }) => React.ComponentProps<"tr">;
-    td: (params: { cell: Cell<TData, unknown> }) => React.ComponentProps<"td">;
-  };
+/** Utility type for recursively defined deep partial on objects */
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
+
+/**
+ * Props passed into the various table component, e.g.:
+ * - `<table />`
+ * - `<tbody />`
+ * - `<tr />` (within `<thead />`)
+ * - `<tr />` (within `<tbody />`),
+ * - ..
+ *
+ * For components rendered within iterators, these are actually "prop getter" functions that receive the data from the relevant iteration step
+ * (current row / column / cell) -- this can be used to apply for example, striping, e.g.:
+ * ```tsx
+ * const componentProps = getComponentProps({
+ *  components: {
+ *   tr: ({ row }) => ({
+ *    className: row.index % 2 === 0 ? "bg-gray-100" : "",
+ *  }),
+ * });
+ */
+type SubcomponentProps<TData> = Partial<{
+  container: React.HTMLAttributes<HTMLDivElement>;
+  table: React.TableHTMLAttributes<HTMLTableElement>;
+  // thead
+  thead: React.HTMLAttributes<HTMLTableSectionElement>;
+  thead_tr: (params: {
+    headerGroup: HeaderGroup<TData>;
+  }) => React.HTMLAttributes<HTMLTableRowElement>;
+  th: (params: {
+    header: Header<TData, unknown>;
+  }) => React.ThHTMLAttributes<HTMLTableCellElement>;
+  // tbody
+  tbody: React.HTMLAttributes<HTMLTableSectionElement>;
+  tbody_tr: (params: {
+    row: Row<TData>;
+    virtualRow: VirtualItem;
+  }) => React.HTMLAttributes<HTMLTableRowElement>;
+  td: (params: {
+    cell: Cell<TData, unknown>;
+  }) => React.TdHTMLAttributes<HTMLTableCellElement>;
+}>;
 
 /**
  * Passed to the base hook: `useControlledTable`
  *
- * The controlled table hook, `useControlledTable` takes care of:
- *   - enabling all features, e.g. column sizing, filtering, sorting
- *   - connecting `state` and `onStateChange` to the `onXXXChange` handlers
- *     (dealing with performance issues with column sizing for you)
- *   - adding custom filter functions, e.g. number range filter
+ * This type omits many of the standard on-state change options (e.g. `onColumnVisibilityChange`) to `useReactTable`.
+ * These options are wired together into a single optimized `state` / `onStateChange` endpoint.
+ *
+ * (optimizations include: only calling `onColumnSizingChange` when sizing stops to prevent extremely rapid rerenders)
  */
 type TableOptionsControlled<TData> = Omit<
   TableOptions<TData>,
@@ -89,4 +115,9 @@ type TableOptionsInferred<TData> = Omit<
   columns?: Partial<ColumnDef<TData, unknown>>[];
 };
 
-export type { SubcomponentProps, TableOptionsControlled, TableOptionsInferred };
+export type {
+  SubcomponentProps,
+  TableOptionsControlled,
+  TableOptionsInferred,
+  DeepPartial,
+};

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@tanstack/react-table": "^8.20.6",
-    "lucide-react": "^0.469.0"
+    "@tanstack/react-virtual": "^3.11.2",
+    "remeda": "^2.19.0"
   }
 }

@@ -2,7 +2,7 @@
  * Controlled table wires up state callbacks onto React Table
  * This hook will deal with performance considerations -- e.g.
  * for rapidly changing state (like column sizing), we will
- * only fire the callback when column sizing stops.
+ * only fire the callback when column sizing stops (user stops dragging).
  */
 
 import { type TableState, type TableOptions } from "@tanstack/react-table";
@@ -15,7 +15,7 @@ import { type TableState, type TableOptions } from "@tanstack/react-table";
  * @param onStateChange - Callback to update controlled state
  * @returns Tanstack `TableOptions` for the controlled state.
  */
-const getControlledOptions = <TData>(props: {
+const getControlledTableOptions = <TData>(props: {
   state: TableState;
   onStateChange: (state: TableState) => void;
 }) => {
@@ -82,4 +82,4 @@ const getControlledOptions = <TData>(props: {
   return controlledStateOptions;
 };
 
-export { getControlledOptions };
+export { getControlledTableOptions };

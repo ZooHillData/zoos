@@ -11,9 +11,9 @@ import {
   getGroupedRowModel,
 } from "@tanstack/react-table";
 
-import * as defaultFilterFns from "./filter-fns";
-import { getControlledOptions } from "./table-options";
-import { type TableOptionsControlled } from "./types";
+import * as defaultFilterFns from "../filter-fns";
+import { getControlledTableOptions } from "../lib";
+import { type TableOptionsControlled } from "../types";
 
 const useControlledTable = <TData>({
   state,
@@ -22,7 +22,7 @@ const useControlledTable = <TData>({
   ...options
 }: TableOptionsControlled<TData>) => {
   // ~ useReactTable
-  // The core hook which sets up:
+  // The core react-table hook call which sets up:
   // - Row models
   // - controlled state handlers
   // - filter functions
@@ -41,12 +41,12 @@ const useControlledTable = <TData>({
       number: filterFns?.number || defaultFilterFns.numRangeFilterFn,
     },
     // Controlled state
-    ...getControlledOptions({ state, onStateChange }),
+    ...getControlledTableOptions({ state, onStateChange }),
     // Caller options
     ...options,
   });
 
-  // ~ Controlled state => table state
+  // ~ Controlled state updates table state
   // When controlled state changes, update in the table
   // state. Need this separated so that we can treat the
   // column sizing separately
@@ -56,9 +56,9 @@ const useControlledTable = <TData>({
     });
   }, [state, table]);
 
-  // ~ Column sizing
-  // Because column sizing changes so frequently, we need to
-  // call `onStateChange` when column resizing operation stops
+  // ~ only fire `onStateChange` when resize event stops
+  // Because column sizing events fire continuously while resizing by draggging,
+  // we only call the `onStateChange` handler when the resizing operation stops.
   const { columnSizingInfo } = table.getState(); // Get current sizing info
   const resizeColumnId = React.useRef<string | undefined>(); // Keep track of the id of the column being resized
   React.useEffect(() => {

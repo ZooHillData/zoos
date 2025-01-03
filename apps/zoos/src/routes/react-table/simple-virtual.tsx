@@ -13,9 +13,6 @@ import {
   type TableState,
   type ColumnDef,
   flexRender,
-  type Header,
-  type Cell,
-  type Row,
 } from "@tanstack/react-table";
 
 const columnHelper = createColumnHelper<User>();
@@ -39,8 +36,11 @@ const columns: ColumnDef<User>[] = [
   }),
 ];
 
-import { useControlledTable } from "@zoos/react-table";
-import { useVirtualizer, VirtualItem } from "@tanstack/react-virtual";
+import {
+  useControlledTable,
+  useComponentProps,
+  useVirtualization,
+} from "@zoos/react-table";
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
@@ -54,77 +54,39 @@ function RouteComponent() {
     onStateChange: (state) => setState(state),
   });
 
-  const containerRef = React.useRef<HTMLDivElement | null>(null);
-  const rowVirtualizer = useVirtualizer({
-    count: table.getRowModel().rows.length,
-    getScrollElement: () => containerRef.current,
-    estimateSize: () => 20,
-    measureElement:
-      typeof window !== "undefined" &&
-      navigator.userAgent.indexOf("Firefox") === -1
-        ? (element) => element?.getBoundingClientRect().height
-        : undefined,
-    overscan: 5,
-  });
+  const { scrollContainerRef, rowVirtualizer, virtualRows, virtualHeight } =
+    useVirtualization({
+      table,
+      rowOptions: {
+        estimateSize: () => 20,
+        overscan: 5,
+      },
+      columnOptions: {
+        overscan: 3,
+      },
+    });
 
-  const tableState = table.getState();
-  const componentProps = React.useMemo(() => {
-    const {
-      columnSizingInfo: { isResizingColumn },
-    } = tableState;
-    return {
-      container: {
-        className: "relative h-fit max-h-full max-w-fit overflow-auto",
-      },
-      table: {
-        className: isResizingColumn ? "grid w-full select-none" : "grid w-full",
-      },
-      thead: { className: "bg-background sticky top-0 z-10" },
-      trhead: { className: "flex w-full" },
-      th: ({ header }: { header: Header<User, unknown> }) => ({
-        className: "flex",
-        style: {
-          left: header.getStart(),
-          width: header.getSize(),
-        },
-      }),
+  const componentProps = useComponentProps({
+    table,
+    getComponentProps: () => ({
       tbody: {
-        style: {
-          height: rowVirtualizer.getTotalSize(),
-        },
+        style: { height: `${virtualHeight}px` },
       },
-
-      trbody: ({
-        row,
-        virtualRow,
-      }: {
-        row: Row<User>;
-        virtualRow: VirtualItem;
-      }) => ({
-        className: "absolute flex",
-        style: { transform: `translateY(${virtualRow.start}px)` },
-        nClick: () => {
-          console.log({ row });
-        },
-      }),
-      td: ({ cell }: { cell: Cell<User, unknown> }) => ({
-        className: "",
-        style: {
-          width: cell.column.getSize(),
-        },
-      }),
-    };
-  }, [tableState, rowVirtualizer]);
+    }),
+  });
 
   return (
     <div className="h-full p-8">
-      <div ref={containerRef} {...componentProps.container}>
+      <div ref={scrollContainerRef} {...componentProps.container}>
         <table {...componentProps.table}>
           <thead {...componentProps.thead}>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} {...componentProps.trhead}>
+              <tr
+                key={headerGroup.id}
+                {...componentProps.thead_tr?.({ headerGroup })}
+              >
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} {...componentProps.th({ header })}>
+                  <th key={header.id} {...componentProps.th?.({ header })}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -137,17 +99,17 @@ function RouteComponent() {
             ))}
           </thead>
           <tbody {...componentProps.tbody}>
-            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            {virtualRows.map((virtualRow) => {
               const row = table.getRowModel().rows[virtualRow.index];
               return (
                 <tr
-                  data-index={virtualRow.index}
-                  ref={(node) => rowVirtualizer.measureElement(node)}
+                  data-index={virtualRow.index} // for dynamic row height
+                  ref={(node) => rowVirtualizer.measureElement(node)} // measure dynamic row height
                   key={virtualRow.index}
-                  {...componentProps.trbody({ row, virtualRow })}
+                  {...componentProps.tbody_tr?.({ row, virtualRow })}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} {...componentProps.td({ cell })}>
+                    <td key={cell.id} {...componentProps.td?.({ cell })}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
