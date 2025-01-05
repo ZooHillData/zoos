@@ -17,9 +17,10 @@ const mergeFeatureProps = (
     mergeStyleProps(featureProps.map((props) => props.trBody?.(params) || {})),
   td: (params) =>
     mergeStyleProps(featureProps.map((props) => props.td?.(params) || {})),
-  resizeCol: mergeStyleProps(
-    featureProps.map((props) => props.resizeCol || {}),
-  ),
+  resizeColHandle: (params) =>
+    mergeStyleProps(
+      featureProps.map((props) => props.resizeColHandle?.(params) || {}),
+    ),
 });
 
 export { mergeFeatureProps };

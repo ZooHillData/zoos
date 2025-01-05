@@ -1,4 +1,4 @@
-import type { Header, Row, Cell } from "@tanstack/react-table";
+import type { Header, HeaderContext, Row, Cell } from "@tanstack/react-table";
 import { type VirtualItem } from "@tanstack/react-virtual";
 
 type ComponentProps = Partial<{
@@ -30,7 +30,14 @@ type ComponentProps = Partial<{
     style: React.CSSProperties;
     className: string;
   }>;
-  resizeCol: Partial<{ className: string }>;
+  resizeColHandle: <TData>(params: {
+    headerContext: HeaderContext<TData, unknown>;
+  }) => Partial<{
+    className: string;
+    onMouseDown: (event: React.MouseEvent) => void;
+    onTouchStart: (event: React.TouchEvent) => void;
+    onDoubleClick: (event: React.MouseEvent) => void;
+  }>;
 }>;
 
 export type { ComponentProps };

@@ -82,24 +82,30 @@ function RouteComponent() {
   const componentProps = React.useMemo(
     () =>
       mergeFeatureProps([
+        // ~ Standard features
         featureProps.rowVirtualization({ scrollContainerRef, rowVirtualizer }),
         featureProps.stickyHeader({
           custom: { thead: { className: "bg-background" } },
         }),
         featureProps.resizeColumn({
           isResizingColumn,
-          custom: { resizeCol: { className: "bg-primary" } },
+          custom: {
+            resizeColHandle: ({ headerContext }) => ({
+              className: "bg-primary",
+            }),
+          },
         }),
         featureProps.borders(),
+        // ~ User-defined styles
         // Small text
         { container: { className: "text-sm" } },
+        // Header cell and data Padding
         {
-          // Padding
-          th: () => ({ className: "px-1 py-0.5" }),
-          td: () => ({ className: "px-1 py-0.5" }),
+          th: ({ header }) => ({ className: "px-1 py-0.5" }),
+          td: ({ cell, virtualRow }) => ({ className: "px-1 py-0.5" }),
         },
+        // Row striping
         {
-          // Striping
           td: ({ virtualRow }) => ({
             className:
               virtualRow.index % 2 === 0 ? "bg-accent" : "bg-background",
@@ -144,9 +150,9 @@ function RouteComponent() {
                       </HeaderContextMenu>
                       <div
                         // Resize column handle
-                        {...componentProps.resizeCol}
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
+                        {...componentProps.resizeColHandle?.({
+                          headerContext: header.getContext(),
+                        })}
                       />
                     </th>
                   );
@@ -167,7 +173,7 @@ function RouteComponent() {
                   {...componentProps.trBody?.({ row, virtualRow })}
                   // Custom row click handler
                   onClick={() => {
-                    console.log(`Row clicked: "${row.id}"`);
+                    console.log("Row clicked:", { row });
                   }}
                 >
                   {row.getVisibleCells().map((cell) => {
