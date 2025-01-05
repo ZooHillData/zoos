@@ -1,15 +1,9 @@
 import type {
-  Cell,
-  ColumnDef,
   FilterFns,
   FilterFn,
-  Header,
-  HeaderGroup,
-  Row,
   TableState,
   TableOptions,
 } from "@tanstack/react-table";
-import { type VirtualItem } from "@tanstack/react-virtual";
 
 declare module "@tanstack/react-table" {
   interface FilterFns {

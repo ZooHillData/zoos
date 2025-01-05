@@ -1,6 +1,6 @@
 import React from "react";
 
-import { type Header } from "@tanstack/react-table";
+import { type HeaderContext } from "@tanstack/react-table";
 
 import {
   ContextMenu,
@@ -16,18 +16,24 @@ const HeaderContextMenu = <TData,>({
   children,
   className,
 }: {
-  header: Header<TData, unknown>;
+  header: HeaderContext<TData, unknown>;
   children: React.ReactNode;
   className?: string;
 }) => {
+  const numHiddenColumns = Object.entries(
+    header.table.getState().columnVisibility,
+  ).filter(([_, isVisible]) => !isVisible).length;
+
   return (
     <ContextMenu>
       <ContextMenuTrigger className={className}>{children}</ContextMenuTrigger>
       <ContextMenuContent className="w-48">
         <ContextMenuLabel>{header.column.id}</ContextMenuLabel>
         <ContextMenuSeparator className="mx-1 border-b" />
+        {
+          // ~ Sorting
+        }
         {header.column.getCanSort() && (
-          // Sorting
           <>
             <ContextMenuItem
               onClick={() => header.column.toggleSorting(true, true)}
@@ -42,9 +48,41 @@ const HeaderContextMenu = <TData,>({
             <ContextMenuSeparator className="mx-1 border-b" />
           </>
         )}
-        {/* Column visibility (always available) */}
-        <ContextMenuItem disabled>Hide Column</ContextMenuItem>
-        <ContextMenuItem disabled>Show Hidden Columns</ContextMenuItem>
+        {
+          // ~ Show / Hide Columns
+        }
+        {header.column.getCanHide() && (
+          <ContextMenuItem
+            onClick={() => {
+              // If this is a group column, hide all child columns
+              if (header.column.columns.length > 0) {
+                const visibilityUpdates = Object.fromEntries(
+                  header.column.columns.map((col) => [col.id, false]),
+                );
+                header.table.setColumnVisibility((prev) => ({
+                  ...prev,
+                  ...visibilityUpdates,
+                }));
+                return;
+              }
+              // Otherwise, hide just this column
+              header.column.toggleVisibility(false);
+            }}
+          >
+            Hide Column
+          </ContextMenuItem>
+        )}
+        {numHiddenColumns > 0 && (
+          <ContextMenuItem
+            onClick={() => header.table.setColumnVisibility({})}
+            className="text-nowrap"
+          >
+            Show Hidden Columns ({numHiddenColumns})
+          </ContextMenuItem>
+        )}
+        {
+          // ~ Column Pinning
+        }
         {!header.column.getIsPinned() ? (
           <>
             <ContextMenuItem onClick={() => header.column.pin("left")}>
@@ -59,7 +97,9 @@ const HeaderContextMenu = <TData,>({
             Unpin from {header.column.getIsPinned()}
           </ContextMenuItem>
         )}
-
+        {
+          // ~ Column Filtering
+        }
         {header.column.getCanFilter() && (
           <>
             <ContextMenuSeparator className="mx-1 border-b" />

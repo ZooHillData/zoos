@@ -24,8 +24,7 @@ import { Route as UiFormStandardReactFormImport } from './routes/ui-form/standar
 import { Route as UiFormSelectImport } from './routes/ui-form/select'
 import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
 import { Route as UiFormCheckboxGroupImport } from './routes/ui-form/checkbox-group'
-import { Route as ReactTableSimpleVirtualImport } from './routes/react-table/simple-virtual'
-import { Route as ReactTableSimpleControlledImport } from './routes/react-table/simple-controlled'
+import { Route as ReactTableStandardImport } from './routes/react-table/standard'
 
 // Create/Update Routes
 
@@ -107,19 +106,11 @@ const UiFormCheckboxGroupRoute = UiFormCheckboxGroupImport.update({
   getParentRoute: () => UiFormRouteRoute,
 } as any)
 
-const ReactTableSimpleVirtualRoute = ReactTableSimpleVirtualImport.update({
-  id: '/simple-virtual',
-  path: '/simple-virtual',
+const ReactTableStandardRoute = ReactTableStandardImport.update({
+  id: '/standard',
+  path: '/standard',
   getParentRoute: () => ReactTableRouteRoute,
 } as any)
-
-const ReactTableSimpleControlledRoute = ReactTableSimpleControlledImport.update(
-  {
-    id: '/simple-controlled',
-    path: '/simple-controlled',
-    getParentRoute: () => ReactTableRouteRoute,
-  } as any,
-)
 
 // Populate the FileRoutesByPath interface
 
@@ -153,18 +144,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiShadRouteImport
       parentRoute: typeof rootRoute
     }
-    '/react-table/simple-controlled': {
-      id: '/react-table/simple-controlled'
-      path: '/simple-controlled'
-      fullPath: '/react-table/simple-controlled'
-      preLoaderRoute: typeof ReactTableSimpleControlledImport
-      parentRoute: typeof ReactTableRouteImport
-    }
-    '/react-table/simple-virtual': {
-      id: '/react-table/simple-virtual'
-      path: '/simple-virtual'
-      fullPath: '/react-table/simple-virtual'
-      preLoaderRoute: typeof ReactTableSimpleVirtualImport
+    '/react-table/standard': {
+      id: '/react-table/standard'
+      path: '/standard'
+      fullPath: '/react-table/standard'
+      preLoaderRoute: typeof ReactTableStandardImport
       parentRoute: typeof ReactTableRouteImport
     }
     '/ui-form/checkbox-group': {
@@ -236,13 +220,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface ReactTableRouteRouteChildren {
-  ReactTableSimpleControlledRoute: typeof ReactTableSimpleControlledRoute
-  ReactTableSimpleVirtualRoute: typeof ReactTableSimpleVirtualRoute
+  ReactTableStandardRoute: typeof ReactTableStandardRoute
 }
 
 const ReactTableRouteRouteChildren: ReactTableRouteRouteChildren = {
-  ReactTableSimpleControlledRoute: ReactTableSimpleControlledRoute,
-  ReactTableSimpleVirtualRoute: ReactTableSimpleVirtualRoute,
+  ReactTableStandardRoute: ReactTableStandardRoute,
 }
 
 const ReactTableRouteRouteWithChildren = ReactTableRouteRoute._addFileChildren(
@@ -292,8 +274,7 @@ export interface FileRoutesByFullPath {
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
-  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
-  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
+  '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -310,8 +291,7 @@ export interface FileRoutesByTo {
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
-  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
-  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
+  '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -329,8 +309,7 @@ export interface FileRoutesById {
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
-  '/react-table/simple-controlled': typeof ReactTableSimpleControlledRoute
-  '/react-table/simple-virtual': typeof ReactTableSimpleVirtualRoute
+  '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
   '/ui-form/select': typeof UiFormSelectRoute
@@ -349,8 +328,7 @@ export interface FileRouteTypes {
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
-    | '/react-table/simple-controlled'
-    | '/react-table/simple-virtual'
+    | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -366,8 +344,7 @@ export interface FileRouteTypes {
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
-    | '/react-table/simple-controlled'
-    | '/react-table/simple-virtual'
+    | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -383,8 +360,7 @@ export interface FileRouteTypes {
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
-    | '/react-table/simple-controlled'
-    | '/react-table/simple-virtual'
+    | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
     | '/ui-form/select'
@@ -433,8 +409,7 @@ export const routeTree = rootRoute
     "/react-table": {
       "filePath": "react-table/route.tsx",
       "children": [
-        "/react-table/simple-controlled",
-        "/react-table/simple-virtual"
+        "/react-table/standard"
       ]
     },
     "/ui-form": {
@@ -456,12 +431,8 @@ export const routeTree = rootRoute
         "/ui-shad/select"
       ]
     },
-    "/react-table/simple-controlled": {
-      "filePath": "react-table/simple-controlled.tsx",
-      "parent": "/react-table"
-    },
-    "/react-table/simple-virtual": {
-      "filePath": "react-table/simple-virtual.tsx",
+    "/react-table/standard": {
+      "filePath": "react-table/standard.tsx",
       "parent": "/react-table"
     },
     "/ui-form/checkbox-group": {

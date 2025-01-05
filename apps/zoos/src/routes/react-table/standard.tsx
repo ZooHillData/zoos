@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/react-table/simple-virtual")({
+export const Route = createFileRoute("/react-table/standard")({
   component: RouteComponent,
 });
 
@@ -50,8 +50,8 @@ function RouteComponent() {
 
   const [state, setState] = React.useState({} as TableState);
 
-  // Hook #1: Create table with single `state` / `onStateChange` entrypoint
-  // pre-optimized for performance
+  // Table with single state / onStateChange
+  // plus a couple other goodies (filterFns)
   const { table } = useControlledTable({
     data,
     columns,
@@ -63,7 +63,7 @@ function RouteComponent() {
     onStateChange: (state) => setState(state),
   });
 
-  // Hook #2: Row and column virtualization
+  // Row and column virtualization
   const { scrollContainerRef, rowVirtualizer, virtualRows } = useVirtualization(
     {
       table,
@@ -126,7 +126,7 @@ function RouteComponent() {
                     <th key={header.id} {...componentProps.th?.({ header })}>
                       <HeaderContextMenu
                         // Header context menu provides right click
-                        header={header}
+                        header={header.getContext()}
                         className="flex w-full justify-between"
                       >
                         {header.isPlaceholder
@@ -163,6 +163,7 @@ function RouteComponent() {
               return (
                 // ~ Data row
                 <tr
+                  key={virtualRow.index}
                   {...componentProps.trBody?.({ row, virtualRow })}
                   // Custom row click handler
                   onClick={() => {

@@ -58,7 +58,7 @@ const useControlledTable = <TData>({
     });
   }, [state, table]);
 
-  // ~ only fire `onStateChange` when resize event stops
+  // ~ only fire `onStateChange` when column resize event stops
   // Because column sizing events fire continuously while resizing by draggging,
   // we only call the `onStateChange` handler when the resizing operation stops.
   const { columnSizingInfo } = table.getState(); // Get current sizing info
