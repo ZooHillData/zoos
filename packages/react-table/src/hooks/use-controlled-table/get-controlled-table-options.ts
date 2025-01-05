@@ -57,11 +57,11 @@ const getControlledTableOptions = <TData>(props: {
         updater instanceof Function ? updater(state.expanded) : updater;
       onStateChange({ ...state, expanded: updated });
     },
-    onPaginationChange: (updater) => {
-      const updated =
-        updater instanceof Function ? updater(state.pagination) : updater;
-      onStateChange({ ...state, pagination: updated });
-    },
+    // onPaginationChange: (updater) => {
+    //   const updated =
+    //     updater instanceof Function ? updater(state.pagination) : updater;
+    //   onStateChange({ ...state, pagination: updated });
+    // },
     onRowPinningChange: (updater) => {
       const updated =
         updater instanceof Function ? updater(state.rowPinning) : updater;

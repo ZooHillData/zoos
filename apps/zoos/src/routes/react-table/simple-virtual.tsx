@@ -5,9 +5,7 @@ export const Route = createFileRoute("/react-table/simple-virtual")({
 });
 
 import React from "react";
-// Create fake user data
 import { type User } from "../../lib/fake-data";
-import { mergeStyleProps } from "@zoos/ui-shad";
 
 import {
   createColumnHelper,
@@ -21,26 +19,30 @@ const columns: ColumnDef<User>[] = [
   columnHelper.group({
     header: "Person",
     columns: [
-      columnHelper.accessor("first_name", { header: "First" }),
-      columnHelper.accessor("last_name", { header: "Last" }),
-      columnHelper.accessor("age", { header: "Age" }),
+      columnHelper.accessor("first_name", {}),
+      columnHelper.accessor("last_name", {}),
+      columnHelper.accessor("age", {}),
     ],
   }),
   columnHelper.group({
     header: "Address",
     columns: [
-      columnHelper.accessor("street", { header: "Street" }),
-      columnHelper.accessor("city", { header: "City" }),
-      columnHelper.accessor("state", { header: "State" }),
-      columnHelper.accessor("zip", { header: "Zip" }),
+      columnHelper.accessor("street", {}),
+      columnHelper.accessor("city", {}),
+      columnHelper.accessor("state", {}),
+      columnHelper.accessor("zip", {}),
     ],
   }),
 ];
 
 import {
   useControlledTable,
-  useComponentProps,
   useVirtualization,
+  HeaderProperId,
+  HeaderContextMenu,
+  HeaderSortIndicator,
+  featureProps,
+  mergeFeatureProps,
 } from "@zoos/react-table";
 
 function RouteComponent() {
@@ -53,6 +55,10 @@ function RouteComponent() {
   const { table } = useControlledTable({
     data,
     columns,
+    defaultColumn: {
+      // Split column ID into words and capitalize
+      header: HeaderProperId,
+    },
     state,
     onStateChange: (state) => setState(state),
   });
@@ -71,102 +77,112 @@ function RouteComponent() {
     },
   );
 
-  // Hook #3: Quickly get base component props to enable selected features
-  // (reactive to table state, virtualizer and features selected)
-  const componentProps = useComponentProps({
-    table,
-    rowVirtualizer,
-    features: {
-      // Enable sticky header
-      // ==> this applies CSS to `<thead />`:
-      //    `top: 0; position: sticky; z-index: 10; background: var(--background);`)
-      stickyHeader: true,
-      // When resizing column, apply CSS to `<table />`: `user-select: none;`
-      resizeColumnNoSelect: true,
-    },
-  });
+  // Get component props leverage the feature props functions
+  const isResizingColumn = !!table.getState().columnSizingInfo.isResizingColumn;
+  const componentProps = React.useMemo(
+    () =>
+      mergeFeatureProps([
+        featureProps.rowVirtualization({ scrollContainerRef, rowVirtualizer }),
+        featureProps.stickyHeader({
+          custom: { thead: { className: "bg-background" } },
+        }),
+        featureProps.resizeColumn({
+          isResizingColumn,
+          custom: { resizeCol: { className: "bg-primary" } },
+        }),
+        featureProps.borders(),
+        // Small text
+        { container: { className: "text-sm" } },
+        {
+          // Padding
+          th: () => ({ className: "px-1 py-0.5" }),
+          td: () => ({ className: "px-1 py-0.5" }),
+        },
+        {
+          // Striping
+          td: ({ virtualRow }) => ({
+            className:
+              virtualRow.index % 2 === 0 ? "bg-accent" : "bg-background",
+          }),
+        },
+      ]),
+    [isResizingColumn, rowVirtualizer, scrollContainerRef],
+  );
 
   return (
     <div className="h-full p-8">
-      <div ref={scrollContainerRef} {...componentProps.container}>
+      <div {...componentProps.container}>
         <table {...componentProps.table}>
+          {
+            // ~ THEAD
+          }
           <thead {...componentProps.thead}>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr
-                key={headerGroup.id}
-                {...componentProps.thead_tr?.({ headerGroup })}
-              >
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} {...componentProps.th?.({ header })}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                  </th>
-                ))}
+              // ~ Header row
+              <tr key={headerGroup.id} {...componentProps.trHead}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    // ~ Header cell
+                    <th key={header.id} {...componentProps.th?.({ header })}>
+                      <HeaderContextMenu
+                        // Header context menu provides right click
+                        header={header}
+                        className="flex w-full justify-between"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                        <HeaderSortIndicator
+                          // Sort indicator
+                          header={header}
+                          className="text-primary"
+                          onClick={() => header.column.toggleSorting()}
+                        />
+                      </HeaderContextMenu>
+                      <div
+                        // Resize column handle
+                        {...componentProps.resizeCol}
+                        onMouseDown={header.getResizeHandler()}
+                        onTouchStart={header.getResizeHandler()}
+                      />
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
+          {
+            // ~ TBODY
+          }
           <tbody {...componentProps.tbody}>
             {virtualRows.map((virtualRow) => {
               const row = table.getRowModel().rows[virtualRow.index];
               return (
+                // ~ Data row
                 <tr
-                  key={virtualRow.index}
-                  {...componentProps.tbody_tr?.({ row, virtualRow })}
-                  /*
-                  ~ Overriding component props
-                  Use case: Row striping + custom `onClick` applied to the row
-
-                  In this example, we:
-                  1. override the styles on the table row using `className`
-                     to apply row striping (different background color on every other row)
-                  2. Include a custom `onClick` handler when row is clicked
-
-                  ! Some overrides can break default feature behavior
-                  If overriding styles via `className` or event handlers, you can edit the props directly. Some 
-                  overrides can break the default styes. E.g. 
-
-                    - `style` is the channel for styling supplied for core features (e.g. row virtualization / sticky header)
-                    - `data-index`, `ref` on `<tr />` within `<tbody />` is used for row virtualization
-
-                  If overriding `style`, use `mergeStyleProps` utility (see section "Merging with `mergeStyleProps`" section below)
-                  */
-                  // 1. override styles on table row using `className`
-                  className={
-                    virtualRow.index % 2 === 0 ? "bg-primary-muted" : ""
-                  }
-                  // 2. Include a custom `onClick` handler when row is clicked
+                  {...componentProps.trBody?.({ row, virtualRow })}
+                  // Custom row click handler
                   onClick={() => {
                     console.log(`Row clicked: "${row.id}"`);
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      /*
-                      ~ Merging with `mergeStyleProps`
-                      For some reason, we want to style with `style` prop here.. 🤷🏼 
-
-                      In this situation, use the `mergeStyleProps` utility from `ui-shad` 
-                      to merge the `style` (with spread) and `className` (via `cn`) 
-                      properties automatically. 
-
-                      (or you can spread the styles yourself, but it's a bit clunky)
-                      */
-                      {...mergeStyleProps({
-                        first: componentProps.td?.({ cell }),
-                        second: { style: { borderRight: "2px solid green" } },
-                      })}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      // ~ Data cell
+                      <td
+                        key={cell.id}
+                        {...componentProps.td?.({ cell, virtualRow })}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}

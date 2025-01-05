@@ -84,10 +84,10 @@ const Form = <Form extends object, Context>(props: {
       {layoutData.rows.map((row) => (
         // Map over each row in the layout
         <div
-          {...mergeStyleProps({
-            first: config.layout?.rowContainerProps,
-            second: row.props,
-          })}
+          {...mergeStyleProps([
+            config.layout?.rowContainerProps || {},
+            row.props || {},
+          ])}
           {...row.props}
         >
           {Object.entries(row.fields).map(([fieldName, fieldProps]) => {
@@ -123,10 +123,10 @@ const Form = <Form extends object, Context>(props: {
                     fieldConfig={fieldConfig}
                     context={context}
                     values={values}
-                    containerProps={mergeStyleProps({
-                      first: config.layout?.fieldContainerProps,
-                      second: fieldProps,
-                    })}
+                    containerProps={mergeStyleProps([
+                      config.layout?.fieldContainerProps || {},
+                      fieldProps || {},
+                    ])}
                   >
                     {/* Input component */}
                     <form.Field

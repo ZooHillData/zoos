@@ -16,6 +16,7 @@ import { Route as UiFormRouteImport } from './routes/ui-form/route'
 import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UiShadSelectImport } from './routes/ui-shad/select'
+import { Route as UiShadContextMenuImport } from './routes/ui-shad/context-menu'
 import { Route as UiShadCheckboxImport } from './routes/ui-shad/checkbox'
 import { Route as UiShadButtonImport } from './routes/ui-shad/button'
 import { Route as UiFormWithZoosFormImport } from './routes/ui-form/with-zoos-form'
@@ -55,6 +56,12 @@ const IndexRoute = IndexImport.update({
 const UiShadSelectRoute = UiShadSelectImport.update({
   id: '/select',
   path: '/select',
+  getParentRoute: () => UiShadRouteRoute,
+} as any)
+
+const UiShadContextMenuRoute = UiShadContextMenuImport.update({
+  id: '/context-menu',
+  path: '/context-menu',
   getParentRoute: () => UiShadRouteRoute,
 } as any)
 
@@ -209,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiShadCheckboxImport
       parentRoute: typeof UiShadRouteImport
     }
+    '/ui-shad/context-menu': {
+      id: '/ui-shad/context-menu'
+      path: '/context-menu'
+      fullPath: '/ui-shad/context-menu'
+      preLoaderRoute: typeof UiShadContextMenuImport
+      parentRoute: typeof UiShadRouteImport
+    }
     '/ui-shad/select': {
       id: '/ui-shad/select'
       path: '/select'
@@ -258,12 +272,14 @@ const UiFormRouteRouteWithChildren = UiFormRouteRoute._addFileChildren(
 interface UiShadRouteRouteChildren {
   UiShadButtonRoute: typeof UiShadButtonRoute
   UiShadCheckboxRoute: typeof UiShadCheckboxRoute
+  UiShadContextMenuRoute: typeof UiShadContextMenuRoute
   UiShadSelectRoute: typeof UiShadSelectRoute
 }
 
 const UiShadRouteRouteChildren: UiShadRouteRouteChildren = {
   UiShadButtonRoute: UiShadButtonRoute,
   UiShadCheckboxRoute: UiShadCheckboxRoute,
+  UiShadContextMenuRoute: UiShadContextMenuRoute,
   UiShadSelectRoute: UiShadSelectRoute,
 }
 
@@ -285,6 +301,7 @@ export interface FileRoutesByFullPath {
   '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
+  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
   '/ui-shad/select': typeof UiShadSelectRoute
 }
 
@@ -302,6 +319,7 @@ export interface FileRoutesByTo {
   '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
+  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
   '/ui-shad/select': typeof UiShadSelectRoute
 }
 
@@ -320,6 +338,7 @@ export interface FileRoutesById {
   '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
+  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
   '/ui-shad/select': typeof UiShadSelectRoute
 }
 
@@ -339,6 +358,7 @@ export interface FileRouteTypes {
     | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
+    | '/ui-shad/context-menu'
     | '/ui-shad/select'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -355,6 +375,7 @@ export interface FileRouteTypes {
     | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
+    | '/ui-shad/context-menu'
     | '/ui-shad/select'
   id:
     | '__root__'
@@ -371,6 +392,7 @@ export interface FileRouteTypes {
     | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
+    | '/ui-shad/context-menu'
     | '/ui-shad/select'
   fileRoutesById: FileRoutesById
 }
@@ -430,6 +452,7 @@ export const routeTree = rootRoute
       "children": [
         "/ui-shad/button",
         "/ui-shad/checkbox",
+        "/ui-shad/context-menu",
         "/ui-shad/select"
       ]
     },
@@ -467,6 +490,10 @@ export const routeTree = rootRoute
     },
     "/ui-shad/checkbox": {
       "filePath": "ui-shad/checkbox.tsx",
+      "parent": "/ui-shad"
+    },
+    "/ui-shad/context-menu": {
+      "filePath": "ui-shad/context-menu.tsx",
       "parent": "/ui-shad"
     },
     "/ui-shad/select": {

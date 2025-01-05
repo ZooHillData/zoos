@@ -11,9 +11,9 @@ import {
   getGroupedRowModel,
 } from "@tanstack/react-table";
 
-import * as defaultFilterFns from "../filter-fns";
-import { getControlledTableOptions } from "../lib";
-import { type TableOptionsControlled } from "../types";
+import * as defaultFilterFns from "../../lib/filter-fns";
+import { getControlledTableOptions } from "./get-controlled-table-options";
+import { type TableOptionsControlled } from "./types";
 
 const useControlledTable = <TData>({
   state,
@@ -34,6 +34,8 @@ const useControlledTable = <TData>({
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
+    // Column resizing
+    columnResizeMode: "onChange",
     // Filtering
     filterFromLeafRows: true,
     filterFns: {
