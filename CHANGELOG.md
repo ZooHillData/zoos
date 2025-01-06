@@ -1,3 +1,9 @@
+## [1.9.3](https://github.com/zoohilldata/zoos/compare/v1.9.2...v1.9.3) (2025-01-06)
+
+### Bug Fixes
+
+* **react-query:** modify react-query docs and shorten to ([070ab12](https://github.com/zoohilldata/zoos/commit/070ab12deb71353ce64357fd9b7579cf22459319))
+
 ## [1.9.2](https://github.com/zoohilldata/zoos/compare/v1.9.1...v1.9.2) (2025-01-06)
 
 ### Bug Fixes
