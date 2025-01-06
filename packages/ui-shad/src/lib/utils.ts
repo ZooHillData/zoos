@@ -13,19 +13,23 @@ const cn = (...inputs: ClassValue[]) => {
  */
 const mergeStyleProps = <
   T extends Partial<{ className: string; style: React.CSSProperties }>,
->(props: {
-  first?: T;
-  second?: T;
-}) => {
-  // Destructure className and style
-  const { className: className1, style: style1, ...keep1 } = props.first || {};
-  const { className: className2, style: style2, ...keep2 } = props.second || {};
+>(
+  toMerge: T[],
+) => {
+  // Extract className, style and other props
+  const classes = toMerge.map((props) => props.className);
+  const styles = toMerge.map((props) => props.style);
+  const others = toMerge.map((props) => {
+    const { className, style, ...others } = props;
+    return others;
+  });
 
   // Merge className and style
-  const className = cn(className1, className2);
-  const style = { ...style1, ...style2 };
+  const className = cn(...classes);
+  const style = Object.assign({}, ...styles);
+  const otherProps = Object.assign({}, ...others);
 
-  return { className, style, ...keep1, ...keep2 } as T;
+  return { className, style, ...otherProps } as T;
 };
 
 export { cn, mergeStyleProps };

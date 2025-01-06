@@ -12,10 +12,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "packages/ui-shad/src/components",
-    "utils": "~/lib/utils",
-    "ui": "packages/ui-shad/src/components",
-    "lib": "~/lib",
-    "hooks": "packages/ui-shad/src/hooks"
+    "components": "../components",
+    "utils": "../lib/utils",
+    "ui": "../components",
+    "lib": "../lib",
+    "hooks": "../hooks"
   }
 }

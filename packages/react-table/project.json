@@ -1,0 +1,16 @@
+{
+  "name": "react-table",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-table/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project react-table --web",
+  "targets": {
+    "release": {
+      "executor": "nx-release:build-update-publish",
+      "options": {
+        "libName": "react-table"
+      }
+    }
+  }
+}

@@ -17,7 +17,8 @@
     "paths": {
       "@zoos/react-form": ["packages/react-form/src/index.ts"],
       "@zoos/ui-form": ["packages/ui-form/src/index.ts"],
-      "@zoos/ui-shad": ["packages/ui-shad/src/index.ts"]
+      "@zoos/ui-shad": ["packages/ui-shad/src/index.ts"],
+      "@zoos/react-table": ["packages/react-table/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
