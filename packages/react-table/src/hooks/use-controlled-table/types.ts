@@ -3,12 +3,18 @@ import type {
   FilterFn,
   TableState,
   TableOptions,
+  RowData,
 } from "@tanstack/react-table";
 
 declare module "@tanstack/react-table" {
   interface FilterFns {
     date: FilterFn<string>;
     number: FilterFn<number>;
+  }
+
+  interface ColumnMeta<TData extends RowData, TValue> {
+    // Column meta can be extended with custom properties
+    type?: "date" | "number" | "string" | "boolean" | "object";
   }
 }
 

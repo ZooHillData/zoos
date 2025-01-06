@@ -5,36 +5,33 @@ export const Route = createFileRoute("/react-table/standard")({
 });
 
 import React from "react";
-import { type User } from "../../lib/fake-data";
 
-import {
-  createColumnHelper,
-  type TableState,
-  type ColumnDef,
-  flexRender,
-} from "@tanstack/react-table";
+// ~ Manual column definitions
+// Using `getColumns` to infer all columns
+// import { type User } from "../../lib/fake-data";
+// import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
+// const columnHelper = createColumnHelper<User>();
+// const columns: ColumnDef<User>[] = [
+//   columnHelper.group({
+//     header: "Person",
+//     columns: [
+//       columnHelper.accessor("first_name", {}),
+//       columnHelper.accessor("last_name", {}),
+//       columnHelper.accessor("age", {}),
+//     ],
+//   }),
+//   columnHelper.group({
+//     header: "Address",
+//     columns: [
+//       columnHelper.accessor("street", {}),
+//       columnHelper.accessor("city", {}),
+//       columnHelper.accessor("state", {}),
+//       columnHelper.accessor("zip", {}),
+//     ],
+//   }),
+// ];
 
-const columnHelper = createColumnHelper<User>();
-const columns: ColumnDef<User>[] = [
-  columnHelper.group({
-    header: "Person",
-    columns: [
-      columnHelper.accessor("first_name", {}),
-      columnHelper.accessor("last_name", {}),
-      columnHelper.accessor("age", {}),
-    ],
-  }),
-  columnHelper.group({
-    header: "Address",
-    columns: [
-      columnHelper.accessor("street", {}),
-      columnHelper.accessor("city", {}),
-      columnHelper.accessor("state", {}),
-      columnHelper.accessor("zip", {}),
-    ],
-  }),
-];
-
+import { type TableState, flexRender } from "@tanstack/react-table";
 import {
   useControlledTable,
   useVirtualization,
@@ -43,12 +40,16 @@ import {
   HeaderSortIndicator,
   featureProps,
   mergeFeatureProps,
+  getColumns,
 } from "@zoos/react-table";
 
 function RouteComponent() {
-  const { data } = Route.useRouteContext();
-
+  // Table state
   const [state, setState] = React.useState({} as TableState);
+
+  // Data / inferred columns (no type inference yet)
+  const { data } = Route.useRouteContext();
+  const columns = React.useMemo(() => getColumns({ data }), [data]);
 
   // Table with single state / onStateChange
   // plus a couple other goodies (filterFns)
