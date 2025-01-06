@@ -1,12 +1,6 @@
 # @zoos/react-query
 
-A simple utility for creating mutation and query options with type inference and quality of life improvements.
-
-**_!!! If you are querying supabase, use the functions from `@zoohilldata/supabase` !!!_**
-
-> **Why `@zoohilldata/supabase`?**
->
-> @zoohilldata/supabase provides `createGetQueryOptionsSupa` and `createGetMutationOptionsSupa` that have the correct query cache keys to ensure that authentication events will automatically invalidate the query.
+A simple utility for creating mutation and query options with type inference and other quality of life improvements.
 
 ## Core principles
 
@@ -23,18 +17,18 @@ npm install @zoohilldata/react-query
 
 For more details, view examples in [React Query Demo](https://github.com/zoohilldata/zoos-turbo/tree/main/apps/demo/src/routes/react-query)
 
-### `createGetQueryOptions`
+### `createQueryOptions`
 
 ```tsx
 import { useQuery } from "@tanstack/react-query";
-import { createGetQueryOptions } from "@zoohilldata/react-query";
+import { createQueryOptions } from "@zoohilldata/react-query";
 
 ///
 /// Define `getQueryOptions`
 ///
 
 // Type inference based on queryFn
-const getQueryOptions = createGetQueryOptions({
+const getQueryOptions = queryOptions({
   queryKey: ["my-query"],
   queryFn: async (params: { id: number }) => {
     const data = await getDataFn();
@@ -66,17 +60,17 @@ const App = () => {
 };
 ```
 
-### `createGetMutationOptions`
+### `createMutationOptions`
 
 ```tsx
 import { useMutation } from "@tanstack/react-query";
-import { createGetMutationOptions } from "@zoohilldata/react-query";
+import { createMutationOptions } from "@zoohilldata/react-query";
 
 ///
 /// Define the mutation
 ///
 
-const getMutationOptions = createGetMutationOptions({
+const getMutationOptions = createMutationOptions({
   mutationKey: ["my-mutation"],
   mutationFn: async (variables: { id: number }) => {
     const data = await postDataFn(variables);
@@ -134,7 +128,7 @@ not required in your `queryFn` / `mutationFn`.
 E.g.,
 
 ```tsx
-const getQueryOptions = createGetQueryOptions({
+const getQueryOptions = queryOptions({
   queryKey: ["my-key"],
   // Query function does not require parameters
   queryFn: async () => doSomething(),

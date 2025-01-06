@@ -24,12 +24,12 @@ type UseMutationOptionsDefaulted<TData, TVariables> = Omit<
   }) => void;
 };
 
-type GetMutationOptions<TData, TVariables> = (options: {
+type MutationOptions<TData, TVariables> = (options: {
   options?: UseMutationOptionsDefaulted<TData, TVariables>;
   queryClient: QueryClient;
 }) => UseMutationOptions<TData, Error, TVariables, TContext>;
 
-const createGetMutationOptions = <TData, TVariables>({
+const createMutationOptions = <TData, TVariables>({
   mutationKey,
   mutationFn,
   options: {
@@ -41,7 +41,7 @@ const createGetMutationOptions = <TData, TVariables>({
   mutationKey: QueryKey;
   mutationFn: (variables: TVariables) => Promise<TData>;
   options?: UseMutationOptionsDefaulted<TData, TVariables>;
-}): GetMutationOptions<TData, TVariables> => {
+}): MutationOptions<TData, TVariables> => {
   return ({
     options: {
       onSuccess: onSuccessUse,
@@ -69,11 +69,13 @@ const createGetMutationOptions = <TData, TVariables>({
   });
 };
 
-type CreateGetMutationOptionsFn<TData, TVariables> =
-  typeof createGetMutationOptions<TData, TVariables>;
+type CreateMutationOptions<TData, TVariables> = typeof createMutationOptions<
+  TData,
+  TVariables
+>;
 
 export {
-  createGetMutationOptions,
-  type GetMutationOptions,
-  type CreateGetMutationOptionsFn,
+  createMutationOptions,
+  type MutationOptions,
+  type CreateMutationOptions,
 };

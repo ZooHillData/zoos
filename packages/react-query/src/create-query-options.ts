@@ -16,23 +16,12 @@ type OptionalQueryOptions<TData, TParams> = Omit<
 //       options?: OptionalQueryOptions<TData, TParams>;
 //     }) => UseQueryOptions<TData, TParams>;
 
-type GetQueryOptions<TData, TParams> = (options: {
+type QueryOptions<TData, TParams> = (options: {
   params: TParams;
   options?: OptionalQueryOptions<TData, TParams>;
 }) => UseQueryOptions<TData, TParams>;
 
-type GetQueryOptionsParams<TData, TParams> = TParams extends void
-  ?
-      | {
-          options?: OptionalQueryOptions<TData, TParams>;
-        }
-      | undefined
-  : {
-      params: TParams;
-      options?: OptionalQueryOptions<TData, TParams>;
-    };
-
-const createGetQueryOptions = <TData, TParams>({
+const createQueryOptions = <TData, TParams>({
   queryFn,
   queryKey,
   options: optionsFromCreate,
@@ -45,8 +34,8 @@ const createGetQueryOptions = <TData, TParams>({
   queryFn: (params: TParams) => Promise<TData>;
   queryKey: QueryKey;
   options?: OptionalQueryOptions<TData, TParams>;
-}): GetQueryOptions<TData, TParams> => {
-  return (options: Parameters<GetQueryOptions<TData, TParams>>[0]) => {
+}): QueryOptions<TData, TParams> => {
+  return (options: Parameters<QueryOptions<TData, TParams>>[0]) => {
     // Extract params and options from getOptionsParams passed
     // during use
     //
@@ -66,13 +55,9 @@ const createGetQueryOptions = <TData, TParams>({
   };
 };
 
-type CreateGetQueryOptions<TData, TParams> = typeof createGetQueryOptions<
+type CreateQueryOptions<TData, TParams> = typeof createQueryOptions<
   TData,
   TParams
 >;
 
-export {
-  createGetQueryOptions,
-  type GetQueryOptions,
-  type CreateGetQueryOptions,
-};
+export { createQueryOptions, type QueryOptions, type CreateQueryOptions };

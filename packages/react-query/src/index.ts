@@ -1,2 +1,2 @@
-export * from "./create-get-query-options";
-export * from "./create-get-mutation-options";
+export * from "./create-query-options";
+export * from "./create-mutation-options";
