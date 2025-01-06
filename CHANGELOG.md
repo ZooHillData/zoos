@@ -71,7 +71,7 @@
 
 ### Bug Fixes
 
-- modify ui-shad README, update release config ([791a394](https://github.com/zoohilldata/zoos/commit/791a39410c594098d4cec35643260cf79874af5d))
+- modify shadcn README, update release config ([791a394](https://github.com/zoohilldata/zoos/commit/791a39410c594098d4cec35643260cf79874af5d))
 
 ## 1.0.0 (2024-12-24)
 

@@ -1,6 +1,6 @@
 import { FieldComponent } from "@tanstack/react-form";
 
-import { Input, Textarea } from "@zoos/ui-shad";
+import { Input, Textarea } from "@zoos/shadcn";
 
 import { getOptions } from "../../lib";
 import { Select, CheckboxWithLabel, CheckboxGroup } from "../../components";

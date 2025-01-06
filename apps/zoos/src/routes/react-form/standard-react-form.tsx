@@ -11,7 +11,7 @@ export const Route = createFileRoute("/react-form/standard-react-form")({
 import { unique } from "remeda";
 import { formOptions, useForm } from "@tanstack/react-form";
 import { CheckboxWithLabel, Select, getOptions } from "@zoos/react-form";
-import { Button, Label } from "@zoos/ui-shad";
+import { Button, Label } from "@zoos/shadcn";
 
 const getFormData = () => {
   const sets = [

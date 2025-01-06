@@ -1,7 +1,7 @@
 import { type Header } from "@tanstack/react-table";
 
 import { ArrowDownZaIcon, ArrowUpAzIcon, LucideProps } from "lucide-react";
-import { cn } from "@zoos/ui-shad";
+import { cn } from "@zoos/shadcn";
 
 type Props<TData> = React.HTMLProps<HTMLSpanElement> & {
   header: Header<TData, unknown>;

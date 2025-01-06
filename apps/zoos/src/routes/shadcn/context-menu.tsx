@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/ui-shad/context-menu")({
+export const Route = createFileRoute('/shadcn/context-menu')({
   component: RouteComponent,
-});
+})
 
 import {
   ContextMenu,
@@ -18,7 +18,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@zoos/ui-shad";
+} from '@zoos/shadcn'
 
 function RouteComponent() {
   return (
@@ -69,5 +69,5 @@ function RouteComponent() {
         </ContextMenuRadioGroup>
       </ContextMenuContent>
     </ContextMenu>
-  );
+  )
 }

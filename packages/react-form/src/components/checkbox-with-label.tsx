@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox } from "@zoos/ui-shad";
+import { Checkbox } from "@zoos/shadcn";
 
 type CheckboxProps = React.ComponentProps<typeof Checkbox>;
 type CheckboxWithLabelProps = CheckboxProps & {

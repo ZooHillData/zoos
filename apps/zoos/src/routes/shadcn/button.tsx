@@ -1,28 +1,28 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/ui-shad/button")({
+export const Route = createFileRoute('/shadcn/button')({
   component: RouteComponent,
-});
+})
 
 ///
 /// Component
 ///
-import { HandHeartIcon } from "lucide-react";
+import { HandHeartIcon } from 'lucide-react'
 
-import { Button, buttonVariants, cn } from "@zoos/ui-shad";
+import { Button, buttonVariants, cn } from '@zoos/shadcn'
 
 const variants = [
-  "default",
-  "secondary",
-  "destructive",
-  "warning",
-  "success",
-  "outline",
-  "ghost",
-  "link",
-] as const;
+  'default',
+  'secondary',
+  'destructive',
+  'warning',
+  'success',
+  'outline',
+  'ghost',
+  'link',
+] as const
 
-const sizes = ["lg", "default", "sm", "icon"] as const;
+const sizes = ['lg', 'default', 'sm', 'icon'] as const
 
 export function RouteComponent() {
   return (
@@ -31,7 +31,7 @@ export function RouteComponent() {
         {sizes.map((size) => (
           <p
             key={size}
-            className={cn(buttonVariants({ variant: "ghost", size }))}
+            className={cn(buttonVariants({ variant: 'ghost', size }))}
           >
             {size}
           </p>
@@ -44,11 +44,11 @@ export function RouteComponent() {
         >
           {sizes.map((size) => (
             <Button key={size} size={size} variant={variant}>
-              {size === "icon" ? <HandHeartIcon /> : variant}
+              {size === 'icon' ? <HandHeartIcon /> : variant}
             </Button>
           ))}
         </div>
       ))}
     </div>
-  );
+  )
 }

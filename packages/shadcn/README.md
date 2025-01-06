@@ -1,4 +1,4 @@
-# @zoos/ui-shad
+# @zoos/shadcn
 
 Very simple wrapper around shadcn UI components.
 

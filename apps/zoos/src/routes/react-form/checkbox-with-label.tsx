@@ -13,7 +13,7 @@ function RouteComponent() {
   console.log({ value });
 
   return (
-    // Same props as standard `Checkbox` from `@zoos/ui-shad`
+    // Same props as standard `Checkbox` from `@zoos/shadcn`
     <CheckboxWithLabel
       label="Check me"
       checked={value}

@@ -1,15 +1,15 @@
 {
-  "name": "ui-shad",
+  "name": "shadcn",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/ui-shad/src",
+  "sourceRoot": "packages/shadcn/src",
   "projectType": "library",
   "tags": [],
-  "// targets": "to see all targets run: nx show project ui-shad --web",
+  "// targets": "to see all targets run: nx show project shadcn --web",
   "targets": {
     "release": {
       "executor": "nx-release:build-update-publish",
       "options": {
-        "libName": "ui-shad"
+        "libName": "shadcn"
       }
     }
   }

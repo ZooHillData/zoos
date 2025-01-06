@@ -1,4 +1,4 @@
-import { Label } from "@zoos/ui-shad";
+import { Label } from "@zoos/shadcn";
 import { type FormConfig, type FieldConfig } from "../types";
 
 const DefaultLabel = (props: { name: string }) => <Label>{props.name}</Label>;

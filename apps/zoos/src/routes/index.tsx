@@ -21,7 +21,7 @@ import {
   DialogTrigger,
   buttonVariants,
   cn,
-} from "@zoos/ui-shad";
+} from "@zoos/shadcn";
 
 import alex from "../assets/alex-snail.svg";
 import bryce from "../assets/bryce-dolphin.svg";

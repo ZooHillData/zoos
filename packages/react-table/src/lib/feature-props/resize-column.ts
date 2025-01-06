@@ -1,4 +1,4 @@
-import { mergeStyleProps } from "@zoos/ui-shad";
+import { mergeStyleProps } from "@zoos/shadcn";
 
 import type { ComponentProps } from "./types";
 import { HeaderContext } from "@tanstack/react-table";

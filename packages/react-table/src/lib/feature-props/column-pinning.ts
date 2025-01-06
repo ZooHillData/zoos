@@ -1,6 +1,6 @@
 import { type Column } from "@tanstack/react-table";
 
-import { cn, mergeStyleProps } from "@zoos/ui-shad";
+import { cn, mergeStyleProps } from "@zoos/shadcn";
 import type { ComponentProps } from "./types";
 
 const getPinningAttributes = <TData>(column: Column<TData, unknown>) => ({

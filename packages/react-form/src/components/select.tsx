@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-} from "@zoos/ui-shad";
+} from "@zoos/shadcn";
 
 import { type Options } from "../lib/get-options";
 

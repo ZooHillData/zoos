@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/ui-shad/select")({
+export const Route = createFileRoute('/shadcn/select')({
   component: RouteComponent,
-});
+})
 
 import {
   Select,
@@ -12,7 +12,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@zoos/ui-shad";
+} from '@zoos/shadcn'
 
 function RouteComponent() {
   return (
@@ -31,5 +31,5 @@ function RouteComponent() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  );
+  )
 }

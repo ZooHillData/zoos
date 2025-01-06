@@ -3,7 +3,7 @@
 import React from "react";
 
 import { useForm } from "@tanstack/react-form";
-import { Button, mergeStyleProps } from "@zoos/ui-shad";
+import { Button, mergeStyleProps } from "@zoos/shadcn";
 
 import type { FormConfig } from "../types/form-config";
 import {

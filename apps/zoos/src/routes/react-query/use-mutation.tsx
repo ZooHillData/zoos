@@ -10,7 +10,7 @@ export const Route = createFileRoute('/react-query/use-mutation')({
 
 import { useMutation } from '@tanstack/react-query'
 import { createGetMutationOptions } from '@zoos/react-query'
-import { Button } from '@zoos/ui-shad'
+import { Button } from '@zoos/shadcn'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 

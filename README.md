@@ -42,7 +42,7 @@ Defined in `apps/zoos/src/routes`. They provide:
 
 ## React Libraries
 
-- `@zoos/ui-shad` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/ui-shad) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/ui-shad) | [NPM](https://www.npmjs.com/package/@zoos/ui-shad)) - Simple wrapper around Shad UI
+- `@zoos/shadcn` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/shadcn) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/shadcn) | [NPM](https://www.npmjs.com/package/@zoos/shadcn)) - Simple wrapper around Shad UI
 
 - `@zoos/react-form` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-form) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Render forms with Tanstack Form, better input components composing @zoos/shad-ui
 

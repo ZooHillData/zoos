@@ -4,7 +4,7 @@ export const Route = createFileRoute("/react-form/with-zoos-form")({
   component: RouteComponent,
 });
 
-import { Label } from "@zoos/ui-shad";
+import { Label } from "@zoos/shadcn";
 import { Form, getFormConfig } from "@zoos/react-form";
 
 /*

@@ -18,7 +18,7 @@
   "dependencies": {
     "@tanstack/react-table": "^8.20.6",
     "@tanstack/react-virtual": "^3.11.2",
-    "@zoos/ui-shad": "*",
+    "@zoos/shadcn": "*",
     "lucide-react": "^0.469.0",
     "remeda": "^2.19.0"
   }

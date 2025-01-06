@@ -11,15 +11,15 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as UiShadRouteImport } from './routes/ui-shad/route'
+import { Route as ShadcnRouteImport } from './routes/shadcn/route'
 import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as ReactQueryRouteImport } from './routes/react-query/route'
 import { Route as ReactFormRouteImport } from './routes/react-form/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as UiShadSelectImport } from './routes/ui-shad/select'
-import { Route as UiShadContextMenuImport } from './routes/ui-shad/context-menu'
-import { Route as UiShadCheckboxImport } from './routes/ui-shad/checkbox'
-import { Route as UiShadButtonImport } from './routes/ui-shad/button'
+import { Route as ShadcnSelectImport } from './routes/shadcn/select'
+import { Route as ShadcnContextMenuImport } from './routes/shadcn/context-menu'
+import { Route as ShadcnCheckboxImport } from './routes/shadcn/checkbox'
+import { Route as ShadcnButtonImport } from './routes/shadcn/button'
 import { Route as ReactTableStandardImport } from './routes/react-table/standard'
 import { Route as ReactQueryUseQueryImport } from './routes/react-query/use-query'
 import { Route as ReactQueryUseMutationImport } from './routes/react-query/use-mutation'
@@ -31,9 +31,9 @@ import { Route as ReactFormCheckboxGroupImport } from './routes/react-form/check
 
 // Create/Update Routes
 
-const UiShadRouteRoute = UiShadRouteImport.update({
-  id: '/ui-shad',
-  path: '/ui-shad',
+const ShadcnRouteRoute = ShadcnRouteImport.update({
+  id: '/shadcn',
+  path: '/shadcn',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -61,28 +61,28 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UiShadSelectRoute = UiShadSelectImport.update({
+const ShadcnSelectRoute = ShadcnSelectImport.update({
   id: '/select',
   path: '/select',
-  getParentRoute: () => UiShadRouteRoute,
+  getParentRoute: () => ShadcnRouteRoute,
 } as any)
 
-const UiShadContextMenuRoute = UiShadContextMenuImport.update({
+const ShadcnContextMenuRoute = ShadcnContextMenuImport.update({
   id: '/context-menu',
   path: '/context-menu',
-  getParentRoute: () => UiShadRouteRoute,
+  getParentRoute: () => ShadcnRouteRoute,
 } as any)
 
-const UiShadCheckboxRoute = UiShadCheckboxImport.update({
+const ShadcnCheckboxRoute = ShadcnCheckboxImport.update({
   id: '/checkbox',
   path: '/checkbox',
-  getParentRoute: () => UiShadRouteRoute,
+  getParentRoute: () => ShadcnRouteRoute,
 } as any)
 
-const UiShadButtonRoute = UiShadButtonImport.update({
+const ShadcnButtonRoute = ShadcnButtonImport.update({
   id: '/button',
   path: '/button',
-  getParentRoute: () => UiShadRouteRoute,
+  getParentRoute: () => ShadcnRouteRoute,
 } as any)
 
 const ReactTableStandardRoute = ReactTableStandardImport.update({
@@ -169,11 +169,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactTableRouteImport
       parentRoute: typeof rootRoute
     }
-    '/ui-shad': {
-      id: '/ui-shad'
-      path: '/ui-shad'
-      fullPath: '/ui-shad'
-      preLoaderRoute: typeof UiShadRouteImport
+    '/shadcn': {
+      id: '/shadcn'
+      path: '/shadcn'
+      fullPath: '/shadcn'
+      preLoaderRoute: typeof ShadcnRouteImport
       parentRoute: typeof rootRoute
     }
     '/react-form/checkbox-group': {
@@ -232,33 +232,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactTableStandardImport
       parentRoute: typeof ReactTableRouteImport
     }
-    '/ui-shad/button': {
-      id: '/ui-shad/button'
+    '/shadcn/button': {
+      id: '/shadcn/button'
       path: '/button'
-      fullPath: '/ui-shad/button'
-      preLoaderRoute: typeof UiShadButtonImport
-      parentRoute: typeof UiShadRouteImport
+      fullPath: '/shadcn/button'
+      preLoaderRoute: typeof ShadcnButtonImport
+      parentRoute: typeof ShadcnRouteImport
     }
-    '/ui-shad/checkbox': {
-      id: '/ui-shad/checkbox'
+    '/shadcn/checkbox': {
+      id: '/shadcn/checkbox'
       path: '/checkbox'
-      fullPath: '/ui-shad/checkbox'
-      preLoaderRoute: typeof UiShadCheckboxImport
-      parentRoute: typeof UiShadRouteImport
+      fullPath: '/shadcn/checkbox'
+      preLoaderRoute: typeof ShadcnCheckboxImport
+      parentRoute: typeof ShadcnRouteImport
     }
-    '/ui-shad/context-menu': {
-      id: '/ui-shad/context-menu'
+    '/shadcn/context-menu': {
+      id: '/shadcn/context-menu'
       path: '/context-menu'
-      fullPath: '/ui-shad/context-menu'
-      preLoaderRoute: typeof UiShadContextMenuImport
-      parentRoute: typeof UiShadRouteImport
+      fullPath: '/shadcn/context-menu'
+      preLoaderRoute: typeof ShadcnContextMenuImport
+      parentRoute: typeof ShadcnRouteImport
     }
-    '/ui-shad/select': {
-      id: '/ui-shad/select'
+    '/shadcn/select': {
+      id: '/shadcn/select'
       path: '/select'
-      fullPath: '/ui-shad/select'
-      preLoaderRoute: typeof UiShadSelectImport
-      parentRoute: typeof UiShadRouteImport
+      fullPath: '/shadcn/select'
+      preLoaderRoute: typeof ShadcnSelectImport
+      parentRoute: typeof ShadcnRouteImport
     }
   }
 }
@@ -311,22 +311,22 @@ const ReactTableRouteRouteWithChildren = ReactTableRouteRoute._addFileChildren(
   ReactTableRouteRouteChildren,
 )
 
-interface UiShadRouteRouteChildren {
-  UiShadButtonRoute: typeof UiShadButtonRoute
-  UiShadCheckboxRoute: typeof UiShadCheckboxRoute
-  UiShadContextMenuRoute: typeof UiShadContextMenuRoute
-  UiShadSelectRoute: typeof UiShadSelectRoute
+interface ShadcnRouteRouteChildren {
+  ShadcnButtonRoute: typeof ShadcnButtonRoute
+  ShadcnCheckboxRoute: typeof ShadcnCheckboxRoute
+  ShadcnContextMenuRoute: typeof ShadcnContextMenuRoute
+  ShadcnSelectRoute: typeof ShadcnSelectRoute
 }
 
-const UiShadRouteRouteChildren: UiShadRouteRouteChildren = {
-  UiShadButtonRoute: UiShadButtonRoute,
-  UiShadCheckboxRoute: UiShadCheckboxRoute,
-  UiShadContextMenuRoute: UiShadContextMenuRoute,
-  UiShadSelectRoute: UiShadSelectRoute,
+const ShadcnRouteRouteChildren: ShadcnRouteRouteChildren = {
+  ShadcnButtonRoute: ShadcnButtonRoute,
+  ShadcnCheckboxRoute: ShadcnCheckboxRoute,
+  ShadcnContextMenuRoute: ShadcnContextMenuRoute,
+  ShadcnSelectRoute: ShadcnSelectRoute,
 }
 
-const UiShadRouteRouteWithChildren = UiShadRouteRoute._addFileChildren(
-  UiShadRouteRouteChildren,
+const ShadcnRouteRouteWithChildren = ShadcnRouteRoute._addFileChildren(
+  ShadcnRouteRouteChildren,
 )
 
 export interface FileRoutesByFullPath {
@@ -334,7 +334,7 @@ export interface FileRoutesByFullPath {
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/select': typeof ReactFormSelectRoute
@@ -343,10 +343,10 @@ export interface FileRoutesByFullPath {
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-shad/button': typeof UiShadButtonRoute
-  '/ui-shad/checkbox': typeof UiShadCheckboxRoute
-  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
-  '/ui-shad/select': typeof UiShadSelectRoute
+  '/shadcn/button': typeof ShadcnButtonRoute
+  '/shadcn/checkbox': typeof ShadcnCheckboxRoute
+  '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/select': typeof ShadcnSelectRoute
 }
 
 export interface FileRoutesByTo {
@@ -354,7 +354,7 @@ export interface FileRoutesByTo {
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/select': typeof ReactFormSelectRoute
@@ -363,10 +363,10 @@ export interface FileRoutesByTo {
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-shad/button': typeof UiShadButtonRoute
-  '/ui-shad/checkbox': typeof UiShadCheckboxRoute
-  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
-  '/ui-shad/select': typeof UiShadSelectRoute
+  '/shadcn/button': typeof ShadcnButtonRoute
+  '/shadcn/checkbox': typeof ShadcnCheckboxRoute
+  '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/select': typeof ShadcnSelectRoute
 }
 
 export interface FileRoutesById {
@@ -375,7 +375,7 @@ export interface FileRoutesById {
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/select': typeof ReactFormSelectRoute
@@ -384,10 +384,10 @@ export interface FileRoutesById {
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-shad/button': typeof UiShadButtonRoute
-  '/ui-shad/checkbox': typeof UiShadCheckboxRoute
-  '/ui-shad/context-menu': typeof UiShadContextMenuRoute
-  '/ui-shad/select': typeof UiShadSelectRoute
+  '/shadcn/button': typeof ShadcnButtonRoute
+  '/shadcn/checkbox': typeof ShadcnCheckboxRoute
+  '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/select': typeof ShadcnSelectRoute
 }
 
 export interface FileRouteTypes {
@@ -397,7 +397,7 @@ export interface FileRouteTypes {
     | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-shad'
+    | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/select'
@@ -406,17 +406,17 @@ export interface FileRouteTypes {
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-shad/button'
-    | '/ui-shad/checkbox'
-    | '/ui-shad/context-menu'
-    | '/ui-shad/select'
+    | '/shadcn/button'
+    | '/shadcn/checkbox'
+    | '/shadcn/context-menu'
+    | '/shadcn/select'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-shad'
+    | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/select'
@@ -425,17 +425,17 @@ export interface FileRouteTypes {
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-shad/button'
-    | '/ui-shad/checkbox'
-    | '/ui-shad/context-menu'
-    | '/ui-shad/select'
+    | '/shadcn/button'
+    | '/shadcn/checkbox'
+    | '/shadcn/context-menu'
+    | '/shadcn/select'
   id:
     | '__root__'
     | '/'
     | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-shad'
+    | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/select'
@@ -444,10 +444,10 @@ export interface FileRouteTypes {
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-shad/button'
-    | '/ui-shad/checkbox'
-    | '/ui-shad/context-menu'
-    | '/ui-shad/select'
+    | '/shadcn/button'
+    | '/shadcn/checkbox'
+    | '/shadcn/context-menu'
+    | '/shadcn/select'
   fileRoutesById: FileRoutesById
 }
 
@@ -456,7 +456,7 @@ export interface RootRouteChildren {
   ReactFormRouteRoute: typeof ReactFormRouteRouteWithChildren
   ReactQueryRouteRoute: typeof ReactQueryRouteRouteWithChildren
   ReactTableRouteRoute: typeof ReactTableRouteRouteWithChildren
-  UiShadRouteRoute: typeof UiShadRouteRouteWithChildren
+  ShadcnRouteRoute: typeof ShadcnRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -464,7 +464,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReactFormRouteRoute: ReactFormRouteRouteWithChildren,
   ReactQueryRouteRoute: ReactQueryRouteRouteWithChildren,
   ReactTableRouteRoute: ReactTableRouteRouteWithChildren,
-  UiShadRouteRoute: UiShadRouteRouteWithChildren,
+  ShadcnRouteRoute: ShadcnRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -481,7 +481,7 @@ export const routeTree = rootRoute
         "/react-form",
         "/react-query",
         "/react-table",
-        "/ui-shad"
+        "/shadcn"
       ]
     },
     "/": {
@@ -510,13 +510,13 @@ export const routeTree = rootRoute
         "/react-table/standard"
       ]
     },
-    "/ui-shad": {
-      "filePath": "ui-shad/route.tsx",
+    "/shadcn": {
+      "filePath": "shadcn/route.tsx",
       "children": [
-        "/ui-shad/button",
-        "/ui-shad/checkbox",
-        "/ui-shad/context-menu",
-        "/ui-shad/select"
+        "/shadcn/button",
+        "/shadcn/checkbox",
+        "/shadcn/context-menu",
+        "/shadcn/select"
       ]
     },
     "/react-form/checkbox-group": {
@@ -551,21 +551,21 @@ export const routeTree = rootRoute
       "filePath": "react-table/standard.tsx",
       "parent": "/react-table"
     },
-    "/ui-shad/button": {
-      "filePath": "ui-shad/button.tsx",
-      "parent": "/ui-shad"
+    "/shadcn/button": {
+      "filePath": "shadcn/button.tsx",
+      "parent": "/shadcn"
     },
-    "/ui-shad/checkbox": {
-      "filePath": "ui-shad/checkbox.tsx",
-      "parent": "/ui-shad"
+    "/shadcn/checkbox": {
+      "filePath": "shadcn/checkbox.tsx",
+      "parent": "/shadcn"
     },
-    "/ui-shad/context-menu": {
-      "filePath": "ui-shad/context-menu.tsx",
-      "parent": "/ui-shad"
+    "/shadcn/context-menu": {
+      "filePath": "shadcn/context-menu.tsx",
+      "parent": "/shadcn"
     },
-    "/ui-shad/select": {
-      "filePath": "ui-shad/select.tsx",
-      "parent": "/ui-shad"
+    "/shadcn/select": {
+      "filePath": "shadcn/select.tsx",
+      "parent": "/shadcn"
     }
   }
 }

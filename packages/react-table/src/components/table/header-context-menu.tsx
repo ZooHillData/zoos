@@ -9,7 +9,7 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "@zoos/ui-shad";
+} from "@zoos/shadcn";
 
 const HeaderContextMenu = <TData,>({
   header,
