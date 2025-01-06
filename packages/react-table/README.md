@@ -1,4 +1,4 @@
-# react-table
+# @zoos/react-table
 
 Library of components, hooks and functions for building tables with `@tanstack/react-table`.
 
@@ -33,11 +33,25 @@ const { table } = useControlledTable({
   ```tsx
   import { useVirtualization } from "@zoos/react-table";
 
-  const { scrollContainerRef, rowVirtualizer, virtualRows, columnVirtualizer, virtualColumns, virtualPaddingLeft, virtualPaddingRight } = useVirtualization({
+  const {
+    // Scroll container immediately wrapping table
+    scrollContainerRef,
+    // Row virtualization
+    rowVirtualizer,
+    virtualRows,
+    // Column Virtualization -
+    // padding left and padding right are used to add fake columns
+    columnVirtualizer,
+    virtualColumns,
+    virtualPaddingLeft,
+    virtualPaddingRight,
+  } = useVirtualization({
     // Standard `Table` returned from `useReactTable`
     table,
+    // `row` and `column` are standard options passed
+    // to `useVirtualizer` (omitting ones defined from table)
     row: {
-      // Row height in pixels
+      // Row height in pixels - helps with scrolling smoothness
       estimateSize: () => 20,
       // How many rows to render on either side of viewport
       overscan: 5,
@@ -53,11 +67,11 @@ const { table } = useControlledTable({
 
 Tanstack Table is amazing. There are examples for everything you need (column pinning, resizing, etc.).
 
-Unfortunately, each feature requires applying CSS rules to each table component (`<thead />`, `<tr />`, `<td />`, ... ) in a pretty specific way.
+Unfortunately, each feature requires passing CSS rules (and other props) to each table component (`<thead />`, `<tr />`, `<td />`, ... ) in certain ways.
 
-We've wired them up using `tailwind` classes b/c we use tailwind and it's easier to read. They're pretty simple, so if we want vanilla `style` props, w can do that too.
+So you don't have to worry about the prop wiring for standard features, we've provided prop getters in `featureProps`. For styling, we used Tailwind classes (where we could) and inline styles when dynamic values were required.
 
-The classes required for each feature are in the `featureProps` object (e.g. `featureProps.rowVirtualization`, `featureProps.stickyHeader`).
+_If people aren't using Tailwind, we can provide a pure inline styles version or you can look at the `featureProps` definitions in [./packages/react-table/src/lib/feature-props](https://github.com/zoohilldata/zoos/tree/main/packages/react-table/src/lib/feature-props) and replicate._
 
 ```tsx
 import { featureProps, mergeFeatureProps } from "@zoos/react-table";
@@ -167,3 +181,4 @@ Infer columns from data passed to reduce the boilerplate for a generic table.
 - Column reorder, double click makes it big enough to fit the widest
 - Row reorder and resize, default height, double click makes it big enough
 - Column / Row selection
+- Saving views with permissions

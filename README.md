@@ -2,14 +2,30 @@
 
 [Docs](./docs) | [Ideas, Feedback, Bugs](https://github.com/ZooHillData/zoos/discussions/new?category=ideas) | [NPM Packages](https://www.npmjs.com/~alexryanterry)
 
-[Tanstack](https://tanstack.com) and [ShadCN](https://ui.shadcn.com/) are powerful libraries for building apps. They are a bit _too powerful_ in some cases. Zoos is a monorepo of composable libraries and methods that provide a slightly more user-friendly and opinionated API on top of these and other foundational libraries (like [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)).
+[Tanstack](https://tanstack.com) and [ShadCN (Tailwind / Radix)](https://ui.shadcn.com/) are very powerful and flexible libraries for building React apps. Because they are so flexible, it takes a bit of experimentation to figure out how to use them most effectively.
 
-You can think of this library as the "ShadCN" of Tanstack.
+Zoos is a monorepo of small building blocks (functions, hooks, components, examples) that capture the way we've learned to build apps with these core libraries. In general, the libraries are small and highly focused, typically built to work with a single 3p library, e.g. `@tanstack/react-table` => `@zoos/react-table`.
+
+The libraries do their best to stay true to the design principles and feel of the core libraries. Acting as a simple layer of examples, helper functions and components that can be pieced together at a slightly high level of abstraction.
 
 ## Architecture
 
-- **Zoos App -** A Vite, Tanstack Router app composing core React libraries - lots of examples and documentation
-- **React Libraries -** small, focused, highly composable React libraries
+- **Zoos App -** The entrypoint into the functionality provided by Zoos. A Vite, Tanstack Router app composing core React libraries into features - lots of examples and documentation.
+- **React Libraries -** Small, focused libraries provide patterns for using
+  - @tanstack/react-query
+  - @tanstack/react-table
+  - @tanstack/react-form
+  - shadcn
+  - _(COMING SOON)_
+    - supabase
+    - zustand
+    - react-grid-layout
+    - excalidraw
+    - mdxeditor
+    - recharts
+    - plotly
+    - @tanstack/react-router
+    - @tanstack/start
 
 ## Zoos App
 
@@ -23,16 +39,6 @@ Entrypoint into core libraries.
 
 ### Features
 
-#### Tanstack Router standard setup
-
-Standard Tanstack Router setup will include:
-
-- **React Router With Query -** - set up using `@tanstack/react-router-with-query`
-- **Auto-generated navigation -** from routeTree.gen.ts (or Router API)
-- **Dialogs, Toasts -** state management in zustand store w/ component shells placed in `__root.tsx` (toast, dialog, etc.)
-- **Global Zustand store -** - with `immer`, `local persist` plugins, type inference, auto useShallow and other DX enhancements
-- **Authentication Routes -** routes (login, forgot password, ..), react-query options with invalidation / query key wiring, login, signup components and redirects wired up
-
 #### Routes Examples
 
 Defined in `apps/zoos/src/routes`. They provide:
@@ -42,20 +48,15 @@ Defined in `apps/zoos/src/routes`. They provide:
 
 ## React Libraries
 
-- `@zoos/shadcn` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/shadcn) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/shadcn) | [NPM](https://www.npmjs.com/package/@zoos/shadcn)) - Simple wrapper around Shad UI
+- `@zoos/shadcn` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/shadcn) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/shadcn) | [NPM](https://www.npmjs.com/package/@zoos/shadcn)) - Simple wrapper around shadcn/ui
 
-- `@zoos/react-form` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-form) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Render forms with Tanstack Form, better input components composing @zoos/shad-ui
+- `@zoos/react-form` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-form) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Render forms with Tanstack Form, input components composing primitives from @zoos/shadcn
 
-### Philosophy
+- `@zoos/react-query` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-query) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Simple helper functions for generating queries and mutations with type inference
 
-- Work well independently, built as a whole
-- Designed for incremental adoption
-- All versions package versions upgrade together
-- Maintain high degree of interoperability between versions
+## Intentions, Request for Feedback
 
-### Incremental Adoption
-
-Libraries are designed specifically for incremental, low effort adoption and wide version interoperatbility.
+Libraries are designed specifically for incremental, low effort adoption, wide version interoperability, flexibility, developer experience and simplicity.
 
 If you have ideas to...
 
@@ -63,5 +64,7 @@ If you have ideas to...
 - reduce friction in adopting this library
 - make upgrading to take advantage of latest features easy
 - make the library simpler or more flexible
+- improve documentation or code readability
+- make an API easier to understand
 
 , please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
