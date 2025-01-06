@@ -24,7 +24,6 @@ npx nx g @nx/react:lib "@zoos/${name}"  \
 
 ```json
 {
-  "version": "0.0.0",
   "repository": { "url": "https://github.com/zoohilldata/zoos.git" },
   "publishConfig": {
     "access": "public"

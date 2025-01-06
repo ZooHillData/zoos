@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as UiShadRouteImport } from './routes/ui-shad/route'
 import { Route as UiFormRouteImport } from './routes/ui-form/route'
 import { Route as ReactTableRouteImport } from './routes/react-table/route'
+import { Route as ReactQueryRouteImport } from './routes/react-query/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UiShadSelectImport } from './routes/ui-shad/select'
 import { Route as UiShadContextMenuImport } from './routes/ui-shad/context-menu'
@@ -25,6 +26,8 @@ import { Route as UiFormSelectImport } from './routes/ui-form/select'
 import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
 import { Route as UiFormCheckboxGroupImport } from './routes/ui-form/checkbox-group'
 import { Route as ReactTableStandardImport } from './routes/react-table/standard'
+import { Route as ReactQueryUseQueryImport } from './routes/react-query/use-query'
+import { Route as ReactQueryUseMutationImport } from './routes/react-query/use-mutation'
 
 // Create/Update Routes
 
@@ -43,6 +46,12 @@ const UiFormRouteRoute = UiFormRouteImport.update({
 const ReactTableRouteRoute = ReactTableRouteImport.update({
   id: '/react-table',
   path: '/react-table',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ReactQueryRouteRoute = ReactQueryRouteImport.update({
+  id: '/react-query',
+  path: '/react-query',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -112,6 +121,18 @@ const ReactTableStandardRoute = ReactTableStandardImport.update({
   getParentRoute: () => ReactTableRouteRoute,
 } as any)
 
+const ReactQueryUseQueryRoute = ReactQueryUseQueryImport.update({
+  id: '/use-query',
+  path: '/use-query',
+  getParentRoute: () => ReactQueryRouteRoute,
+} as any)
+
+const ReactQueryUseMutationRoute = ReactQueryUseMutationImport.update({
+  id: '/use-mutation',
+  path: '/use-mutation',
+  getParentRoute: () => ReactQueryRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -121,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/react-query': {
+      id: '/react-query'
+      path: '/react-query'
+      fullPath: '/react-query'
+      preLoaderRoute: typeof ReactQueryRouteImport
       parentRoute: typeof rootRoute
     }
     '/react-table': {
@@ -143,6 +171,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/ui-shad'
       preLoaderRoute: typeof UiShadRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/react-query/use-mutation': {
+      id: '/react-query/use-mutation'
+      path: '/use-mutation'
+      fullPath: '/react-query/use-mutation'
+      preLoaderRoute: typeof ReactQueryUseMutationImport
+      parentRoute: typeof ReactQueryRouteImport
+    }
+    '/react-query/use-query': {
+      id: '/react-query/use-query'
+      path: '/use-query'
+      fullPath: '/react-query/use-query'
+      preLoaderRoute: typeof ReactQueryUseQueryImport
+      parentRoute: typeof ReactQueryRouteImport
     }
     '/react-table/standard': {
       id: '/react-table/standard'
@@ -219,6 +261,20 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface ReactQueryRouteRouteChildren {
+  ReactQueryUseMutationRoute: typeof ReactQueryUseMutationRoute
+  ReactQueryUseQueryRoute: typeof ReactQueryUseQueryRoute
+}
+
+const ReactQueryRouteRouteChildren: ReactQueryRouteRouteChildren = {
+  ReactQueryUseMutationRoute: ReactQueryUseMutationRoute,
+  ReactQueryUseQueryRoute: ReactQueryUseQueryRoute,
+}
+
+const ReactQueryRouteRouteWithChildren = ReactQueryRouteRoute._addFileChildren(
+  ReactQueryRouteRouteChildren,
+)
+
 interface ReactTableRouteRouteChildren {
   ReactTableStandardRoute: typeof ReactTableStandardRoute
 }
@@ -271,9 +327,12 @@ const UiShadRouteRouteWithChildren = UiShadRouteRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
+  '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
@@ -288,9 +347,12 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
+  '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
@@ -306,9 +368,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
+  '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
   '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
@@ -325,9 +390,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/react-query'
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
+    | '/react-query/use-mutation'
+    | '/react-query/use-query'
     | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
@@ -341,9 +409,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/react-query'
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
+    | '/react-query/use-mutation'
+    | '/react-query/use-query'
     | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
@@ -357,9 +428,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/react-query'
     | '/react-table'
     | '/ui-form'
     | '/ui-shad'
+    | '/react-query/use-mutation'
+    | '/react-query/use-query'
     | '/react-table/standard'
     | '/ui-form/checkbox-group'
     | '/ui-form/checkbox-with-label'
@@ -375,6 +449,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReactQueryRouteRoute: typeof ReactQueryRouteRouteWithChildren
   ReactTableRouteRoute: typeof ReactTableRouteRouteWithChildren
   UiFormRouteRoute: typeof UiFormRouteRouteWithChildren
   UiShadRouteRoute: typeof UiShadRouteRouteWithChildren
@@ -382,6 +457,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReactQueryRouteRoute: ReactQueryRouteRouteWithChildren,
   ReactTableRouteRoute: ReactTableRouteRouteWithChildren,
   UiFormRouteRoute: UiFormRouteRouteWithChildren,
   UiShadRouteRoute: UiShadRouteRouteWithChildren,
@@ -398,6 +474,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/react-query",
         "/react-table",
         "/ui-form",
         "/ui-shad"
@@ -405,6 +482,13 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/react-query": {
+      "filePath": "react-query/route.tsx",
+      "children": [
+        "/react-query/use-mutation",
+        "/react-query/use-query"
+      ]
     },
     "/react-table": {
       "filePath": "react-table/route.tsx",
@@ -430,6 +514,14 @@ export const routeTree = rootRoute
         "/ui-shad/context-menu",
         "/ui-shad/select"
       ]
+    },
+    "/react-query/use-mutation": {
+      "filePath": "react-query/use-mutation.tsx",
+      "parent": "/react-query"
+    },
+    "/react-query/use-query": {
+      "filePath": "react-query/use-query.tsx",
+      "parent": "/react-query"
     },
     "/react-table/standard": {
       "filePath": "react-table/standard.tsx",

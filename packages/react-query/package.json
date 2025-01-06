@@ -1,0 +1,21 @@
+{
+  "name": "@zoos/react-query",
+  "version": "1.8.2",
+  "repository": {
+    "url": "https://github.com/zoohilldata/zoos.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.62.7"
+  }
+}

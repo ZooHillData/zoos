@@ -1,6 +1,6 @@
 {
   "name": "@zoos/source",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "license": "MIT",
   "scripts": {},
   "private": false,
@@ -8,8 +8,8 @@
   "dependencies": {
     "@faker-js/faker": "^9.3.0",
     "@tanstack/react-form": "^0.40.4",
-    "@tanstack/react-table": "^8.20.6",
-    "@tanstack/react-virtual": "^3.11.2",
+    "@tanstack/react-query": "^5.62.15",
+    "@tanstack/react-router": "^1.95.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remeda": "^2.19.0"
