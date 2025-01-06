@@ -14,9 +14,9 @@ const rowVirtualization = (params: {
     table: {
       className: "grid w-full",
     },
-    trHead: {
+    trHead: () => ({
       className: "flex w-full",
-    },
+    }),
     th: ({ header }) => ({
       style: {
         width: header.getSize(),

@@ -1,4 +1,10 @@
-import type { Header, HeaderContext, Row, Cell } from "@tanstack/react-table";
+import type {
+  HeaderGroup,
+  Header,
+  HeaderContext,
+  Row,
+  Cell,
+} from "@tanstack/react-table";
 import { type VirtualItem } from "@tanstack/react-virtual";
 
 type ComponentProps = Partial<{
@@ -9,7 +15,9 @@ type ComponentProps = Partial<{
   }>;
   table: Partial<{ className: string; style: React.CSSProperties }>;
   thead: Partial<{ className: string; style: React.CSSProperties }>;
-  trHead: Partial<{ className: string; style: React.CSSProperties }>;
+  trHead: <TData>(params: {
+    headerGroup: HeaderGroup<TData>;
+  }) => Partial<{ className: string; style: React.CSSProperties }>;
   th: <TData>(params: {
     header: Header<TData, unknown>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;

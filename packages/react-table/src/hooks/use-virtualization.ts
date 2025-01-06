@@ -14,12 +14,12 @@ type TableVirtualizerOptionsColumn = Omit<
 
 const useVirtualization = <TData>({
   table,
-  rowOptions,
-  columnOptions,
+  row: rowOptions,
+  column: columnOptions,
 }: {
   table: Table<TData>;
-  rowOptions: TableVirtualizerOptionsRow;
-  columnOptions: TableVirtualizerOptionsColumn;
+  row: TableVirtualizerOptionsRow;
+  column: TableVirtualizerOptionsColumn;
 }) => {
   const rows = table.getRowModel().rows;
   const visibleColumns = table.getVisibleLeafColumns();

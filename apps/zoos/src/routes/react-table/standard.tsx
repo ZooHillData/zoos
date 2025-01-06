@@ -69,11 +69,11 @@ function RouteComponent() {
   const { scrollContainerRef, rowVirtualizer, virtualRows } = useVirtualization(
     {
       table,
-      rowOptions: {
+      row: {
         estimateSize: () => 20,
         overscan: 5,
       },
-      columnOptions: {
+      column: {
         overscan: 3,
       },
     },
@@ -154,7 +154,10 @@ function RouteComponent() {
           <thead {...componentProps.thead}>
             {table.getHeaderGroups().map((headerGroup) => (
               // ~ Header row
-              <tr key={headerGroup.id} {...componentProps.trHead}>
+              <tr
+                key={headerGroup.id}
+                {...componentProps.trHead?.({ headerGroup })}
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     // ~ Header cell

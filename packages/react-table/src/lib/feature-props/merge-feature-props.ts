@@ -9,7 +9,8 @@ const mergeFeatureProps = (
   ),
   table: mergeStyleProps(featureProps.map((props) => props.table || {})),
   thead: mergeStyleProps(featureProps.map((props) => props.thead || {})),
-  trHead: mergeStyleProps(featureProps.map((props) => props.trHead || {})),
+  trHead: (params) =>
+    mergeStyleProps(featureProps.map((props) => props.trHead?.(params) || {})),
   th: (params) =>
     mergeStyleProps(featureProps.map((props) => props.th?.(params) || {})),
   tbody: mergeStyleProps(featureProps.map((props) => props.tbody || {})),
