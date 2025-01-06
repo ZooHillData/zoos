@@ -9,7 +9,7 @@
 
 ### Bug Fixes
 
-* **all:** manually update changelog to trigger release ([d9338d6](https://github.com/zoohilldata/zoos/commit/d9338d6c340c988d8b0a2840382adc5cdc5431f6))
+- **all:** manually update changelog to trigger release ([d9338d6](https://github.com/zoohilldata/zoos/commit/d9338d6c340c988d8b0a2840382adc5cdc5431f6))
 
 ## [1.8.0](https://github.com/zoohilldata/zoos/compare/v1.7.0...v1.8.0) (2025-01-05)
 
@@ -21,31 +21,31 @@
 
 ### Features
 
-- **ui-form:** layout options ([a0c9549](https://github.com/zoohilldata/zoos/commit/a0c954914277cf2e8c44e4081b4a1c6e1195e3d0))
+- **react-form:** layout options ([a0c9549](https://github.com/zoohilldata/zoos/commit/a0c954914277cf2e8c44e4081b4a1c6e1195e3d0))
 
 ## [1.6.0](https://github.com/zoohilldata/zoos/compare/v1.5.0...v1.6.0) (2024-12-26)
 
 ### Features
 
-- **ui-form:** fieldProps passed into <form.Field />, curried type inference in ([7d2f467](https://github.com/zoohilldata/zoos/commit/7d2f467fd201a693d7c7cd3ff8501aea6e56be50))
+- **react-form:** fieldProps passed into <form.Field />, curried type inference in ([7d2f467](https://github.com/zoohilldata/zoos/commit/7d2f467fd201a693d7c7cd3ff8501aea6e56be50))
 
 ## [1.5.0](https://github.com/zoohilldata/zoos/compare/v1.4.0...v1.5.0) (2024-12-26)
 
 ### Features
 
-- **ui-form:** pass FormOptions into FormConfig (onSuccess handler) ([b5f4149](https://github.com/zoohilldata/zoos/commit/b5f4149c401055bc2238502fb88b670524a75f9f))
+- **react-form:** pass FormOptions into FormConfig (onSuccess handler) ([b5f4149](https://github.com/zoohilldata/zoos/commit/b5f4149c401055bc2238502fb88b670524a75f9f))
 
 ## [1.4.0](https://github.com/zoohilldata/zoos/compare/v1.3.0...v1.4.0) (2024-12-26)
 
 ### Features
 
-- **ui-form:** enhancements unlock full-feature push ([8eef9f2](https://github.com/zoohilldata/zoos/commit/8eef9f26bcbbf831bd844a2b93487df2dbc9c022))
+- **react-form:** enhancements unlock full-feature push ([8eef9f2](https://github.com/zoohilldata/zoos/commit/8eef9f26bcbbf831bd844a2b93487df2dbc9c022))
 
 ## [1.3.0](https://github.com/zoohilldata/zoos/compare/v1.2.0...v1.3.0) (2024-12-25)
 
 ### Features
 
-- fix checkbox-with-label id's, checkbox-group and update ui-form package.json for publishing ([238880e](https://github.com/zoohilldata/zoos/commit/238880ead0af75fa62c50803276fd83ce4b8398d))
+- fix checkbox-with-label id's, checkbox-group and update react-form package.json for publishing ([238880e](https://github.com/zoohilldata/zoos/commit/238880ead0af75fa62c50803276fd83ce4b8398d))
 
 ## [1.2.0](https://github.com/zoohilldata/zoos/compare/v1.1.0...v1.2.0) (2024-12-25)
 
@@ -57,8 +57,8 @@
 
 ### Features
 
-- start packages/ui-form + start developer docs ([#6](https://github.com/zoohilldata/zoos/issues/6)) ([7ef3e1f](https://github.com/zoohilldata/zoos/commit/7ef3e1f461221b6be6c3f21ec176be9242a26d1b))
-- update ui-form package.json for publishing ([#7](https://github.com/zoohilldata/zoos/issues/7)) ([42c7fd4](https://github.com/zoohilldata/zoos/commit/42c7fd4d1080dc7fd639552406d07f11028cfbe7))
+- start packages/react-form + start developer docs ([#6](https://github.com/zoohilldata/zoos/issues/6)) ([7ef3e1f](https://github.com/zoohilldata/zoos/commit/7ef3e1f461221b6be6c3f21ec176be9242a26d1b))
+- update react-form package.json for publishing ([#7](https://github.com/zoohilldata/zoos/issues/7)) ([42c7fd4](https://github.com/zoohilldata/zoos/commit/42c7fd4d1080dc7fd639552406d07f11028cfbe7))
 
 ## [1.0.1](https://github.com/zoohilldata/zoos/compare/v1.0.0...v1.0.1) (2024-12-24)
 

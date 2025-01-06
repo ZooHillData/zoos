@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form/with-zoos-form")({
+export const Route = createFileRoute("/react-form/with-zoos-form")({
   component: RouteComponent,
 });
 
 import { Label } from "@zoos/ui-shad";
-import { Form, getFormConfig } from "@zoos/ui-form";
+import { Form, getFormConfig } from "@zoos/react-form";
 
 /*
 This could be your react-query

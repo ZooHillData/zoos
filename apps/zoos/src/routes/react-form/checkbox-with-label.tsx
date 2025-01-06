@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form/checkbox-with-label")({
+export const Route = createFileRoute("/react-form/checkbox-with-label")({
   component: RouteComponent,
 });
 
 import React from "react";
-import { CheckboxWithLabel } from "@zoos/ui-form";
+import { CheckboxWithLabel } from "@zoos/react-form";
 
 function RouteComponent() {
   const [value, setValue] = React.useState<boolean>(false);

@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form")({
+export const Route = createFileRoute("/react-form")({
   component: RouteComponent,
 });
 

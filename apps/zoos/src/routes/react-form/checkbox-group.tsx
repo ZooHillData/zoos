@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form/checkbox-group")({
+export const Route = createFileRoute("/react-form/checkbox-group")({
   component: RouteComponent,
 });
 
 import React from "react";
-import { CheckboxGroup, getOptions } from "@zoos/ui-form";
+import { CheckboxGroup, getOptions } from "@zoos/react-form";
 
 const options = getOptions({
   values: ["3", "2", "1", "4"],

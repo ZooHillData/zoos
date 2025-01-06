@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form/select")({
+export const Route = createFileRoute("/react-form/select")({
   component: RouteComponent,
 });
 
 import React from "react";
-import { Select, getOptions } from "@zoos/ui-form";
+import { Select, getOptions } from "@zoos/react-form";
 
 const options = getOptions({
   values: ["1", "2", "3", "4"],

@@ -1,4 +1,4 @@
-# @zoos/ui-form
+# @zoos/react-form
 
 A component library for creating forms in React.
 

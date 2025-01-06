@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/ui-form/standard-react-form")({
+export const Route = createFileRoute("/react-form/standard-react-form")({
   component: RouteComponent,
 });
 
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/ui-form/standard-react-form")({
 
 import { unique } from "remeda";
 import { formOptions, useForm } from "@tanstack/react-form";
-import { CheckboxWithLabel, Select, getOptions } from "@zoos/ui-form";
+import { CheckboxWithLabel, Select, getOptions } from "@zoos/react-form";
 import { Button, Label } from "@zoos/ui-shad";
 
 const getFormData = () => {

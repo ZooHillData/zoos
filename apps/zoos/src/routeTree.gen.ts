@@ -12,34 +12,28 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as UiShadRouteImport } from './routes/ui-shad/route'
-import { Route as UiFormRouteImport } from './routes/ui-form/route'
 import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as ReactQueryRouteImport } from './routes/react-query/route'
+import { Route as ReactFormRouteImport } from './routes/react-form/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as UiShadSelectImport } from './routes/ui-shad/select'
 import { Route as UiShadContextMenuImport } from './routes/ui-shad/context-menu'
 import { Route as UiShadCheckboxImport } from './routes/ui-shad/checkbox'
 import { Route as UiShadButtonImport } from './routes/ui-shad/button'
-import { Route as UiFormWithZoosFormImport } from './routes/ui-form/with-zoos-form'
-import { Route as UiFormStandardReactFormImport } from './routes/ui-form/standard-react-form'
-import { Route as UiFormSelectImport } from './routes/ui-form/select'
-import { Route as UiFormCheckboxWithLabelImport } from './routes/ui-form/checkbox-with-label'
-import { Route as UiFormCheckboxGroupImport } from './routes/ui-form/checkbox-group'
 import { Route as ReactTableStandardImport } from './routes/react-table/standard'
 import { Route as ReactQueryUseQueryImport } from './routes/react-query/use-query'
 import { Route as ReactQueryUseMutationImport } from './routes/react-query/use-mutation'
+import { Route as ReactFormWithZoosFormImport } from './routes/react-form/with-zoos-form'
+import { Route as ReactFormStandardReactFormImport } from './routes/react-form/standard-react-form'
+import { Route as ReactFormSelectImport } from './routes/react-form/select'
+import { Route as ReactFormCheckboxWithLabelImport } from './routes/react-form/checkbox-with-label'
+import { Route as ReactFormCheckboxGroupImport } from './routes/react-form/checkbox-group'
 
 // Create/Update Routes
 
 const UiShadRouteRoute = UiShadRouteImport.update({
   id: '/ui-shad',
   path: '/ui-shad',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const UiFormRouteRoute = UiFormRouteImport.update({
-  id: '/ui-form',
-  path: '/ui-form',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -52,6 +46,12 @@ const ReactTableRouteRoute = ReactTableRouteImport.update({
 const ReactQueryRouteRoute = ReactQueryRouteImport.update({
   id: '/react-query',
   path: '/react-query',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ReactFormRouteRoute = ReactFormRouteImport.update({
+  id: '/react-form',
+  path: '/react-form',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -85,36 +85,6 @@ const UiShadButtonRoute = UiShadButtonImport.update({
   getParentRoute: () => UiShadRouteRoute,
 } as any)
 
-const UiFormWithZoosFormRoute = UiFormWithZoosFormImport.update({
-  id: '/with-zoos-form',
-  path: '/with-zoos-form',
-  getParentRoute: () => UiFormRouteRoute,
-} as any)
-
-const UiFormStandardReactFormRoute = UiFormStandardReactFormImport.update({
-  id: '/standard-react-form',
-  path: '/standard-react-form',
-  getParentRoute: () => UiFormRouteRoute,
-} as any)
-
-const UiFormSelectRoute = UiFormSelectImport.update({
-  id: '/select',
-  path: '/select',
-  getParentRoute: () => UiFormRouteRoute,
-} as any)
-
-const UiFormCheckboxWithLabelRoute = UiFormCheckboxWithLabelImport.update({
-  id: '/checkbox-with-label',
-  path: '/checkbox-with-label',
-  getParentRoute: () => UiFormRouteRoute,
-} as any)
-
-const UiFormCheckboxGroupRoute = UiFormCheckboxGroupImport.update({
-  id: '/checkbox-group',
-  path: '/checkbox-group',
-  getParentRoute: () => UiFormRouteRoute,
-} as any)
-
 const ReactTableStandardRoute = ReactTableStandardImport.update({
   id: '/standard',
   path: '/standard',
@@ -133,6 +103,40 @@ const ReactQueryUseMutationRoute = ReactQueryUseMutationImport.update({
   getParentRoute: () => ReactQueryRouteRoute,
 } as any)
 
+const ReactFormWithZoosFormRoute = ReactFormWithZoosFormImport.update({
+  id: '/with-zoos-form',
+  path: '/with-zoos-form',
+  getParentRoute: () => ReactFormRouteRoute,
+} as any)
+
+const ReactFormStandardReactFormRoute = ReactFormStandardReactFormImport.update(
+  {
+    id: '/standard-react-form',
+    path: '/standard-react-form',
+    getParentRoute: () => ReactFormRouteRoute,
+  } as any,
+)
+
+const ReactFormSelectRoute = ReactFormSelectImport.update({
+  id: '/select',
+  path: '/select',
+  getParentRoute: () => ReactFormRouteRoute,
+} as any)
+
+const ReactFormCheckboxWithLabelRoute = ReactFormCheckboxWithLabelImport.update(
+  {
+    id: '/checkbox-with-label',
+    path: '/checkbox-with-label',
+    getParentRoute: () => ReactFormRouteRoute,
+  } as any,
+)
+
+const ReactFormCheckboxGroupRoute = ReactFormCheckboxGroupImport.update({
+  id: '/checkbox-group',
+  path: '/checkbox-group',
+  getParentRoute: () => ReactFormRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -142,6 +146,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/react-form': {
+      id: '/react-form'
+      path: '/react-form'
+      fullPath: '/react-form'
+      preLoaderRoute: typeof ReactFormRouteImport
       parentRoute: typeof rootRoute
     }
     '/react-query': {
@@ -158,19 +169,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactTableRouteImport
       parentRoute: typeof rootRoute
     }
-    '/ui-form': {
-      id: '/ui-form'
-      path: '/ui-form'
-      fullPath: '/ui-form'
-      preLoaderRoute: typeof UiFormRouteImport
-      parentRoute: typeof rootRoute
-    }
     '/ui-shad': {
       id: '/ui-shad'
       path: '/ui-shad'
       fullPath: '/ui-shad'
       preLoaderRoute: typeof UiShadRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/react-form/checkbox-group': {
+      id: '/react-form/checkbox-group'
+      path: '/checkbox-group'
+      fullPath: '/react-form/checkbox-group'
+      preLoaderRoute: typeof ReactFormCheckboxGroupImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/checkbox-with-label': {
+      id: '/react-form/checkbox-with-label'
+      path: '/checkbox-with-label'
+      fullPath: '/react-form/checkbox-with-label'
+      preLoaderRoute: typeof ReactFormCheckboxWithLabelImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/select': {
+      id: '/react-form/select'
+      path: '/select'
+      fullPath: '/react-form/select'
+      preLoaderRoute: typeof ReactFormSelectImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/standard-react-form': {
+      id: '/react-form/standard-react-form'
+      path: '/standard-react-form'
+      fullPath: '/react-form/standard-react-form'
+      preLoaderRoute: typeof ReactFormStandardReactFormImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/with-zoos-form': {
+      id: '/react-form/with-zoos-form'
+      path: '/with-zoos-form'
+      fullPath: '/react-form/with-zoos-form'
+      preLoaderRoute: typeof ReactFormWithZoosFormImport
+      parentRoute: typeof ReactFormRouteImport
     }
     '/react-query/use-mutation': {
       id: '/react-query/use-mutation'
@@ -192,41 +231,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/react-table/standard'
       preLoaderRoute: typeof ReactTableStandardImport
       parentRoute: typeof ReactTableRouteImport
-    }
-    '/ui-form/checkbox-group': {
-      id: '/ui-form/checkbox-group'
-      path: '/checkbox-group'
-      fullPath: '/ui-form/checkbox-group'
-      preLoaderRoute: typeof UiFormCheckboxGroupImport
-      parentRoute: typeof UiFormRouteImport
-    }
-    '/ui-form/checkbox-with-label': {
-      id: '/ui-form/checkbox-with-label'
-      path: '/checkbox-with-label'
-      fullPath: '/ui-form/checkbox-with-label'
-      preLoaderRoute: typeof UiFormCheckboxWithLabelImport
-      parentRoute: typeof UiFormRouteImport
-    }
-    '/ui-form/select': {
-      id: '/ui-form/select'
-      path: '/select'
-      fullPath: '/ui-form/select'
-      preLoaderRoute: typeof UiFormSelectImport
-      parentRoute: typeof UiFormRouteImport
-    }
-    '/ui-form/standard-react-form': {
-      id: '/ui-form/standard-react-form'
-      path: '/standard-react-form'
-      fullPath: '/ui-form/standard-react-form'
-      preLoaderRoute: typeof UiFormStandardReactFormImport
-      parentRoute: typeof UiFormRouteImport
-    }
-    '/ui-form/with-zoos-form': {
-      id: '/ui-form/with-zoos-form'
-      path: '/with-zoos-form'
-      fullPath: '/ui-form/with-zoos-form'
-      preLoaderRoute: typeof UiFormWithZoosFormImport
-      parentRoute: typeof UiFormRouteImport
     }
     '/ui-shad/button': {
       id: '/ui-shad/button'
@@ -261,6 +265,26 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface ReactFormRouteRouteChildren {
+  ReactFormCheckboxGroupRoute: typeof ReactFormCheckboxGroupRoute
+  ReactFormCheckboxWithLabelRoute: typeof ReactFormCheckboxWithLabelRoute
+  ReactFormSelectRoute: typeof ReactFormSelectRoute
+  ReactFormStandardReactFormRoute: typeof ReactFormStandardReactFormRoute
+  ReactFormWithZoosFormRoute: typeof ReactFormWithZoosFormRoute
+}
+
+const ReactFormRouteRouteChildren: ReactFormRouteRouteChildren = {
+  ReactFormCheckboxGroupRoute: ReactFormCheckboxGroupRoute,
+  ReactFormCheckboxWithLabelRoute: ReactFormCheckboxWithLabelRoute,
+  ReactFormSelectRoute: ReactFormSelectRoute,
+  ReactFormStandardReactFormRoute: ReactFormStandardReactFormRoute,
+  ReactFormWithZoosFormRoute: ReactFormWithZoosFormRoute,
+}
+
+const ReactFormRouteRouteWithChildren = ReactFormRouteRoute._addFileChildren(
+  ReactFormRouteRouteChildren,
+)
+
 interface ReactQueryRouteRouteChildren {
   ReactQueryUseMutationRoute: typeof ReactQueryUseMutationRoute
   ReactQueryUseQueryRoute: typeof ReactQueryUseQueryRoute
@@ -287,26 +311,6 @@ const ReactTableRouteRouteWithChildren = ReactTableRouteRoute._addFileChildren(
   ReactTableRouteRouteChildren,
 )
 
-interface UiFormRouteRouteChildren {
-  UiFormCheckboxGroupRoute: typeof UiFormCheckboxGroupRoute
-  UiFormCheckboxWithLabelRoute: typeof UiFormCheckboxWithLabelRoute
-  UiFormSelectRoute: typeof UiFormSelectRoute
-  UiFormStandardReactFormRoute: typeof UiFormStandardReactFormRoute
-  UiFormWithZoosFormRoute: typeof UiFormWithZoosFormRoute
-}
-
-const UiFormRouteRouteChildren: UiFormRouteRouteChildren = {
-  UiFormCheckboxGroupRoute: UiFormCheckboxGroupRoute,
-  UiFormCheckboxWithLabelRoute: UiFormCheckboxWithLabelRoute,
-  UiFormSelectRoute: UiFormSelectRoute,
-  UiFormStandardReactFormRoute: UiFormStandardReactFormRoute,
-  UiFormWithZoosFormRoute: UiFormWithZoosFormRoute,
-}
-
-const UiFormRouteRouteWithChildren = UiFormRouteRoute._addFileChildren(
-  UiFormRouteRouteChildren,
-)
-
 interface UiShadRouteRouteChildren {
   UiShadButtonRoute: typeof UiShadButtonRoute
   UiShadCheckboxRoute: typeof UiShadCheckboxRoute
@@ -327,18 +331,18 @@ const UiShadRouteRouteWithChildren = UiShadRouteRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
+  '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/select': typeof ReactFormSelectRoute
+  '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
+  '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
-  '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
-  '/ui-form/select': typeof UiFormSelectRoute
-  '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
-  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/context-menu': typeof UiShadContextMenuRoute
@@ -347,18 +351,18 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
+  '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/select': typeof ReactFormSelectRoute
+  '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
+  '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
-  '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
-  '/ui-form/select': typeof UiFormSelectRoute
-  '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
-  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/context-menu': typeof UiShadContextMenuRoute
@@ -368,18 +372,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
-  '/ui-form': typeof UiFormRouteRouteWithChildren
   '/ui-shad': typeof UiShadRouteRouteWithChildren
+  '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
+  '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/select': typeof ReactFormSelectRoute
+  '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
+  '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
   '/react-table/standard': typeof ReactTableStandardRoute
-  '/ui-form/checkbox-group': typeof UiFormCheckboxGroupRoute
-  '/ui-form/checkbox-with-label': typeof UiFormCheckboxWithLabelRoute
-  '/ui-form/select': typeof UiFormSelectRoute
-  '/ui-form/standard-react-form': typeof UiFormStandardReactFormRoute
-  '/ui-form/with-zoos-form': typeof UiFormWithZoosFormRoute
   '/ui-shad/button': typeof UiShadButtonRoute
   '/ui-shad/checkbox': typeof UiShadCheckboxRoute
   '/ui-shad/context-menu': typeof UiShadContextMenuRoute
@@ -390,18 +394,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-form'
     | '/ui-shad'
+    | '/react-form/checkbox-group'
+    | '/react-form/checkbox-with-label'
+    | '/react-form/select'
+    | '/react-form/standard-react-form'
+    | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-form/checkbox-group'
-    | '/ui-form/checkbox-with-label'
-    | '/ui-form/select'
-    | '/ui-form/standard-react-form'
-    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/context-menu'
@@ -409,18 +413,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-form'
     | '/ui-shad'
+    | '/react-form/checkbox-group'
+    | '/react-form/checkbox-with-label'
+    | '/react-form/select'
+    | '/react-form/standard-react-form'
+    | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-form/checkbox-group'
-    | '/ui-form/checkbox-with-label'
-    | '/ui-form/select'
-    | '/ui-form/standard-react-form'
-    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/context-menu'
@@ -428,18 +432,18 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/react-form'
     | '/react-query'
     | '/react-table'
-    | '/ui-form'
     | '/ui-shad'
+    | '/react-form/checkbox-group'
+    | '/react-form/checkbox-with-label'
+    | '/react-form/select'
+    | '/react-form/standard-react-form'
+    | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
     | '/react-table/standard'
-    | '/ui-form/checkbox-group'
-    | '/ui-form/checkbox-with-label'
-    | '/ui-form/select'
-    | '/ui-form/standard-react-form'
-    | '/ui-form/with-zoos-form'
     | '/ui-shad/button'
     | '/ui-shad/checkbox'
     | '/ui-shad/context-menu'
@@ -449,17 +453,17 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ReactFormRouteRoute: typeof ReactFormRouteRouteWithChildren
   ReactQueryRouteRoute: typeof ReactQueryRouteRouteWithChildren
   ReactTableRouteRoute: typeof ReactTableRouteRouteWithChildren
-  UiFormRouteRoute: typeof UiFormRouteRouteWithChildren
   UiShadRouteRoute: typeof UiShadRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ReactFormRouteRoute: ReactFormRouteRouteWithChildren,
   ReactQueryRouteRoute: ReactQueryRouteRouteWithChildren,
   ReactTableRouteRoute: ReactTableRouteRouteWithChildren,
-  UiFormRouteRoute: UiFormRouteRouteWithChildren,
   UiShadRouteRoute: UiShadRouteRouteWithChildren,
 }
 
@@ -474,14 +478,24 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/react-form",
         "/react-query",
         "/react-table",
-        "/ui-form",
         "/ui-shad"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/react-form": {
+      "filePath": "react-form/route.tsx",
+      "children": [
+        "/react-form/checkbox-group",
+        "/react-form/checkbox-with-label",
+        "/react-form/select",
+        "/react-form/standard-react-form",
+        "/react-form/with-zoos-form"
+      ]
     },
     "/react-query": {
       "filePath": "react-query/route.tsx",
@@ -496,16 +510,6 @@ export const routeTree = rootRoute
         "/react-table/standard"
       ]
     },
-    "/ui-form": {
-      "filePath": "ui-form/route.tsx",
-      "children": [
-        "/ui-form/checkbox-group",
-        "/ui-form/checkbox-with-label",
-        "/ui-form/select",
-        "/ui-form/standard-react-form",
-        "/ui-form/with-zoos-form"
-      ]
-    },
     "/ui-shad": {
       "filePath": "ui-shad/route.tsx",
       "children": [
@@ -514,6 +518,26 @@ export const routeTree = rootRoute
         "/ui-shad/context-menu",
         "/ui-shad/select"
       ]
+    },
+    "/react-form/checkbox-group": {
+      "filePath": "react-form/checkbox-group.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/checkbox-with-label": {
+      "filePath": "react-form/checkbox-with-label.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/select": {
+      "filePath": "react-form/select.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/standard-react-form": {
+      "filePath": "react-form/standard-react-form.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/with-zoos-form": {
+      "filePath": "react-form/with-zoos-form.tsx",
+      "parent": "/react-form"
     },
     "/react-query/use-mutation": {
       "filePath": "react-query/use-mutation.tsx",
@@ -526,26 +550,6 @@ export const routeTree = rootRoute
     "/react-table/standard": {
       "filePath": "react-table/standard.tsx",
       "parent": "/react-table"
-    },
-    "/ui-form/checkbox-group": {
-      "filePath": "ui-form/checkbox-group.tsx",
-      "parent": "/ui-form"
-    },
-    "/ui-form/checkbox-with-label": {
-      "filePath": "ui-form/checkbox-with-label.tsx",
-      "parent": "/ui-form"
-    },
-    "/ui-form/select": {
-      "filePath": "ui-form/select.tsx",
-      "parent": "/ui-form"
-    },
-    "/ui-form/standard-react-form": {
-      "filePath": "ui-form/standard-react-form.tsx",
-      "parent": "/ui-form"
-    },
-    "/ui-form/with-zoos-form": {
-      "filePath": "ui-form/with-zoos-form.tsx",
-      "parent": "/ui-form"
     },
     "/ui-shad/button": {
       "filePath": "ui-shad/button.tsx",
