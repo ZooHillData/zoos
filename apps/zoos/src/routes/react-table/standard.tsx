@@ -41,6 +41,7 @@ import {
   featureProps,
   mergeFeatureProps,
   getColumns,
+  getPinningAttributes,
 } from "@zoos/react-table";
 
 function RouteComponent() {
@@ -91,19 +92,45 @@ function RouteComponent() {
         featureProps.resizeColumn({
           isResizingColumn,
           custom: {
-            resizeColHandle: ({ headerContext }) => ({
+            resizeColHandle: () => ({
               className: "bg-primary",
             }),
           },
         }),
         featureProps.borders(),
+        featureProps.columnPinning({
+          custom: {
+            // Custom styles for the border between pinned and non-pinned columns
+            // `<td />` and `<th />` set separately
+            th: ({ header: { column } }) => {
+              const { isLastLeft, isFirstRight } = getPinningAttributes(column);
+              return {
+                className: isLastLeft
+                  ? "border-r-4"
+                  : isFirstRight
+                    ? "border-l-4"
+                    : "",
+              };
+            },
+            td: ({ cell: { column } }) => {
+              const { isLastLeft, isFirstRight } = getPinningAttributes(column);
+              return {
+                className: isLastLeft
+                  ? "border-r-4"
+                  : isFirstRight
+                    ? "border-l-4"
+                    : "",
+              };
+            },
+          },
+        }),
         // ~ User-defined styles
         // Small text
         { container: { className: "text-sm" } },
         // Header cell and data Padding
         {
-          th: ({ header }) => ({ className: "px-1 py-0.5" }),
-          td: ({ cell, virtualRow }) => ({ className: "px-1 py-0.5" }),
+          th: () => ({ className: "px-1 py-0.5" }),
+          td: () => ({ className: "px-1 py-0.5" }),
         },
         // Row striping
         {
@@ -111,6 +138,7 @@ function RouteComponent() {
             className:
               virtualRow.index % 2 === 0 ? "bg-accent" : "bg-background",
           }),
+          th: () => ({ className: "bg-background" }),
         },
       ]),
     [isResizingColumn, rowVirtualizer, scrollContainerRef],

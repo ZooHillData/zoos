@@ -83,7 +83,7 @@ CSS Variables for Tailwind Config
       --warning-accent: color-mix(in srgb, white 20%, var(--warning) 80%);
       --success-muted: color-mix(in srgb, black 40%, var(--success) 60%);
       --success-accent: color-mix(in srgb, white 20%, var(--success) 80%);
-      --accent: color-mix(in srgb, white 5%, var(--background) 80%);
+      --accent: color-mix(in srgb, white 5%, var(--background) 95%);
       --accent-foreground: color-mix(in srgb, white 5%, var(--foreground) 80%);
       --muted: color-mix(in srgb, white 25%, var(--background) 75%);
       --muted-foreground: color-mix(in srgb, black 30%, var(--foreground) 70%);
