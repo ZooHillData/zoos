@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/zoohilldata/zoos/compare/v1.9.0...v1.9.1) (2025-01-06)
+
+### Bug Fixes
+
+* **all:** package-lock dependency issue ([0749788](https://github.com/zoohilldata/zoos/commit/0749788306f98aa57d84fbdfcd29688690d33dce))
+* **react-form:** ui-form => react-form ([adc4bdb](https://github.com/zoohilldata/zoos/commit/adc4bdba9e76189c3c144d36e1ffc21b2e4d610c))
+
 ## [1.9.0](https://github.com/zoohilldata/zoos/compare/v1.8.2...v1.9.0) (2025-01-06)
 
 ### Features
