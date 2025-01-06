@@ -1,3 +1,10 @@
+## [1.9.0](https://github.com/zoohilldata/zoos/compare/v1.8.2...v1.9.0) (2025-01-06)
+
+### Features
+
+* **all:** upgrade new package-lock ([1482c58](https://github.com/zoohilldata/zoos/commit/1482c587e11c990cc274a4be340c25194648b944))
+* **react-query:** initial release ([b5ed1cd](https://github.com/zoohilldata/zoos/commit/b5ed1cd15c8a6dd5274cda92e425c9fcd026322a))
+
 ## [1.8.1](https://github.com/zoohilldata/zoos/compare/v1.8.0...v1.8.1) (2025-01-06)
 
 ### Bug Fixes
