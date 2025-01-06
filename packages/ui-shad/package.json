@@ -2,7 +2,7 @@
   "name": "@zoos/ui-shad",
   "version": "1.7.0",
   "repository": {
-    "url": "https://github.com/zoohilldata/zoos"
+    "url": "git+https://github.com/zoohilldata/zoos.git"
   },
   "publishConfig": {
     "access": "public"
