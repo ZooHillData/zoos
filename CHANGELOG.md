@@ -1,3 +1,9 @@
+## [1.8.1](https://github.com/zoohilldata/zoos/compare/v1.8.0...v1.8.1) (2025-01-06)
+
+### Bug Fixes
+
+* **all:** manually update changelog to trigger release ([d9338d6](https://github.com/zoohilldata/zoos/commit/d9338d6c340c988d8b0a2840382adc5cdc5431f6))
+
 ## [1.8.0](https://github.com/zoohilldata/zoos/compare/v1.7.0...v1.8.0) (2025-01-05)
 
 ### Features
