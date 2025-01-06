@@ -1,3 +1,9 @@
+## [1.9.2](https://github.com/zoohilldata/zoos/compare/v1.9.1...v1.9.2) (2025-01-06)
+
+### Bug Fixes
+
+* **shadcn:** rename package ([c353561](https://github.com/zoohilldata/zoos/commit/c3535614d5cbe15d2d265b57d131e2c7131f257a))
+
 ## [1.9.1](https://github.com/zoohilldata/zoos/compare/v1.9.0...v1.9.1) (2025-01-06)
 
 ### Bug Fixes
