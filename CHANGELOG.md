@@ -1,3 +1,9 @@
+## [1.10.0](https://github.com/zoohilldata/zoos/compare/v1.9.3...v1.10.0) (2025-01-08)
+
+### Features
+
+* **react-table:** column filters ([dfae4a2](https://github.com/zoohilldata/zoos/commit/dfae4a26f39c30175c7ee0792a0d855d9f1ed076))
+
 ## [1.9.3](https://github.com/zoohilldata/zoos/compare/v1.9.2...v1.9.3) (2025-01-06)
 
 ### Bug Fixes
