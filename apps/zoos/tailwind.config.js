@@ -60,6 +60,7 @@ module.exports = {
         },
       },
       borderColor: { DEFAULT: "var(--border)" },
+      borderRadius: { DEFAULT: "var(--border-radius)" },
       keyframes: {
         "accordion-down": {
           from: {

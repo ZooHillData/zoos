@@ -10,6 +10,10 @@ CSS Variables for Tailwind Config
 */
 @layer base {
   :root {
+    /*
+    ~ Colors    
+    */
+
     --foreground: hsl(0, 0%, 10%);
     --background: hsl(200, 100%, 99%);
     --border: hsl(0, 0%, 89.8%);
@@ -43,9 +47,18 @@ CSS Variables for Tailwind Config
     --accent-foreground: var(--foreground);
     --muted: color-mix(in srgb, black 10%, var(--background) 90%);
     --muted-foreground: color-mix(in srgb, white 20%, var(--foreground) 80%);
+
+    /*
+    ~ Other miscellaneous
+    */
+
+    --border-radius: 0.25rem;
   }
   @media (prefers-color-scheme: dark) {
     :root {
+      /*
+      ~ Colors (Dark)
+      */
       --foreground: hsl(220, 13%, 75%);
       --background: hsl(221, 59%, 11%);
       --border: hsl(217, 56%, 24%);

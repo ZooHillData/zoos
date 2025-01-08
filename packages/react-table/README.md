@@ -171,14 +171,59 @@ Infer columns from data passed to reduce the boilerplate for a generic table.
 
 - No type inference, return columnHelper.accessor() for each column ID
 
-#### Coming Shortly
+### Column Filters
 
-- type inference automatically sets up correct filter, sort, edit, etc.
-- simple override experience to deep merge / override
+For filtering, a column requires 2 things:
 
-### Backlog Features
+1. A [`filterFn`](https://tanstack.com/table/latest/docs/guide/column-filtering#filterfns) (standard for Tanstack table)
+2. A `filter` component, similar to `cell` or `header` (a new field added to [`columnDef.meta`](https://tanstack.com/table/latest/docs/api/core/column-def#meta))
 
-- Column reorder, double click makes it big enough to fit the widest
-- Row reorder and resize, default height, double click makes it big enough
-- Column / Row selection
-- Saving views with permissions
+The filterFn and filter components are accessed through the `filters` object. They are organized by column type (e.g. string) and then filter type (e.g. includes, inArray, etc.).
+
+```ts
+import { type ColumnDef } from "@tanstack/react-table";
+
+import { filters } from "@zoos/react-table";
+
+const data: DataRow[] = [{ ... }];
+const columnHelper = createColumnHelper<DataRow>();
+const columns: ColumnDef<DataRow> = [
+  columnHelper.accessor("name", {
+    // Filter function
+    filterFn: filters.string.includes.filterFn,
+    meta: {
+      /*
+      Filter component
+      - The filter component is *only* the input hooked up to the table column `setCellValue` / `getCellValue`.
+      - For filter components which require additional props (e.g. `string.inArray`), you must pass in an array of `options`)
+      - You can also pass in custom wrapper / label (e.g. `<div><Label>...</Label><Filter /></div>`)
+      */
+     filter: (headerContext) => (
+            <filters.string.inArray.Filter
+              headerContext={headerContext}
+              inputProps={{
+                // Full control over props passed to input
+                // (other than those required to connect to
+                // `headerContext.column.setFilterValue()`)
+                options: Array.from(
+                  headerContext.column.getFacetedUniqueValues().keys(),
+                ).sort((a, b) => a.localeCompare(b)),
+              }}
+            />
+          ),
+    }
+  })
+]
+```
+
+There are several filters available for each data type including:
+
+- `filters.string.includes` - Filter for string that include the filter value (performs lowercase on both filter and values)
+- `filters.string.inArray` - Filter for rows that include one of the values in the filter array
+
+(coming soon)
+
+- `filters.number.range` - Filter for numbers within a range
+- `filters.date.range` - Filter for dates within a range
+- `filters.stringArray.includesOne` - Filter for rows that include one of the values in the filter array
+- `filters.stringArray.includesAll` - Filter for rows that include all values in the filter array

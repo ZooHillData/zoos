@@ -9,6 +9,9 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuPortal,
 } from "@zoos/shadcn";
 
 const HeaderContextMenu = <TData,>({
@@ -101,10 +104,14 @@ const HeaderContextMenu = <TData,>({
           // ~ Column Filtering
         }
         {header.column.getCanFilter() && (
-          <>
-            <ContextMenuSeparator className="mx-1 border-b" />
-            <ContextMenuItem disabled>Filter by...</ContextMenuItem>
-          </>
+          <ContextMenuSub>
+            <ContextMenuSubTrigger>Filter</ContextMenuSubTrigger>
+            <ContextMenuPortal>
+              <ContextMenuContent>
+                {header.column.columnDef.meta?.filter?.(header)}
+              </ContextMenuContent>
+            </ContextMenuPortal>
+          </ContextMenuSub>
         )}
       </ContextMenuContent>
     </ContextMenu>

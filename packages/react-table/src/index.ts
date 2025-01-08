@@ -6,3 +6,4 @@ export * from "./lib/filter-fns";
 export * from "./lib/column-inference";
 
 export * from "./components/table";
+export * from "./components/filters";

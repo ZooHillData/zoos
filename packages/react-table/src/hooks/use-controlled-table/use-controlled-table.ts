@@ -9,9 +9,10 @@ import {
   getSortedRowModel,
   type TableState,
   getGroupedRowModel,
+  getFacetedUniqueValues,
+  getFacetedMinMaxValues,
 } from "@tanstack/react-table";
 
-import * as defaultFilterFns from "../../lib/filter-fns";
 import { getControlledTableOptions } from "./get-controlled-table-options";
 import { type TableOptionsControlled } from "./types";
 
@@ -30,18 +31,16 @@ const useControlledTable = <TData>({
     // Core row models
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    getFacetedMinMaxValues: getFacetedMinMaxValues(),
     // Column resizing
     columnResizeMode: "onChange",
     // Filtering
     filterFromLeafRows: true,
-    filterFns: {
-      date: filterFns?.date || defaultFilterFns.dateFilterFn,
-      number: filterFns?.number || defaultFilterFns.numRangeFilterFn,
-    },
     // Controlled state
     ...getControlledTableOptions({ state, onStateChange }),
     // Caller options

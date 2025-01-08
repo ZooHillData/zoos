@@ -6,51 +6,109 @@ export const Route = createFileRoute("/react-table/standard")({
 
 import React from "react";
 
-// ~ Manual column definitions
-// Using `getColumns` to infer all columns
-// import { type User } from "../../lib/fake-data";
-// import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
-// const columnHelper = createColumnHelper<User>();
-// const columns: ColumnDef<User>[] = [
-//   columnHelper.group({
-//     header: "Person",
-//     columns: [
-//       columnHelper.accessor("first_name", {}),
-//       columnHelper.accessor("last_name", {}),
-//       columnHelper.accessor("age", {}),
-//     ],
-//   }),
-//   columnHelper.group({
-//     header: "Address",
-//     columns: [
-//       columnHelper.accessor("street", {}),
-//       columnHelper.accessor("city", {}),
-//       columnHelper.accessor("state", {}),
-//       columnHelper.accessor("zip", {}),
-//     ],
-//   }),
-// ];
-
 import { type TableState, flexRender } from "@tanstack/react-table";
 import {
   useControlledTable,
   useVirtualization,
-  HeaderProperId,
+  FormattedId,
   HeaderContextMenu,
   HeaderSortIndicator,
   featureProps,
   mergeFeatureProps,
   getColumns,
   getPinningAttributes,
+  filters,
 } from "@zoos/react-table";
+import {
+  Label,
+  TooltipProvider,
+  TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+} from "@zoos/shadcn";
+
+// ~ Manual column definitions
+// Using `getColumns` to infer all columns
+import { type User } from "../../lib/fake-data";
+import { createColumnHelper } from "@tanstack/react-table";
+const columnHelper = createColumnHelper<User>();
+const columns = [
+  columnHelper.group({
+    header: "Person",
+    columns: [
+      columnHelper.accessor("first_name", {}),
+      columnHelper.accessor("last_name", {}),
+      columnHelper.accessor("age", {}),
+    ],
+  }),
+  columnHelper.group({
+    header: "Address",
+    columns: [
+      columnHelper.accessor("street", {
+        // ~ Custom cell (tooltip for previewing long text)
+        // This does have performance impacts, so recommend
+        // using on a per-column basis instead of setting in `defaultColumn`
+        cell: (cellContext) => (
+          <TooltipProvider>
+            <Tooltip delayDuration={200}>
+              {/* 
+              `className="w-full text-left"` 
+                => makes sure alignment is still left but the tooltip takes up the full cell 
+              */}
+              <TooltipTrigger className="w-full text-left">
+                {String(cellContext.getValue())}
+              </TooltipTrigger>
+              <TooltipContent>{String(cellContext.getValue())}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ),
+      }),
+      columnHelper.accessor("city", {}),
+      columnHelper.accessor("state", {
+        // ~ Custom filter
+        // specify:
+        // - `filterFn` (method)
+        // - `meta.filter` (rendered Component)
+        // - since this is a `inArray` filter, provide `options` prop to the `input`
+        filterFn: filters.string.inArray.filterFn,
+        meta: {
+          filter: (headerContext) => (
+            <filters.string.inArray.Filter
+              headerContext={headerContext}
+              inputProps={{
+                // Full control over props passed to input
+                // (other than those required to connect to
+                // `headerContext.column.setFilterValue()`)
+                options: Array.from(
+                  headerContext.column.getFacetedUniqueValues().keys(),
+                ).sort((a, b) => a.localeCompare(b)),
+              }}
+            />
+          ),
+        },
+      }),
+      columnHelper.accessor("zip", {}),
+    ],
+  }),
+];
+
+const getFullType = <T,>(partial: Partial<T>): T => {
+  return partial as T;
+};
 
 function RouteComponent() {
   // Table state
-  const [state, setState] = React.useState({} as TableState);
+  const [state, setState] = React.useState(
+    getFullType<TableState>({
+      columnVisibility: {
+        first_name: true,
+      },
+    }),
+  );
 
   // Data / inferred columns (no type inference yet)
   const { data } = Route.useRouteContext();
-  const columns = React.useMemo(() => getColumns({ data }), [data]);
+  // const columns = React.useMemo(() => getColumns({ data }), [data]);
 
   // Table with single state / onStateChange
   // plus a couple other goodies (filterFns)
@@ -58,8 +116,24 @@ function RouteComponent() {
     data,
     columns,
     defaultColumn: {
-      // Split column ID into words and capitalize
-      header: HeaderProperId,
+      header: (headerContext) => <FormattedId headerContext={headerContext} />,
+      filterFn: filters.string.includes.filterFn,
+      meta: {
+        filter: (headerContext) => {
+          return (
+            <div className="flex flex-col gap-2">
+              <Label className="pt-1">
+                <FormattedId headerContext={headerContext} /> matches (case
+                insensitive):
+              </Label>
+              <filters.string.includes.Filter
+                headerContext={headerContext}
+                inputProps={{ placeholder: "Filter value" }}
+              />
+            </div>
+          );
+        },
+      },
     },
     state,
     onStateChange: (state) => setState(state),
@@ -70,8 +144,8 @@ function RouteComponent() {
     {
       table,
       row: {
-        estimateSize: () => 20,
-        overscan: 5,
+        estimateSize: () => 24,
+        overscan: 10,
       },
       column: {
         overscan: 3,
@@ -106,7 +180,7 @@ function RouteComponent() {
               const { isLastLeft, isFirstRight } = getPinningAttributes(column);
               return {
                 className: isLastLeft
-                  ? "border-r-4"
+                  ? "border-r-4 border-red-500"
                   : isFirstRight
                     ? "border-l-4"
                     : "",
@@ -116,7 +190,7 @@ function RouteComponent() {
               const { isLastLeft, isFirstRight } = getPinningAttributes(column);
               return {
                 className: isLastLeft
-                  ? "border-r-4"
+                  ? "border-r-4 border-red-500"
                   : isFirstRight
                     ? "border-l-4"
                     : "",
@@ -127,6 +201,8 @@ function RouteComponent() {
         // ~ User-defined styles
         // Small text
         { container: { className: "text-sm" } },
+        // No wrapping in table cells
+        { td: () => ({ className: "whitespace-nowrap" }) },
         // Header cell and data Padding
         {
           th: () => ({ className: "px-1 py-0.5" }),
