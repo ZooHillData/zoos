@@ -220,10 +220,13 @@ There are several filters available for each data type including:
 
 - `filters.string.includes` - Filter for string that include the filter value (performs lowercase on both filter and values)
 - `filters.string.inArray` - Filter for rows that include one of the values in the filter array
-
-(coming soon)
-
-- `filters.number.range` - Filter for numbers within a range
 - `filters.date.range` - Filter for dates within a range
+
+## Coming soon
+
+### Column Filters
+
+- Debounce input on `filters.string.includes`
+- `filters.number.range` - Filter for numbers within a range
 - `filters.stringArray.includesOne` - Filter for rows that include one of the values in the filter array
 - `filters.stringArray.includesAll` - Filter for rows that include all values in the filter array

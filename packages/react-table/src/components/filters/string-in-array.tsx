@@ -1,14 +1,16 @@
 import { type HeaderContext, type Row } from "@tanstack/react-table";
 
+import { cn } from "@zoos/shadcn";
 import { CheckboxWithLabel } from "@zoos/react-form";
 
 const Combobox = (props: {
   options: string[];
   value: string[];
   onClick: (value: string) => void;
+  className?: string;
 }) => {
   return (
-    <div className="space-y-2">
+    <div className={cn("space-y-2", props.className || "")}>
       {props.options.map((option) => (
         <CheckboxWithLabel
           checked={props.value.includes(option)}
@@ -20,7 +22,7 @@ const Combobox = (props: {
   );
 };
 
-const Filter = <TData, TValue>({
+const FilterInput = <TData, TValue>({
   headerContext: { column },
   inputProps,
 }: {
@@ -35,7 +37,9 @@ const Filter = <TData, TValue>({
       value={filterValue}
       onClick={(option) => {
         if (filterValue.includes(option)) {
-          column.setFilterValue(filterValue.filter((v) => v !== option));
+          const updated = filterValue.filter((v) => v !== option);
+          const updateValue = updated.length === 0 ? undefined : updated;
+          column.setFilterValue(undefined);
         } else {
           column.setFilterValue([...filterValue, option]);
         }
@@ -47,11 +51,14 @@ const Filter = <TData, TValue>({
 const filterFn = <TData,>(
   row: Row<TData>,
   columnId: string,
-  filterValue: string[],
+  filterValue: string[] | undefined,
   addMeta: (meta: any) => void,
 ) => {
+  // Empty filter value means no filter set
+  if (!filterValue || filterValue.length === 0) return true;
+
   const value = row.getValue<string>(columnId);
   return filterValue.includes(value);
 };
 
-export { Filter, filterFn };
+export { FilterInput, filterFn };

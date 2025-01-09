@@ -4,6 +4,7 @@ function createRandomUser() {
   return {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
+    join_date: faker.date.recent(),
     age: faker.number.int({ min: 18, max: 100 }),
     street: faker.location.streetAddress(),
     city: faker.location.city(),

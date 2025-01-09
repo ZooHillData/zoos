@@ -16,6 +16,7 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        label: { foreground: "var(--label-foreground)" },
         popover: {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",

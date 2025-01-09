@@ -6,7 +6,11 @@ export const Route = createFileRoute("/react-table/standard")({
 
 import React from "react";
 
-import { type TableState, flexRender } from "@tanstack/react-table";
+import {
+  type TableState,
+  type HeaderContext,
+  flexRender,
+} from "@tanstack/react-table";
 import {
   useControlledTable,
   useVirtualization,
@@ -15,9 +19,10 @@ import {
   HeaderSortIndicator,
   featureProps,
   mergeFeatureProps,
-  getColumns,
+  // getColumns,
   getPinningAttributes,
   filters,
+  ClearFilterButton,
 } from "@zoos/react-table";
 import {
   Label,
@@ -25,7 +30,39 @@ import {
   TooltipTrigger,
   Tooltip,
   TooltipContent,
+  cn,
 } from "@zoos/shadcn";
+
+/*
+~ 
+~ Components for Filter UI
+~ 
+
+*/
+
+/**
+ * Container around the filter
+ * `<FilterContainer><Label /><FilterInput /></FilterContainer>`
+ */
+const FilterContainer = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("space-y-1 px-2 py-1", className)} {...props} />
+);
+
+/** Style and format the column ID for display in the filter component */
+const FilterFieldLabel = ({
+  className,
+  headerContext,
+}: {
+  headerContext: HeaderContext<User, unknown>;
+  className?: string;
+}) => (
+  <em className={cn("italic", className)}>
+    <FormattedId headerContext={headerContext} />
+  </em>
+);
 
 // ~ Manual column definitions
 // Using `getColumns` to infer all columns
@@ -34,62 +71,78 @@ import { createColumnHelper } from "@tanstack/react-table";
 const columnHelper = createColumnHelper<User>();
 const columns = [
   columnHelper.group({
-    header: "Person",
+    header: "User",
     columns: [
       columnHelper.accessor("first_name", {}),
       columnHelper.accessor("last_name", {}),
       columnHelper.accessor("age", {}),
     ],
   }),
-  columnHelper.group({
-    header: "Address",
-    columns: [
-      columnHelper.accessor("street", {
-        // ~ Custom cell (tooltip for previewing long text)
-        // This does have performance impacts, so recommend
-        // using on a per-column basis instead of setting in `defaultColumn`
-        cell: (cellContext) => (
-          <TooltipProvider>
-            <Tooltip delayDuration={200}>
-              {/* 
-              `className="w-full text-left"` 
-                => makes sure alignment is still left but the tooltip takes up the full cell 
-              */}
-              <TooltipTrigger className="w-full text-left">
-                {String(cellContext.getValue())}
-              </TooltipTrigger>
-              <TooltipContent>{String(cellContext.getValue())}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        ),
-      }),
-      columnHelper.accessor("city", {}),
-      columnHelper.accessor("state", {
-        // ~ Custom filter
-        // specify:
-        // - `filterFn` (method)
-        // - `meta.filter` (rendered Component)
-        // - since this is a `inArray` filter, provide `options` prop to the `input`
-        filterFn: filters.string.inArray.filterFn,
-        meta: {
-          filter: (headerContext) => (
-            <filters.string.inArray.Filter
-              headerContext={headerContext}
-              inputProps={{
-                // Full control over props passed to input
-                // (other than those required to connect to
-                // `headerContext.column.setFilterValue()`)
-                options: Array.from(
-                  headerContext.column.getFacetedUniqueValues().keys(),
-                ).sort((a, b) => a.localeCompare(b)),
-              }}
-            />
-          ),
-        },
-      }),
-      columnHelper.accessor("zip", {}),
-    ],
+  columnHelper.accessor("join_date", {
+    filterFn: filters.date.range.filterFn,
+    meta: {
+      filter: (headerContext) => (
+        <FilterContainer>
+          <Label>
+            <FilterFieldLabel headerContext={headerContext} /> Range
+          </Label>
+          <filters.date.range.FilterInput headerContext={headerContext} />
+          <ClearFilterButton headerContext={headerContext} />
+        </FilterContainer>
+      ),
+    },
   }),
+  columnHelper.accessor("street", {
+    // ~ Custom cell (tooltip for previewing long text)
+    // This does have performance impacts, so recommend
+    // using on a per-column basis instead of setting in `defaultColumn`
+    cell: (cellContext) => (
+      <TooltipProvider>
+        <Tooltip delayDuration={200}>
+          {/* 
+          `className="w-full text-left"` 
+            => makes sure alignment is still left but the tooltip takes up the full cell 
+          */}
+          <TooltipTrigger className="w-full text-left">
+            {String(cellContext.getValue())}
+          </TooltipTrigger>
+          <TooltipContent>{String(cellContext.getValue())}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    ),
+  }),
+  columnHelper.accessor("city", {}),
+  columnHelper.accessor("state", {
+    // ~ Custom filter
+    // specify:
+    // - `filterFn` (method)
+    // - `meta.filter` (rendered Component)
+    // - since this is a `inArray` filter, provide `options` prop to the `input`
+    filterFn: filters.string.inArray.filterFn,
+    meta: {
+      filter: (headerContext) => (
+        <FilterContainer>
+          <Label>
+            <FilterFieldLabel headerContext={headerContext} /> is in:
+          </Label>
+          <filters.string.inArray.FilterInput
+            headerContext={headerContext}
+            inputProps={{
+              className: "max-h-[400px] overflow-auto",
+              // Full control over props passed to input
+              // (other than those required to connect to
+              // `headerContext.column.setFilterValue()`)
+              options: Array.from(
+                headerContext.column.getFacetedUniqueValues().keys(),
+              ).sort((a, b) => a.localeCompare(b)),
+            }}
+          />
+          <ClearFilterButton headerContext={headerContext} />
+        </FilterContainer>
+      ),
+    },
+  }),
+  columnHelper.accessor("zip", {}),
 ];
 
 const getFullType = <T,>(partial: Partial<T>): T => {
@@ -121,16 +174,16 @@ function RouteComponent() {
       meta: {
         filter: (headerContext) => {
           return (
-            <div className="flex flex-col gap-2">
-              <Label className="pt-1">
-                <FormattedId headerContext={headerContext} /> matches (case
-                insensitive):
+            <FilterContainer>
+              <Label>
+                <FilterFieldLabel headerContext={headerContext} /> matches:
               </Label>
-              <filters.string.includes.Filter
+              <filters.string.includes.FilterInput
                 headerContext={headerContext}
-                inputProps={{ placeholder: "Filter value" }}
+                inputProps={{ placeholder: "case insensitive match" }}
               />
-            </div>
+              <ClearFilterButton headerContext={headerContext} />
+            </FilterContainer>
           );
         },
       },
@@ -180,7 +233,7 @@ function RouteComponent() {
               const { isLastLeft, isFirstRight } = getPinningAttributes(column);
               return {
                 className: isLastLeft
-                  ? "border-r-4 border-red-500"
+                  ? "border-r-4"
                   : isFirstRight
                     ? "border-l-4"
                     : "",
@@ -190,7 +243,7 @@ function RouteComponent() {
               const { isLastLeft, isFirstRight } = getPinningAttributes(column);
               return {
                 className: isLastLeft
-                  ? "border-r-4 border-red-500"
+                  ? "border-r-4"
                   : isFirstRight
                     ? "border-l-4"
                     : "",
@@ -203,6 +256,12 @@ function RouteComponent() {
         { container: { className: "text-sm" } },
         // No wrapping in table cells
         { td: () => ({ className: "whitespace-nowrap" }) },
+        // No overflow (important for pinned columns with higher z-index
+        // to not overflow into other columns)
+        {
+          th: () => ({ className: "overflow-hidden" }),
+          td: () => ({ className: "overflow-hidden" }),
+        },
         // Header cell and data Padding
         {
           th: () => ({ className: "px-1 py-0.5" }),

@@ -16,10 +16,11 @@ CSS Variables for Tailwind Config
 
     --foreground: hsl(0, 0%, 10%);
     --background: hsl(200, 100%, 99%);
-    --border: hsl(0, 0%, 89.8%);
 
+    --border: hsl(0, 0%, 89.8%);
     --popover: hsl(0, 0%, 100%);
     --popover-foreground: hsl(0, 0%, 3.9%);
+    --label-foreground: color-mix(in srgb, white 10%, var(--foreground) 90%);
 
     --primary-foreground: hsl(0, 0%, 100%);
     --primary: hsl(212, 80%, 42%);
@@ -61,10 +62,11 @@ CSS Variables for Tailwind Config
       */
       --foreground: hsl(220, 13%, 75%);
       --background: hsl(221, 59%, 11%);
-      --border: hsl(217, 56%, 24%);
 
+      --border: hsl(217, 56%, 24%);
       --popover: hsl(221, 59%, 11%);
       --popover-foreground: hsl(220, 13%, 91%);
+      --label-foreground: color-mix(in srgb, black 10%, var(--foreground) 90%);
 
       --primary-foreground: hsl(220, 13%, 91%);
       --primary: hsl(212, 80%, 42%);
@@ -99,7 +101,7 @@ CSS Variables for Tailwind Config
       --accent: color-mix(in srgb, white 5%, var(--background) 95%);
       --accent-foreground: color-mix(in srgb, white 5%, var(--foreground) 80%);
       --muted: color-mix(in srgb, white 25%, var(--background) 75%);
-      --muted-foreground: color-mix(in srgb, black 30%, var(--foreground) 70%);
+      --muted-foreground: color-mix(in srgb, black 25%, var(--foreground) 75%);
     }
   }
 }

@@ -2,7 +2,7 @@ import { Input } from "@zoos/shadcn";
 
 import { type HeaderContext } from "@tanstack/react-table";
 
-const Filter = <TData, TValue>({
+const FilterInput = <TData, TValue>({
   headerContext: { column },
   inputProps,
 }: {
@@ -22,4 +22,4 @@ const Filter = <TData, TValue>({
 
 const filterFn = "includesString";
 
-export { Filter, filterFn };
+export { FilterInput, filterFn };

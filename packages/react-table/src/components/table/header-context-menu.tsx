@@ -31,7 +31,7 @@ const HeaderContextMenu = <TData,>({
     <ContextMenu>
       <ContextMenuTrigger className={className}>{children}</ContextMenuTrigger>
       <ContextMenuContent className="w-48">
-        <ContextMenuLabel>{header.column.id}</ContextMenuLabel>
+        <ContextMenuLabel>{children}</ContextMenuLabel>
         <ContextMenuSeparator className="mx-1 border-b" />
         {
           // ~ Sorting
