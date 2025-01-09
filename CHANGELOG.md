@@ -1,3 +1,9 @@
+## [1.11.0](https://github.com/zoohilldata/zoos/compare/v1.10.0...v1.11.0) (2025-01-09)
+
+### Features
+
+* **react-table, react-form:** date picker, date range picker, date range filter ([f0a8c2d](https://github.com/zoohilldata/zoos/commit/f0a8c2d997a5f23f935814419fc2d17807ccc7fb))
+
 ## [1.10.0](https://github.com/zoohilldata/zoos/compare/v1.9.3...v1.10.0) (2025-01-08)
 
 ### Features
