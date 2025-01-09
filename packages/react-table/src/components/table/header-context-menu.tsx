@@ -14,12 +14,12 @@ import {
   ContextMenuPortal,
 } from "@zoos/shadcn";
 
-const HeaderContextMenu = <TData,>({
+const HeaderContextMenu = <TData, TValue>({
   header,
   children,
   className,
 }: {
-  header: HeaderContext<TData, unknown>;
+  header: HeaderContext<TData, TValue>;
   children: React.ReactNode;
   className?: string;
 }) => {

@@ -3,15 +3,15 @@ import { type Header } from "@tanstack/react-table";
 import { ArrowDownZaIcon, ArrowUpAzIcon, LucideProps } from "lucide-react";
 import { cn } from "@zoos/shadcn";
 
-type Props<TData> = React.HTMLProps<HTMLSpanElement> & {
-  header: Header<TData, unknown>;
+type Props<TData, TValue> = React.HTMLProps<HTMLSpanElement> & {
+  header: Header<TData, TValue>;
 };
 
-const HeaderSortIndicator = <TData,>({
+const HeaderSortIndicator = <TData, TValue>({
   header,
   className,
   ...props
-}: Props<TData>) => {
+}: Props<TData, TValue>) => {
   switch (header.column.getIsSorted()) {
     case "asc":
       return (

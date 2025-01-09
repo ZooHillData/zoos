@@ -2,9 +2,12 @@ import { type Header } from "@tanstack/react-table";
 
 import { ArrowDownZaIcon, ArrowUpAzIcon, LucideProps } from "lucide-react";
 
-type Props<TData> = LucideProps & { header: Header<TData, unknown> };
+type Props<TData, TValue> = LucideProps & { header: Header<TData, TValue> };
 
-const HeaderFilterIndicator = <TData,>({ header, ...props }: Props<TData>) => {
+const HeaderFilterIndicator = <TData, TValue>({
+  header,
+  ...props
+}: Props<TData, TValue>) => {
   if (!header.column.getIsFiltered()) {
     return null;
   }

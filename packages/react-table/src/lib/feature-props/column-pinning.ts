@@ -3,7 +3,9 @@ import { type Column } from "@tanstack/react-table";
 import { cn, mergeStyleProps } from "@zoos/shadcn";
 import type { ComponentProps } from "./types";
 
-const getPinningAttributes = <TData>(column: Column<TData, unknown>) => ({
+const getPinningAttributes = <TData, TValue>(
+  column: Column<TData, TValue>,
+) => ({
   isPinned: Boolean(column.getIsPinned()),
   isPinnedLeft: column.getIsPinned() === "left",
   isPinnedRight: column.getIsPinned() === "right",
@@ -12,7 +14,7 @@ const getPinningAttributes = <TData>(column: Column<TData, unknown>) => ({
   isLastLeft: Boolean(column.getIsPinned()) && column.getIsLastColumn("left"),
 });
 
-const getPinningStyles = <TData>(column: Column<TData, unknown>) => {
+const getPinningStyles = <TData, TValue>(column: Column<TData, TValue>) => {
   const pinning = getPinningAttributes(column);
 
   return {

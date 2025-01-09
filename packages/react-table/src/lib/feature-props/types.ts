@@ -18,8 +18,8 @@ type ComponentProps = Partial<{
   trHead: <TData>(params: {
     headerGroup: HeaderGroup<TData>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
-  th: <TData>(params: {
-    header: Header<TData, unknown>;
+  th: <TData, TValue>(params: {
+    header: Header<TData, TValue>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
   tbody: Partial<{ className: string; style: React.CSSProperties }>;
   trBody: <TData>(params: {
@@ -31,15 +31,15 @@ type ComponentProps = Partial<{
     style: React.CSSProperties;
     className: string;
   }>;
-  td: <TData>(params: {
-    cell: Cell<TData, unknown>;
+  td: <TData, TValue>(params: {
+    cell: Cell<TData, TValue>;
     virtualRow: VirtualItem;
   }) => Partial<{
     style: React.CSSProperties;
     className: string;
   }>;
-  resizeColHandle: <TData>(params: {
-    headerContext: HeaderContext<TData, unknown>;
+  resizeColHandle: <TData, TValue>(params: {
+    headerContext: HeaderContext<TData, TValue>;
   }) => Partial<{
     className: string;
     onMouseDown: (event: React.MouseEvent) => void;

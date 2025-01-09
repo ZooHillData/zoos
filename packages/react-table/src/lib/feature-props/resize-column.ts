@@ -15,10 +15,10 @@ const resizeColumn = (params: {
     ]),
     // So that resize handle is visible on hover
     th: () => ({ className: "relative group" }),
-    resizeColHandle: <TData>({
+    resizeColHandle: <TData, TValue>({
       headerContext,
     }: {
-      headerContext: HeaderContext<TData, unknown>;
+      headerContext: HeaderContext<TData, TValue>;
     }) =>
       mergeStyleProps([
         {
