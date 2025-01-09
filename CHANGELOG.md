@@ -1,3 +1,9 @@
+## [1.11.1](https://github.com/zoohilldata/zoos/compare/v1.11.0...v1.11.1) (2025-01-09)
+
+### Bug Fixes
+
+* **react-table:** filter enhancements, add `number.range` filter ([d35907e](https://github.com/zoohilldata/zoos/commit/d35907eec84e360e9a324fbef2b775b4d9d96e3f))
+
 ## [1.11.0](https://github.com/zoohilldata/zoos/compare/v1.10.0...v1.11.0) (2025-01-09)
 
 ### Features
