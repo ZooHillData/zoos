@@ -1,4 +1,7 @@
+import React from "react";
+
 import { cn } from "@zoos/shadcn";
+
 import { DatePicker } from "./date-picker";
 
 type DateRange = {
@@ -12,8 +15,8 @@ const DateRange2Picker = (
     onChange: (value: DateRange) => void;
     separator: React.ReactNode;
     componentProps: Partial<{
-      from: React.ComponentProps<typeof DatePicker>;
-      to: React.ComponentProps<typeof DatePicker>;
+      from: Omit<React.ComponentProps<typeof DatePicker>, "value" | "onChange">;
+      to: Omit<React.ComponentProps<typeof DatePicker>, "value" | "onChange">;
     }>;
   }>,
 ) => {
@@ -21,14 +24,16 @@ const DateRange2Picker = (
     value: { from, to } = {},
     onChange,
     separator = <span className="text-label-foreground">-</span>,
-    componentProps: { from: fromProps, to: toProps } = {},
+    componentProps: { from: fromProps = {}, to: toProps = {} } = {},
   } = props;
 
   return (
     <div className={cn("flex items-center gap-1")}>
       <DatePicker
         value={from}
-        onChange={(date) => onChange?.({ from: date, to })}
+        onChange={(date) => {
+          onChange?.({ from: date, to });
+        }}
         {...fromProps}
       />
       {separator}

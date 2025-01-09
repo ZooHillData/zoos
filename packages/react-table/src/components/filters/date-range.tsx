@@ -6,33 +6,19 @@ import {
   type DateRange,
 } from "@zoos/react-form";
 
+import { evaluateRangeFilter } from "./lib";
+
 const filterFn = <TData,>(
   row: Row<TData>,
   columnId: string,
-  filterValue: DateRange,
+  filterValue?: DateRange,
 ) => {
   const { from, to } = {
-    from: filterValue.from ? new Date(filterValue.from) : undefined,
-    to: filterValue.to ? new Date(filterValue.to) : undefined,
+    from: filterValue?.from ? new Date(filterValue.from) : undefined,
+    to: filterValue?.to ? new Date(filterValue.to) : undefined,
   };
-  const cellValue: Date = row.getValue(columnId);
-
-  // If no filter is set, return true
-  if (!from && !to) return true;
-
-  if (from && to) {
-    return cellValue >= from && cellValue <= to;
-  }
-
-  if (from) {
-    return cellValue >= from;
-  }
-
-  if (to) {
-    return cellValue <= to;
-  }
-
-  return true;
+  const value: Date = row.getValue(columnId);
+  return evaluateRangeFilter({ from, to, value });
 };
 
 const FilterInput = <TData, TValue>({

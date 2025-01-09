@@ -75,7 +75,20 @@ const columns = [
     columns: [
       columnHelper.accessor("first_name", {}),
       columnHelper.accessor("last_name", {}),
-      columnHelper.accessor("age", {}),
+      columnHelper.accessor("age", {
+        filterFn: filters.number.range.filterFn,
+        meta: {
+          filter: (headerContext) => (
+            <FilterContainer>
+              <Label>
+                <FilterFieldLabel headerContext={headerContext} /> Range
+              </Label>
+              <filters.number.range.FilterInput headerContext={headerContext} />
+              <ClearFilterButton headerContext={headerContext} />
+            </FilterContainer>
+          ),
+        },
+      }),
     ],
   }),
   columnHelper.accessor("join_date", {

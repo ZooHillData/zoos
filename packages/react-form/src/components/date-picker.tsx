@@ -1,3 +1,4 @@
+import React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import {
@@ -13,6 +14,8 @@ import {
 const DatePicker = (props: {
   value?: Date;
   onChange?: (date?: Date) => void;
+  // if true, don't close the popover onChange
+  keepOpen?: boolean;
   placeholder?: React.ReactNode;
   componentProps?: Partial<{
     button: ButtonProps;
@@ -20,6 +23,7 @@ const DatePicker = (props: {
   }>;
 }) => {
   const {
+    keepOpen = false,
     value,
     onChange,
     placeholder = "Pick date",
@@ -28,8 +32,10 @@ const DatePicker = (props: {
       calendar: calendarProps,
     } = {},
   } = props;
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -48,7 +54,12 @@ const DatePicker = (props: {
         <Calendar
           mode="single"
           selected={value}
-          onSelect={(date) => onChange?.(date)}
+          onSelect={(date) => {
+            if (!keepOpen) {
+              setIsOpen(false);
+            }
+            onChange?.(date);
+          }}
           initialFocus
           {...calendarProps}
         />
