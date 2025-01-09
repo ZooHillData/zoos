@@ -1,3 +1,9 @@
+## [1.12.0](https://github.com/zoohilldata/zoos/compare/v1.11.1...v1.12.0) (2025-01-09)
+
+### Features
+
+* **react-table,shadcn:** debounce, pause auto-refresh ([0744d0f](https://github.com/zoohilldata/zoos/commit/0744d0ff021d5efa086df485bc59ec4bd8a8994a))
+
 ## [1.11.1](https://github.com/zoohilldata/zoos/compare/v1.11.0...v1.11.1) (2025-01-09)
 
 ### Bug Fixes
