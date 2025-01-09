@@ -1,4 +1,7 @@
+import React from "react";
+
 import type { Row, HeaderContext } from "@tanstack/react-table";
+
 import {
   NumberRange2Input,
   type NumberRange2InputProps,
@@ -21,14 +24,37 @@ function filterFn<TData>(
 const FilterInput = <TData, TValue>(props: {
   headerContext: HeaderContext<TData, TValue>;
   inputProps?: NumberRange2InputProps;
+  autoRefresh?: boolean;
 }) => {
-  const { column } = props.headerContext;
-  const { from, to } = (column.getFilterValue() || {}) as NumberRange;
+  const {
+    headerContext: { column },
+    autoRefresh = true,
+  } = props;
+  const filterValue = column.getFilterValue();
+  const range = (filterValue || {}) as NumberRange;
+  const [value, setValue] = React.useState(range);
+
+  // When autoRefresh is re-enabled, set the value in the column
+  React.useEffect(() => {
+    if (autoRefresh) {
+      column.setFilterValue(value);
+    }
+  }, [autoRefresh, column, value]);
+
+  React.useEffect(() => {
+    setValue(filterValue ? { ...filterValue } : {});
+  }, [filterValue]);
 
   return (
     <NumberRange2Input
-      value={{ from, to }}
-      onChange={(value) => column.setFilterValue(value)}
+      value={value}
+      onChange={(value) => {
+        if (autoRefresh) {
+          column.setFilterValue(value);
+        } else {
+          setValue(value);
+        }
+      }}
       {...props.inputProps}
     />
   );

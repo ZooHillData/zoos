@@ -108,7 +108,7 @@ const HeaderContextMenu = <TData,>({
             <ContextMenuSubTrigger>Filter</ContextMenuSubTrigger>
             <ContextMenuPortal>
               <ContextMenuContent>
-                {header.column.columnDef.meta?.filter?.(header)}
+                {header.column.columnDef.meta?.Filter?.(header)}
               </ContextMenuContent>
             </ContextMenuPortal>
           </ContextMenuSub>

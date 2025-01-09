@@ -1,9 +1,9 @@
 import { cn, Input } from "@zoos/shadcn";
 
-type NumberRange = Partial<{
-  from: number;
-  to: number;
-}>;
+type NumberRange = {
+  from?: number;
+  to?: number;
+};
 
 const NumberRange2Input = (
   props: Partial<{

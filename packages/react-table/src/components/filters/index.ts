@@ -14,3 +14,4 @@ const filters = {
 
 export { filters };
 export { ClearFilterButton } from "./clear-filter-button";
+export { AutoRefreshToggle } from "./auto-refresh-toggle";

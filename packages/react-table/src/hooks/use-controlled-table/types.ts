@@ -8,7 +8,7 @@ import type {
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
     // Column meta can be extended with custom properties
-    filter?: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
+    Filter?: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
   }
 }
 

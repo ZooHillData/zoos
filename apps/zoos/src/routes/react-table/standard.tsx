@@ -23,6 +23,7 @@ import {
   getPinningAttributes,
   filters,
   ClearFilterButton,
+  AutoRefreshToggle,
 } from "@zoos/react-table";
 import {
   Label,
@@ -46,9 +47,12 @@ import {
  */
 const FilterContainer = ({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("space-y-1 px-2 py-1", className)} {...props} />
+  <div className={cn("flex flex-col gap-1 px-2 py-1", className)} {...props}>
+    {children}
+  </div>
 );
 
 /** Style and format the column ID for display in the filter component */
@@ -78,15 +82,27 @@ const columns = [
       columnHelper.accessor("age", {
         filterFn: filters.number.range.filterFn,
         meta: {
-          filter: (headerContext) => (
-            <FilterContainer>
-              <Label>
-                <FilterFieldLabel headerContext={headerContext} /> Range
-              </Label>
-              <filters.number.range.FilterInput headerContext={headerContext} />
-              <ClearFilterButton headerContext={headerContext} />
-            </FilterContainer>
-          ),
+          Filter: (headerContext) => {
+            const [autoRefresh, setAutoRefresh] = React.useState(true);
+            return (
+              <FilterContainer>
+                <div className="ml-auto">
+                  <AutoRefreshToggle
+                    pressed={autoRefresh}
+                    onPressedChange={setAutoRefresh}
+                  />
+                </div>
+                <Label>
+                  <FilterFieldLabel headerContext={headerContext} /> Range
+                </Label>
+                <filters.number.range.FilterInput
+                  headerContext={headerContext}
+                  autoRefresh={autoRefresh}
+                />
+                <ClearFilterButton headerContext={headerContext} />
+              </FilterContainer>
+            );
+          },
         },
       }),
     ],
@@ -94,7 +110,7 @@ const columns = [
   columnHelper.accessor("join_date", {
     filterFn: filters.date.range.filterFn,
     meta: {
-      filter: (headerContext) => (
+      Filter: (headerContext) => (
         <FilterContainer>
           <Label>
             <FilterFieldLabel headerContext={headerContext} /> Range
@@ -133,7 +149,7 @@ const columns = [
     // - since this is a `inArray` filter, provide `options` prop to the `input`
     filterFn: filters.string.inArray.filterFn,
     meta: {
-      filter: (headerContext) => (
+      Filter: (headerContext) => (
         <FilterContainer>
           <Label>
             <FilterFieldLabel headerContext={headerContext} /> is in:
@@ -185,9 +201,16 @@ function RouteComponent() {
       header: (headerContext) => <FormattedId headerContext={headerContext} />,
       filterFn: filters.string.includes.filterFn,
       meta: {
-        filter: (headerContext) => {
+        Filter: (headerContext) => {
+          const [autoRefresh, setAutoRefresh] = React.useState(true);
           return (
             <FilterContainer>
+              <div className="ml-auto">
+                <AutoRefreshToggle
+                  pressed={autoRefresh}
+                  onPressedChange={setAutoRefresh}
+                />
+              </div>
               <Label>
                 <FilterFieldLabel headerContext={headerContext} /> matches:
               </Label>

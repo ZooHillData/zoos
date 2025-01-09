@@ -16,6 +16,8 @@ import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as ReactQueryRouteImport } from './routes/react-query/route'
 import { Route as ReactFormRouteImport } from './routes/react-form/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as ShadcnUseReactiveStateImport } from './routes/shadcn/use-reactive-state'
+import { Route as ShadcnUseDebounceImport } from './routes/shadcn/use-debounce'
 import { Route as ShadcnSelectImport } from './routes/shadcn/select'
 import { Route as ShadcnContextMenuImport } from './routes/shadcn/context-menu'
 import { Route as ShadcnCheckboxImport } from './routes/shadcn/checkbox'
@@ -26,6 +28,7 @@ import { Route as ReactQueryUseMutationImport } from './routes/react-query/use-m
 import { Route as ReactFormWithZoosFormImport } from './routes/react-form/with-zoos-form'
 import { Route as ReactFormStandardReactFormImport } from './routes/react-form/standard-react-form'
 import { Route as ReactFormSelectImport } from './routes/react-form/select'
+import { Route as ReactFormInputDebounceImport } from './routes/react-form/input-debounce'
 import { Route as ReactFormCheckboxWithLabelImport } from './routes/react-form/checkbox-with-label'
 import { Route as ReactFormCheckboxGroupImport } from './routes/react-form/checkbox-group'
 
@@ -59,6 +62,18 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const ShadcnUseReactiveStateRoute = ShadcnUseReactiveStateImport.update({
+  id: '/use-reactive-state',
+  path: '/use-reactive-state',
+  getParentRoute: () => ShadcnRouteRoute,
+} as any)
+
+const ShadcnUseDebounceRoute = ShadcnUseDebounceImport.update({
+  id: '/use-debounce',
+  path: '/use-debounce',
+  getParentRoute: () => ShadcnRouteRoute,
 } as any)
 
 const ShadcnSelectRoute = ShadcnSelectImport.update({
@@ -120,6 +135,12 @@ const ReactFormStandardReactFormRoute = ReactFormStandardReactFormImport.update(
 const ReactFormSelectRoute = ReactFormSelectImport.update({
   id: '/select',
   path: '/select',
+  getParentRoute: () => ReactFormRouteRoute,
+} as any)
+
+const ReactFormInputDebounceRoute = ReactFormInputDebounceImport.update({
+  id: '/input-debounce',
+  path: '/input-debounce',
   getParentRoute: () => ReactFormRouteRoute,
 } as any)
 
@@ -188,6 +209,13 @@ declare module '@tanstack/react-router' {
       path: '/checkbox-with-label'
       fullPath: '/react-form/checkbox-with-label'
       preLoaderRoute: typeof ReactFormCheckboxWithLabelImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/input-debounce': {
+      id: '/react-form/input-debounce'
+      path: '/input-debounce'
+      fullPath: '/react-form/input-debounce'
+      preLoaderRoute: typeof ReactFormInputDebounceImport
       parentRoute: typeof ReactFormRouteImport
     }
     '/react-form/select': {
@@ -260,6 +288,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShadcnSelectImport
       parentRoute: typeof ShadcnRouteImport
     }
+    '/shadcn/use-debounce': {
+      id: '/shadcn/use-debounce'
+      path: '/use-debounce'
+      fullPath: '/shadcn/use-debounce'
+      preLoaderRoute: typeof ShadcnUseDebounceImport
+      parentRoute: typeof ShadcnRouteImport
+    }
+    '/shadcn/use-reactive-state': {
+      id: '/shadcn/use-reactive-state'
+      path: '/use-reactive-state'
+      fullPath: '/shadcn/use-reactive-state'
+      preLoaderRoute: typeof ShadcnUseReactiveStateImport
+      parentRoute: typeof ShadcnRouteImport
+    }
   }
 }
 
@@ -268,6 +310,7 @@ declare module '@tanstack/react-router' {
 interface ReactFormRouteRouteChildren {
   ReactFormCheckboxGroupRoute: typeof ReactFormCheckboxGroupRoute
   ReactFormCheckboxWithLabelRoute: typeof ReactFormCheckboxWithLabelRoute
+  ReactFormInputDebounceRoute: typeof ReactFormInputDebounceRoute
   ReactFormSelectRoute: typeof ReactFormSelectRoute
   ReactFormStandardReactFormRoute: typeof ReactFormStandardReactFormRoute
   ReactFormWithZoosFormRoute: typeof ReactFormWithZoosFormRoute
@@ -276,6 +319,7 @@ interface ReactFormRouteRouteChildren {
 const ReactFormRouteRouteChildren: ReactFormRouteRouteChildren = {
   ReactFormCheckboxGroupRoute: ReactFormCheckboxGroupRoute,
   ReactFormCheckboxWithLabelRoute: ReactFormCheckboxWithLabelRoute,
+  ReactFormInputDebounceRoute: ReactFormInputDebounceRoute,
   ReactFormSelectRoute: ReactFormSelectRoute,
   ReactFormStandardReactFormRoute: ReactFormStandardReactFormRoute,
   ReactFormWithZoosFormRoute: ReactFormWithZoosFormRoute,
@@ -316,6 +360,8 @@ interface ShadcnRouteRouteChildren {
   ShadcnCheckboxRoute: typeof ShadcnCheckboxRoute
   ShadcnContextMenuRoute: typeof ShadcnContextMenuRoute
   ShadcnSelectRoute: typeof ShadcnSelectRoute
+  ShadcnUseDebounceRoute: typeof ShadcnUseDebounceRoute
+  ShadcnUseReactiveStateRoute: typeof ShadcnUseReactiveStateRoute
 }
 
 const ShadcnRouteRouteChildren: ShadcnRouteRouteChildren = {
@@ -323,6 +369,8 @@ const ShadcnRouteRouteChildren: ShadcnRouteRouteChildren = {
   ShadcnCheckboxRoute: ShadcnCheckboxRoute,
   ShadcnContextMenuRoute: ShadcnContextMenuRoute,
   ShadcnSelectRoute: ShadcnSelectRoute,
+  ShadcnUseDebounceRoute: ShadcnUseDebounceRoute,
+  ShadcnUseReactiveStateRoute: ShadcnUseReactiveStateRoute,
 }
 
 const ShadcnRouteRouteWithChildren = ShadcnRouteRoute._addFileChildren(
@@ -337,6 +385,7 @@ export interface FileRoutesByFullPath {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
@@ -347,6 +396,8 @@ export interface FileRoutesByFullPath {
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
   '/shadcn/select': typeof ShadcnSelectRoute
+  '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
+  '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
 }
 
 export interface FileRoutesByTo {
@@ -357,6 +408,7 @@ export interface FileRoutesByTo {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
@@ -367,6 +419,8 @@ export interface FileRoutesByTo {
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
   '/shadcn/select': typeof ShadcnSelectRoute
+  '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
+  '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
 }
 
 export interface FileRoutesById {
@@ -378,6 +432,7 @@ export interface FileRoutesById {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
@@ -388,6 +443,8 @@ export interface FileRoutesById {
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
   '/shadcn/select': typeof ShadcnSelectRoute
+  '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
+  '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
 }
 
 export interface FileRouteTypes {
@@ -400,6 +457,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
     | '/react-form/with-zoos-form'
@@ -410,6 +468,8 @@ export interface FileRouteTypes {
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
     | '/shadcn/select'
+    | '/shadcn/use-debounce'
+    | '/shadcn/use-reactive-state'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -419,6 +479,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
     | '/react-form/with-zoos-form'
@@ -429,6 +490,8 @@ export interface FileRouteTypes {
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
     | '/shadcn/select'
+    | '/shadcn/use-debounce'
+    | '/shadcn/use-reactive-state'
   id:
     | '__root__'
     | '/'
@@ -438,6 +501,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
     | '/react-form/with-zoos-form'
@@ -448,6 +512,8 @@ export interface FileRouteTypes {
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
     | '/shadcn/select'
+    | '/shadcn/use-debounce'
+    | '/shadcn/use-reactive-state'
   fileRoutesById: FileRoutesById
 }
 
@@ -492,6 +558,7 @@ export const routeTree = rootRoute
       "children": [
         "/react-form/checkbox-group",
         "/react-form/checkbox-with-label",
+        "/react-form/input-debounce",
         "/react-form/select",
         "/react-form/standard-react-form",
         "/react-form/with-zoos-form"
@@ -516,7 +583,9 @@ export const routeTree = rootRoute
         "/shadcn/button",
         "/shadcn/checkbox",
         "/shadcn/context-menu",
-        "/shadcn/select"
+        "/shadcn/select",
+        "/shadcn/use-debounce",
+        "/shadcn/use-reactive-state"
       ]
     },
     "/react-form/checkbox-group": {
@@ -525,6 +594,10 @@ export const routeTree = rootRoute
     },
     "/react-form/checkbox-with-label": {
       "filePath": "react-form/checkbox-with-label.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/input-debounce": {
+      "filePath": "react-form/input-debounce.tsx",
       "parent": "/react-form"
     },
     "/react-form/select": {
@@ -565,6 +638,14 @@ export const routeTree = rootRoute
     },
     "/shadcn/select": {
       "filePath": "shadcn/select.tsx",
+      "parent": "/shadcn"
+    },
+    "/shadcn/use-debounce": {
+      "filePath": "shadcn/use-debounce.tsx",
+      "parent": "/shadcn"
+    },
+    "/shadcn/use-reactive-state": {
+      "filePath": "shadcn/use-reactive-state.tsx",
       "parent": "/shadcn"
     }
   }
