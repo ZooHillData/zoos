@@ -1,3 +1,9 @@
+## [1.12.1](https://github.com/zoohilldata/zoos/compare/v1.12.0...v1.12.1) (2025-01-09)
+
+### Bug Fixes
+
+* **react-table:** wire in TValue instead of unknown ([54c7326](https://github.com/zoohilldata/zoos/commit/54c7326f8caf91e15d56cb35eacba73522615cc8))
+
 ## [1.12.0](https://github.com/zoohilldata/zoos/compare/v1.11.1...v1.12.0) (2025-01-09)
 
 ### Features
