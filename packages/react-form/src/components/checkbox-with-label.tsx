@@ -1,5 +1,3 @@
-"use client";
-
 import { Checkbox } from "@zoos/shadcn";
 
 type CheckboxProps = React.ComponentProps<typeof Checkbox>;

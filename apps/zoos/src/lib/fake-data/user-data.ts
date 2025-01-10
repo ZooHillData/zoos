@@ -10,6 +10,8 @@ function createRandomUser() {
     city: faker.location.city(),
     state: faker.location.state(),
     zip: faker.location.zipCode(),
+    phone: faker.helpers.arrayElement([null, faker.phone.number()]),
+    user_id: String(Math.round(Math.random() * 100000000000)),
   };
 }
 

@@ -32,4 +32,8 @@ const mergeStyleProps = <
   return { className, style, ...otherProps } as T;
 };
 
-export { cn, mergeStyleProps };
+const createCn = (className: string) => {
+  return (componentClassName?: string) => cn(componentClassName, className);
+};
+
+export { cn, createCn, mergeStyleProps };

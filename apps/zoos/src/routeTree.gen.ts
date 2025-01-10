@@ -19,6 +19,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as ShadcnUseReactiveStateImport } from './routes/shadcn/use-reactive-state'
 import { Route as ShadcnUseDebounceImport } from './routes/shadcn/use-debounce'
 import { Route as ShadcnSelectImport } from './routes/shadcn/select'
+import { Route as ShadcnProposeClassNameOverrideImport } from './routes/shadcn/propose-class-name-override'
 import { Route as ShadcnContextMenuImport } from './routes/shadcn/context-menu'
 import { Route as ShadcnCheckboxImport } from './routes/shadcn/checkbox'
 import { Route as ShadcnButtonImport } from './routes/shadcn/button'
@@ -29,6 +30,7 @@ import { Route as ReactFormWithZoosFormImport } from './routes/react-form/with-z
 import { Route as ReactFormStandardReactFormImport } from './routes/react-form/standard-react-form'
 import { Route as ReactFormSelectImport } from './routes/react-form/select'
 import { Route as ReactFormInputDebounceImport } from './routes/react-form/input-debounce'
+import { Route as ReactFormComboboxCheckboxGroupImport } from './routes/react-form/combobox-checkbox-group'
 import { Route as ReactFormCheckboxWithLabelImport } from './routes/react-form/checkbox-with-label'
 import { Route as ReactFormCheckboxGroupImport } from './routes/react-form/checkbox-group'
 
@@ -81,6 +83,13 @@ const ShadcnSelectRoute = ShadcnSelectImport.update({
   path: '/select',
   getParentRoute: () => ShadcnRouteRoute,
 } as any)
+
+const ShadcnProposeClassNameOverrideRoute =
+  ShadcnProposeClassNameOverrideImport.update({
+    id: '/propose-class-name-override',
+    path: '/propose-class-name-override',
+    getParentRoute: () => ShadcnRouteRoute,
+  } as any)
 
 const ShadcnContextMenuRoute = ShadcnContextMenuImport.update({
   id: '/context-menu',
@@ -143,6 +152,13 @@ const ReactFormInputDebounceRoute = ReactFormInputDebounceImport.update({
   path: '/input-debounce',
   getParentRoute: () => ReactFormRouteRoute,
 } as any)
+
+const ReactFormComboboxCheckboxGroupRoute =
+  ReactFormComboboxCheckboxGroupImport.update({
+    id: '/combobox-checkbox-group',
+    path: '/combobox-checkbox-group',
+    getParentRoute: () => ReactFormRouteRoute,
+  } as any)
 
 const ReactFormCheckboxWithLabelRoute = ReactFormCheckboxWithLabelImport.update(
   {
@@ -209,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/checkbox-with-label'
       fullPath: '/react-form/checkbox-with-label'
       preLoaderRoute: typeof ReactFormCheckboxWithLabelImport
+      parentRoute: typeof ReactFormRouteImport
+    }
+    '/react-form/combobox-checkbox-group': {
+      id: '/react-form/combobox-checkbox-group'
+      path: '/combobox-checkbox-group'
+      fullPath: '/react-form/combobox-checkbox-group'
+      preLoaderRoute: typeof ReactFormComboboxCheckboxGroupImport
       parentRoute: typeof ReactFormRouteImport
     }
     '/react-form/input-debounce': {
@@ -281,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShadcnContextMenuImport
       parentRoute: typeof ShadcnRouteImport
     }
+    '/shadcn/propose-class-name-override': {
+      id: '/shadcn/propose-class-name-override'
+      path: '/propose-class-name-override'
+      fullPath: '/shadcn/propose-class-name-override'
+      preLoaderRoute: typeof ShadcnProposeClassNameOverrideImport
+      parentRoute: typeof ShadcnRouteImport
+    }
     '/shadcn/select': {
       id: '/shadcn/select'
       path: '/select'
@@ -310,6 +340,7 @@ declare module '@tanstack/react-router' {
 interface ReactFormRouteRouteChildren {
   ReactFormCheckboxGroupRoute: typeof ReactFormCheckboxGroupRoute
   ReactFormCheckboxWithLabelRoute: typeof ReactFormCheckboxWithLabelRoute
+  ReactFormComboboxCheckboxGroupRoute: typeof ReactFormComboboxCheckboxGroupRoute
   ReactFormInputDebounceRoute: typeof ReactFormInputDebounceRoute
   ReactFormSelectRoute: typeof ReactFormSelectRoute
   ReactFormStandardReactFormRoute: typeof ReactFormStandardReactFormRoute
@@ -319,6 +350,7 @@ interface ReactFormRouteRouteChildren {
 const ReactFormRouteRouteChildren: ReactFormRouteRouteChildren = {
   ReactFormCheckboxGroupRoute: ReactFormCheckboxGroupRoute,
   ReactFormCheckboxWithLabelRoute: ReactFormCheckboxWithLabelRoute,
+  ReactFormComboboxCheckboxGroupRoute: ReactFormComboboxCheckboxGroupRoute,
   ReactFormInputDebounceRoute: ReactFormInputDebounceRoute,
   ReactFormSelectRoute: ReactFormSelectRoute,
   ReactFormStandardReactFormRoute: ReactFormStandardReactFormRoute,
@@ -359,6 +391,7 @@ interface ShadcnRouteRouteChildren {
   ShadcnButtonRoute: typeof ShadcnButtonRoute
   ShadcnCheckboxRoute: typeof ShadcnCheckboxRoute
   ShadcnContextMenuRoute: typeof ShadcnContextMenuRoute
+  ShadcnProposeClassNameOverrideRoute: typeof ShadcnProposeClassNameOverrideRoute
   ShadcnSelectRoute: typeof ShadcnSelectRoute
   ShadcnUseDebounceRoute: typeof ShadcnUseDebounceRoute
   ShadcnUseReactiveStateRoute: typeof ShadcnUseReactiveStateRoute
@@ -368,6 +401,7 @@ const ShadcnRouteRouteChildren: ShadcnRouteRouteChildren = {
   ShadcnButtonRoute: ShadcnButtonRoute,
   ShadcnCheckboxRoute: ShadcnCheckboxRoute,
   ShadcnContextMenuRoute: ShadcnContextMenuRoute,
+  ShadcnProposeClassNameOverrideRoute: ShadcnProposeClassNameOverrideRoute,
   ShadcnSelectRoute: ShadcnSelectRoute,
   ShadcnUseDebounceRoute: ShadcnUseDebounceRoute,
   ShadcnUseReactiveStateRoute: ShadcnUseReactiveStateRoute,
@@ -385,6 +419,7 @@ export interface FileRoutesByFullPath {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
   '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
@@ -395,6 +430,7 @@ export interface FileRoutesByFullPath {
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/propose-class-name-override': typeof ShadcnProposeClassNameOverrideRoute
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
@@ -408,6 +444,7 @@ export interface FileRoutesByTo {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
   '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
@@ -418,6 +455,7 @@ export interface FileRoutesByTo {
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/propose-class-name-override': typeof ShadcnProposeClassNameOverrideRoute
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
@@ -432,6 +470,7 @@ export interface FileRoutesById {
   '/shadcn': typeof ShadcnRouteRouteWithChildren
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
+  '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
   '/react-form/input-debounce': typeof ReactFormInputDebounceRoute
   '/react-form/select': typeof ReactFormSelectRoute
   '/react-form/standard-react-form': typeof ReactFormStandardReactFormRoute
@@ -442,6 +481,7 @@ export interface FileRoutesById {
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
   '/shadcn/context-menu': typeof ShadcnContextMenuRoute
+  '/shadcn/propose-class-name-override': typeof ShadcnProposeClassNameOverrideRoute
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
@@ -457,6 +497,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/combobox-checkbox-group'
     | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
@@ -467,6 +508,7 @@ export interface FileRouteTypes {
     | '/shadcn/button'
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
+    | '/shadcn/propose-class-name-override'
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
@@ -479,6 +521,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/combobox-checkbox-group'
     | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
@@ -489,6 +532,7 @@ export interface FileRouteTypes {
     | '/shadcn/button'
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
+    | '/shadcn/propose-class-name-override'
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
@@ -501,6 +545,7 @@ export interface FileRouteTypes {
     | '/shadcn'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
+    | '/react-form/combobox-checkbox-group'
     | '/react-form/input-debounce'
     | '/react-form/select'
     | '/react-form/standard-react-form'
@@ -511,6 +556,7 @@ export interface FileRouteTypes {
     | '/shadcn/button'
     | '/shadcn/checkbox'
     | '/shadcn/context-menu'
+    | '/shadcn/propose-class-name-override'
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
@@ -558,6 +604,7 @@ export const routeTree = rootRoute
       "children": [
         "/react-form/checkbox-group",
         "/react-form/checkbox-with-label",
+        "/react-form/combobox-checkbox-group",
         "/react-form/input-debounce",
         "/react-form/select",
         "/react-form/standard-react-form",
@@ -583,6 +630,7 @@ export const routeTree = rootRoute
         "/shadcn/button",
         "/shadcn/checkbox",
         "/shadcn/context-menu",
+        "/shadcn/propose-class-name-override",
         "/shadcn/select",
         "/shadcn/use-debounce",
         "/shadcn/use-reactive-state"
@@ -594,6 +642,10 @@ export const routeTree = rootRoute
     },
     "/react-form/checkbox-with-label": {
       "filePath": "react-form/checkbox-with-label.tsx",
+      "parent": "/react-form"
+    },
+    "/react-form/combobox-checkbox-group": {
+      "filePath": "react-form/combobox-checkbox-group.tsx",
       "parent": "/react-form"
     },
     "/react-form/input-debounce": {
@@ -634,6 +686,10 @@ export const routeTree = rootRoute
     },
     "/shadcn/context-menu": {
       "filePath": "shadcn/context-menu.tsx",
+      "parent": "/shadcn"
+    },
+    "/shadcn/propose-class-name-override": {
+      "filePath": "shadcn/propose-class-name-override.tsx",
       "parent": "/shadcn"
     },
     "/shadcn/select": {

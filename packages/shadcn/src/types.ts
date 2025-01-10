@@ -1,3 +1,7 @@
 type WithFreshClassName<T> = T & { freshClassName?: string };
 
-export { WithFreshClassName };
+type WithClassNameFn<T> = Omit<T, "className"> & {
+  className?: (componentClassName?: string) => string;
+};
+
+export { WithFreshClassName, WithClassNameFn };

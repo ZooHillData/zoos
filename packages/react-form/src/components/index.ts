@@ -1,6 +1,12 @@
-export * from "./checkbox-group";
+// Checkboxes
 export * from "./checkbox-with-label";
+export * from "./checkbox-group";
+export * from "./checkbox-group-virtual";
+
+// Dropdown select
 export * from "./select";
+
+// Text inputs
 export * from "./input-debounce";
 
 // Number
