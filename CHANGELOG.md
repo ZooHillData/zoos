@@ -1,3 +1,9 @@
+## [1.13.1](https://github.com/zoohilldata/zoos/compare/v1.13.0...v1.13.1) (2025-01-10)
+
+### Bug Fixes
+
+* **react-table:** virtualized combobox-checkbox-group ([937bae5](https://github.com/zoohilldata/zoos/commit/937bae533f503f629f059688f54878bd9701bdb2))
+
 ## [1.13.0](https://github.com/zoohilldata/zoos/compare/v1.12.1...v1.13.0) (2025-01-10)
 
 ### Features
