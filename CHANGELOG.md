@@ -1,3 +1,9 @@
+## [1.13.0](https://github.com/zoohilldata/zoos/compare/v1.12.1...v1.13.0) (2025-01-10)
+
+### Features
+
+* **react-form:** combobox hooks and examples with checkbox group in zoos ([a648b7c](https://github.com/zoohilldata/zoos/commit/a648b7c5cb1d089df14ee0a0038a9968928398ed))
+
 ## [1.12.1](https://github.com/zoohilldata/zoos/compare/v1.12.0...v1.12.1) (2025-01-09)
 
 ### Bug Fixes
