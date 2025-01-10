@@ -38,6 +38,7 @@
     "@swc/cli": "~0.3.12",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@tanstack/react-virtual": "^3.11.2",
     "@tanstack/router-devtools": "^1.92.3",
     "@tanstack/router-plugin": "^1.91.1",
     "@testing-library/react": "15.0.6",

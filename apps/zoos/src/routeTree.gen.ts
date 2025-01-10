@@ -15,6 +15,7 @@ import { Route as ShadcnRouteImport } from './routes/shadcn/route'
 import { Route as ReactTableRouteImport } from './routes/react-table/route'
 import { Route as ReactQueryRouteImport } from './routes/react-query/route'
 import { Route as ReactFormRouteImport } from './routes/react-form/route'
+import { Route as ObjectsRouteImport } from './routes/objects/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as ShadcnUseReactiveStateImport } from './routes/shadcn/use-reactive-state'
 import { Route as ShadcnUseDebounceImport } from './routes/shadcn/use-debounce'
@@ -24,6 +25,7 @@ import { Route as ShadcnContextMenuImport } from './routes/shadcn/context-menu'
 import { Route as ShadcnCheckboxImport } from './routes/shadcn/checkbox'
 import { Route as ShadcnButtonImport } from './routes/shadcn/button'
 import { Route as ReactTableStandardImport } from './routes/react-table/standard'
+import { Route as ReactTableCustomColumnsImport } from './routes/react-table/custom-columns'
 import { Route as ReactQueryUseQueryImport } from './routes/react-query/use-query'
 import { Route as ReactQueryUseMutationImport } from './routes/react-query/use-mutation'
 import { Route as ReactFormWithZoosFormImport } from './routes/react-form/with-zoos-form'
@@ -33,6 +35,12 @@ import { Route as ReactFormInputDebounceImport } from './routes/react-form/input
 import { Route as ReactFormComboboxCheckboxGroupImport } from './routes/react-form/combobox-checkbox-group'
 import { Route as ReactFormCheckboxWithLabelImport } from './routes/react-form/checkbox-with-label'
 import { Route as ReactFormCheckboxGroupImport } from './routes/react-form/checkbox-group'
+import { Route as ObjectsTableObjectExplorerImport } from './routes/objects/table-object-explorer'
+import { Route as AppAuthRouteImport } from './routes/app/auth/route'
+import { Route as AppAuthSignupImport } from './routes/app/auth/signup'
+import { Route as AppAuthLoginImport } from './routes/app/auth/login'
+import { Route as AppAuthForgotPasswordImport } from './routes/app/auth/forgot-password'
+import { Route as AppAuthConfirmOtpImport } from './routes/app/auth/confirm-otp'
 
 // Create/Update Routes
 
@@ -57,6 +65,12 @@ const ReactQueryRouteRoute = ReactQueryRouteImport.update({
 const ReactFormRouteRoute = ReactFormRouteImport.update({
   id: '/react-form',
   path: '/react-form',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ObjectsRouteRoute = ObjectsRouteImport.update({
+  id: '/objects',
+  path: '/objects',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -112,6 +126,12 @@ const ShadcnButtonRoute = ShadcnButtonImport.update({
 const ReactTableStandardRoute = ReactTableStandardImport.update({
   id: '/standard',
   path: '/standard',
+  getParentRoute: () => ReactTableRouteRoute,
+} as any)
+
+const ReactTableCustomColumnsRoute = ReactTableCustomColumnsImport.update({
+  id: '/custom-columns',
+  path: '/custom-columns',
   getParentRoute: () => ReactTableRouteRoute,
 } as any)
 
@@ -174,6 +194,44 @@ const ReactFormCheckboxGroupRoute = ReactFormCheckboxGroupImport.update({
   getParentRoute: () => ReactFormRouteRoute,
 } as any)
 
+const ObjectsTableObjectExplorerRoute = ObjectsTableObjectExplorerImport.update(
+  {
+    id: '/table-object-explorer',
+    path: '/table-object-explorer',
+    getParentRoute: () => ObjectsRouteRoute,
+  } as any,
+)
+
+const AppAuthRouteRoute = AppAuthRouteImport.update({
+  id: '/app/auth',
+  path: '/app/auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AppAuthSignupRoute = AppAuthSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AppAuthRouteRoute,
+} as any)
+
+const AppAuthLoginRoute = AppAuthLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AppAuthRouteRoute,
+} as any)
+
+const AppAuthForgotPasswordRoute = AppAuthForgotPasswordImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => AppAuthRouteRoute,
+} as any)
+
+const AppAuthConfirmOtpRoute = AppAuthConfirmOtpImport.update({
+  id: '/confirm-otp',
+  path: '/confirm-otp',
+  getParentRoute: () => AppAuthRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -183,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/objects': {
+      id: '/objects'
+      path: '/objects'
+      fullPath: '/objects'
+      preLoaderRoute: typeof ObjectsRouteImport
       parentRoute: typeof rootRoute
     }
     '/react-form': {
@@ -212,6 +277,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/shadcn'
       preLoaderRoute: typeof ShadcnRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/app/auth': {
+      id: '/app/auth'
+      path: '/app/auth'
+      fullPath: '/app/auth'
+      preLoaderRoute: typeof AppAuthRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/objects/table-object-explorer': {
+      id: '/objects/table-object-explorer'
+      path: '/table-object-explorer'
+      fullPath: '/objects/table-object-explorer'
+      preLoaderRoute: typeof ObjectsTableObjectExplorerImport
+      parentRoute: typeof ObjectsRouteImport
     }
     '/react-form/checkbox-group': {
       id: '/react-form/checkbox-group'
@@ -276,6 +355,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReactQueryUseQueryImport
       parentRoute: typeof ReactQueryRouteImport
     }
+    '/react-table/custom-columns': {
+      id: '/react-table/custom-columns'
+      path: '/custom-columns'
+      fullPath: '/react-table/custom-columns'
+      preLoaderRoute: typeof ReactTableCustomColumnsImport
+      parentRoute: typeof ReactTableRouteImport
+    }
     '/react-table/standard': {
       id: '/react-table/standard'
       path: '/standard'
@@ -332,10 +418,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShadcnUseReactiveStateImport
       parentRoute: typeof ShadcnRouteImport
     }
+    '/app/auth/confirm-otp': {
+      id: '/app/auth/confirm-otp'
+      path: '/confirm-otp'
+      fullPath: '/app/auth/confirm-otp'
+      preLoaderRoute: typeof AppAuthConfirmOtpImport
+      parentRoute: typeof AppAuthRouteImport
+    }
+    '/app/auth/forgot-password': {
+      id: '/app/auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/app/auth/forgot-password'
+      preLoaderRoute: typeof AppAuthForgotPasswordImport
+      parentRoute: typeof AppAuthRouteImport
+    }
+    '/app/auth/login': {
+      id: '/app/auth/login'
+      path: '/login'
+      fullPath: '/app/auth/login'
+      preLoaderRoute: typeof AppAuthLoginImport
+      parentRoute: typeof AppAuthRouteImport
+    }
+    '/app/auth/signup': {
+      id: '/app/auth/signup'
+      path: '/signup'
+      fullPath: '/app/auth/signup'
+      preLoaderRoute: typeof AppAuthSignupImport
+      parentRoute: typeof AppAuthRouteImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface ObjectsRouteRouteChildren {
+  ObjectsTableObjectExplorerRoute: typeof ObjectsTableObjectExplorerRoute
+}
+
+const ObjectsRouteRouteChildren: ObjectsRouteRouteChildren = {
+  ObjectsTableObjectExplorerRoute: ObjectsTableObjectExplorerRoute,
+}
+
+const ObjectsRouteRouteWithChildren = ObjectsRouteRoute._addFileChildren(
+  ObjectsRouteRouteChildren,
+)
 
 interface ReactFormRouteRouteChildren {
   ReactFormCheckboxGroupRoute: typeof ReactFormCheckboxGroupRoute
@@ -376,10 +502,12 @@ const ReactQueryRouteRouteWithChildren = ReactQueryRouteRoute._addFileChildren(
 )
 
 interface ReactTableRouteRouteChildren {
+  ReactTableCustomColumnsRoute: typeof ReactTableCustomColumnsRoute
   ReactTableStandardRoute: typeof ReactTableStandardRoute
 }
 
 const ReactTableRouteRouteChildren: ReactTableRouteRouteChildren = {
+  ReactTableCustomColumnsRoute: ReactTableCustomColumnsRoute,
   ReactTableStandardRoute: ReactTableStandardRoute,
 }
 
@@ -411,12 +539,33 @@ const ShadcnRouteRouteWithChildren = ShadcnRouteRoute._addFileChildren(
   ShadcnRouteRouteChildren,
 )
 
+interface AppAuthRouteRouteChildren {
+  AppAuthConfirmOtpRoute: typeof AppAuthConfirmOtpRoute
+  AppAuthForgotPasswordRoute: typeof AppAuthForgotPasswordRoute
+  AppAuthLoginRoute: typeof AppAuthLoginRoute
+  AppAuthSignupRoute: typeof AppAuthSignupRoute
+}
+
+const AppAuthRouteRouteChildren: AppAuthRouteRouteChildren = {
+  AppAuthConfirmOtpRoute: AppAuthConfirmOtpRoute,
+  AppAuthForgotPasswordRoute: AppAuthForgotPasswordRoute,
+  AppAuthLoginRoute: AppAuthLoginRoute,
+  AppAuthSignupRoute: AppAuthSignupRoute,
+}
+
+const AppAuthRouteRouteWithChildren = AppAuthRouteRoute._addFileChildren(
+  AppAuthRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/objects': typeof ObjectsRouteRouteWithChildren
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/shadcn': typeof ShadcnRouteRouteWithChildren
+  '/app/auth': typeof AppAuthRouteRouteWithChildren
+  '/objects/table-object-explorer': typeof ObjectsTableObjectExplorerRoute
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
@@ -426,6 +575,7 @@ export interface FileRoutesByFullPath {
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
+  '/react-table/custom-columns': typeof ReactTableCustomColumnsRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
@@ -434,14 +584,21 @@ export interface FileRoutesByFullPath {
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
+  '/app/auth/confirm-otp': typeof AppAuthConfirmOtpRoute
+  '/app/auth/forgot-password': typeof AppAuthForgotPasswordRoute
+  '/app/auth/login': typeof AppAuthLoginRoute
+  '/app/auth/signup': typeof AppAuthSignupRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/objects': typeof ObjectsRouteRouteWithChildren
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/shadcn': typeof ShadcnRouteRouteWithChildren
+  '/app/auth': typeof AppAuthRouteRouteWithChildren
+  '/objects/table-object-explorer': typeof ObjectsTableObjectExplorerRoute
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
@@ -451,6 +608,7 @@ export interface FileRoutesByTo {
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
+  '/react-table/custom-columns': typeof ReactTableCustomColumnsRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
@@ -459,15 +617,22 @@ export interface FileRoutesByTo {
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
+  '/app/auth/confirm-otp': typeof AppAuthConfirmOtpRoute
+  '/app/auth/forgot-password': typeof AppAuthForgotPasswordRoute
+  '/app/auth/login': typeof AppAuthLoginRoute
+  '/app/auth/signup': typeof AppAuthSignupRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/objects': typeof ObjectsRouteRouteWithChildren
   '/react-form': typeof ReactFormRouteRouteWithChildren
   '/react-query': typeof ReactQueryRouteRouteWithChildren
   '/react-table': typeof ReactTableRouteRouteWithChildren
   '/shadcn': typeof ShadcnRouteRouteWithChildren
+  '/app/auth': typeof AppAuthRouteRouteWithChildren
+  '/objects/table-object-explorer': typeof ObjectsTableObjectExplorerRoute
   '/react-form/checkbox-group': typeof ReactFormCheckboxGroupRoute
   '/react-form/checkbox-with-label': typeof ReactFormCheckboxWithLabelRoute
   '/react-form/combobox-checkbox-group': typeof ReactFormComboboxCheckboxGroupRoute
@@ -477,6 +642,7 @@ export interface FileRoutesById {
   '/react-form/with-zoos-form': typeof ReactFormWithZoosFormRoute
   '/react-query/use-mutation': typeof ReactQueryUseMutationRoute
   '/react-query/use-query': typeof ReactQueryUseQueryRoute
+  '/react-table/custom-columns': typeof ReactTableCustomColumnsRoute
   '/react-table/standard': typeof ReactTableStandardRoute
   '/shadcn/button': typeof ShadcnButtonRoute
   '/shadcn/checkbox': typeof ShadcnCheckboxRoute
@@ -485,16 +651,23 @@ export interface FileRoutesById {
   '/shadcn/select': typeof ShadcnSelectRoute
   '/shadcn/use-debounce': typeof ShadcnUseDebounceRoute
   '/shadcn/use-reactive-state': typeof ShadcnUseReactiveStateRoute
+  '/app/auth/confirm-otp': typeof AppAuthConfirmOtpRoute
+  '/app/auth/forgot-password': typeof AppAuthForgotPasswordRoute
+  '/app/auth/login': typeof AppAuthLoginRoute
+  '/app/auth/signup': typeof AppAuthSignupRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/objects'
     | '/react-form'
     | '/react-query'
     | '/react-table'
     | '/shadcn'
+    | '/app/auth'
+    | '/objects/table-object-explorer'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/combobox-checkbox-group'
@@ -504,6 +677,7 @@ export interface FileRouteTypes {
     | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
+    | '/react-table/custom-columns'
     | '/react-table/standard'
     | '/shadcn/button'
     | '/shadcn/checkbox'
@@ -512,13 +686,20 @@ export interface FileRouteTypes {
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
+    | '/app/auth/confirm-otp'
+    | '/app/auth/forgot-password'
+    | '/app/auth/login'
+    | '/app/auth/signup'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/objects'
     | '/react-form'
     | '/react-query'
     | '/react-table'
     | '/shadcn'
+    | '/app/auth'
+    | '/objects/table-object-explorer'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/combobox-checkbox-group'
@@ -528,6 +709,7 @@ export interface FileRouteTypes {
     | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
+    | '/react-table/custom-columns'
     | '/react-table/standard'
     | '/shadcn/button'
     | '/shadcn/checkbox'
@@ -536,13 +718,20 @@ export interface FileRouteTypes {
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
+    | '/app/auth/confirm-otp'
+    | '/app/auth/forgot-password'
+    | '/app/auth/login'
+    | '/app/auth/signup'
   id:
     | '__root__'
     | '/'
+    | '/objects'
     | '/react-form'
     | '/react-query'
     | '/react-table'
     | '/shadcn'
+    | '/app/auth'
+    | '/objects/table-object-explorer'
     | '/react-form/checkbox-group'
     | '/react-form/checkbox-with-label'
     | '/react-form/combobox-checkbox-group'
@@ -552,6 +741,7 @@ export interface FileRouteTypes {
     | '/react-form/with-zoos-form'
     | '/react-query/use-mutation'
     | '/react-query/use-query'
+    | '/react-table/custom-columns'
     | '/react-table/standard'
     | '/shadcn/button'
     | '/shadcn/checkbox'
@@ -560,23 +750,31 @@ export interface FileRouteTypes {
     | '/shadcn/select'
     | '/shadcn/use-debounce'
     | '/shadcn/use-reactive-state'
+    | '/app/auth/confirm-otp'
+    | '/app/auth/forgot-password'
+    | '/app/auth/login'
+    | '/app/auth/signup'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ObjectsRouteRoute: typeof ObjectsRouteRouteWithChildren
   ReactFormRouteRoute: typeof ReactFormRouteRouteWithChildren
   ReactQueryRouteRoute: typeof ReactQueryRouteRouteWithChildren
   ReactTableRouteRoute: typeof ReactTableRouteRouteWithChildren
   ShadcnRouteRoute: typeof ShadcnRouteRouteWithChildren
+  AppAuthRouteRoute: typeof AppAuthRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ObjectsRouteRoute: ObjectsRouteRouteWithChildren,
   ReactFormRouteRoute: ReactFormRouteRouteWithChildren,
   ReactQueryRouteRoute: ReactQueryRouteRouteWithChildren,
   ReactTableRouteRoute: ReactTableRouteRouteWithChildren,
   ShadcnRouteRoute: ShadcnRouteRouteWithChildren,
+  AppAuthRouteRoute: AppAuthRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -590,14 +788,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/objects",
         "/react-form",
         "/react-query",
         "/react-table",
-        "/shadcn"
+        "/shadcn",
+        "/app/auth"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/objects": {
+      "filePath": "objects/route.tsx",
+      "children": [
+        "/objects/table-object-explorer"
+      ]
     },
     "/react-form": {
       "filePath": "react-form/route.tsx",
@@ -621,6 +827,7 @@ export const routeTree = rootRoute
     "/react-table": {
       "filePath": "react-table/route.tsx",
       "children": [
+        "/react-table/custom-columns",
         "/react-table/standard"
       ]
     },
@@ -635,6 +842,19 @@ export const routeTree = rootRoute
         "/shadcn/use-debounce",
         "/shadcn/use-reactive-state"
       ]
+    },
+    "/app/auth": {
+      "filePath": "app/auth/route.tsx",
+      "children": [
+        "/app/auth/confirm-otp",
+        "/app/auth/forgot-password",
+        "/app/auth/login",
+        "/app/auth/signup"
+      ]
+    },
+    "/objects/table-object-explorer": {
+      "filePath": "objects/table-object-explorer.tsx",
+      "parent": "/objects"
     },
     "/react-form/checkbox-group": {
       "filePath": "react-form/checkbox-group.tsx",
@@ -672,6 +892,10 @@ export const routeTree = rootRoute
       "filePath": "react-query/use-query.tsx",
       "parent": "/react-query"
     },
+    "/react-table/custom-columns": {
+      "filePath": "react-table/custom-columns.tsx",
+      "parent": "/react-table"
+    },
     "/react-table/standard": {
       "filePath": "react-table/standard.tsx",
       "parent": "/react-table"
@@ -703,6 +927,22 @@ export const routeTree = rootRoute
     "/shadcn/use-reactive-state": {
       "filePath": "shadcn/use-reactive-state.tsx",
       "parent": "/shadcn"
+    },
+    "/app/auth/confirm-otp": {
+      "filePath": "app/auth/confirm-otp.tsx",
+      "parent": "/app/auth"
+    },
+    "/app/auth/forgot-password": {
+      "filePath": "app/auth/forgot-password.tsx",
+      "parent": "/app/auth"
+    },
+    "/app/auth/login": {
+      "filePath": "app/auth/login.tsx",
+      "parent": "/app/auth"
+    },
+    "/app/auth/signup": {
+      "filePath": "app/auth/signup.tsx",
+      "parent": "/app/auth"
     }
   }
 }
