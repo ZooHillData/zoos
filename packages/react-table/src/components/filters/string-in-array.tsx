@@ -1,23 +1,50 @@
 import { type HeaderContext, type Row } from "@tanstack/react-table";
 
-import { cn } from "@zoos/shadcn";
-import { CheckboxWithLabel } from "@zoos/react-form";
+import { createCn, Input } from "@zoos/shadcn";
+import { CheckboxGroupVirtual, useVirtualCombobox } from "@zoos/react-form";
+import React from "react";
 
-const Combobox = (props: {
-  options: string[];
-  value: string[];
-  onClick: (value: string) => void;
-  className?: string;
+const Combobox = ({
+  options,
+  inputClassName,
+  ...props
+}: Omit<React.ComponentProps<typeof CheckboxGroupVirtual>, "virtualizer"> & {
+  inputClassName?: string;
 }) => {
+  const {
+    query,
+    setQuery,
+    optionsFiltered,
+    hasUniqueValues,
+    virtualizer,
+    scrollRef,
+  } = useVirtualCombobox({
+    options,
+    virtualizerOptions: { estimateSize: () => 24 },
+  });
+
+  if (!hasUniqueValues) {
+    window.alert(
+      "Options must have unique values. That's one benefit of `Options` as an object with IDs.",
+    );
+  }
+
   return (
-    <div className={cn("space-y-2", props.className || "")}>
-      {props.options.map((option) => (
-        <CheckboxWithLabel
-          checked={props.value.includes(option)}
-          onCheckedChange={() => props.onClick(option)}
-          label={option}
+    <div className="space-y-3">
+      <Input
+        className={inputClassName}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <div className="h-full overflow-auto" ref={scrollRef}>
+        <CheckboxGroupVirtual
+          options={optionsFiltered}
+          virtualizer={virtualizer}
+          className={createCn("flex flex-col gap-3")}
+          {...props}
         />
-      ))}
+      </div>
+      {/* </div> */}
     </div>
   );
 };
@@ -35,15 +62,7 @@ const FilterInput = <TData, TValue>({
     <Combobox
       {...inputProps}
       value={filterValue}
-      onClick={(option) => {
-        if (filterValue.includes(option)) {
-          const updated = filterValue.filter((v) => v !== option);
-          const updateValue = updated.length === 0 ? undefined : updated;
-          column.setFilterValue(undefined);
-        } else {
-          column.setFilterValue([...filterValue, option]);
-        }
-      }}
+      onChange={(value) => column.setFilterValue(value)}
     />
   );
 };

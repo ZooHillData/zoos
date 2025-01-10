@@ -32,6 +32,7 @@ import {
   Tooltip,
   TooltipContent,
   cn,
+  createCn,
 } from "@zoos/shadcn";
 
 /*
@@ -157,13 +158,15 @@ const columns = [
           <filters.string.inArray.FilterInput
             headerContext={headerContext}
             inputProps={{
-              className: "max-h-[400px] overflow-auto",
+              className: createCn("max-h-[300px]"),
               // Full control over props passed to input
               // (other than those required to connect to
               // `headerContext.column.setFilterValue()`)
               options: Array.from(
                 headerContext.column.getFacetedUniqueValues().keys(),
-              ).sort((a, b) => a.localeCompare(b)),
+              )
+                .sort((a, b) => a.localeCompare(b))
+                .map((value) => ({ value, label: value })),
             }}
           />
           <ClearFilterButton headerContext={headerContext} />

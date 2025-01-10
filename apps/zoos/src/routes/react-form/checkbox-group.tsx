@@ -22,23 +22,23 @@ function RouteComponent() {
     <div className="space-y-8">
       <div className="space-y-2">
         <h2>Vertical</h2>
-        <CheckboxGroup
-          value={value}
-          onChange={(value) => setValue(value)}
-          options={options}
-          sort={true}
-          direction="column"
-        />
+        <div className="space-y-3">
+          <CheckboxGroup
+            value={value}
+            onChange={(value) => setValue(value)}
+            options={options}
+          />
+        </div>
       </div>
       <div className="space-y-2">
         <h2>Horizontal</h2>
-        <CheckboxGroup
-          value={value2}
-          onChange={(value) => setValue2(value)}
-          options={options}
-          sort={true}
-          direction="row"
-        />
+        <div className="space-y-3">
+          <CheckboxGroup
+            value={value2}
+            onChange={(value) => setValue2(value)}
+            options={options}
+          />
+        </div>
       </div>
     </div>
   );

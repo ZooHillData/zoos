@@ -8,8 +8,8 @@ const ClearFilterButton = <TData, TValue>({
   ...buttonProps
 }: {
   headerContext: HeaderContext<TData, TValue>;
-} & WithFreshClassName<React.ComponentProps<typeof Button>>) =>
-  headerContext.column.getFilterValue() ? (
+} & WithFreshClassName<React.ComponentProps<typeof Button>>) => {
+  return headerContext.column.getIsFiltered() ? (
     <Button
       size="sm"
       variant="link"
@@ -20,5 +20,6 @@ const ClearFilterButton = <TData, TValue>({
       Clear Filter
     </Button>
   ) : null;
+};
 
 export { ClearFilterButton };

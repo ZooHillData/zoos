@@ -2,19 +2,13 @@ import { Virtualizer } from "@tanstack/react-virtual";
 
 import { useReactiveState, type WithClassNameFn } from "@zoos/shadcn";
 
+import { type CheckboxGroupProps } from "./checkbox-group";
 import { CheckboxWithLabel } from "./checkbox-with-label";
-import { type Options, type Option } from "../lib/get-options";
 
 const CheckboxGroupVirtual = (
-  props: WithClassNameFn<{
-    options: Options;
-    virtualizer: Virtualizer<HTMLDivElement, Element>;
-    value?: string[];
-    onChange?: (value: string[]) => void;
-    getCheckboxProps?: (
-      option: Option,
-    ) => React.ComponentProps<typeof CheckboxWithLabel>;
-  }>,
+  props: WithClassNameFn<
+    CheckboxGroupProps & { virtualizer: Virtualizer<HTMLDivElement, Element> }
+  >,
 ) => {
   const [value, setValue] = useReactiveState(props.value);
   const { className = (className) => className } = props;
@@ -39,10 +33,14 @@ const CheckboxGroupVirtual = (
               checked={value?.includes(option?.value)}
               onCheckedChange={(checked) => {
                 if (checked) {
-                  props.onChange?.([...(props.value || []), option.value]);
+                  props.onChange?.(
+                    [...(props.value || []), option.value],
+                    option,
+                  );
                 } else {
                   props.onChange?.(
                     (props.value || []).filter((v) => v !== option?.value),
+                    option,
                   );
                 }
               }}
