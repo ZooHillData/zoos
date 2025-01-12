@@ -1,7 +1,7 @@
 # Docs for configuring this file: https://ntl.fyi/file-based-build-config
 
 [build]
-command = "npm run build"
+command = "npm install && npm run build"
 functions = "netlify/functions"
 publish = "dist/apps/zoos"
 
