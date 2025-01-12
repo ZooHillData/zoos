@@ -1,7 +1,6 @@
 import type { ComponentProps } from "./types";
-import { mergeFeatureProps } from "./merge-feature-props";
 
-const borders = () =>
+const borders = <TData, TValue>() =>
   ({
     container: { className: "border" },
     trHead: () => ({
@@ -16,6 +15,6 @@ const borders = () =>
     td: () => ({
       className: "border-r last:border-r-0",
     }),
-  }) satisfies ComponentProps;
+  }) satisfies ComponentProps<TData, TValue>;
 
 export { borders };
