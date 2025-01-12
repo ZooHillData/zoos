@@ -4,9 +4,11 @@ import type { ComponentProps } from "./types";
 import { HeaderContext } from "@tanstack/react-table";
 
 /** Get props required for column resizing */
-const resizeColumn = (params: {
+const resizeColumn = <TData, TValue>(params: {
   isResizingColumn: boolean;
-  custom?: Pick<ComponentProps, "table" | "resizeColHandle">;
+  custom?: Partial<
+    Pick<ComponentProps<TData, TValue>, "table" | "resizeColHandle">
+  >;
 }) => {
   return {
     table: mergeStyleProps([
@@ -15,7 +17,7 @@ const resizeColumn = (params: {
     ]),
     // So that resize handle is visible on hover
     th: () => ({ className: "relative group" }),
-    resizeColHandle: <TData, TValue>({
+    resizeColHandle: ({
       headerContext,
     }: {
       headerContext: HeaderContext<TData, TValue>;

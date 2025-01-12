@@ -25,16 +25,16 @@ const getPinningStyles = <TData, TValue>(column: Column<TData, TValue>) => {
   };
 };
 
-const columnPinning = (params?: {
-  custom?: Pick<ComponentProps, "th" | "td">;
+const columnPinning = <TData, TValue>(params?: {
+  custom?: Pick<ComponentProps<TData, TValue>, "th" | "td">;
 }) =>
   ({
-    th: ({ header }) => {
+    th: ({ headerContext }) => {
       return mergeStyleProps([
         {
-          style: getPinningStyles(header.column),
+          style: getPinningStyles(headerContext.header.column),
         },
-        params?.custom?.th?.({ header }) || {},
+        params?.custom?.th?.({ headerContext }) || {},
       ]);
     },
     td: ({ cell, virtualRow }) => {
@@ -45,6 +45,6 @@ const columnPinning = (params?: {
         params?.custom?.td?.({ cell, virtualRow }) || {},
       ]);
     },
-  }) satisfies Partial<ComponentProps>;
+  }) satisfies ComponentProps<TData, TValue>;
 
 export { columnPinning, getPinningStyles, getPinningAttributes };

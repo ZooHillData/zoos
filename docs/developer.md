@@ -56,3 +56,28 @@ npx nx run-many -t lint,build,release
 #
 npx semantic-release
 ```
+
+## If CI fails
+
+Many times when CI fails, it will successfully publish the package to npm but not update the tags and commits in the repo.
+
+Since semantic-release looks at GH tags to determine the next version, you need to manually update the tags in the repo if it fails.
+
+**1. Check remote tags**
+
+```bash
+# List remote tags
+git ls-remote --tags origin
+```
+
+If latest tag does not match the version in package.json, manually add the tag
+
+```bash
+version=1.13.2
+git tag v${version}
+git push origin v${version}
+```
+
+**2. Push to remote**
+
+Push / merge to remote as typical to trigger a release

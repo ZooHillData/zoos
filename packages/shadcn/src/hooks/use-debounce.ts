@@ -16,11 +16,17 @@ const useDebounce = <T>({
   // Debounce the onChange handler
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange(internalValue);
+      // Since the internal value is updated when `value` changes
+      // with the `useReactiveState` hook, we have to check
+      // that the value has actually changed so we stop the
+      // invinite update loop
+      if (internalValue !== value) {
+        onChange(internalValue);
+      }
     }, delay);
 
     return () => clearTimeout(timeout);
-  }, [internalValue, delay, onChange]);
+  }, [internalValue, delay, onChange, value]);
 
   return [internalValue, setInternalValue] as const;
 };

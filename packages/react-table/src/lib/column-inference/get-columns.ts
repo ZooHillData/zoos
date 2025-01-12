@@ -1,14 +1,22 @@
-import { createColumnHelper } from "@tanstack/react-table";
+import { type ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
-const getColumns = <TData extends object>(params: { data: TData[] }) => {
-  const columnIds = Object.keys(params.data[0]);
-  const columnHelper = createColumnHelper<TData>();
+const getColumns =
+  <TData extends Record<string, unknown>>({ data }: { data: TData[] }) =>
+  (params?: { columns?: Record<string, Partial<ColumnDef<TData>>> }) => {
+    const { columns } = params || {};
+    const columnHelper = createColumnHelper<TData>();
 
-  return columnIds.map((columnId) => {
-    return columnHelper.accessor((row) => row[columnId as keyof TData], {
-      id: columnId,
-    });
-  });
-};
+    // Combine column IDs from columns passed in and inferred from data
+    const columnIds = Array.from(
+      new Set([...Object.keys(columns || {}), ...Object.keys(data[0])]),
+    );
+
+    return columnIds.map((columnId) =>
+      columnHelper.accessor((row) => row[columnId], {
+        id: columnId,
+        ...columns?.[columnId],
+      }),
+    );
+  };
 
 export { getColumns };

@@ -1,7 +1,7 @@
 import { type ComponentProps } from "./types";
 import { type Virtualizer } from "@tanstack/react-virtual";
 
-const rowVirtualization = (params: {
+const rowVirtualization = <TData, TValue>(params: {
   scrollContainerRef: React.MutableRefObject<HTMLDivElement | null>;
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
 }) =>
@@ -16,9 +16,9 @@ const rowVirtualization = (params: {
     trHead: () => ({
       className: "flex w-full",
     }),
-    th: ({ header }) => ({
+    th: ({ headerContext }) => ({
       style: {
-        width: header.getSize(),
+        width: headerContext.header.getSize(),
       },
     }),
     tbody: { style: { height: `${params.rowVirtualizer.getTotalSize()}px` } },
@@ -35,6 +35,6 @@ const rowVirtualization = (params: {
         width: cell.column.getSize(),
       },
     }),
-  }) satisfies Partial<ComponentProps>;
+  }) satisfies Partial<ComponentProps<TData, TValue>>;
 
 export { rowVirtualization };

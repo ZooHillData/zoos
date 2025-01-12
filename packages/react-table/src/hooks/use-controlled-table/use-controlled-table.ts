@@ -39,8 +39,14 @@ const useControlledTable = <TData>({
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     // Column resizing
     columnResizeMode: "onChange",
-    // Filtering
+    // Filtering from the leaf nodes in the event of
+    // hierarchical data, requiring expansion
     filterFromLeafRows: true,
+    // Don't reset all state when data changes
+    // for example, this will prevent the
+    // expanding state from changing with global
+    // filter or column filter changes
+    autoResetAll: false,
     // Controlled state
     ...getControlledTableOptions({ state, onStateChange }),
     // Caller options

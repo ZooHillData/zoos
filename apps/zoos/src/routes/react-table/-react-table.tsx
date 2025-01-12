@@ -8,9 +8,11 @@ import React from "react";
 import {
   flexRender,
   type Table as TTable,
-  type TableState,
   type HeaderContext,
+  Header,
 } from "@tanstack/react-table";
+import { type Virtualizer } from "@tanstack/react-virtual";
+
 import { cn } from "@zoos/shadcn";
 import {
   useVirtualization,
@@ -18,12 +20,11 @@ import {
   featureProps,
   mergeFeatureProps,
   getPinningAttributes,
-  getColumns,
   FormattedId,
   HeaderContextMenu,
   HeaderSortIndicator,
+  ComponentProps,
 } from "@zoos/react-table";
-import { type Virtualizer } from "@tanstack/react-virtual";
 
 const FilterContainer = ({
   className,
@@ -47,26 +48,21 @@ const FilterFieldLabel = <TData, TValue>({
   </em>
 );
 
-type UseTableParams<TData> = {
-  data: TData[];
-  columns?: Parameters<typeof useControlledTable<TData>>[0]["columns"];
-} & Omit<
-  Parameters<typeof useControlledTable<TData>>[0],
-  "columns" | "state" | "onStateChange"
->;
+type UseTableParams<TData, TValue> = Parameters<
+  typeof useControlledTable<TData>
+>[0] & {
+  userProps?: Partial<ComponentProps<TData, TValue>>;
+};
 
-const useTable = <TData extends object>({
-  columns: paramColumns,
+const useTable = <TData extends object, TValue>({
+  columns,
   data,
+  userProps = {},
   ...params
-}: UseTableParams<TData>) => {
-  const [state, setState] = React.useState({} as TableState);
-  const columns = paramColumns || getColumns({ data: data });
+}: UseTableParams<TData, TValue>) => {
   const { table } = useControlledTable({
     data,
     columns,
-    state,
-    onStateChange: setState,
     ...params,
   });
   const { scrollContainerRef, rowVirtualizer, virtualRows } = useVirtualization(
@@ -74,7 +70,7 @@ const useTable = <TData extends object>({
       table,
       row: {
         estimateSize: () => 24,
-        overscan: 10,
+        overscan: 50,
       },
       column: {
         overscan: 3,
@@ -86,8 +82,13 @@ const useTable = <TData extends object>({
   const isResizingColumn = !!table.getState().columnSizingInfo.isResizingColumn;
   const featureProps = React.useMemo(
     () =>
-      getFeatureProps({ isResizingColumn, rowVirtualizer, scrollContainerRef }),
-    [isResizingColumn, rowVirtualizer, scrollContainerRef],
+      getFeatureProps({
+        isResizingColumn,
+        rowVirtualizer,
+        scrollContainerRef,
+        userProps,
+      }),
+    [isResizingColumn, rowVirtualizer, scrollContainerRef, userProps],
   );
 
   return {
@@ -99,10 +100,10 @@ const useTable = <TData extends object>({
   };
 };
 
-const Table = <TData extends object>(props: {
+const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
   virtualRows: ReturnType<typeof useVirtualization>["virtualRows"];
-  featureProps: ReturnType<typeof getFeatureProps>;
+  featureProps: ComponentProps<TData, TValue>;
 }) => {
   const { table, virtualRows, featureProps } = props;
 
@@ -119,10 +120,15 @@ const Table = <TData extends object>(props: {
               key={headerGroup.id}
               {...featureProps.trHead?.({ headerGroup })}
             >
-              {headerGroup.headers.map((header) => {
+              {headerGroup.headers.map((header: Header<TData, TValue>) => {
                 return (
                   // ~ Header cell
-                  <th key={header.id} {...featureProps.th?.({ header })}>
+                  <th
+                    key={header.id}
+                    {...featureProps.th?.({
+                      headerContext: header.getContext(),
+                    })}
+                  >
                     <HeaderContextMenu
                       // Header context menu provides right click
                       header={header.getContext()}
@@ -166,20 +172,23 @@ const Table = <TData extends object>(props: {
                 {...featureProps.trBody?.({ row, virtualRow })}
                 // Custom row click handler
               >
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    // ~ Data cell
-                    <td
-                      key={cell.id}
-                      {...featureProps.td?.({ cell, virtualRow })}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </td>
-                  );
-                })}
+                {
+                  // ! Need this type hint to avoid TS error
+                  row.getVisibleCells().map((cell) => {
+                    return (
+                      // ~ Data cell
+                      <td
+                        key={cell.id}
+                        {...featureProps.td?.({ cell, virtualRow })}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </td>
+                    );
+                  })
+                }
               </tr>
             );
           })}
@@ -189,15 +198,17 @@ const Table = <TData extends object>(props: {
   );
 };
 
-const getFeatureProps = ({
+const getFeatureProps = <TData, TValue>({
   isResizingColumn,
   rowVirtualizer,
   scrollContainerRef,
+  userProps = {},
 }: {
   isResizingColumn: boolean;
   rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
   scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-}) =>
+  userProps?: Partial<ComponentProps<TData, TValue>>;
+}): ComponentProps<TData, TValue> =>
   mergeFeatureProps([
     // ~ Standard features
     featureProps.rowVirtualization({ scrollContainerRef, rowVirtualizer }),
@@ -212,12 +223,12 @@ const getFeatureProps = ({
         }),
       },
     }),
-    featureProps.borders(),
+    // featureProps.borders(),
     featureProps.columnPinning({
       custom: {
         // Custom styles for the border between pinned and non-pinned columns
         // `<td />` and `<th />` set separately
-        th: ({ header: { column } }) => {
+        th: ({ headerContext: { column } }) => {
           const { isLastLeft, isFirstRight } = getPinningAttributes(column);
           return {
             className: isLastLeft
@@ -258,10 +269,11 @@ const getFeatureProps = ({
     // Row striping
     {
       td: ({ virtualRow }) => ({
-        className: virtualRow.index % 2 === 0 ? "bg-accent" : "bg-background",
+        className: virtualRow.index % 2 === 0 ? "bg-muted" : "bg-background",
       }),
       th: () => ({ className: "bg-background" }),
     },
+    userProps,
   ]);
 
 export { useTable, FilterContainer, FilterFieldLabel, Table, getFeatureProps };

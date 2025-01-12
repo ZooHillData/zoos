@@ -6,6 +6,8 @@ export const Route = createFileRoute("/react-table/custom-columns")({
 
 import React from "react";
 
+import { type TableState, createColumnHelper } from "@tanstack/react-table";
+
 import {
   filters,
   ClearFilterButton,
@@ -30,7 +32,6 @@ import {
 // ~ Manual column definitions
 // Using `getColumns` to infer all columns
 import { type User } from "../../lib/fake-data";
-import { createColumnHelper } from "@tanstack/react-table";
 const columnHelper = createColumnHelper<User>();
 const columns = [
   columnHelper.group({
@@ -137,10 +138,13 @@ const columns = [
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
+  const [state, setState] = React.useState({} as TableState);
 
   const { table, virtualRows, featureProps } = useTable({
     data,
     columns,
+    state,
+    onStateChange: (state) => setState(state),
   });
 
   return <Table {...{ table, virtualRows, featureProps }} />;

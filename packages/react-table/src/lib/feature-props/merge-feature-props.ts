@@ -1,9 +1,9 @@
 import { mergeStyleProps } from "@zoos/shadcn";
 import { type ComponentProps } from "./types";
 
-const mergeFeatureProps = (
-  featureProps: Partial<ComponentProps>[],
-): ComponentProps => ({
+const mergeFeatureProps = <TData, TValue>(
+  featureProps: Partial<ComponentProps<TData, TValue>>[],
+): ComponentProps<TData, TValue> => ({
   container: mergeStyleProps(
     featureProps.map((props) => props.container || {}),
   ),

@@ -5,6 +5,10 @@ function globalFilterFn<TData>(
   columnId: string,
   filterValue: string,
 ) {
+  if (!filterValue) {
+    return true;
+  }
+
   const columnIds = row.getAllCells().map((cell) => cell.column.id);
   const lowerFilter = filterValue.toLowerCase();
   const concatenatedValues = columnIds

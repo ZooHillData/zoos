@@ -1,20 +1,28 @@
 import { Input } from "@zoos/shadcn";
+import { InputDebounce } from "@zoos/react-form";
 
 import { type HeaderContext } from "@tanstack/react-table";
 
+type FilterInputProps<TData, TValue> = Omit<
+  React.ComponentProps<typeof InputDebounce>,
+  "value" | "onChange" | "delay"
+> & {
+  headerContext: HeaderContext<TData, TValue>;
+  delay?: number;
+};
+
 const FilterInput = <TData, TValue>({
   headerContext: { column },
-  inputProps,
-}: {
-  headerContext: HeaderContext<TData, TValue>;
-  inputProps?: Omit<React.ComponentProps<typeof Input>, "value" | "onChange">;
-}) => {
+  delay = 0,
+  ...inputProps
+}: FilterInputProps<TData, TValue>) => {
   const filterValue = String(column.getFilterValue() || "");
 
   return (
-    <Input
+    <InputDebounce
       value={filterValue}
-      onChange={(e) => column.setFilterValue(e.target.value)}
+      onChange={(value) => column.setFilterValue(value)}
+      delay={delay}
       {...inputProps}
     />
   );
