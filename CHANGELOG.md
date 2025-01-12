@@ -1,3 +1,9 @@
+## [1.33.0](https://github.com/zoohilldata/zoos/compare/v1.32.0...v1.33.0) (2025-01-12)
+
+### Features
+
+* **react-table:** fixes and improvements on path to hierarchical data (file) explorer ([6ab72ff](https://github.com/zoohilldata/zoos/commit/6ab72ff8c1db81f5f6785032480e0ed6551e4be6))
+
 ## [1.13.1](https://github.com/zoohilldata/zoos/compare/v1.13.0...v1.13.1) (2025-01-10)
 
 ### Bug Fixes
