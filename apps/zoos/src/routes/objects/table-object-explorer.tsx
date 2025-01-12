@@ -6,12 +6,17 @@ export const Route = createFileRoute("/objects/table-object-explorer")({
 
 import React from "react";
 
-import { ChevronRightIcon, ChevronDownIcon } from "lucide-react";
+import {
+  ChevronRightIcon,
+  ChevronDownIcon,
+  UnfoldVerticalIcon,
+  FoldVerticalIcon,
+} from "lucide-react";
 import { createColumnHelper, TableState } from "@tanstack/react-table";
 
 import { cn, Label } from "@zoos/shadcn";
 import { InputDebounce } from "@zoos/react-form";
-import { filters } from "@zoos/react-table";
+import { filters, globalFilterFn } from "@zoos/react-table";
 
 import { Table, useTable, FilterContainer } from "../react-table/-react-table";
 
@@ -24,7 +29,24 @@ const columnHelper = createColumnHelper<PathNode<(typeof files)[0]>>();
 const columns = [
   columnHelper.display({ id: "select", header: "", size: 20 }),
   columnHelper.accessor("_leaf", {
-    header: "Name",
+    header: (headerContext) => (
+      <div className="group flex w-full items-center justify-between text-left">
+        Name
+        {
+          // Expand / collapse on name header
+        }
+        <div className="flex gap-1 pr-2">
+          <UnfoldVerticalIcon
+            onClick={() => headerContext.table.toggleAllRowsExpanded(true)}
+            className="hover:text-primary invisible size-4 group-hover:visible"
+          />
+          <FoldVerticalIcon
+            onClick={() => headerContext.table.toggleAllRowsExpanded(false)}
+            className="hover:text-primary invisible size-4 group-hover:visible"
+          />
+        </div>
+      </div>
+    ),
     size: 300,
     cell: ({ row, cell }) => {
       // Parameters
@@ -56,12 +78,25 @@ const columns = [
               )}
             </button>
           )}
-          <span>{cell.getValue()}</span>
+          <a
+            // Link to github
+            rel="noreferrer"
+            target="_blank"
+            href={`https://github.com/zoohilldata/zoos/tree/main${cell.row.original._path}`}
+            className="hover:underline"
+          >
+            {cell.getValue()}
+          </a>
         </div>
       );
     },
   }),
-  columnHelper.accessor("last_updated", { header: "Last Updated", size: 225 }),
+  columnHelper.accessor("last_updated", {
+    header: "Last Updated",
+    size: 225,
+    cell: ({ cell }) =>
+      cell.row.original._type === "directory" ? "-" : cell.getValue(),
+  }),
   columnHelper.accessor(
     (row) => (row._type === "directory" ? "-" : row.owner),
     {
@@ -85,9 +120,13 @@ const columns = [
         cell.row.original._type === "directory" ? "-" : cell.getValue(),
     },
   ),
+  columnHelper.accessor("_path", { header: "Full Path" }),
 ];
 
-const root = buildPathTree({ data: files })({
+const root = buildPathTree({
+  // Sort paths prior to building tree
+  data: files.sort((a, b) => a.path.localeCompare(b.path)),
+})({
   getParts: (row) => row.path.split("/"),
 });
 
@@ -100,6 +139,10 @@ function RouteComponent() {
     data,
     columns,
     state,
+    initialState: {
+      columnVisibility: { _path: false },
+    },
+    globalFilterFn,
     defaultColumn: {
       filterFn: filters.string.includes.filterFn,
       meta: {
