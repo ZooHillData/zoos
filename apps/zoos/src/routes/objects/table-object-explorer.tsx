@@ -61,9 +61,30 @@ const columns = [
       );
     },
   }),
-  columnHelper.accessor("last_updated", { header: "Last Updated", size: 175 }),
-  columnHelper.accessor("owner", { header: "Owner", size: 175 }),
-  columnHelper.accessor("size", { header: "Size", size: 100 }),
+  columnHelper.accessor("last_updated", { header: "Last Updated", size: 225 }),
+  columnHelper.accessor(
+    (row) => (row._type === "directory" ? "-" : row.owner),
+    {
+      id: "owner",
+      header: "Owner",
+      size: 175,
+    },
+  ),
+  columnHelper.accessor(
+    (row) => {
+      if ((row._children?.length || 0) > 0) {
+        return NaN;
+      }
+      return row.size;
+    },
+    {
+      id: "size",
+      header: "Size",
+      size: 100,
+      cell: ({ cell }) =>
+        cell.row.original._type === "directory" ? "-" : cell.getValue(),
+    },
+  ),
 ];
 
 const root = buildPathTree({ data: files })({
