@@ -84,8 +84,8 @@ function RouteComponent() {
         <h1 className="text-6xl font-bold">Zoos</h1>
         <Links />
         <p className="max-w-[400px] text-balance text-center text-sm italic">
-          Simple, composable React libraries to help take advantage of our top
-          Tanstack, ShadCN, Zustand, Supabase patterns.
+          Simple, composable React libraries using our top Tanstack, ShadCN,
+          Zustand, Supabase patterns.
         </p>
         <GetStartedButton />
       </div>
