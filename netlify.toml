@@ -1,0 +1,13 @@
+# Docs for configuring this file: https://ntl.fyi/file-based-build-config
+
+[build]
+command = "npm run build"
+functions = "netlify/functions"
+publish = "dist/apps/zoos"
+
+# For Tanstack Route / Vite to work
+[[redirects]]
+from = "/*"
+to = "/"
+status = 200
+

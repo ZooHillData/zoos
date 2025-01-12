@@ -3,7 +3,8 @@
   "version": "1.33.0",
   "license": "MIT",
   "scripts": {
-    "build:zoos": "nx build zoos"
+    "dev": "nx serve zoos",
+    "build": "nx build zoos"
   },
   "private": false,
   "repository": "https://github.com/zoohilldata/zoos",
