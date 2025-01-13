@@ -1,3 +1,9 @@
+## [1.35.0](https://github.com/zoohilldata/zoos/compare/v1.34.0...v1.35.0) (2025-01-13)
+
+### Features
+
+* trigger next version with react-table-ui ([1866fc5](https://github.com/zoohilldata/zoos/commit/1866fc5436025efe30dfc2da9a846fc4305a6889))
+
 ## [1.33.0](https://github.com/zoohilldata/zoos/compare/v1.32.0...v1.33.0) (2025-01-12)
 
 ### Features
