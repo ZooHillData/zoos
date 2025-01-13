@@ -8,7 +8,7 @@ const rowVirtualization = <TData, TValue>(params: {
   ({
     container: {
       ref: params.scrollContainerRef,
-      className: "relative h-full max-h-fit max-w-fit overflow-auto",
+      className: "relative h-full max-h-fit max-w-fit overflow-auto rounded",
     },
     table: {
       className: "grid w-full",

@@ -1,0 +1,19 @@
+{
+  "name": "@zoos/navigation",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "repository": {
+    "url": "https://github.com/zoohilldata/zoos.git",
+    "directory": "packages/navigation"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

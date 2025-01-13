@@ -1,6 +1,6 @@
 import type { ComponentProps } from "./types";
 
-const borders = <TData, TValue>() =>
+const borders = () =>
   ({
     container: { className: "border" },
     trHead: () => ({
@@ -15,6 +15,6 @@ const borders = <TData, TValue>() =>
     td: () => ({
       className: "border-r last:border-r-0",
     }),
-  }) satisfies ComponentProps<TData, TValue>;
+  }) satisfies ComponentProps<unknown, unknown>;
 
 export { borders };

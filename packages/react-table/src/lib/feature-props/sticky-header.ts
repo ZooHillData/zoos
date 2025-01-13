@@ -7,7 +7,7 @@ const stickyHeader = <TData, TValue>(params?: {
 }) =>
   mergeFeatureProps<TData, TValue>([
     {
-      thead: { className: "sticky top-0 z-10" },
+      thead: { className: "sticky top-0 z-10 bg-background" },
     },
     params?.custom || {},
   ]);

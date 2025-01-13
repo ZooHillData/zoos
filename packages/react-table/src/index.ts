@@ -7,4 +7,5 @@ export * from "./lib/filter-fns/global-filter-fn";
 export * from "./lib/utils";
 
 export * from "./components/table";
-export * from "./components/filters";
+// export * from "./components/filters";
+export * from "./module.types";

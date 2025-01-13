@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import { RouteComponent } from "../../routes/shadcn/button";
+import { RouteComponent } from "../../routes/libraries/shadcn/button";
 
 jest.mock("@zoos/shadcn", () => ({
   Button: ({ children }: { children: React.ReactNode }) => (
