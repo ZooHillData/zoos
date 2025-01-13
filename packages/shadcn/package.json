@@ -2,7 +2,8 @@
   "name": "@zoos/shadcn",
   "version": "1.33.0",
   "repository": {
-    "url": "git+https://github.com/zoohilldata/zoos.git"
+    "url": "https://github.com/zoohilldata/zoos.git",
+    "directory": "packages/shadcn"
   },
   "publishConfig": {
     "access": "public"
