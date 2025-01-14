@@ -1,3 +1,9 @@
+## [1.35.1](https://github.com/zoohilldata/zoos/compare/v1.35.0...v1.35.1) (2025-01-14)
+
+### Bug Fixes
+
+* **navigation:** clean up getDataTree naming conventions ([81c88c3](https://github.com/zoohilldata/zoos/commit/81c88c31c569fe13d00a31acbe475bf3c2601e1f))
+
 ## [1.35.0](https://github.com/zoohilldata/zoos/compare/v1.34.0...v1.35.0) (2025-01-13)
 
 ### Features
