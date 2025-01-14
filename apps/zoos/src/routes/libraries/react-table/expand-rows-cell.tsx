@@ -16,18 +16,19 @@ export const Route = createFileRoute("/libraries/react-table/expand-rows-cell")(
 );
 
 import React from "react";
-import { type TableState, createColumnHelper } from "@tanstack/react-table";
+import { type TableState } from "@tanstack/react-table";
 
-import { getDataTree, type TreeNode } from "@zoos/navigation";
+import { getDataTree } from "@zoos/navigation";
 import { featureProps, getColumns, mergeColumns } from "@zoos/react-table";
 import {
   useTable,
   Table,
   useComponentProps,
   features,
+  FormattedId,
 } from "@zoos/react-table-ui";
 
-const KEEP_COLUMNS = ["first_name", "last_name", "state"];
+const KEEP_COLUMNS: string[] = ["age", "join_date"];
 
 function RouteComponent() {
   const [state, setState] = React.useState({} as TableState);
@@ -41,7 +42,6 @@ function RouteComponent() {
       getPath: (row) => [row.state, `${row.first_name} ${row.last_name}`],
     })._dataTree.children;
 
-    const columnHelper = createColumnHelper<TreeNode<(typeof data)[0]>>();
     const columns = getColumns({ data: dataTree })({
       exclude: (columnId) => !KEEP_COLUMNS.includes(columnId),
     });
@@ -50,10 +50,11 @@ function RouteComponent() {
       columns: mergeColumns({ base: columns })({
         newColumns: [
           {
-            id: "key",
+            id: "leaf",
+            accessorFn: (row) => row._dataTree.leaf,
             header: (headerContext) => (
               <features.expandRow.ExpandAllHeader headerContext={headerContext}>
-                Key
+                Leaf
               </features.expandRow.ExpandAllHeader>
             ),
             cell: (cellContext) => (
@@ -72,6 +73,17 @@ function RouteComponent() {
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data: dataTree,
+    defaultColumn: {
+      // Use standard header context
+      header: (headerContext) => <FormattedId headerContext={headerContext} />,
+      // If not the 'leaf' column and at a parent row (for state)
+      // don't show other values b/c they are not relevant on the
+      // group level (e.g. `age` is not applicable to a `state` level)
+      cell: ({ cell, column, row }) =>
+        column.id !== "leaf" && row.getCanExpand()
+          ? "-"
+          : String(cell.getValue()),
+    },
     columns,
     state,
     onStateChange: setState,

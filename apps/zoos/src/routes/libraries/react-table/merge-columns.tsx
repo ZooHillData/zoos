@@ -5,6 +5,7 @@ export const Route = createFileRoute("/libraries/react-table/merge-columns")({
 });
 
 import React from "react";
+import { InputDebounce } from "@zoos/react-form";
 import { Checkbox } from "@zoos/shadcn";
 import { mergeColumns, getColumns, featureProps } from "@zoos/react-table";
 import { useTable, useComponentProps, Table } from "@zoos/react-table-ui";
@@ -92,13 +93,22 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex h-full flex-col gap-2 overflow-hidden">
-      <div>
-        Selected Rows:{" "}
-        {Object.entries(state.rowSelection || {})
-          .filter(([columnId, isSelected]) => isSelected)
-          .map(([columnId]) => columnId)
-          .join(", ")}
+    <div className="flex h-full flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <InputDebounce
+          className="w-[300px]"
+          value={table.getState().globalFilter || ""}
+          onChange={(value) => table.setGlobalFilter(value)}
+          delay={300}
+          placeholder="Global search.."
+        />
+        <div className="flex">
+          Selected Rows:{" "}
+          {Object.entries(state.rowSelection || {})
+            .filter(([columnId, isSelected]) => isSelected)
+            .map(([columnId]) => columnId)
+            .join(", ")}
+        </div>
       </div>
       <Table {...{ table, virtualRows, componentProps }} />
     </div>

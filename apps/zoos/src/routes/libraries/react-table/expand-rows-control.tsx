@@ -54,19 +54,20 @@ function RouteComponent() {
           state: {
             cell: ({ cell }) =>
               // For state, show value only on parent rows
-              cell.row.subRows.length > 0 ? cell.getValue() : undefined,
+              cell.row.getCanExpand() ? cell.getValue() : undefined,
           },
           // For name columns, show value only on child rows
           first_name: {
             cell: ({ cell }) =>
               // For name columns, show value only on child rows
-              cell.row.subRows.length === 0 ? cell.getValue() : undefined,
+              cell.row.getCanExpand() ? cell.getValue() : undefined,
           },
           last_name: {
             cell: ({ cell }) =>
-              cell.row.subRows.length === 0 ? cell.getValue() : undefined,
+              cell.row.getCanExpand() ? cell.getValue() : undefined,
           },
         },
+        newColumns: [features.expandRow.getControlColumnDef(columnHelper)],
       }),
     };
   }, [data]);
