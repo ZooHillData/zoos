@@ -1,3 +1,14 @@
+## [1.36.1](https://github.com/zoohilldata/zoos/compare/v1.36.0...v1.36.1) (2025-01-14)
+
+### Bug Fixes
+
+* **react-table:** move useComponentProps, useTable from react-table-ui to react-table ([3907551](https://github.com/zoohilldata/zoos/commit/3907551fd8870afddd024e32ee3e8c71f5da2431))
+
+### Chores
+
+* **react-table:** fix expand-rows examples in zoos ([1ff3459](https://github.com/zoohilldata/zoos/commit/1ff34597196671c7507bd95b13d6a53f1e658054))
+* **zoos:** continue deving the file-browser feature in zoos ([f7bb39a](https://github.com/zoohilldata/zoos/commit/f7bb39a6ab3c8b4bac86db6a8bb2d0f883f7cea3))
+
 ## [1.36.0](https://github.com/zoohilldata/zoos/compare/v1.35.2...v1.36.0) (2025-01-14)
 
 ### Features
