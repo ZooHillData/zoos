@@ -28,7 +28,8 @@ import { Route as LibrariesShadcnCheckboxImport } from './routes/libraries/shadc
 import { Route as LibrariesShadcnButtonImport } from './routes/libraries/shadcn/button'
 import { Route as LibrariesReactTableStandardImport } from './routes/libraries/react-table/standard'
 import { Route as LibrariesReactTableFullCustomizationImport } from './routes/libraries/react-table/full-customization'
-import { Route as LibrariesReactTableExpandRowsImport } from './routes/libraries/react-table/expand-rows'
+import { Route as LibrariesReactTableExpandRowsControlImport } from './routes/libraries/react-table/expand-rows-control'
+import { Route as LibrariesReactTableExpandRowsCellImport } from './routes/libraries/react-table/expand-rows-cell'
 import { Route as LibrariesReactTableCustomColumnsImport } from './routes/libraries/react-table/custom-columns'
 import { Route as LibrariesReactQueryUseQueryImport } from './routes/libraries/react-query/use-query'
 import { Route as LibrariesReactQueryUseMutationImport } from './routes/libraries/react-query/use-mutation'
@@ -157,10 +158,17 @@ const LibrariesReactTableFullCustomizationRoute =
     getParentRoute: () => LibrariesReactTableRouteRoute,
   } as any)
 
-const LibrariesReactTableExpandRowsRoute =
-  LibrariesReactTableExpandRowsImport.update({
-    id: '/expand-rows',
-    path: '/expand-rows',
+const LibrariesReactTableExpandRowsControlRoute =
+  LibrariesReactTableExpandRowsControlImport.update({
+    id: '/expand-rows-control',
+    path: '/expand-rows-control',
+    getParentRoute: () => LibrariesReactTableRouteRoute,
+  } as any)
+
+const LibrariesReactTableExpandRowsCellRoute =
+  LibrariesReactTableExpandRowsCellImport.update({
+    id: '/expand-rows-cell',
+    path: '/expand-rows-cell',
     getParentRoute: () => LibrariesReactTableRouteRoute,
   } as any)
 
@@ -387,11 +395,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibrariesReactTableCustomColumnsImport
       parentRoute: typeof LibrariesReactTableRouteImport
     }
-    '/libraries/react-table/expand-rows': {
-      id: '/libraries/react-table/expand-rows'
-      path: '/expand-rows'
-      fullPath: '/libraries/react-table/expand-rows'
-      preLoaderRoute: typeof LibrariesReactTableExpandRowsImport
+    '/libraries/react-table/expand-rows-cell': {
+      id: '/libraries/react-table/expand-rows-cell'
+      path: '/expand-rows-cell'
+      fullPath: '/libraries/react-table/expand-rows-cell'
+      preLoaderRoute: typeof LibrariesReactTableExpandRowsCellImport
+      parentRoute: typeof LibrariesReactTableRouteImport
+    }
+    '/libraries/react-table/expand-rows-control': {
+      id: '/libraries/react-table/expand-rows-control'
+      path: '/expand-rows-control'
+      fullPath: '/libraries/react-table/expand-rows-control'
+      preLoaderRoute: typeof LibrariesReactTableExpandRowsControlImport
       parentRoute: typeof LibrariesReactTableRouteImport
     }
     '/libraries/react-table/full-customization': {
@@ -565,7 +580,8 @@ const LibrariesReactQueryRouteRouteWithChildren =
 
 interface LibrariesReactTableRouteRouteChildren {
   LibrariesReactTableCustomColumnsRoute: typeof LibrariesReactTableCustomColumnsRoute
-  LibrariesReactTableExpandRowsRoute: typeof LibrariesReactTableExpandRowsRoute
+  LibrariesReactTableExpandRowsCellRoute: typeof LibrariesReactTableExpandRowsCellRoute
+  LibrariesReactTableExpandRowsControlRoute: typeof LibrariesReactTableExpandRowsControlRoute
   LibrariesReactTableFullCustomizationRoute: typeof LibrariesReactTableFullCustomizationRoute
   LibrariesReactTableStandardRoute: typeof LibrariesReactTableStandardRoute
 }
@@ -574,7 +590,10 @@ const LibrariesReactTableRouteRouteChildren: LibrariesReactTableRouteRouteChildr
   {
     LibrariesReactTableCustomColumnsRoute:
       LibrariesReactTableCustomColumnsRoute,
-    LibrariesReactTableExpandRowsRoute: LibrariesReactTableExpandRowsRoute,
+    LibrariesReactTableExpandRowsCellRoute:
+      LibrariesReactTableExpandRowsCellRoute,
+    LibrariesReactTableExpandRowsControlRoute:
+      LibrariesReactTableExpandRowsControlRoute,
     LibrariesReactTableFullCustomizationRoute:
       LibrariesReactTableFullCustomizationRoute,
     LibrariesReactTableStandardRoute: LibrariesReactTableStandardRoute,
@@ -646,7 +665,8 @@ export interface FileRoutesByFullPath {
   '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
   '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
   '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows': typeof LibrariesReactTableExpandRowsRoute
+  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
+  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
@@ -681,7 +701,8 @@ export interface FileRoutesByTo {
   '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
   '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
   '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows': typeof LibrariesReactTableExpandRowsRoute
+  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
+  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
@@ -718,7 +739,8 @@ export interface FileRoutesById {
   '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
   '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
   '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows': typeof LibrariesReactTableExpandRowsRoute
+  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
+  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
@@ -756,7 +778,8 @@ export interface FileRouteTypes {
     | '/libraries/react-query/use-mutation'
     | '/libraries/react-query/use-query'
     | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows'
+    | '/libraries/react-table/expand-rows-cell'
+    | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
@@ -790,7 +813,8 @@ export interface FileRouteTypes {
     | '/libraries/react-query/use-mutation'
     | '/libraries/react-query/use-query'
     | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows'
+    | '/libraries/react-table/expand-rows-cell'
+    | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
@@ -825,7 +849,8 @@ export interface FileRouteTypes {
     | '/libraries/react-query/use-mutation'
     | '/libraries/react-query/use-query'
     | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows'
+    | '/libraries/react-table/expand-rows-cell'
+    | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
@@ -915,7 +940,8 @@ export const routeTree = rootRoute
       "filePath": "libraries/react-table/route.tsx",
       "children": [
         "/libraries/react-table/custom-columns",
-        "/libraries/react-table/expand-rows",
+        "/libraries/react-table/expand-rows-cell",
+        "/libraries/react-table/expand-rows-control",
         "/libraries/react-table/full-customization",
         "/libraries/react-table/standard"
       ]
@@ -982,8 +1008,12 @@ export const routeTree = rootRoute
       "filePath": "libraries/react-table/custom-columns.tsx",
       "parent": "/libraries/react-table"
     },
-    "/libraries/react-table/expand-rows": {
-      "filePath": "libraries/react-table/expand-rows.tsx",
+    "/libraries/react-table/expand-rows-cell": {
+      "filePath": "libraries/react-table/expand-rows-cell.tsx",
+      "parent": "/libraries/react-table"
+    },
+    "/libraries/react-table/expand-rows-control": {
+      "filePath": "libraries/react-table/expand-rows-control.tsx",
       "parent": "/libraries/react-table"
     },
     "/libraries/react-table/full-customization": {

@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+const metadata = {
+  description: `
+Standard table implementation from \`@zoos/react-table-ui\`
+`,
+};
+
 export const Route = createFileRoute("/libraries/react-table/standard")({
   component: RouteComponent,
+  context: () => ({ metadata }),
 });
 
 import React from "react";
@@ -36,6 +43,12 @@ function RouteComponent() {
         featureProps.rowStriping(),
         featureProps.spacing.compact(),
         { th: () => ({ className: "bg-muted" }) },
+        {
+          td: ({ cell }) =>
+            cell.column.id === "_leaf"
+              ? { style: { paddingLeft: `${cell.row.depth * 1}rem` } }
+              : {},
+        },
       ],
     },
   );

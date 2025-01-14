@@ -17,3 +17,5 @@ export * from "./module.types";
 
 // Pre-configured tables - <Table />, useTable, getComponentProps
 export * from "./tables";
+
+export * as features from "./features";

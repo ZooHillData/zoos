@@ -10,6 +10,7 @@ import { borders } from "./borders";
 import { rowStriping } from "./row-striping";
 import * as utils from "./utils";
 import * as spacing from "./spacing";
+import { indentSubrows } from "./indent-subrows";
 
 const featureProps = {
   resizeColumn,
@@ -20,6 +21,7 @@ const featureProps = {
   spacing,
   rowStriping,
   utils,
+  indentSubrows,
 };
 
 export { featureProps, mergeFeatureProps, type ComponentProps };
