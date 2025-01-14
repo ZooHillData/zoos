@@ -34,8 +34,8 @@ Entrypoint into core libraries.
 ### Quick Start
 
 1. `npm install`
-2. `npx nx serve zoos`
-3. Go to: [http://localhost:4200](http://localhost:4200)
+2. `npm run dev`
+3. Go to: [http://localhost:2005](http://localhost:2005)
 
 ### Features
 

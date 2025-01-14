@@ -35,7 +35,7 @@ const columns = [
     cell: ({ cell }) => (cell.row.subRows.length > 0 ? "-" : cell.getValue()),
   }),
   columnHelper.accessor(
-    (row) => (row._dataTree.children.length > 0 ? "-" : row.owner),
+    (row) => (row._dataTree.children?.length > 0 ? "-" : row.owner),
     {
       id: "owner",
       header: "Owner",

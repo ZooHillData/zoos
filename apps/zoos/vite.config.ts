@@ -12,11 +12,11 @@ export default defineConfig({
   root: __dirname,
   cacheDir: "../../node_modules/.vite/apps/zoos",
   server: {
-    port: 4200,
+    port: 2005,
     host: "localhost",
   },
   preview: {
-    port: 4300,
+    port: 2015,
     host: "localhost",
   },
   plugins: [
