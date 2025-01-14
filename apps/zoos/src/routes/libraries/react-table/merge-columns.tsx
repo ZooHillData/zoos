@@ -5,11 +5,20 @@ export const Route = createFileRoute("/libraries/react-table/merge-columns")({
 });
 
 import React from "react";
+
+import type { TableState } from "@tanstack/react-table";
+
+import { createColumnHelper } from "@tanstack/react-table";
 import { InputDebounce } from "@zoos/react-form";
 import { Checkbox } from "@zoos/shadcn";
-import { mergeColumns, getColumns, featureProps } from "@zoos/react-table";
-import { useTable, useComponentProps, Table } from "@zoos/react-table-ui";
-import { createColumnHelper, TableState } from "@tanstack/react-table";
+import {
+  useTable,
+  useComponentProps,
+  mergeColumns,
+  getColumns,
+  featureProps,
+} from "@zoos/react-table";
+import { Table } from "@zoos/react-table-ui";
 
 const EXCLUDE_COLUMNS = ["user_id", "join_date"];
 

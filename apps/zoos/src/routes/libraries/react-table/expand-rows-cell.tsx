@@ -16,17 +16,18 @@ export const Route = createFileRoute("/libraries/react-table/expand-rows-cell")(
 );
 
 import React from "react";
-import { type TableState } from "@tanstack/react-table";
+
+import type { TableState } from "@tanstack/react-table";
 
 import { getDataTree } from "@zoos/navigation";
-import { featureProps, getColumns, mergeColumns } from "@zoos/react-table";
 import {
   useTable,
-  Table,
   useComponentProps,
-  features,
-  FormattedId,
-} from "@zoos/react-table-ui";
+  featureProps,
+  getColumns,
+  mergeColumns,
+} from "@zoos/react-table";
+import { Table, features, FormattedId } from "@zoos/react-table-ui";
 
 const KEEP_COLUMNS: string[] = ["age", "join_date"];
 

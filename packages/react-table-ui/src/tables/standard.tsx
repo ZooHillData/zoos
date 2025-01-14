@@ -1,53 +1,10 @@
 import React from "react";
 
-import {
-  flexRender,
-  type Table as TTable,
-  type Header,
-  type Cell,
-} from "@tanstack/react-table";
-import { type Virtualizer } from "@tanstack/react-virtual";
+import type { Table as TTable, Header, Cell } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
 
-import {
-  useVirtualization,
-  useControlledTable,
-  featureProps,
-  mergeFeatureProps,
-  getPinningAttributes,
-  type ComponentProps,
-} from "@zoos/react-table";
-
+import { useVirtualization, type ComponentProps } from "@zoos/react-table";
 import { HeaderContextMenu, HeaderSortIndicator } from "../header";
-
-type UseTableParams<TData> = Parameters<typeof useControlledTable<TData>>[0] & {
-  virtualOptions?: Partial<
-    Omit<Parameters<typeof useVirtualization>[0], "table">
-  >;
-};
-
-const useTable = <TData extends object>({
-  virtualOptions = {},
-  ...tableOptions
-}: UseTableParams<TData> &
-  Partial<Omit<Parameters<typeof useVirtualization>[0], "table">>) => {
-  const { table } = useControlledTable(tableOptions);
-
-  const {
-    row = { estimateSize: () => 24, overscan: 50 },
-    column = { overscan: 3 },
-  } = virtualOptions;
-
-  const virtualizer = useVirtualization({
-    table,
-    row,
-    column,
-  });
-
-  return {
-    table,
-    ...virtualizer,
-  };
-};
 
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
@@ -147,83 +104,4 @@ const Table = <TData extends object, TValue>(props: {
   );
 };
 
-const getComponentProps = <TData, TValue>({
-  isResizingColumn,
-  rowVirtualizer,
-  scrollContainerRef,
-  mergeProps = [],
-}: {
-  isResizingColumn: boolean;
-  rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-  mergeProps?: Partial<ComponentProps<TData, TValue>>[];
-}): ComponentProps<TData, TValue> =>
-  mergeFeatureProps([
-    // ~ Standard features
-    featureProps.rowVirtualization({ scrollContainerRef, rowVirtualizer }),
-    featureProps.stickyHeader({
-      custom: { thead: { className: "bg-background" } },
-    }),
-    featureProps.resizeColumn({
-      isResizingColumn,
-      custom: {
-        resizeColHandle: () => ({
-          className: "bg-primary",
-        }),
-      },
-    }),
-    // featureProps.borders(),
-    featureProps.columnPinning({
-      custom: {
-        // Custom styles for the border between pinned and non-pinned columns
-        // `<td />` and `<th />` set separately
-        th: ({ headerContext: { column } }) => {
-          const { isLastLeft, isFirstRight } = getPinningAttributes(column);
-          return {
-            className: isLastLeft
-              ? "border-r-4"
-              : isFirstRight
-                ? "border-l-4"
-                : "",
-          };
-        },
-        td: ({ cell: { column } }) => {
-          const { isLastLeft, isFirstRight } = getPinningAttributes(column);
-          return {
-            className: isLastLeft
-              ? "border-r-4"
-              : isFirstRight
-                ? "border-l-4"
-                : "",
-          };
-        },
-      },
-    }),
-    ...mergeProps,
-  ]);
-
-const useComponentProps = <TData, TValue>(
-  params: {
-    table: TTable<TData>;
-    rowVirtualizer: Virtualizer<HTMLDivElement, Element>;
-    scrollContainerRef: React.RefObject<HTMLDivElement | null>;
-  },
-  custom?: { mergeProps?: Partial<ComponentProps<NoInfer<TData>, TValue>>[] },
-): ComponentProps<TData, TValue> => {
-  const { table, rowVirtualizer, scrollContainerRef } = params;
-  const { mergeProps } = custom || {};
-
-  const isResizingColumn = !!table.getState().columnSizingInfo.isResizingColumn;
-  return React.useMemo(
-    () =>
-      getComponentProps({
-        isResizingColumn,
-        rowVirtualizer,
-        scrollContainerRef,
-        mergeProps,
-      }),
-    [isResizingColumn, rowVirtualizer, scrollContainerRef, mergeProps],
-  );
-};
-
-export { Table, useTable, useComponentProps, getComponentProps };
+export { Table };

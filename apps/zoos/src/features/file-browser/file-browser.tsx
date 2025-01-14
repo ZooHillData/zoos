@@ -1,22 +1,17 @@
 import React from "react";
 
-import { type TableState } from "@tanstack/react-table";
+import type { TableState } from "@tanstack/react-table";
+import type { FileAttributes } from "./types";
 
 import { Label } from "@zoos/shadcn";
 import { InputDebounce } from "@zoos/react-form";
 import { getDataTree, searchDataTree } from "@zoos/navigation";
 import { LocationBreadcrumb } from "@zoos/navigation-ui";
-import { featureProps } from "@zoos/react-table";
-import {
-  filters,
-  useTable,
-  useComponentProps,
-  FilterContainer,
-} from "@zoos/react-table-ui";
+import { useTable, useComponentProps, featureProps } from "@zoos/react-table";
+import { filters, FilterContainer } from "@zoos/react-table-ui";
 
 // In-zoos feature imports
 import { columns } from "./column-defs";
-import { type FileAttributes } from "./types";
 import { Table } from "./table";
 
 const FileBrowser = (props: {

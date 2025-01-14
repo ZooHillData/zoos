@@ -16,16 +16,21 @@ export const Route = createFileRoute(
 });
 
 import React from "react";
-import { type TableState, createColumnHelper } from "@tanstack/react-table";
 
-import { getDataTree, type TreeNode } from "@zoos/navigation";
-import { featureProps, getColumns, mergeColumns } from "@zoos/react-table";
+import type { TableState } from "@tanstack/react-table";
+import type { TreeNode } from "@zoos/navigation";
+
+import { createColumnHelper } from "@tanstack/react-table";
+
+import { getDataTree } from "@zoos/navigation";
 import {
   useTable,
-  Table,
   useComponentProps,
-  features,
-} from "@zoos/react-table-ui";
+  featureProps,
+  getColumns,
+  mergeColumns,
+} from "@zoos/react-table";
+import { Table, features } from "@zoos/react-table-ui";
 
 const KEEP_COLUMNS = ["first_name", "last_name", "state"];
 

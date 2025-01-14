@@ -6,7 +6,8 @@ export const Route = createFileRoute("/libraries/react-table/custom-columns")({
 
 import React from "react";
 
-import { type TableState, createColumnHelper } from "@tanstack/react-table";
+import type { TableState } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 
 import {
   filters,
@@ -14,11 +15,9 @@ import {
   AutoRefreshToggle,
   FilterContainer,
   FormattedId,
-  useTable,
   Table,
-  useComponentProps,
 } from "@zoos/react-table-ui";
-import { featureProps } from "@zoos/react-table";
+import { useTable, useComponentProps, featureProps } from "@zoos/react-table";
 
 import {
   Label,

@@ -13,10 +13,15 @@ export const Route = createFileRoute("/libraries/react-table/standard")({
 
 import React from "react";
 
-import { type TableState } from "@tanstack/react-table";
+import type { TableState } from "@tanstack/react-table";
 
-import { getColumns, featureProps } from "@zoos/react-table";
-import { useTable, useComponentProps, Table } from "@zoos/react-table-ui";
+import {
+  useTable,
+  useComponentProps,
+  getColumns,
+  featureProps,
+} from "@zoos/react-table";
+import { Table } from "@zoos/react-table-ui";
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
