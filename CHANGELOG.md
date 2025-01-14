@@ -1,3 +1,9 @@
+## [1.35.2](https://github.com/zoohilldata/zoos/compare/v1.35.1...v1.35.2) (2025-01-14)
+
+### Bug Fixes
+
+* **feat-file-browser:** fix types, change zoos to port 2005 ;) ([17a9023](https://github.com/zoohilldata/zoos/commit/17a9023a4bc20931af7ee53a7fbc9d715a091d17))
+
 ## [1.35.1](https://github.com/zoohilldata/zoos/compare/v1.35.0...v1.35.1) (2025-01-14)
 
 ### Bug Fixes
