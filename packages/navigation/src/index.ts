@@ -1,1 +1,1 @@
-export * from "./lib/path-tree";
+export * from "./lib/data-tree";

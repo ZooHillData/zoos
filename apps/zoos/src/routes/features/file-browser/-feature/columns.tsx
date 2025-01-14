@@ -1,15 +1,16 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { type PathNode } from "@zoos/navigation";
+import { TreeNode } from "@zoos/navigation";
 
 import { ExpandRowCell, ExpandRowHeader } from "./components";
 import { FileAttributes } from "./types";
 
-const columnHelper = createColumnHelper<PathNode<FileAttributes>>();
+const columnHelper = createColumnHelper<TreeNode<FileAttributes>>();
 const columns = [
   columnHelper.display({ id: "select", header: "", size: 20 }),
   // features.expandRow.getColumnDef(columnHelper),
-  columnHelper.accessor("_leaf", {
+  columnHelper.accessor((row) => row._dataTree.leaf, {
+    id: "name",
     header: (headerContext) => (
       <ExpandRowHeader headerContext={headerContext}>Name</ExpandRowHeader>
     ),
@@ -20,7 +21,7 @@ const columns = [
           // Link to github
           rel="noreferrer"
           target="_blank"
-          href={`https://github.com/zoohilldata/zoos/tree/main${cellContext.cell.row.original._path}`}
+          href={`https://github.com/zoohilldata/zoos/tree/main${cellContext.cell.row.original._dataTree.pathStr}`}
           className="hover:underline"
         >
           {cellContext.cell.getValue()}
@@ -31,11 +32,10 @@ const columns = [
   columnHelper.accessor("last_updated", {
     header: "Last Updated",
     size: 225,
-    cell: ({ cell }) =>
-      cell.row.original._type === "directory" ? "-" : cell.getValue(),
+    cell: ({ cell }) => (cell.row.subRows.length > 0 ? "-" : cell.getValue()),
   }),
   columnHelper.accessor(
-    (row) => (row._type === "directory" ? "-" : row.owner),
+    (row) => (row._dataTree.children.length > 0 ? "-" : row.owner),
     {
       id: "owner",
       header: "Owner",
@@ -44,7 +44,7 @@ const columns = [
   ),
   columnHelper.accessor(
     (row) => {
-      if ((row._children?.length || 0) > 0) {
+      if ((row._dataTree.children?.length || 0) > 0) {
         return NaN;
       }
       return row.size;
@@ -53,11 +53,12 @@ const columns = [
       id: "size",
       header: "Size",
       size: 100,
-      cell: ({ cell }) =>
-        cell.row.original._type === "directory" ? "-" : cell.getValue(),
+      cell: ({ cell }) => (cell.row.subRows.length > 0 ? "-" : cell.getValue()),
     },
   ),
-  columnHelper.accessor("_path", { header: "Full Path" }),
+  columnHelper.accessor((row) => row._dataTree.pathStr, {
+    header: "Full Path",
+  }),
 ];
 
 export { columns };

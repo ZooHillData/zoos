@@ -9,7 +9,7 @@ import React from "react";
 import { type TableState } from "@tanstack/react-table";
 
 import { Label } from "@zoos/shadcn";
-import { buildPathTree, searchPathTree } from "@zoos/navigation";
+import { getDataTree, searchDataTree } from "@zoos/navigation";
 import { InputDebounce } from "@zoos/react-form";
 import { globalFilterFn, featureProps } from "@zoos/react-table";
 import {
@@ -24,17 +24,17 @@ import { files } from "./-data";
 import { LocationBreadcrumb } from "./-feature/components";
 import { columns } from "./-feature/columns";
 
-const root = buildPathTree({
+const dataTree = getDataTree({
   // Sort paths prior to building tree
   data: files.sort((a, b) => a.path.localeCompare(b.path)),
 })({
-  getParts: (row) => row.path.split("/"),
+  getPath: (row) => row.path.split("/"),
 });
 
 function RouteComponent() {
   const [state, setState] = React.useState({} as TableState);
   const [folder, setFolder] = React.useState("/");
-  const [data, setData] = React.useState(root._children);
+  const [data, setData] = React.useState(dataTree._dataTree.children);
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,
@@ -59,8 +59,8 @@ function RouteComponent() {
         ),
       },
     },
-    getRowId: (row) => row._path,
-    getSubRows: (row) => row._children,
+    getRowId: (row) => row._dataTree.pathStr,
+    getSubRows: (row) => row._dataTree.children,
   });
 
   const componentProps = useComponentProps(
@@ -87,7 +87,7 @@ function RouteComponent() {
         {
           // Directory row get bolder font
           td: ({ cell: { row } }) => ({
-            className: row.original._type === "directory" ? "font-medium" : "",
+            className: row.subRows.length > 0 ? "font-medium" : "",
           }),
         },
         {
@@ -95,7 +95,7 @@ function RouteComponent() {
           trBody: ({ row }) => ({
             onDoubleClick: () => {
               if (row.subRows.length > 0) {
-                setFolder(row.original._path);
+                setFolder(row.original._dataTree.pathStr);
               }
             },
           }),
@@ -107,11 +107,11 @@ function RouteComponent() {
   // When folder changes, find that node and set
   // the table data to be those rows
   React.useEffect(() => {
-    const node = searchPathTree({
-      node: root,
-      isMatch: (node) => node._path === folder,
+    const node = searchDataTree({
+      node: dataTree,
+      isMatch: (node) => node._dataTree.pathStr === folder,
     });
-    setData(node?._children || []);
+    setData(node?._dataTree.children || []);
   }, [folder]);
 
   return (
