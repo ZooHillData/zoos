@@ -1,3 +1,9 @@
+## [1.36.0](https://github.com/zoohilldata/zoos/compare/v1.35.2...v1.36.0) (2025-01-14)
+
+### Features
+
+* **react-table:** table refinements ([564129f](https://github.com/zoohilldata/zoos/commit/564129fddab0597c5882bb0e9ab709d50d304caf))
+
 ## [1.35.2](https://github.com/zoohilldata/zoos/compare/v1.35.1...v1.35.2) (2025-01-14)
 
 ### Bug Fixes
