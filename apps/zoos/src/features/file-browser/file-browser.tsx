@@ -12,12 +12,12 @@ import {
   useTable,
   useComponentProps,
   FilterContainer,
-  Table,
 } from "@zoos/react-table-ui";
 
 // In-zoos feature imports
 import { columns } from "./column-defs";
 import { type FileAttributes } from "./types";
+import { Table } from "./table";
 
 const FileBrowser = (props: {
   files: FileAttributes[];
@@ -25,6 +25,7 @@ const FileBrowser = (props: {
   onStateChange: (state: TableState) => void;
   location: string;
   onLocationChange: (location: string) => void;
+  tableOptions?: Partial<{ initialState: Partial<TableState> }>;
 }) => {
   const { files, state, onStateChange, location, onLocationChange } = props;
   const dataTree = React.useMemo(
@@ -60,10 +61,7 @@ const FileBrowser = (props: {
     // Hierarchical row options
     getRowId: (row) => row._dataTree.pathStr,
     getSubRows: (row) => row._dataTree.children,
-    // Initial state hides the full path column
-    initialState: {
-      columnVisibility: { _path: false },
-    },
+    ...props.tableOptions,
   });
 
   const componentProps = useComponentProps(

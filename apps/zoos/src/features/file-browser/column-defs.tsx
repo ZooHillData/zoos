@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { TreeNode } from "@zoos/navigation";
+import { Checkbox } from "@zoos/shadcn";
 import { features } from "@zoos/react-table-ui";
 
 import { type FileAttributes } from "./types";
@@ -8,7 +9,20 @@ import { type FileAttributes } from "./types";
 const columnHelper = createColumnHelper<TreeNode<FileAttributes>>();
 
 const columns = [
-  columnHelper.display({ id: "select", header: "", size: 20 }),
+  columnHelper.display({
+    id: "select",
+    // cell: ({ row }) => (
+    //   <div className="">
+    //     <Checkbox
+    //       onCheckedChange={(checked) => {
+    //         row.toggleSelected(checked === true);
+    //       }}
+    //     />
+    //   </div>
+    // ),
+    size: 15,
+    enableResizing: false,
+  }),
   // features.expandRow.getColumnDef(columnHelper),
   columnHelper.accessor((row) => row._dataTree.leaf, {
     id: "name",
@@ -63,6 +77,7 @@ const columns = [
     },
   ),
   columnHelper.accessor((row) => row._dataTree.pathStr, {
+    id: "full_path",
     header: "Full Path",
   }),
 ];

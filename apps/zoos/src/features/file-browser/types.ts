@@ -1,3 +1,5 @@
+import { type TreeNode } from "@zoos/navigation";
+
 type FileAttributes = {
   path: string;
   size: number;
@@ -5,4 +7,6 @@ type FileAttributes = {
   last_updated: string;
 };
 
-export { type FileAttributes };
+type FileTreeNode = TreeNode<FileAttributes>;
+
+export type { FileAttributes, FileTreeNode };

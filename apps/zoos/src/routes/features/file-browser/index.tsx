@@ -25,6 +25,9 @@ function RouteComponent() {
       onStateChange={setState}
       location={folder}
       onLocationChange={setFolder}
+      tableOptions={{
+        initialState: { columnVisibility: { full_path: false } },
+      }}
     />
   );
 }
