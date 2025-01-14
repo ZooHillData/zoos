@@ -14,38 +14,29 @@ import {
   featureProps,
   mergeFeatureProps,
   getPinningAttributes,
-  HeaderContextMenu,
-  HeaderSortIndicator,
-  ComponentProps,
+  type ComponentProps,
 } from "@zoos/react-table";
 
-type UseTableParams<TData, TValue> = Parameters<
-  typeof useControlledTable<TData>
->[0] & {
-  userProps?: Partial<ComponentProps<TData, TValue>>;
+import { HeaderContextMenu, HeaderSortIndicator } from "../header";
+
+type UseTableParams<TData> = Parameters<typeof useControlledTable<TData>>[0] & {
   virtualOptions?: Partial<
     Omit<Parameters<typeof useVirtualization>[0], "table">
   >;
 };
 
-const useTable = <TData extends object, TValue>({
-  columns,
-  data,
-  userProps = {},
+const useTable = <TData extends object>({
   virtualOptions = {},
-  ...params
-}: UseTableParams<TData, TValue> &
+  ...tableOptions
+}: UseTableParams<TData> &
   Partial<Omit<Parameters<typeof useVirtualization>[0], "table">>) => {
-  const { table } = useControlledTable({
-    data,
-    columns,
-    ...params,
-  });
+  const { table } = useControlledTable(tableOptions);
 
   const {
     row = { estimateSize: () => 24, overscan: 50 },
     column = { overscan: 3 },
   } = virtualOptions;
+
   const virtualizer = useVirtualization({
     table,
     row,

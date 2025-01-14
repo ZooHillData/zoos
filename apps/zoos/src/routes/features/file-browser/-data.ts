@@ -1,4 +1,6 @@
-const files = [
+import { type FileAttributes } from "../../../features/file-browser";
+
+const files: FileAttributes[] = [
   {
     path: "/jest.preset.js",
     size: 88,

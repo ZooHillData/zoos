@@ -15,5 +15,10 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@zoos/navigation": "*",
+    "@zoos/shadcn": "*",
+    "lucide-react": "^0.469.0"
   }
 }

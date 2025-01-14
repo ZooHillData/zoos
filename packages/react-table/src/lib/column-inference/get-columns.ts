@@ -1,38 +1,43 @@
 import {
+  type AccessorColumnDef,
   type ColumnDef,
   type ColumnHelper,
   createColumnHelper,
 } from "@tanstack/react-table";
 
+type AccessorColumnDefWithId<TData, TValue> = AccessorColumnDef<
+  TData,
+  TValue
+> & {
+  id: keyof TData;
+};
+
 /** getColumns helper function  */
 const getColumns =
-  <TData extends Record<string, unknown>>({ data }: { data: TData[] }) =>
+  <TData extends Record<string, unknown>, TValue>({
+    data,
+  }: {
+    data: TData[];
+  }) =>
   (params?: {
-    keepColumn?: (columnId: keyof TData) => boolean;
-    columns?: Record<string, Partial<ColumnDef<TData>>>;
+    exclude?: (columnId: keyof TData) => boolean;
+    columns?: Record<string, Partial<ColumnDef<TData, TValue>>>;
     columnHelper?: ColumnHelper<TData>;
   }) => {
     const {
-      columns,
+      exclude = () => false,
       columnHelper = createColumnHelper<TData>(),
-      keepColumn = () => true,
     } = params || {};
 
-    const filteredInferred = Object.keys(data[0]).filter((columnId) =>
-      keepColumn(columnId),
+    const filteredInferred = Object.keys(data[0]).filter(
+      (columnId) => !exclude(columnId),
     );
 
-    // Combine column IDs from columns passed in and inferred from data
-    const columnIds = Array.from(
-      new Set([...Object.keys(columns || {}), ...filteredInferred]),
-    );
-
-    return columnIds.map((columnId) =>
+    return filteredInferred.map((columnId) =>
       columnHelper.accessor((row) => row[columnId], {
         id: columnId,
-        ...columns?.[columnId],
       }),
-    );
+    ) as AccessorColumnDefWithId<TData, TValue>[];
   };
 
 export { getColumns };

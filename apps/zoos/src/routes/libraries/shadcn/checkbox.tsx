@@ -1,10 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/libraries/shadcn/checkbox')({
+export const Route = createFileRoute("/libraries/shadcn/checkbox")({
   component: RouteComponent,
-})
+});
 
-import { Checkbox } from '@zoos/shadcn'
+import { Checkbox } from "@zoos/shadcn";
 
 function RouteComponent() {
   return (
@@ -17,5 +17,5 @@ function RouteComponent() {
         Accept terms and conditions
       </label>
     </div>
-  )
+  );
 }

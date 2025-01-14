@@ -27,6 +27,7 @@ import { Route as LibrariesShadcnContextMenuImport } from './routes/libraries/sh
 import { Route as LibrariesShadcnCheckboxImport } from './routes/libraries/shadcn/checkbox'
 import { Route as LibrariesShadcnButtonImport } from './routes/libraries/shadcn/button'
 import { Route as LibrariesReactTableStandardImport } from './routes/libraries/react-table/standard'
+import { Route as LibrariesReactTableMergeColumnsImport } from './routes/libraries/react-table/merge-columns'
 import { Route as LibrariesReactTableFullCustomizationImport } from './routes/libraries/react-table/full-customization'
 import { Route as LibrariesReactTableExpandRowsControlImport } from './routes/libraries/react-table/expand-rows-control'
 import { Route as LibrariesReactTableExpandRowsCellImport } from './routes/libraries/react-table/expand-rows-cell'
@@ -148,6 +149,13 @@ const LibrariesReactTableStandardRoute =
   LibrariesReactTableStandardImport.update({
     id: '/standard',
     path: '/standard',
+    getParentRoute: () => LibrariesReactTableRouteRoute,
+  } as any)
+
+const LibrariesReactTableMergeColumnsRoute =
+  LibrariesReactTableMergeColumnsImport.update({
+    id: '/merge-columns',
+    path: '/merge-columns',
     getParentRoute: () => LibrariesReactTableRouteRoute,
   } as any)
 
@@ -416,6 +424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibrariesReactTableFullCustomizationImport
       parentRoute: typeof LibrariesReactTableRouteImport
     }
+    '/libraries/react-table/merge-columns': {
+      id: '/libraries/react-table/merge-columns'
+      path: '/merge-columns'
+      fullPath: '/libraries/react-table/merge-columns'
+      preLoaderRoute: typeof LibrariesReactTableMergeColumnsImport
+      parentRoute: typeof LibrariesReactTableRouteImport
+    }
     '/libraries/react-table/standard': {
       id: '/libraries/react-table/standard'
       path: '/standard'
@@ -583,6 +598,7 @@ interface LibrariesReactTableRouteRouteChildren {
   LibrariesReactTableExpandRowsCellRoute: typeof LibrariesReactTableExpandRowsCellRoute
   LibrariesReactTableExpandRowsControlRoute: typeof LibrariesReactTableExpandRowsControlRoute
   LibrariesReactTableFullCustomizationRoute: typeof LibrariesReactTableFullCustomizationRoute
+  LibrariesReactTableMergeColumnsRoute: typeof LibrariesReactTableMergeColumnsRoute
   LibrariesReactTableStandardRoute: typeof LibrariesReactTableStandardRoute
 }
 
@@ -596,6 +612,7 @@ const LibrariesReactTableRouteRouteChildren: LibrariesReactTableRouteRouteChildr
       LibrariesReactTableExpandRowsControlRoute,
     LibrariesReactTableFullCustomizationRoute:
       LibrariesReactTableFullCustomizationRoute,
+    LibrariesReactTableMergeColumnsRoute: LibrariesReactTableMergeColumnsRoute,
     LibrariesReactTableStandardRoute: LibrariesReactTableStandardRoute,
   }
 
@@ -668,6 +685,7 @@ export interface FileRoutesByFullPath {
   '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
   '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
+  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
   '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
@@ -704,6 +722,7 @@ export interface FileRoutesByTo {
   '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
   '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
+  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
   '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
@@ -742,6 +761,7 @@ export interface FileRoutesById {
   '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
   '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
   '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
+  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
   '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
   '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
   '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
@@ -781,6 +801,7 @@ export interface FileRouteTypes {
     | '/libraries/react-table/expand-rows-cell'
     | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
+    | '/libraries/react-table/merge-columns'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
     | '/libraries/shadcn/checkbox'
@@ -816,6 +837,7 @@ export interface FileRouteTypes {
     | '/libraries/react-table/expand-rows-cell'
     | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
+    | '/libraries/react-table/merge-columns'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
     | '/libraries/shadcn/checkbox'
@@ -852,6 +874,7 @@ export interface FileRouteTypes {
     | '/libraries/react-table/expand-rows-cell'
     | '/libraries/react-table/expand-rows-control'
     | '/libraries/react-table/full-customization'
+    | '/libraries/react-table/merge-columns'
     | '/libraries/react-table/standard'
     | '/libraries/shadcn/button'
     | '/libraries/shadcn/checkbox'
@@ -943,6 +966,7 @@ export const routeTree = rootRoute
         "/libraries/react-table/expand-rows-cell",
         "/libraries/react-table/expand-rows-control",
         "/libraries/react-table/full-customization",
+        "/libraries/react-table/merge-columns",
         "/libraries/react-table/standard"
       ]
     },
@@ -1018,6 +1042,10 @@ export const routeTree = rootRoute
     },
     "/libraries/react-table/full-customization": {
       "filePath": "libraries/react-table/full-customization.tsx",
+      "parent": "/libraries/react-table"
+    },
+    "/libraries/react-table/merge-columns": {
+      "filePath": "libraries/react-table/merge-columns.tsx",
       "parent": "/libraries/react-table"
     },
     "/libraries/react-table/standard": {

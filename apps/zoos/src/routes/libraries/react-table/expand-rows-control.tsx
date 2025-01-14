@@ -19,13 +19,15 @@ import React from "react";
 import { type TableState, createColumnHelper } from "@tanstack/react-table";
 
 import { getDataTree, type TreeNode } from "@zoos/navigation";
-import { featureProps, getColumns } from "@zoos/react-table";
+import { featureProps, getColumns, mergeColumns } from "@zoos/react-table";
 import {
   useTable,
   Table,
   useComponentProps,
   features,
 } from "@zoos/react-table-ui";
+
+const KEEP_COLUMNS = ["first_name", "last_name", "state"];
 
 function RouteComponent() {
   const [state, setState] = React.useState({} as TableState);
@@ -40,19 +42,21 @@ function RouteComponent() {
     })._dataTree.children;
 
     const columnHelper = createColumnHelper<TreeNode<(typeof data)[0]>>();
+    const columns = getColumns({ data: dataTree })({
+      exclude: (columnId) => !KEEP_COLUMNS.includes(columnId),
+    });
     return {
       dataTree,
-      columns: getColumns({ data: dataTree })({
-        keepColumn: (columnId) =>
-          ["first_name", "last_name", "state"].includes(columnId),
-        columnHelper,
-        columns: {
+      columns: mergeColumns({ base: columns })({
+        overrides: {
+          // For state, show value only on parent rows
           expand: features.expandRow.getControlColumnDef(columnHelper),
           state: {
             cell: ({ cell }) =>
               // For state, show value only on parent rows
               cell.row.subRows.length > 0 ? cell.getValue() : undefined,
           },
+          // For name columns, show value only on child rows
           first_name: {
             cell: ({ cell }) =>
               // For name columns, show value only on child rows

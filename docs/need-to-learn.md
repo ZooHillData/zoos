@@ -1,0 +1,2 @@
+- data loaded from query options and placed into context, adding context at multiple levels
+- vscode snippets for common stuff - e.g. `zoos-table`

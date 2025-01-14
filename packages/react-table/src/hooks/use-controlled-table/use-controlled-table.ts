@@ -15,6 +15,7 @@ import {
 
 import { getControlledTableOptions } from "./get-controlled-table-options";
 import { type TableOptionsControlled } from "./types";
+import { globalFilterFn } from "../../lib/filter-fns/global-filter-fn";
 
 const useControlledTable = <TData>({
   state,
@@ -47,6 +48,7 @@ const useControlledTable = <TData>({
     // expanding state from changing with global
     // filter or column filter changes
     autoResetAll: false,
+    globalFilterFn,
     // Controlled state
     ...getControlledTableOptions({ state, onStateChange }),
     // Caller options

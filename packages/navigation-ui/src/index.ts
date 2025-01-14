@@ -1,1 +1,1 @@
-export * from "./lib/navigation-ui";
+export * from "./location-breadcrumb";

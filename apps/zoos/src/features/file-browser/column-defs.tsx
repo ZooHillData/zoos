@@ -1,22 +1,28 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
 import { TreeNode } from "@zoos/navigation";
+import { features } from "@zoos/react-table-ui";
 
-import { ExpandRowCell, ExpandRowHeader } from "./components";
-import { FileAttributes } from "./types";
+import { type FileAttributes } from "./types";
 
 const columnHelper = createColumnHelper<TreeNode<FileAttributes>>();
+
 const columns = [
   columnHelper.display({ id: "select", header: "", size: 20 }),
   // features.expandRow.getColumnDef(columnHelper),
   columnHelper.accessor((row) => row._dataTree.leaf, {
     id: "name",
     header: (headerContext) => (
-      <ExpandRowHeader headerContext={headerContext}>Name</ExpandRowHeader>
+      <features.expandRow.ExpandAllHeader headerContext={headerContext}>
+        Name
+      </features.expandRow.ExpandAllHeader>
     ),
     size: 300,
     cell: (cellContext) => (
-      <ExpandRowCell cellContext={cellContext} rowDepthIndentPx={16}>
+      <features.expandRow.ExpandCell
+        cellContext={cellContext}
+        depthIndentPx={16}
+      >
         <a
           // Link to github
           rel="noreferrer"
@@ -26,7 +32,7 @@ const columns = [
         >
           {cellContext.cell.getValue()}
         </a>
-      </ExpandRowCell>
+      </features.expandRow.ExpandCell>
     ),
   }),
   columnHelper.accessor("last_updated", {

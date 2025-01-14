@@ -19,13 +19,15 @@ import React from "react";
 import { type TableState, createColumnHelper } from "@tanstack/react-table";
 
 import { getDataTree, type TreeNode } from "@zoos/navigation";
-import { featureProps, getColumns } from "@zoos/react-table";
+import { featureProps, getColumns, mergeColumns } from "@zoos/react-table";
 import {
   useTable,
   Table,
   useComponentProps,
   features,
 } from "@zoos/react-table-ui";
+
+const KEEP_COLUMNS = ["first_name", "last_name", "state"];
 
 function RouteComponent() {
   const [state, setState] = React.useState({} as TableState);
@@ -40,14 +42,15 @@ function RouteComponent() {
     })._dataTree.children;
 
     const columnHelper = createColumnHelper<TreeNode<(typeof data)[0]>>();
+    const columns = getColumns({ data: dataTree })({
+      exclude: (columnId) => !KEEP_COLUMNS.includes(columnId),
+    });
     return {
       dataTree,
-      columns: getColumns({ data: dataTree })({
-        keepColumn: (columnId) =>
-          ["first_name", "last_name", "state"].includes(columnId),
-        columnHelper,
-        columns: {
-          _leaf: {
+      columns: mergeColumns({ base: columns })({
+        newColumns: [
+          {
+            id: "key",
             header: (headerContext) => (
               <features.expandRow.ExpandAllHeader headerContext={headerContext}>
                 Key
@@ -58,14 +61,11 @@ function RouteComponent() {
                 cellContext={cellContext}
                 depthIndentPx={16}
               >
-                {
-                  // ! why isn't this inferred -__-
-                  cellContext.cell.getValue() as string
-                }
+                {cellContext.cell.getValue() as string}
               </features.expandRow.ExpandCell>
             ),
           },
-        },
+        ],
       }),
     };
   }, [data]);
