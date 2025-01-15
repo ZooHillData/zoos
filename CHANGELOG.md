@@ -1,3 +1,9 @@
+## [1.36.2](https://github.com/zoohilldata/zoos/compare/v1.36.1...v1.36.2) (2025-01-15)
+
+### Bug Fixes
+
+* add auth form configs to zoos ([9d3c45b](https://github.com/zoohilldata/zoos/commit/9d3c45b28a0aa1653a98f5af5b4f9c3295c0dee8))
+
 ## [1.36.1](https://github.com/zoohilldata/zoos/compare/v1.36.0...v1.36.1) (2025-01-14)
 
 ### Bug Fixes
