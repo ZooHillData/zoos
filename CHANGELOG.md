@@ -1,3 +1,9 @@
+## [1.36.3](https://github.com/zoohilldata/zoos/compare/v1.36.2...v1.36.3) (2025-01-15)
+
+### Bug Fixes
+
+* auth form configs and requisite component development (still using react-form "v1") ([8b37d19](https://github.com/zoohilldata/zoos/commit/8b37d192a1ed9c1ea1775c333585b7a340a1ffc5))
+
 ## [1.36.2](https://github.com/zoohilldata/zoos/compare/v1.36.1...v1.36.2) (2025-01-15)
 
 ### Bug Fixes
