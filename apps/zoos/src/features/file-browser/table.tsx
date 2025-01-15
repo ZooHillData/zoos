@@ -3,7 +3,7 @@ import { flexRender } from "@tanstack/react-table";
 import { useVirtualization, type ComponentProps } from "@zoos/react-table";
 import { HeaderContextMenu, HeaderSortIndicator } from "@zoos/react-table-ui";
 
-import { RowContextMenu } from "./row-context-menu";
+import { CellContextMenu } from "./cell-context-menu";
 
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
@@ -77,25 +77,25 @@ const Table = <TData extends object, TValue>(props: {
                 {...componentProps.trBody?.({ row, virtualRow })}
                 // Custom row click handler
               >
-                <RowContextMenu row={row}>
-                  {
-                    // ! Need this type hint to avoid TS error
-                    row.getVisibleCells().map((cell: Cell<TData, TValue>) => {
-                      return (
-                        // ~ Data cell
-                        <td
-                          key={cell.id}
-                          {...componentProps.td?.({ cell, virtualRow })}
-                        >
+                {
+                  // ! Need this type hint to avoid TS error
+                  row.getVisibleCells().map((cell: Cell<TData, TValue>) => {
+                    return (
+                      // ~ Data cell
+                      <td
+                        key={cell.id}
+                        {...componentProps.td?.({ cell, virtualRow })}
+                      >
+                        <CellContextMenu row={row}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
                           )}
-                        </td>
-                      );
-                    })
-                  }
-                </RowContextMenu>
+                        </CellContextMenu>
+                      </td>
+                    );
+                  })
+                }
               </tr>
             );
           })}

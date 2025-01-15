@@ -2,7 +2,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@zoos/shadcn";
 import { TreeNode } from "@zoos/navigation";
-import { features } from "@zoos/react-table-ui";
+import { features, filters } from "@zoos/react-table-ui";
 
 import type { FileAttributesWithPermissions } from "./types";
 import alex from "../../assets/alex-snail.svg";
@@ -29,7 +29,7 @@ const UserAvatar = ({
 }) => (
   <Avatar className="bg-popover size-6 border p-1">
     <AvatarImage src={src} alt={alt} />
-    <AvatarFallback>{fallback}</AvatarFallback>
+    {/* <AvatarFallback>{fallback}</AvatarFallback> */}
   </Avatar>
 );
 

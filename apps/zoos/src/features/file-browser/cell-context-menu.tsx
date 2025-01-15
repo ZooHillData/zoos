@@ -14,8 +14,9 @@ import {
 } from "@zoos/shadcn";
 
 import { PermissionsForm } from "./permissions-form";
+import { ownerOptions } from "./column-defs";
 
-const RowContextMenu = <TData,>(props: {
+const CellContextMenu = <TData,>(props: {
   row: Row<TData>;
   children: React.ReactNode;
   className?: string;
@@ -27,11 +28,10 @@ const RowContextMenu = <TData,>(props: {
   return (
     <ContextMenu>
       <ContextMenuTrigger
-        // "flex w-full" is required for columns within the row
-        // to be distributed correctly within the grid-based
-        // table layout required for row virtualization
-        className={cn("flex w-full", className)}
         style={style}
+        // "flex h-full w-full" make it so the context menu
+        // takes up the full <td />
+        className={cn("flex h-full w-full", className)}
       >
         {children}
       </ContextMenuTrigger>
@@ -65,7 +65,14 @@ const RowContextMenu = <TData,>(props: {
           <ContextMenuSubTrigger>Edit Permissions</ContextMenuSubTrigger>
           <ContextMenuPortal>
             <ContextMenuContent>
-              <PermissionsForm />
+              <PermissionsForm
+                permissions={{
+                  read: row.getValue("read"),
+                  write: row.getValue("write"),
+                  manage: row.getValue("manage"),
+                }}
+                options={ownerOptions}
+              />
             </ContextMenuContent>
           </ContextMenuPortal>
         </ContextMenuSub>
@@ -74,4 +81,4 @@ const RowContextMenu = <TData,>(props: {
   );
 };
 
-export { RowContextMenu };
+export { CellContextMenu };

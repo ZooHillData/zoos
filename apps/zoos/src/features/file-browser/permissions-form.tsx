@@ -1,36 +1,35 @@
-import { Form, getFormConfig } from "@zoos/react-form";
+import React from "react";
+import { getOptions } from "@zoos/react-form";
+import { Button, Tabs, TabsList, TabsTrigger } from "@zoos/shadcn";
+import { ComboboxCheckboxGroup } from "./../../routes/libraries/react-form/combobox-checkbox-group";
 
-const formConfig = getFormConfig({
-  defaultValues: {
-    permissions: [] as string[],
-  },
-  context: { emails: [] as string[] },
-})({
-  formOptions: {},
-  fields: [
-    {
-      name: "permissions",
-      type: "array-string.multiple",
-      options: ({ context }) => context.emails,
-    },
-  ],
-  layout: {
-    rowContainerProps: { className: "py-3" },
-    fieldContainerProps: { className: "space-y-2" },
-    formContainerProps: { className: "space-y-4 px-3 py-2" },
-    rows: [{ fields: ["permissions"] }],
-  },
-});
+type Permissions = Record<string, string[]>;
 
-const emails = [
-  "art@zoohilldata.com",
-  "bk@zoohilldata.com",
-  "borst@zoohilldata.com",
-  "bryce@zoohilldata.com",
-];
+const PermissionsForm = (props: {
+  permissions: Permissions;
+  options: string[];
+}) => {
+  const [type, setType] = React.useState("read");
 
-const PermissionsForm = () => {
-  return <Form context={{ emails }} config={formConfig} />;
+  return (
+    <Tabs value={type} onValueChange={(type) => setType(type)}>
+      <TabsList>
+        <TabsTrigger value="read">Read</TabsTrigger>
+        <TabsTrigger value="write">Write</TabsTrigger>
+        <TabsTrigger value="manage">Manage</TabsTrigger>
+      </TabsList>
+      <div className="p-2">
+        <ComboboxCheckboxGroup
+          options={getOptions({ values: props.options })}
+          value={props.permissions[type]}
+          onChange={(value) => {
+            console.log(value);
+          }}
+        />
+      </div>
+      <Button className="w-full">Save</Button>
+    </Tabs>
+  );
 };
 
 export { PermissionsForm };
