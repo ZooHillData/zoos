@@ -1,12 +1,40 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
+import { Avatar, AvatarImage, AvatarFallback } from "@zoos/shadcn";
 import { TreeNode } from "@zoos/navigation";
-import { Checkbox } from "@zoos/shadcn";
 import { features } from "@zoos/react-table-ui";
 
-import { type FileAttributes } from "./types";
+import type { FileAttributesWithPermissions } from "./types";
+import alex from "../../assets/alex-snail.svg";
+import bryce from "../../assets/bryce-dolphin.svg";
+import borst from "../../assets/borst-turtle.svg";
+import brian from "../../assets/brian-monkey.svg";
 
-const columnHelper = createColumnHelper<TreeNode<FileAttributes>>();
+const owners: Record<string, string> = {
+  "art@zoohilldata.com": alex,
+  "bk@zoohilldata.com": brian,
+  "borst@zoohilldata.com": borst,
+  "bryce@zoohilldata.com": bryce,
+};
+const ownerOptions = Object.keys(owners);
+
+const UserAvatar = ({
+  src,
+  alt,
+  fallback = alt[0],
+}: {
+  src: string;
+  alt: string;
+  fallback?: string;
+}) => (
+  <Avatar className="bg-popover size-6 border p-1">
+    <AvatarImage src={src} alt={alt} />
+    <AvatarFallback>{fallback}</AvatarFallback>
+  </Avatar>
+);
+
+const columnHelper =
+  createColumnHelper<TreeNode<FileAttributesWithPermissions>>();
 
 const columns = [
   columnHelper.display({
@@ -20,6 +48,7 @@ const columns = [
     //     />
     //   </div>
     // ),
+    header: "",
     size: 15,
     enableResizing: false,
   }),
@@ -60,7 +89,31 @@ const columns = [
       id: "owner",
       header: "Owner",
       size: 175,
+      cell: ({ cell }) => {
+        const owner = cell.getValue();
+        if (owner !== "-") {
+          return <UserAvatar src={owners[owner]} alt={owner} />;
+        }
+      },
     },
+  ),
+  ...(["read", "write", "manage"] as const).map((columnId) =>
+    columnHelper.accessor(columnId, {
+      cell: ({ cell }) => {
+        const permissions = cell.getValue();
+        return (
+          <div className="flex gap-1">
+            {permissions.map((permission) => (
+              <UserAvatar
+                key={permission}
+                src={owners[permission]}
+                alt={permission}
+              />
+            ))}
+          </div>
+        );
+      },
+    }),
   ),
   columnHelper.accessor(
     (row) => {
@@ -82,4 +135,4 @@ const columns = [
   }),
 ];
 
-export { columns };
+export { columns, ownerOptions };

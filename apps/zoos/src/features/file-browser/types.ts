@@ -7,6 +7,12 @@ type FileAttributes = {
   last_updated: string;
 };
 
+type FileAttributesWithPermissions = FileAttributes & {
+  read: string[];
+  write: string[];
+  manage: string[];
+};
+
 type FileTreeNode = TreeNode<FileAttributes>;
 
-export type { FileAttributes, FileTreeNode };
+export type { FileAttributesWithPermissions, FileAttributes, FileTreeNode };

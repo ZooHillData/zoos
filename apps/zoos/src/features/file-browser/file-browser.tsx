@@ -1,21 +1,21 @@
 import React from "react";
 
 import type { TableState } from "@tanstack/react-table";
-import type { FileAttributes } from "./types";
+import type { FileAttributesWithPermissions } from "./types";
 
 import { Label } from "@zoos/shadcn";
 import { InputDebounce } from "@zoos/react-form";
 import { getDataTree, searchDataTree } from "@zoos/navigation";
 import { LocationBreadcrumb } from "@zoos/navigation-ui";
 import { useTable, useComponentProps, featureProps } from "@zoos/react-table";
-import { filters, FilterContainer } from "@zoos/react-table-ui";
+import { filters, FilterContainer, FormattedId } from "@zoos/react-table-ui";
 
 // In-zoos feature imports
 import { columns } from "./column-defs";
 import { Table } from "./table";
 
 const FileBrowser = (props: {
-  files: FileAttributes[];
+  files: FileAttributesWithPermissions[];
   state: TableState;
   onStateChange: (state: TableState) => void;
   location: string;
@@ -40,6 +40,7 @@ const FileBrowser = (props: {
     state,
     onStateChange,
     defaultColumn: {
+      header: (headerContext) => <FormattedId headerContext={headerContext} />,
       filterFn: filters.string.includes.filterFn,
       meta: {
         Filter: (headerContext) => (
@@ -74,7 +75,7 @@ const FileBrowser = (props: {
           container: { className: "border" },
           thead: { className: "border-b" },
         },
-        { thead: { className: "bg-muted" } },
+        { th: () => ({ className: "bg-muted" }) },
         {
           // Row hover accent
           trBody: ({ row }) => ({ className: "hover:cursor-default group" }),
@@ -111,7 +112,7 @@ const FileBrowser = (props: {
   }, [location, dataTree]);
 
   return (
-    <div className="flex h-full w-fit flex-col gap-2 p-4">
+    <div className="flex h-full flex-col gap-2 p-4">
       <div className="flex items-center justify-between">
         <LocationBreadcrumb
           location={location}

@@ -10,6 +10,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuPortal,
   ContextMenuLabel,
+  cn,
 } from "@zoos/shadcn";
 
 import { PermissionsForm } from "./permissions-form";
@@ -25,7 +26,13 @@ const RowContextMenu = <TData,>(props: {
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className={className} style={style}>
+      <ContextMenuTrigger
+        // "flex w-full" is required for columns within the row
+        // to be distributed correctly within the grid-based
+        // table layout required for row virtualization
+        className={cn("flex w-full", className)}
+        style={style}
+      >
         {children}
       </ContextMenuTrigger>
       <ContextMenuContent className="w-48">
