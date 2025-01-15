@@ -21,6 +21,14 @@ module.exports = {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",
         },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        input: {
+          DEFAULT: "var(--input)",
+          foreground: "var(--input-foreground)",
+        },
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
@@ -61,7 +69,10 @@ module.exports = {
         },
       },
       borderColor: { DEFAULT: "var(--border)" },
-      borderRadius: { DEFAULT: "var(--border-radius)" },
+      borderRadius: {
+        DEFAULT: "var(--border-radius)",
+        card: "var(--card-border-radius)",
+      },
       keyframes: {
         "accordion-down": {
           from: {

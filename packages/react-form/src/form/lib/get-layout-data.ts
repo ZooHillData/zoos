@@ -46,12 +46,12 @@ const getRowContainerProps = <Form, Context>(row: Row<Form, Context>) => {
 const getLayoutData = <Form, Context>(params: {
   layout: Layout<Form, Context>;
 }): LayoutData<Form> => {
-  const rowLayoutData = params.layout.rows.map((row) =>
+  const rowLayoutData = params.layout.rows?.map((row) =>
     getRowContainerProps(row),
   );
 
   return {
-    rows: rowLayoutData,
+    rows: rowLayoutData || [],
   };
 };
 

@@ -20,7 +20,12 @@ CSS Variables for Tailwind Config
     --border: hsl(0, 0%, 89.8%);
     --popover: hsl(0, 0%, 100%);
     --popover-foreground: hsl(0, 0%, 3.9%);
+    --card: var(--popover);
+    --card-foreground: var(--popover-foreground);
     --label-foreground: color-mix(in srgb, white 10%, var(--foreground) 90%);
+
+    --input: var(--background);
+    --input-foreground: var(--foreground);
 
     --primary-foreground: hsl(0, 0%, 100%);
     --primary: hsl(212, 80%, 42%);
@@ -54,6 +59,7 @@ CSS Variables for Tailwind Config
     */
 
     --border-radius: 0.25rem;
+    --card-border-radius: 0.5rem;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -66,6 +72,8 @@ CSS Variables for Tailwind Config
       --border: hsl(217, 56%, 24%);
       --popover: hsl(218, 100%, 9%);
       --popover-foreground: hsl(220, 13%, 91%);
+      --card: var(--popover);
+      --card-foreground: var(--popover-foreground);
       --label-foreground: color-mix(in srgb, black 10%, var(--foreground) 90%);
 
       --primary-foreground: hsl(220, 13%, 91%);

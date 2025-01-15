@@ -33,12 +33,12 @@ type Row<Form, Context> = {
   }) => React.ReactNode;
 };
 
-type Layout<Form, Context> = {
-  minWidth?: number;
-  rowContainerProps?: React.ComponentProps<"div">;
-  fieldContainerProps?: React.ComponentProps<"div">;
-  formContainerProps?: React.ComponentProps<"form">;
-  labelComponent?: ({
+type Layout<Form, Context> = Partial<{
+  minWidth: number;
+  rowContainerProps: React.ComponentProps<"div">;
+  fieldContainerProps: React.ComponentProps<"div">;
+  formContainerProps: React.ComponentProps<"form">;
+  labelComponent: ({
     fieldConfig,
     values,
     context,
@@ -48,6 +48,6 @@ type Layout<Form, Context> = {
     context: Context;
   }) => (props: { name: string }) => React.ReactNode;
   rows: Row<Form, Context>[];
-};
+}>;
 
 export type { Layout, Row };

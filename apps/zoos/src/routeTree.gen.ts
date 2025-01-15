@@ -18,6 +18,7 @@ import { Route as LibrariesReactQueryRouteImport } from './routes/libraries/reac
 import { Route as LibrariesReactFormRouteImport } from './routes/libraries/react-form/route'
 import { Route as FeaturesFileBrowserRouteImport } from './routes/features/file-browser/route'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
+import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
 import { Route as LibrariesShadcnUseReactiveStateImport } from './routes/libraries/shadcn/use-reactive-state'
 import { Route as LibrariesShadcnUseDebounceImport } from './routes/libraries/shadcn/use-debounce'
 import { Route as LibrariesShadcnSelectImport } from './routes/libraries/shadcn/select'
@@ -89,6 +90,12 @@ const FeaturesFileBrowserIndexRoute = FeaturesFileBrowserIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => FeaturesFileBrowserRouteRoute,
+} as any)
+
+const FeaturesAuthIndexRoute = FeaturesAuthIndexImport.update({
+  id: '/features/auth/',
+  path: '/features/auth/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const LibrariesShadcnUseReactiveStateRoute =
@@ -494,6 +501,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibrariesShadcnUseReactiveStateImport
       parentRoute: typeof LibrariesShadcnRouteImport
     }
+    '/features/auth/': {
+      id: '/features/auth/'
+      path: '/features/auth'
+      fullPath: '/features/auth'
+      preLoaderRoute: typeof FeaturesAuthIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/features/file-browser/': {
       id: '/features/file-browser/'
       path: '/'
@@ -695,6 +709,7 @@ export interface FileRoutesByFullPath {
   '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
   '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
   '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
@@ -732,6 +747,7 @@ export interface FileRoutesByTo {
   '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
   '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
   '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
   '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
@@ -771,6 +787,7 @@ export interface FileRoutesById {
   '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
   '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
   '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
@@ -811,6 +828,7 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/select'
     | '/libraries/shadcn/use-debounce'
     | '/libraries/shadcn/use-reactive-state'
+    | '/features/auth'
     | '/features/file-browser/'
     | '/features/app/auth/confirm-otp'
     | '/features/app/auth/forgot-password'
@@ -847,6 +865,7 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/select'
     | '/libraries/shadcn/use-debounce'
     | '/libraries/shadcn/use-reactive-state'
+    | '/features/auth'
     | '/features/file-browser'
     | '/features/app/auth/confirm-otp'
     | '/features/app/auth/forgot-password'
@@ -884,6 +903,7 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/select'
     | '/libraries/shadcn/use-debounce'
     | '/libraries/shadcn/use-reactive-state'
+    | '/features/auth/'
     | '/features/file-browser/'
     | '/features/app/auth/confirm-otp'
     | '/features/app/auth/forgot-password'
@@ -900,6 +920,7 @@ export interface RootRouteChildren {
   LibrariesReactTableRouteRoute: typeof LibrariesReactTableRouteRouteWithChildren
   LibrariesShadcnRouteRoute: typeof LibrariesShadcnRouteRouteWithChildren
   FeaturesAppAuthRouteRoute: typeof FeaturesAppAuthRouteRouteWithChildren
+  FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -910,6 +931,7 @@ const rootRouteChildren: RootRouteChildren = {
   LibrariesReactTableRouteRoute: LibrariesReactTableRouteRouteWithChildren,
   LibrariesShadcnRouteRoute: LibrariesShadcnRouteRouteWithChildren,
   FeaturesAppAuthRouteRoute: FeaturesAppAuthRouteRouteWithChildren,
+  FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -928,7 +950,8 @@ export const routeTree = rootRoute
         "/libraries/react-query",
         "/libraries/react-table",
         "/libraries/shadcn",
-        "/features/app/auth"
+        "/features/app/auth",
+        "/features/auth/"
       ]
     },
     "/": {
@@ -1083,6 +1106,9 @@ export const routeTree = rootRoute
     "/libraries/shadcn/use-reactive-state": {
       "filePath": "libraries/shadcn/use-reactive-state.tsx",
       "parent": "/libraries/shadcn"
+    },
+    "/features/auth/": {
+      "filePath": "features/auth/index.tsx"
     },
     "/features/file-browser/": {
       "filePath": "features/file-browser/index.tsx",
