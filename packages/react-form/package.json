@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@tanstack/react-form": "^0.40.4",
-    "@tanstack/react-virtual": "^3.11.2"
+    "@tanstack/react-virtual": "^3.11.2",
+    "lucide-react": "^0.469.0"
   }
 }

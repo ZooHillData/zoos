@@ -28,8 +28,13 @@ import bryce from "../assets/bryce-dolphin.svg";
 import borst from "../assets/borst-turtle.svg";
 import brian from "../assets/brian-monkey.svg";
 
-const Icons = () => (
-  <div className="mx-auto flex w-fit flex-wrap items-center gap-x-8">
+const Icons = ({ className }: { className?: string }) => (
+  <div
+    className={cn(
+      "flex flex-wrap items-center justify-center gap-x-8",
+      className,
+    )}
+  >
     <img src={alex} alt="Alex Snail" className="h-24 w-24" />
     <img src={bryce} alt="Bryce Dolphin" className="h-24 w-24" />
     <img src={brian} alt="Brian Monkey" className="h-24 w-24" />
@@ -77,13 +82,17 @@ const Links = () => (
   </div>
 );
 
+const HeaderGroup = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex flex-col items-center gap-4">{children}</div>
+);
+
 function RouteComponent() {
   return (
-    <div className="bg-background text-foreground flex h-screen w-screen flex-col items-center gap-8 overflow-auto">
+    <div className="bg-background text-foreground relative flex h-screen w-screen flex-col items-center gap-8 overflow-auto py-8">
       <div className="mt-auto flex flex-col items-center gap-4">
         <h1 className="text-6xl font-bold">Zoos</h1>
         <Links />
-        <p className="max-w-[400px] text-balance text-center text-sm italic">
+        <p className="max-w-[400px] text-pretty text-center text-sm italic">
           Simple, composable React libraries using our top Tanstack, ShadCN,
           Zustand, Supabase patterns.
         </p>

@@ -19,11 +19,15 @@ type FormConfig<Form extends object, Context = void> = {
 
 /** FieldType is central to   */
 type FieldType =
+  // strings
   | "string"
-  | "string-long"
-  | "select-single"
-  | "select-multi"
-  | "boolean";
+  | "string.long"
+  | "string.password"
+  | "string.otp"
+  | "boolean"
+  // arrays
+  | "array-string.single"
+  | "array-string.multiple";
 
 /**
  * FieldProps, configured in FieldConfig, passed to the

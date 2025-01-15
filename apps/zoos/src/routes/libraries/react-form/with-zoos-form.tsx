@@ -1,11 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/libraries/react-form/with-zoos-form')({
+export const Route = createFileRoute("/libraries/react-form/with-zoos-form")({
   component: RouteComponent,
-})
+});
 
-import { Label } from '@zoos/shadcn'
-import { Form, getFormConfig } from '@zoos/react-form'
+import { Label } from "@zoos/shadcn";
+import { Form, getFormConfig } from "@zoos/react-form";
 
 /*
 This could be your react-query
@@ -14,18 +14,18 @@ pass into the form
 */
 const getContext = () => {
   return {
-    variables: ['Temperature', 'Viscocity', 'Distortion'],
+    variables: ["Temperature", "Viscocity", "Distortion"],
     sets: [
-      'node-1',
-      'node-2',
-      'surface-1',
-      'surface-2',
-      'edge-1',
-      'edge-2',
-      'volume-1',
+      "node-1",
+      "node-2",
+      "surface-1",
+      "surface-2",
+      "edge-1",
+      "edge-2",
+      "volume-1",
     ],
-  }
-}
+  };
+};
 
 /*
 ~
@@ -41,9 +41,9 @@ const formConfig = getFormConfig({
   Form data default values (passed to `useForm`)
   */
   defaultValues: {
-    variable: '',
+    variable: "",
     set_filter: false,
-    set_type: '',
+    set_type: "",
     // Type hint on required on empty arrays
     sets: [] as string[],
   },
@@ -60,7 +60,7 @@ const formConfig = getFormConfig({
   context: {
     // Type hint required on empty arrays
     sets: [] as string[],
-    setTypes: ['node', 'surface', 'edge', 'volume'],
+    setTypes: ["node", "surface", "edge", "volume"],
     variables: [] as string[],
   },
 })({
@@ -71,7 +71,7 @@ const formConfig = getFormConfig({
   */
   formOptions: {
     onSubmit: ({ value }) => {
-      window.alert(JSON.stringify(value))
+      window.alert(JSON.stringify(value));
     },
   },
   /*
@@ -96,9 +96,9 @@ const formConfig = getFormConfig({
     - `rowContainerProps` - passed to row container
     - `fieldContainerProps` - passed to field container
     */
-    rowContainerProps: { className: 'py-2' },
-    fieldContainerProps: { className: 'space-y-1' },
-    formContainerProps: { className: 'space-y-4' },
+    rowContainerProps: { className: "py-2" },
+    fieldContainerProps: { className: "space-y-1" },
+    formContainerProps: { className: "space-y-4" },
     /*
     Component overrides
     ------------------------
@@ -107,7 +107,7 @@ const formConfig = getFormConfig({
     labelComponent:
       () =>
       ({ name }) => (
-        <Label className="uppercase">{name.split('_').join(' ')}</Label>
+        <Label className="uppercase">{name.split("_").join(" ")}</Label>
       ),
     // If you specify layout, only field names specified in
     // one of the fields arrays will be rendered
@@ -121,21 +121,21 @@ const formConfig = getFormConfig({
           in the row objects so you can see the structure at a glance.
       */
       // ! Currently, `fields` arrays are not strongly typed .. soon?
-      { fields: ['variable'] },
+      { fields: ["variable"] },
       // Override container "w-1/2" custom class, this row only.
-      { fields: ['set_filter'], containerProps: { className: 'w-1/2' } },
+      { fields: ["set_filter"], containerProps: { className: "w-1/2" } },
       {
-        fields: ['set_type', 'sets'],
+        fields: ["set_type", "sets"],
         containerProps: {
-          className: 'flex w-full gap-4',
+          className: "flex w-full gap-4",
         },
       },
     ],
   },
   fields: [
     {
-      name: 'variable',
-      type: 'select-single',
+      name: "variable",
+      type: "array-string.single",
       options: ({ context }) => context.variables,
       /*
       ~
@@ -147,20 +147,20 @@ const formConfig = getFormConfig({
           // Unfortunately, handlers need to be manually typed b/c the
           // value type (from `name`) is not flowing through here
           onChange: ({ value }: { value: string }) => {
-            if (value === 'Temperature') {
-              return 'Temperature is not allowed'
+            if (value === "Temperature") {
+              return "Temperature is not allowed";
             }
           },
         },
       },
     },
     {
-      name: 'set_filter',
-      type: 'boolean',
+      name: "set_filter",
+      type: "boolean",
     },
     {
-      name: 'sets',
-      type: 'select-multi',
+      name: "sets",
+      type: "array-string.multiple",
       /*
       ~
       ~ Field attribute callbacks
@@ -176,16 +176,16 @@ const formConfig = getFormConfig({
       hidden: ({ values }) => !values.set_filter,
     },
     {
-      name: 'set_type',
-      type: 'select-single',
+      name: "set_type",
+      type: "array-string.single",
       options: ({ context }) => context.setTypes,
       hidden: ({ values }) => !values.set_filter,
     },
   ],
-})
+});
 
 function RouteComponent() {
-  const context = getContext()
+  const context = getContext();
 
   return (
     <div className="h-full w-full max-w-[300px]">
@@ -196,5 +196,5 @@ function RouteComponent() {
         config={formConfig}
       />
     </div>
-  )
+  );
 }

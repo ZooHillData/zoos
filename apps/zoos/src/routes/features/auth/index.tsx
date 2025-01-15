@@ -20,6 +20,7 @@ import {
   TabsTrigger,
   TabsContent,
   CardDescription,
+  cn,
 } from "@zoos/shadcn";
 
 import {
@@ -34,32 +35,40 @@ const tabs = [
   {
     value: "login",
     label: "Login",
+    description: "Login in to access your custom experience",
     formConfig: loginConfig,
     submitButtonLabel: "Login",
   },
   {
     value: "signup",
     label: "Signup",
+    description: "Welcome to our platform! Signup to get started",
     formConfig: signupConfig,
     submitButtonLabel: "Signup",
   },
-  {
-    value: "confirm-otp",
-    label: "Confirm OTP",
-    formConfig: confirmOtpConfig,
-    submitButtonLabel: "Confirm OTP",
-  },
+
   {
     value: "forgot-password",
     label: "Forgot Password",
+    description:
+      "Don't worry, it happens. Enter your email to reset your password",
     formConfig: forgotPasswordConfig,
     submitButtonLabel: "Reset Password",
   },
   {
     value: "reset-password",
     label: "Reset Password",
+    description:
+      "Choose a strong password and store it in your password manager ❤️",
     formConfig: resetPasswordConfig,
     submitButtonLabel: "Reset password",
+  },
+  {
+    value: "confirm-otp",
+    label: "Confirm Code",
+    description: "Enter the 6-digit code sent to your email",
+    formConfig: confirmOtpConfig,
+    submitButtonLabel: "Confirm OTP",
   },
 ] as const;
 
@@ -89,18 +98,26 @@ function RouteComponent() {
           <TabsContent
             key={tab.value}
             value={tab.value}
-            className="mx-auto mt-16 max-w-[350px]"
+            className={cn(
+              "mx-auto mt-16 max-w-[350px]",
+              tab.value === "confirm-otp" && "max-w-fit",
+            )}
           >
             <Card>
               <CardHeader className="flex w-full flex-col items-center justify-center text-center">
-                <CardTitle className="text-2xl">{tab.label}</CardTitle>
-                <div className="h-12 w-24">
+                <div className="h-10 w-16">
                   <img
-                    src="./favicon.svg"
+                    src="./favicon-dark.svg"
                     className="h-full w-full object-cover"
                     alt="logo"
                   />
                 </div>
+                <CardTitle className="text-2xl">{tab.label}</CardTitle>
+                {tab.description && (
+                  <CardDescription className="text-pretty">
+                    {tab.description}
+                  </CardDescription>
+                )}
               </CardHeader>
               <CardContent>
                 <Form

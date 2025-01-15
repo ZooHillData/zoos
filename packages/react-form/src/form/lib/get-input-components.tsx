@@ -1,9 +1,16 @@
 import { FieldComponent } from "@tanstack/react-form";
+import { EyeIcon } from "lucide-react";
 
 import { Input, Textarea } from "@zoos/shadcn";
 
 import { getOptions } from "../../lib";
-import { Select, CheckboxWithLabel, CheckboxGroup } from "../../components";
+import {
+  OTP,
+  Select,
+  CheckboxWithLabel,
+  CheckboxGroup,
+  InputPassword,
+} from "../../components";
 import type {
   FieldType,
   FieldName,
@@ -46,7 +53,7 @@ const getInputComponents = <Form extends object, Context>(data: {
           // ?
 
           // select-single: select dropdown
-          if (type === "select-single") {
+          if (type === "array-string.single") {
             return (
               <Select
                 options={getOptions({
@@ -57,14 +64,14 @@ const getInputComponents = <Form extends object, Context>(data: {
                     }) || [],
                 })}
                 value={fieldApi.state.value as string}
-                // eslint-disable-next-line
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onChange={(value) => fieldApi.setValue(value as any)}
                 sort={true}
               />
             );
           }
           // select-multi: multi-select checkbox group
-          if (type === "select-multi") {
+          if (type === "array-string.multiple") {
             return (
               <CheckboxGroup
                 options={getOptions({
@@ -75,7 +82,7 @@ const getInputComponents = <Form extends object, Context>(data: {
                     }) || [],
                 })}
                 value={fieldApi.state.value as string[]}
-                // eslint-disable-next-line
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onChange={(value) => fieldApi.setValue(value as any)}
               />
             );
@@ -86,18 +93,38 @@ const getInputComponents = <Form extends object, Context>(data: {
               <CheckboxWithLabel
                 label="true"
                 checked={Boolean(fieldApi.state.value)}
-                // eslint-disable-next-line
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onCheckedChange={(value) => fieldApi.setValue(value as any)}
               />
             );
           }
           // string-long: textarea
-          if (type === "string-long") {
+          if (type === "string.long") {
             return (
               <Textarea
                 value={fieldApi.state.value as string}
                 onChange={({ target }) =>
-                  // eslint-disable-next-line
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  fieldApi.setValue(target.value as any)
+                }
+              />
+            );
+          }
+          if (type === "string.otp") {
+            return (
+              <OTP
+                value={String(fieldApi.state.value)}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onValueChange={(value) => fieldApi.setValue(value as any)}
+              />
+            );
+          }
+          if (type === "string.password") {
+            return (
+              <InputPassword
+                value={String(fieldApi.state.value)}
+                // eslint-disable-next-line
+                onChange={({ target }) =>
                   fieldApi.setValue(target.value as any)
                 }
               />

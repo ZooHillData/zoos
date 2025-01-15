@@ -8,6 +8,8 @@ export * from "./select";
 
 // Text inputs
 export * from "./input-debounce";
+export * from "./input-password";
+export * from "./otp";
 
 // Number
 export * from "./number-range-2-input";

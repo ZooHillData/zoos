@@ -42,11 +42,6 @@ import { Route as LibrariesReactFormInputDebounceImport } from './routes/librari
 import { Route as LibrariesReactFormComboboxCheckboxGroupImport } from './routes/libraries/react-form/combobox-checkbox-group'
 import { Route as LibrariesReactFormCheckboxWithLabelImport } from './routes/libraries/react-form/checkbox-with-label'
 import { Route as LibrariesReactFormCheckboxGroupImport } from './routes/libraries/react-form/checkbox-group'
-import { Route as FeaturesAppAuthRouteImport } from './routes/features/app/auth/route'
-import { Route as FeaturesAppAuthSignupImport } from './routes/features/app/auth/signup'
-import { Route as FeaturesAppAuthLoginImport } from './routes/features/app/auth/login'
-import { Route as FeaturesAppAuthForgotPasswordImport } from './routes/features/app/auth/forgot-password'
-import { Route as FeaturesAppAuthConfirmOtpImport } from './routes/features/app/auth/confirm-otp'
 
 // Create/Update Routes
 
@@ -256,37 +251,6 @@ const LibrariesReactFormCheckboxGroupRoute =
     getParentRoute: () => LibrariesReactFormRouteRoute,
   } as any)
 
-const FeaturesAppAuthRouteRoute = FeaturesAppAuthRouteImport.update({
-  id: '/features/app/auth',
-  path: '/features/app/auth',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const FeaturesAppAuthSignupRoute = FeaturesAppAuthSignupImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => FeaturesAppAuthRouteRoute,
-} as any)
-
-const FeaturesAppAuthLoginRoute = FeaturesAppAuthLoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => FeaturesAppAuthRouteRoute,
-} as any)
-
-const FeaturesAppAuthForgotPasswordRoute =
-  FeaturesAppAuthForgotPasswordImport.update({
-    id: '/forgot-password',
-    path: '/forgot-password',
-    getParentRoute: () => FeaturesAppAuthRouteRoute,
-  } as any)
-
-const FeaturesAppAuthConfirmOtpRoute = FeaturesAppAuthConfirmOtpImport.update({
-  id: '/confirm-otp',
-  path: '/confirm-otp',
-  getParentRoute: () => FeaturesAppAuthRouteRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -331,13 +295,6 @@ declare module '@tanstack/react-router' {
       path: '/libraries/shadcn'
       fullPath: '/libraries/shadcn'
       preLoaderRoute: typeof LibrariesShadcnRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/features/app/auth': {
-      id: '/features/app/auth'
-      path: '/features/app/auth'
-      fullPath: '/features/app/auth'
-      preLoaderRoute: typeof FeaturesAppAuthRouteImport
       parentRoute: typeof rootRoute
     }
     '/libraries/react-form/checkbox-group': {
@@ -515,34 +472,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesFileBrowserIndexImport
       parentRoute: typeof FeaturesFileBrowserRouteImport
     }
-    '/features/app/auth/confirm-otp': {
-      id: '/features/app/auth/confirm-otp'
-      path: '/confirm-otp'
-      fullPath: '/features/app/auth/confirm-otp'
-      preLoaderRoute: typeof FeaturesAppAuthConfirmOtpImport
-      parentRoute: typeof FeaturesAppAuthRouteImport
-    }
-    '/features/app/auth/forgot-password': {
-      id: '/features/app/auth/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/features/app/auth/forgot-password'
-      preLoaderRoute: typeof FeaturesAppAuthForgotPasswordImport
-      parentRoute: typeof FeaturesAppAuthRouteImport
-    }
-    '/features/app/auth/login': {
-      id: '/features/app/auth/login'
-      path: '/login'
-      fullPath: '/features/app/auth/login'
-      preLoaderRoute: typeof FeaturesAppAuthLoginImport
-      parentRoute: typeof FeaturesAppAuthRouteImport
-    }
-    '/features/app/auth/signup': {
-      id: '/features/app/auth/signup'
-      path: '/signup'
-      fullPath: '/features/app/auth/signup'
-      preLoaderRoute: typeof FeaturesAppAuthSignupImport
-      parentRoute: typeof FeaturesAppAuthRouteImport
-    }
   }
 }
 
@@ -661,23 +590,6 @@ const LibrariesShadcnRouteRouteChildren: LibrariesShadcnRouteRouteChildren = {
 const LibrariesShadcnRouteRouteWithChildren =
   LibrariesShadcnRouteRoute._addFileChildren(LibrariesShadcnRouteRouteChildren)
 
-interface FeaturesAppAuthRouteRouteChildren {
-  FeaturesAppAuthConfirmOtpRoute: typeof FeaturesAppAuthConfirmOtpRoute
-  FeaturesAppAuthForgotPasswordRoute: typeof FeaturesAppAuthForgotPasswordRoute
-  FeaturesAppAuthLoginRoute: typeof FeaturesAppAuthLoginRoute
-  FeaturesAppAuthSignupRoute: typeof FeaturesAppAuthSignupRoute
-}
-
-const FeaturesAppAuthRouteRouteChildren: FeaturesAppAuthRouteRouteChildren = {
-  FeaturesAppAuthConfirmOtpRoute: FeaturesAppAuthConfirmOtpRoute,
-  FeaturesAppAuthForgotPasswordRoute: FeaturesAppAuthForgotPasswordRoute,
-  FeaturesAppAuthLoginRoute: FeaturesAppAuthLoginRoute,
-  FeaturesAppAuthSignupRoute: FeaturesAppAuthSignupRoute,
-}
-
-const FeaturesAppAuthRouteRouteWithChildren =
-  FeaturesAppAuthRouteRoute._addFileChildren(FeaturesAppAuthRouteRouteChildren)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
@@ -685,7 +597,6 @@ export interface FileRoutesByFullPath {
   '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
   '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
   '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/features/app/auth': typeof FeaturesAppAuthRouteRouteWithChildren
   '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
   '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
   '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
@@ -711,10 +622,6 @@ export interface FileRoutesByFullPath {
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
-  '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
-  '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
-  '/features/app/auth/login': typeof FeaturesAppAuthLoginRoute
-  '/features/app/auth/signup': typeof FeaturesAppAuthSignupRoute
 }
 
 export interface FileRoutesByTo {
@@ -723,7 +630,6 @@ export interface FileRoutesByTo {
   '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
   '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
   '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/features/app/auth': typeof FeaturesAppAuthRouteRouteWithChildren
   '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
   '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
   '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
@@ -749,10 +655,6 @@ export interface FileRoutesByTo {
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
-  '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
-  '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
-  '/features/app/auth/login': typeof FeaturesAppAuthLoginRoute
-  '/features/app/auth/signup': typeof FeaturesAppAuthSignupRoute
 }
 
 export interface FileRoutesById {
@@ -763,7 +665,6 @@ export interface FileRoutesById {
   '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
   '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
   '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/features/app/auth': typeof FeaturesAppAuthRouteRouteWithChildren
   '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
   '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
   '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
@@ -789,10 +690,6 @@ export interface FileRoutesById {
   '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
-  '/features/app/auth/confirm-otp': typeof FeaturesAppAuthConfirmOtpRoute
-  '/features/app/auth/forgot-password': typeof FeaturesAppAuthForgotPasswordRoute
-  '/features/app/auth/login': typeof FeaturesAppAuthLoginRoute
-  '/features/app/auth/signup': typeof FeaturesAppAuthSignupRoute
 }
 
 export interface FileRouteTypes {
@@ -804,7 +701,6 @@ export interface FileRouteTypes {
     | '/libraries/react-query'
     | '/libraries/react-table'
     | '/libraries/shadcn'
-    | '/features/app/auth'
     | '/libraries/react-form/checkbox-group'
     | '/libraries/react-form/checkbox-with-label'
     | '/libraries/react-form/combobox-checkbox-group'
@@ -830,10 +726,6 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/use-reactive-state'
     | '/features/auth'
     | '/features/file-browser/'
-    | '/features/app/auth/confirm-otp'
-    | '/features/app/auth/forgot-password'
-    | '/features/app/auth/login'
-    | '/features/app/auth/signup'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -841,7 +733,6 @@ export interface FileRouteTypes {
     | '/libraries/react-query'
     | '/libraries/react-table'
     | '/libraries/shadcn'
-    | '/features/app/auth'
     | '/libraries/react-form/checkbox-group'
     | '/libraries/react-form/checkbox-with-label'
     | '/libraries/react-form/combobox-checkbox-group'
@@ -867,10 +758,6 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/use-reactive-state'
     | '/features/auth'
     | '/features/file-browser'
-    | '/features/app/auth/confirm-otp'
-    | '/features/app/auth/forgot-password'
-    | '/features/app/auth/login'
-    | '/features/app/auth/signup'
   id:
     | '__root__'
     | '/'
@@ -879,7 +766,6 @@ export interface FileRouteTypes {
     | '/libraries/react-query'
     | '/libraries/react-table'
     | '/libraries/shadcn'
-    | '/features/app/auth'
     | '/libraries/react-form/checkbox-group'
     | '/libraries/react-form/checkbox-with-label'
     | '/libraries/react-form/combobox-checkbox-group'
@@ -905,10 +791,6 @@ export interface FileRouteTypes {
     | '/libraries/shadcn/use-reactive-state'
     | '/features/auth/'
     | '/features/file-browser/'
-    | '/features/app/auth/confirm-otp'
-    | '/features/app/auth/forgot-password'
-    | '/features/app/auth/login'
-    | '/features/app/auth/signup'
   fileRoutesById: FileRoutesById
 }
 
@@ -919,7 +801,6 @@ export interface RootRouteChildren {
   LibrariesReactQueryRouteRoute: typeof LibrariesReactQueryRouteRouteWithChildren
   LibrariesReactTableRouteRoute: typeof LibrariesReactTableRouteRouteWithChildren
   LibrariesShadcnRouteRoute: typeof LibrariesShadcnRouteRouteWithChildren
-  FeaturesAppAuthRouteRoute: typeof FeaturesAppAuthRouteRouteWithChildren
   FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
 }
 
@@ -930,7 +811,6 @@ const rootRouteChildren: RootRouteChildren = {
   LibrariesReactQueryRouteRoute: LibrariesReactQueryRouteRouteWithChildren,
   LibrariesReactTableRouteRoute: LibrariesReactTableRouteRouteWithChildren,
   LibrariesShadcnRouteRoute: LibrariesShadcnRouteRouteWithChildren,
-  FeaturesAppAuthRouteRoute: FeaturesAppAuthRouteRouteWithChildren,
   FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
 }
 
@@ -950,7 +830,6 @@ export const routeTree = rootRoute
         "/libraries/react-query",
         "/libraries/react-table",
         "/libraries/shadcn",
-        "/features/app/auth",
         "/features/auth/"
       ]
     },
@@ -1004,15 +883,6 @@ export const routeTree = rootRoute
         "/libraries/shadcn/select",
         "/libraries/shadcn/use-debounce",
         "/libraries/shadcn/use-reactive-state"
-      ]
-    },
-    "/features/app/auth": {
-      "filePath": "features/app/auth/route.tsx",
-      "children": [
-        "/features/app/auth/confirm-otp",
-        "/features/app/auth/forgot-password",
-        "/features/app/auth/login",
-        "/features/app/auth/signup"
       ]
     },
     "/libraries/react-form/checkbox-group": {
@@ -1113,22 +983,6 @@ export const routeTree = rootRoute
     "/features/file-browser/": {
       "filePath": "features/file-browser/index.tsx",
       "parent": "/features/file-browser"
-    },
-    "/features/app/auth/confirm-otp": {
-      "filePath": "features/app/auth/confirm-otp.tsx",
-      "parent": "/features/app/auth"
-    },
-    "/features/app/auth/forgot-password": {
-      "filePath": "features/app/auth/forgot-password.tsx",
-      "parent": "/features/app/auth"
-    },
-    "/features/app/auth/login": {
-      "filePath": "features/app/auth/login.tsx",
-      "parent": "/features/app/auth"
-    },
-    "/features/app/auth/signup": {
-      "filePath": "features/app/auth/signup.tsx",
-      "parent": "/features/app/auth"
     }
   }
 }

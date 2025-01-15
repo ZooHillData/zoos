@@ -7,7 +7,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     component: () => (
       <div className="bg-background text-foreground">
         <Outlet />
-        <TanStackRouterDevtools />
+        {/* <TanStackRouterDevtools  /> */}
       </div>
     ),
   },

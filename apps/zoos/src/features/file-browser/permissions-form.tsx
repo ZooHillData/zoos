@@ -10,7 +10,7 @@ const formConfig = getFormConfig({
   fields: [
     {
       name: "permissions",
-      type: "select-multi",
+      type: "array-string.multiple",
       options: ({ context }) => context.emails,
     },
   ],

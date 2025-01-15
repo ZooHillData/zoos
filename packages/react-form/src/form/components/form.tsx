@@ -142,7 +142,9 @@ const Form = <Form extends object, Context>(props: {
           })}
         </div>
       ))}
-      <Button onClick={() => form.handleSubmit()}>{submitButtonLabel}</Button>
+      <Button className="w-full" onClick={() => form.handleSubmit()}>
+        {submitButtonLabel}
+      </Button>
     </form>
   );
 };
