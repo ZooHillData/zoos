@@ -1,3 +1,15 @@
+## [1.36.4](https://github.com/zoohilldata/zoos/compare/v1.36.3...v1.36.4) (2025-01-16)
+
+### Bug Fixes
+
+* fix button test relative path ([a932936](https://github.com/zoohilldata/zoos/commit/a93293636e20c326091b9b0fc00bea80db6c23b8))
+* **react-table:** modify cell, header types ([76feaa8](https://github.com/zoohilldata/zoos/commit/76feaa864f4e95b8695f4b4bbe46a1d599685bfc))
+
+### Chores
+
+* feat/file-browser with avatars for owner / permissions ([63b2d64](https://github.com/zoohilldata/zoos/commit/63b2d64285903d4c506bc44785d7db24dafa76ff))
+* update file-browser with new permissions edit experience ([c20a72f](https://github.com/zoohilldata/zoos/commit/c20a72f4348cd38a3918d4fbc610cd0877da6166))
+
 ## [1.36.3](https://github.com/zoohilldata/zoos/compare/v1.36.2...v1.36.3) (2025-01-15)
 
 ### Bug Fixes
