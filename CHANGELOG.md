@@ -1,3 +1,9 @@
+## [1.36.5](https://github.com/zoohilldata/zoos/compare/v1.36.4...v1.36.5) (2025-01-16)
+
+### Bug Fixes
+
+* **react-table:** table state API ([d563382](https://github.com/zoohilldata/zoos/commit/d56338250682536b9bee41d66ffcba403b0e4eb3))
+
 ## [1.36.4](https://github.com/zoohilldata/zoos/compare/v1.36.3...v1.36.4) (2025-01-16)
 
 ### Bug Fixes
