@@ -14,11 +14,8 @@ declare module "@tanstack/react-table" {
 
 type TableOptionsControlled<TData extends RowData> = Omit<
   TableOptions<TData>,
-  // In controlled table, state / onStateChange require full table
-  // state for simplicity
-  | "state"
-  | "onStateChange"
   // Row models that are already set
+  | "onStateChange"
   | "getExpandedRowModel"
   | "getFacetedRowModel"
   | "getFilteredRowModel"
@@ -40,9 +37,7 @@ type TableOptionsControlled<TData extends RowData> = Omit<
   | "onRowSelectionChange"
   | "onSortingChange"
 > & {
-  state: TableState;
-  onStateChange: (state: TableState) => void;
-  inferTypes?: boolean;
+  onStateChange?: (state: TableState) => void;
 };
 
 export { type TableOptionsControlled };

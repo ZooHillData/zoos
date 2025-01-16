@@ -6,7 +6,6 @@ export const Route = createFileRoute("/core/react-table/custom-columns")({
 
 import React from "react";
 
-import type { TableState } from "@tanstack/react-table";
 import { createColumnHelper } from "@tanstack/react-table";
 
 import {
@@ -137,7 +136,7 @@ const columns = [
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
-  const [state, setState] = React.useState({} as TableState);
+  const [state, setState] = React.useState({});
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,

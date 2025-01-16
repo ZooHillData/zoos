@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
 const metadata = {
   description: `Expand rows with a separate control column with rotation right-down chevron 'expand toggle button'
@@ -6,35 +6,34 @@ const metadata = {
 - Optional indentation
 - Modify cell rendering at different row depths 
 `,
-}
+};
 
-export const Route = createFileRoute('/core/react-table/expand-rows-control')({
+export const Route = createFileRoute("/core/react-table/expand-rows-control")({
   component: RouteComponent,
   context: () => ({ metadata }),
-})
+});
 
-import React from 'react'
+import React from "react";
 
-import type { TableState } from '@tanstack/react-table'
-import type { TreeNode } from '@zoos/navigation'
+import type { TreeNode } from "@zoos/navigation";
 
-import { createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper } from "@tanstack/react-table";
 
-import { getDataTree } from '@zoos/navigation'
+import { getDataTree } from "@zoos/navigation";
 import {
   useTable,
   useComponentProps,
   featureProps,
   getColumns,
   mergeColumns,
-} from '@zoos/react-table'
-import { Table, features } from '@zoos/react-table-ui'
+} from "@zoos/react-table";
+import { Table, features } from "@zoos/react-table-ui";
 
-const KEEP_COLUMNS = ['first_name', 'last_name', 'state']
+const KEEP_COLUMNS = ["first_name", "last_name", "state"];
 
 function RouteComponent() {
-  const [state, setState] = React.useState({} as TableState)
-  const { data } = Route.useRouteContext()
+  const [state, setState] = React.useState({});
+  const { data } = Route.useRouteContext();
 
   const { dataTree, columns } = React.useMemo(() => {
     // Use `buildPathTree` utility to convert flat data into hierarchical
@@ -42,12 +41,12 @@ function RouteComponent() {
       data,
     })({
       getPath: (row) => [row.state, `${row.first_name} ${row.last_name}`],
-    })._dataTree.children
+    })._dataTree.children;
 
-    const columnHelper = createColumnHelper<TreeNode<(typeof data)[0]>>()
+    const columnHelper = createColumnHelper<TreeNode<(typeof data)[0]>>();
     const columns = getColumns({ data: dataTree })({
       exclude: (columnId) => !KEEP_COLUMNS.includes(columnId),
-    })
+    });
     return {
       dataTree,
       columns: mergeColumns({ base: columns })({
@@ -72,17 +71,17 @@ function RouteComponent() {
         },
         newColumns: [features.expandRow.getControlColumnDef(columnHelper)],
       }),
-    }
-  }, [data])
+    };
+  }, [data]);
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data: dataTree,
     columns,
-    initialState: { columnPinning: { left: ['expand', 'state'] } },
+    initialState: { columnPinning: { left: ["expand", "state"] } },
     state,
     onStateChange: setState,
     getSubRows: (row) => row._dataTree.children,
-  })
+  });
 
   const componentProps = useComponentProps(
     {
@@ -108,7 +107,7 @@ function RouteComponent() {
         featureProps.indentSubrows({ indentPx: 0, baseLeftPadPx: 4 }),
       ],
     },
-  )
+  );
 
-  return <Table {...{ table, componentProps, virtualRows }} />
+  return <Table {...{ table, componentProps, virtualRows }} />;
 }

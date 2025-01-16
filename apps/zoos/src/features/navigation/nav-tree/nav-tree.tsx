@@ -47,7 +47,11 @@ const NavTree = <T extends object>(props: {
           .getAllCells()
           .find((cell) => cell.column.id === "leaf");
         if (!cell) return null;
-        return flexRender(cell?.column.columnDef.cell, cell?.getContext());
+        return (
+          <span key={row.id}>
+            {flexRender(cell?.column.columnDef.cell, cell?.getContext())}
+          </span>
+        );
       })}
     </div>
   );

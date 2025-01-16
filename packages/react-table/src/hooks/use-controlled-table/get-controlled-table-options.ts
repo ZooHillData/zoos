@@ -5,7 +5,7 @@
  * only fire the callback when column sizing stops (user stops dragging).
  */
 
-import { type TableState, type TableOptions } from "@tanstack/react-table";
+import type { TableState, TableOptions, Table } from "@tanstack/react-table";
 
 /**
  * Helper function to wire in the controlled state options. Specifically
@@ -16,10 +16,11 @@ import { type TableState, type TableOptions } from "@tanstack/react-table";
  * @returns Tanstack `TableOptions` for the controlled state.
  */
 const getControlledTableOptions = <TData>(props: {
-  state: TableState;
+  table: Table<TData>;
   onStateChange: (state: TableState) => void;
 }) => {
-  const { state, onStateChange } = props;
+  const { table, onStateChange } = props;
+  const state = table.getState();
 
   const controlledStateOptions: Partial<TableOptions<TData>> = {
     onColumnOrderChange: (updater) => {
@@ -73,8 +74,10 @@ const getControlledTableOptions = <TData>(props: {
       onStateChange({ ...state, rowSelection: updated });
     },
     onSortingChange: (updater) => {
+      console.log({ updater });
       const updated =
         updater instanceof Function ? updater(state.sorting) : updater;
+      console.log({ updated });
       onStateChange({ ...state, sorting: updated });
     },
   };

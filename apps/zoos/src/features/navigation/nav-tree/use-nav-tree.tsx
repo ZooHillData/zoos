@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import type { TableState, ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import React from "react";
 
@@ -49,7 +49,7 @@ const useNavTree = <T extends object>(params: {
     };
   }, [paths, getPath]);
 
-  const [state, setState] = React.useState({} as TableState);
+  const [state, setState] = React.useState({});
   const { table } = useTable({
     data,
     columns,

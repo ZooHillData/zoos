@@ -16,7 +16,7 @@ import { Table } from "./table";
 
 const FileBrowser = (props: {
   files: FileAttributesWithPermissions[];
-  state: TableState;
+  state: Partial<TableState>;
   onStateChange: (state: TableState) => void;
   location: string;
   onLocationChange: (location: string) => void;

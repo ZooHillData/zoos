@@ -7,7 +7,6 @@ export const Route = createFileRoute("/features/file-browser/")({
 import React from "react";
 
 import { shuffle } from "remeda";
-import { type TableState } from "@tanstack/react-table";
 
 import { FileBrowser, ownerOptions } from "../../../features/file-browser";
 
@@ -34,7 +33,7 @@ const filesSorted = files
   .sort((a, b) => a.path.localeCompare(b.path));
 
 function RouteComponent() {
-  const [state, setState] = React.useState({} as TableState);
+  const [state, setState] = React.useState({});
   const [folder, setFolder] = React.useState("/");
 
   return (

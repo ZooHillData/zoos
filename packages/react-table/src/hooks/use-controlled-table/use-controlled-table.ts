@@ -18,9 +18,9 @@ import { type TableOptionsControlled } from "./types";
 import { globalFilterFn } from "../../lib/filter-fns/global-filter-fn";
 
 const useControlledTable = <TData>({
+  filterFns,
   state,
   onStateChange,
-  filterFns,
   ...options
 }: TableOptionsControlled<TData>) => {
   // ~ useReactTable
@@ -50,12 +50,20 @@ const useControlledTable = <TData>({
     autoResetAll: false,
     globalFilterFn,
     // Controlled state
-    ...getControlledTableOptions({ state, onStateChange }),
+    // ...getControlledTableOptions({ state, onStateChange }),
     // Caller options
     ...options,
   });
 
-  // ~ Controlled state updates table state
+  // ~ Wire in the onChange handlers
+  table.setOptions((prev) => ({
+    ...prev,
+    ...(onStateChange
+      ? getControlledTableOptions({ table, onStateChange })
+      : {}),
+  }));
+
+  // ~ External state change => update internal table state
   // When controlled state changes, update in the table
   // state. Need this separated so that we can treat the
   // column sizing separately
