@@ -12,36 +12,37 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as LibrariesShadcnRouteImport } from './routes/libraries/shadcn/route'
-import { Route as LibrariesReactTableRouteImport } from './routes/libraries/react-table/route'
-import { Route as LibrariesReactQueryRouteImport } from './routes/libraries/react-query/route'
-import { Route as LibrariesReactFormRouteImport } from './routes/libraries/react-form/route'
+import { Route as CommunityIndexImport } from './routes/community/index'
 import { Route as FeaturesFileBrowserRouteImport } from './routes/features/file-browser/route'
+import { Route as CoreShadcnRouteImport } from './routes/core/shadcn/route'
+import { Route as CoreReactTableRouteImport } from './routes/core/react-table/route'
+import { Route as CoreReactQueryRouteImport } from './routes/core/react-query/route'
+import { Route as CoreReactFormRouteImport } from './routes/core/react-form/route'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
 import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
-import { Route as LibrariesShadcnUseReactiveStateImport } from './routes/libraries/shadcn/use-reactive-state'
-import { Route as LibrariesShadcnUseDebounceImport } from './routes/libraries/shadcn/use-debounce'
-import { Route as LibrariesShadcnSelectImport } from './routes/libraries/shadcn/select'
-import { Route as LibrariesShadcnProposeClassNameOverrideImport } from './routes/libraries/shadcn/propose-class-name-override'
-import { Route as LibrariesShadcnPopoverImport } from './routes/libraries/shadcn/popover'
-import { Route as LibrariesShadcnContextMenuImport } from './routes/libraries/shadcn/context-menu'
-import { Route as LibrariesShadcnCheckboxImport } from './routes/libraries/shadcn/checkbox'
-import { Route as LibrariesShadcnButtonImport } from './routes/libraries/shadcn/button'
-import { Route as LibrariesReactTableStandardImport } from './routes/libraries/react-table/standard'
-import { Route as LibrariesReactTableMergeColumnsImport } from './routes/libraries/react-table/merge-columns'
-import { Route as LibrariesReactTableFullCustomizationImport } from './routes/libraries/react-table/full-customization'
-import { Route as LibrariesReactTableExpandRowsControlImport } from './routes/libraries/react-table/expand-rows-control'
-import { Route as LibrariesReactTableExpandRowsCellImport } from './routes/libraries/react-table/expand-rows-cell'
-import { Route as LibrariesReactTableCustomColumnsImport } from './routes/libraries/react-table/custom-columns'
-import { Route as LibrariesReactQueryUseQueryImport } from './routes/libraries/react-query/use-query'
-import { Route as LibrariesReactQueryUseMutationImport } from './routes/libraries/react-query/use-mutation'
-import { Route as LibrariesReactFormWithZoosFormImport } from './routes/libraries/react-form/with-zoos-form'
-import { Route as LibrariesReactFormStandardReactFormImport } from './routes/libraries/react-form/standard-react-form'
-import { Route as LibrariesReactFormSelectImport } from './routes/libraries/react-form/select'
-import { Route as LibrariesReactFormInputDebounceImport } from './routes/libraries/react-form/input-debounce'
-import { Route as LibrariesReactFormComboboxCheckboxGroupImport } from './routes/libraries/react-form/combobox-checkbox-group'
-import { Route as LibrariesReactFormCheckboxWithLabelImport } from './routes/libraries/react-form/checkbox-with-label'
-import { Route as LibrariesReactFormCheckboxGroupImport } from './routes/libraries/react-form/checkbox-group'
+import { Route as CoreShadcnUseReactiveStateImport } from './routes/core/shadcn/use-reactive-state'
+import { Route as CoreShadcnUseDebounceImport } from './routes/core/shadcn/use-debounce'
+import { Route as CoreShadcnSelectImport } from './routes/core/shadcn/select'
+import { Route as CoreShadcnProposeClassNameOverrideImport } from './routes/core/shadcn/propose-class-name-override'
+import { Route as CoreShadcnPopoverImport } from './routes/core/shadcn/popover'
+import { Route as CoreShadcnContextMenuImport } from './routes/core/shadcn/context-menu'
+import { Route as CoreShadcnCheckboxImport } from './routes/core/shadcn/checkbox'
+import { Route as CoreShadcnButtonImport } from './routes/core/shadcn/button'
+import { Route as CoreReactTableStandardImport } from './routes/core/react-table/standard'
+import { Route as CoreReactTableMergeColumnsImport } from './routes/core/react-table/merge-columns'
+import { Route as CoreReactTableFullCustomizationImport } from './routes/core/react-table/full-customization'
+import { Route as CoreReactTableExpandRowsControlImport } from './routes/core/react-table/expand-rows-control'
+import { Route as CoreReactTableExpandRowsCellImport } from './routes/core/react-table/expand-rows-cell'
+import { Route as CoreReactTableCustomColumnsImport } from './routes/core/react-table/custom-columns'
+import { Route as CoreReactQueryUseQueryImport } from './routes/core/react-query/use-query'
+import { Route as CoreReactQueryUseMutationImport } from './routes/core/react-query/use-mutation'
+import { Route as CoreReactFormWithZoosFormImport } from './routes/core/react-form/with-zoos-form'
+import { Route as CoreReactFormStandardReactFormImport } from './routes/core/react-form/standard-react-form'
+import { Route as CoreReactFormSelectImport } from './routes/core/react-form/select'
+import { Route as CoreReactFormInputDebounceImport } from './routes/core/react-form/input-debounce'
+import { Route as CoreReactFormComboboxCheckboxGroupImport } from './routes/core/react-form/combobox-checkbox-group'
+import { Route as CoreReactFormCheckboxWithLabelImport } from './routes/core/react-form/checkbox-with-label'
+import { Route as CoreReactFormCheckboxGroupImport } from './routes/core/react-form/checkbox-group'
 
 // Create/Update Routes
 
@@ -51,33 +52,39 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LibrariesShadcnRouteRoute = LibrariesShadcnRouteImport.update({
-  id: '/libraries/shadcn',
-  path: '/libraries/shadcn',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LibrariesReactTableRouteRoute = LibrariesReactTableRouteImport.update({
-  id: '/libraries/react-table',
-  path: '/libraries/react-table',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LibrariesReactQueryRouteRoute = LibrariesReactQueryRouteImport.update({
-  id: '/libraries/react-query',
-  path: '/libraries/react-query',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LibrariesReactFormRouteRoute = LibrariesReactFormRouteImport.update({
-  id: '/libraries/react-form',
-  path: '/libraries/react-form',
+const CommunityIndexRoute = CommunityIndexImport.update({
+  id: '/community/',
+  path: '/community/',
   getParentRoute: () => rootRoute,
 } as any)
 
 const FeaturesFileBrowserRouteRoute = FeaturesFileBrowserRouteImport.update({
   id: '/features/file-browser',
   path: '/features/file-browser',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoreShadcnRouteRoute = CoreShadcnRouteImport.update({
+  id: '/core/shadcn',
+  path: '/core/shadcn',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoreReactTableRouteRoute = CoreReactTableRouteImport.update({
+  id: '/core/react-table',
+  path: '/core/react-table',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoreReactQueryRouteRoute = CoreReactQueryRouteImport.update({
+  id: '/core/react-query',
+  path: '/core/react-query',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CoreReactFormRouteRoute = CoreReactFormRouteImport.update({
+  id: '/core/react-form',
+  path: '/core/react-form',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -93,163 +100,159 @@ const FeaturesAuthIndexRoute = FeaturesAuthIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LibrariesShadcnUseReactiveStateRoute =
-  LibrariesShadcnUseReactiveStateImport.update({
+const CoreShadcnUseReactiveStateRoute = CoreShadcnUseReactiveStateImport.update(
+  {
     id: '/use-reactive-state',
     path: '/use-reactive-state',
-    getParentRoute: () => LibrariesShadcnRouteRoute,
-  } as any)
-
-const LibrariesShadcnUseDebounceRoute = LibrariesShadcnUseDebounceImport.update(
-  {
-    id: '/use-debounce',
-    path: '/use-debounce',
-    getParentRoute: () => LibrariesShadcnRouteRoute,
+    getParentRoute: () => CoreShadcnRouteRoute,
   } as any,
 )
 
-const LibrariesShadcnSelectRoute = LibrariesShadcnSelectImport.update({
-  id: '/select',
-  path: '/select',
-  getParentRoute: () => LibrariesShadcnRouteRoute,
+const CoreShadcnUseDebounceRoute = CoreShadcnUseDebounceImport.update({
+  id: '/use-debounce',
+  path: '/use-debounce',
+  getParentRoute: () => CoreShadcnRouteRoute,
 } as any)
 
-const LibrariesShadcnProposeClassNameOverrideRoute =
-  LibrariesShadcnProposeClassNameOverrideImport.update({
+const CoreShadcnSelectRoute = CoreShadcnSelectImport.update({
+  id: '/select',
+  path: '/select',
+  getParentRoute: () => CoreShadcnRouteRoute,
+} as any)
+
+const CoreShadcnProposeClassNameOverrideRoute =
+  CoreShadcnProposeClassNameOverrideImport.update({
     id: '/propose-class-name-override',
     path: '/propose-class-name-override',
-    getParentRoute: () => LibrariesShadcnRouteRoute,
+    getParentRoute: () => CoreShadcnRouteRoute,
   } as any)
 
-const LibrariesShadcnPopoverRoute = LibrariesShadcnPopoverImport.update({
+const CoreShadcnPopoverRoute = CoreShadcnPopoverImport.update({
   id: '/popover',
   path: '/popover',
-  getParentRoute: () => LibrariesShadcnRouteRoute,
+  getParentRoute: () => CoreShadcnRouteRoute,
 } as any)
 
-const LibrariesShadcnContextMenuRoute = LibrariesShadcnContextMenuImport.update(
+const CoreShadcnContextMenuRoute = CoreShadcnContextMenuImport.update({
+  id: '/context-menu',
+  path: '/context-menu',
+  getParentRoute: () => CoreShadcnRouteRoute,
+} as any)
+
+const CoreShadcnCheckboxRoute = CoreShadcnCheckboxImport.update({
+  id: '/checkbox',
+  path: '/checkbox',
+  getParentRoute: () => CoreShadcnRouteRoute,
+} as any)
+
+const CoreShadcnButtonRoute = CoreShadcnButtonImport.update({
+  id: '/button',
+  path: '/button',
+  getParentRoute: () => CoreShadcnRouteRoute,
+} as any)
+
+const CoreReactTableStandardRoute = CoreReactTableStandardImport.update({
+  id: '/standard',
+  path: '/standard',
+  getParentRoute: () => CoreReactTableRouteRoute,
+} as any)
+
+const CoreReactTableMergeColumnsRoute = CoreReactTableMergeColumnsImport.update(
   {
-    id: '/context-menu',
-    path: '/context-menu',
-    getParentRoute: () => LibrariesShadcnRouteRoute,
+    id: '/merge-columns',
+    path: '/merge-columns',
+    getParentRoute: () => CoreReactTableRouteRoute,
   } as any,
 )
 
-const LibrariesShadcnCheckboxRoute = LibrariesShadcnCheckboxImport.update({
-  id: '/checkbox',
-  path: '/checkbox',
-  getParentRoute: () => LibrariesShadcnRouteRoute,
-} as any)
-
-const LibrariesShadcnButtonRoute = LibrariesShadcnButtonImport.update({
-  id: '/button',
-  path: '/button',
-  getParentRoute: () => LibrariesShadcnRouteRoute,
-} as any)
-
-const LibrariesReactTableStandardRoute =
-  LibrariesReactTableStandardImport.update({
-    id: '/standard',
-    path: '/standard',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
-  } as any)
-
-const LibrariesReactTableMergeColumnsRoute =
-  LibrariesReactTableMergeColumnsImport.update({
-    id: '/merge-columns',
-    path: '/merge-columns',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
-  } as any)
-
-const LibrariesReactTableFullCustomizationRoute =
-  LibrariesReactTableFullCustomizationImport.update({
+const CoreReactTableFullCustomizationRoute =
+  CoreReactTableFullCustomizationImport.update({
     id: '/full-customization',
     path: '/full-customization',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
+    getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
-const LibrariesReactTableExpandRowsControlRoute =
-  LibrariesReactTableExpandRowsControlImport.update({
+const CoreReactTableExpandRowsControlRoute =
+  CoreReactTableExpandRowsControlImport.update({
     id: '/expand-rows-control',
     path: '/expand-rows-control',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
+    getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
-const LibrariesReactTableExpandRowsCellRoute =
-  LibrariesReactTableExpandRowsCellImport.update({
+const CoreReactTableExpandRowsCellRoute =
+  CoreReactTableExpandRowsCellImport.update({
     id: '/expand-rows-cell',
     path: '/expand-rows-cell',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
+    getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
-const LibrariesReactTableCustomColumnsRoute =
-  LibrariesReactTableCustomColumnsImport.update({
+const CoreReactTableCustomColumnsRoute =
+  CoreReactTableCustomColumnsImport.update({
     id: '/custom-columns',
     path: '/custom-columns',
-    getParentRoute: () => LibrariesReactTableRouteRoute,
+    getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
-const LibrariesReactQueryUseQueryRoute =
-  LibrariesReactQueryUseQueryImport.update({
-    id: '/use-query',
-    path: '/use-query',
-    getParentRoute: () => LibrariesReactQueryRouteRoute,
-  } as any)
-
-const LibrariesReactQueryUseMutationRoute =
-  LibrariesReactQueryUseMutationImport.update({
-    id: '/use-mutation',
-    path: '/use-mutation',
-    getParentRoute: () => LibrariesReactQueryRouteRoute,
-  } as any)
-
-const LibrariesReactFormWithZoosFormRoute =
-  LibrariesReactFormWithZoosFormImport.update({
-    id: '/with-zoos-form',
-    path: '/with-zoos-form',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
-  } as any)
-
-const LibrariesReactFormStandardReactFormRoute =
-  LibrariesReactFormStandardReactFormImport.update({
-    id: '/standard-react-form',
-    path: '/standard-react-form',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
-  } as any)
-
-const LibrariesReactFormSelectRoute = LibrariesReactFormSelectImport.update({
-  id: '/select',
-  path: '/select',
-  getParentRoute: () => LibrariesReactFormRouteRoute,
+const CoreReactQueryUseQueryRoute = CoreReactQueryUseQueryImport.update({
+  id: '/use-query',
+  path: '/use-query',
+  getParentRoute: () => CoreReactQueryRouteRoute,
 } as any)
 
-const LibrariesReactFormInputDebounceRoute =
-  LibrariesReactFormInputDebounceImport.update({
+const CoreReactQueryUseMutationRoute = CoreReactQueryUseMutationImport.update({
+  id: '/use-mutation',
+  path: '/use-mutation',
+  getParentRoute: () => CoreReactQueryRouteRoute,
+} as any)
+
+const CoreReactFormWithZoosFormRoute = CoreReactFormWithZoosFormImport.update({
+  id: '/with-zoos-form',
+  path: '/with-zoos-form',
+  getParentRoute: () => CoreReactFormRouteRoute,
+} as any)
+
+const CoreReactFormStandardReactFormRoute =
+  CoreReactFormStandardReactFormImport.update({
+    id: '/standard-react-form',
+    path: '/standard-react-form',
+    getParentRoute: () => CoreReactFormRouteRoute,
+  } as any)
+
+const CoreReactFormSelectRoute = CoreReactFormSelectImport.update({
+  id: '/select',
+  path: '/select',
+  getParentRoute: () => CoreReactFormRouteRoute,
+} as any)
+
+const CoreReactFormInputDebounceRoute = CoreReactFormInputDebounceImport.update(
+  {
     id: '/input-debounce',
     path: '/input-debounce',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
-  } as any)
+    getParentRoute: () => CoreReactFormRouteRoute,
+  } as any,
+)
 
-const LibrariesReactFormComboboxCheckboxGroupRoute =
-  LibrariesReactFormComboboxCheckboxGroupImport.update({
+const CoreReactFormComboboxCheckboxGroupRoute =
+  CoreReactFormComboboxCheckboxGroupImport.update({
     id: '/combobox-checkbox-group',
     path: '/combobox-checkbox-group',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
+    getParentRoute: () => CoreReactFormRouteRoute,
   } as any)
 
-const LibrariesReactFormCheckboxWithLabelRoute =
-  LibrariesReactFormCheckboxWithLabelImport.update({
+const CoreReactFormCheckboxWithLabelRoute =
+  CoreReactFormCheckboxWithLabelImport.update({
     id: '/checkbox-with-label',
     path: '/checkbox-with-label',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
+    getParentRoute: () => CoreReactFormRouteRoute,
   } as any)
 
-const LibrariesReactFormCheckboxGroupRoute =
-  LibrariesReactFormCheckboxGroupImport.update({
+const CoreReactFormCheckboxGroupRoute = CoreReactFormCheckboxGroupImport.update(
+  {
     id: '/checkbox-group',
     path: '/checkbox-group',
-    getParentRoute: () => LibrariesReactFormRouteRoute,
-  } as any)
+    getParentRoute: () => CoreReactFormRouteRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -262,6 +265,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/core/react-form': {
+      id: '/core/react-form'
+      path: '/core/react-form'
+      fullPath: '/core/react-form'
+      preLoaderRoute: typeof CoreReactFormRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/core/react-query': {
+      id: '/core/react-query'
+      path: '/core/react-query'
+      fullPath: '/core/react-query'
+      preLoaderRoute: typeof CoreReactQueryRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/core/react-table': {
+      id: '/core/react-table'
+      path: '/core/react-table'
+      fullPath: '/core/react-table'
+      preLoaderRoute: typeof CoreReactTableRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/core/shadcn': {
+      id: '/core/shadcn'
+      path: '/core/shadcn'
+      fullPath: '/core/shadcn'
+      preLoaderRoute: typeof CoreShadcnRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/features/file-browser': {
       id: '/features/file-browser'
       path: '/features/file-browser'
@@ -269,194 +300,173 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesFileBrowserRouteImport
       parentRoute: typeof rootRoute
     }
-    '/libraries/react-form': {
-      id: '/libraries/react-form'
-      path: '/libraries/react-form'
-      fullPath: '/libraries/react-form'
-      preLoaderRoute: typeof LibrariesReactFormRouteImport
+    '/community/': {
+      id: '/community/'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityIndexImport
       parentRoute: typeof rootRoute
     }
-    '/libraries/react-query': {
-      id: '/libraries/react-query'
-      path: '/libraries/react-query'
-      fullPath: '/libraries/react-query'
-      preLoaderRoute: typeof LibrariesReactQueryRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/libraries/react-table': {
-      id: '/libraries/react-table'
-      path: '/libraries/react-table'
-      fullPath: '/libraries/react-table'
-      preLoaderRoute: typeof LibrariesReactTableRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/libraries/shadcn': {
-      id: '/libraries/shadcn'
-      path: '/libraries/shadcn'
-      fullPath: '/libraries/shadcn'
-      preLoaderRoute: typeof LibrariesShadcnRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/libraries/react-form/checkbox-group': {
-      id: '/libraries/react-form/checkbox-group'
+    '/core/react-form/checkbox-group': {
+      id: '/core/react-form/checkbox-group'
       path: '/checkbox-group'
-      fullPath: '/libraries/react-form/checkbox-group'
-      preLoaderRoute: typeof LibrariesReactFormCheckboxGroupImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/checkbox-group'
+      preLoaderRoute: typeof CoreReactFormCheckboxGroupImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/checkbox-with-label': {
-      id: '/libraries/react-form/checkbox-with-label'
+    '/core/react-form/checkbox-with-label': {
+      id: '/core/react-form/checkbox-with-label'
       path: '/checkbox-with-label'
-      fullPath: '/libraries/react-form/checkbox-with-label'
-      preLoaderRoute: typeof LibrariesReactFormCheckboxWithLabelImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/checkbox-with-label'
+      preLoaderRoute: typeof CoreReactFormCheckboxWithLabelImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/combobox-checkbox-group': {
-      id: '/libraries/react-form/combobox-checkbox-group'
+    '/core/react-form/combobox-checkbox-group': {
+      id: '/core/react-form/combobox-checkbox-group'
       path: '/combobox-checkbox-group'
-      fullPath: '/libraries/react-form/combobox-checkbox-group'
-      preLoaderRoute: typeof LibrariesReactFormComboboxCheckboxGroupImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/combobox-checkbox-group'
+      preLoaderRoute: typeof CoreReactFormComboboxCheckboxGroupImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/input-debounce': {
-      id: '/libraries/react-form/input-debounce'
+    '/core/react-form/input-debounce': {
+      id: '/core/react-form/input-debounce'
       path: '/input-debounce'
-      fullPath: '/libraries/react-form/input-debounce'
-      preLoaderRoute: typeof LibrariesReactFormInputDebounceImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/input-debounce'
+      preLoaderRoute: typeof CoreReactFormInputDebounceImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/select': {
-      id: '/libraries/react-form/select'
+    '/core/react-form/select': {
+      id: '/core/react-form/select'
       path: '/select'
-      fullPath: '/libraries/react-form/select'
-      preLoaderRoute: typeof LibrariesReactFormSelectImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/select'
+      preLoaderRoute: typeof CoreReactFormSelectImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/standard-react-form': {
-      id: '/libraries/react-form/standard-react-form'
+    '/core/react-form/standard-react-form': {
+      id: '/core/react-form/standard-react-form'
       path: '/standard-react-form'
-      fullPath: '/libraries/react-form/standard-react-form'
-      preLoaderRoute: typeof LibrariesReactFormStandardReactFormImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/standard-react-form'
+      preLoaderRoute: typeof CoreReactFormStandardReactFormImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-form/with-zoos-form': {
-      id: '/libraries/react-form/with-zoos-form'
+    '/core/react-form/with-zoos-form': {
+      id: '/core/react-form/with-zoos-form'
       path: '/with-zoos-form'
-      fullPath: '/libraries/react-form/with-zoos-form'
-      preLoaderRoute: typeof LibrariesReactFormWithZoosFormImport
-      parentRoute: typeof LibrariesReactFormRouteImport
+      fullPath: '/core/react-form/with-zoos-form'
+      preLoaderRoute: typeof CoreReactFormWithZoosFormImport
+      parentRoute: typeof CoreReactFormRouteImport
     }
-    '/libraries/react-query/use-mutation': {
-      id: '/libraries/react-query/use-mutation'
+    '/core/react-query/use-mutation': {
+      id: '/core/react-query/use-mutation'
       path: '/use-mutation'
-      fullPath: '/libraries/react-query/use-mutation'
-      preLoaderRoute: typeof LibrariesReactQueryUseMutationImport
-      parentRoute: typeof LibrariesReactQueryRouteImport
+      fullPath: '/core/react-query/use-mutation'
+      preLoaderRoute: typeof CoreReactQueryUseMutationImport
+      parentRoute: typeof CoreReactQueryRouteImport
     }
-    '/libraries/react-query/use-query': {
-      id: '/libraries/react-query/use-query'
+    '/core/react-query/use-query': {
+      id: '/core/react-query/use-query'
       path: '/use-query'
-      fullPath: '/libraries/react-query/use-query'
-      preLoaderRoute: typeof LibrariesReactQueryUseQueryImport
-      parentRoute: typeof LibrariesReactQueryRouteImport
+      fullPath: '/core/react-query/use-query'
+      preLoaderRoute: typeof CoreReactQueryUseQueryImport
+      parentRoute: typeof CoreReactQueryRouteImport
     }
-    '/libraries/react-table/custom-columns': {
-      id: '/libraries/react-table/custom-columns'
+    '/core/react-table/custom-columns': {
+      id: '/core/react-table/custom-columns'
       path: '/custom-columns'
-      fullPath: '/libraries/react-table/custom-columns'
-      preLoaderRoute: typeof LibrariesReactTableCustomColumnsImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/custom-columns'
+      preLoaderRoute: typeof CoreReactTableCustomColumnsImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/react-table/expand-rows-cell': {
-      id: '/libraries/react-table/expand-rows-cell'
+    '/core/react-table/expand-rows-cell': {
+      id: '/core/react-table/expand-rows-cell'
       path: '/expand-rows-cell'
-      fullPath: '/libraries/react-table/expand-rows-cell'
-      preLoaderRoute: typeof LibrariesReactTableExpandRowsCellImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/expand-rows-cell'
+      preLoaderRoute: typeof CoreReactTableExpandRowsCellImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/react-table/expand-rows-control': {
-      id: '/libraries/react-table/expand-rows-control'
+    '/core/react-table/expand-rows-control': {
+      id: '/core/react-table/expand-rows-control'
       path: '/expand-rows-control'
-      fullPath: '/libraries/react-table/expand-rows-control'
-      preLoaderRoute: typeof LibrariesReactTableExpandRowsControlImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/expand-rows-control'
+      preLoaderRoute: typeof CoreReactTableExpandRowsControlImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/react-table/full-customization': {
-      id: '/libraries/react-table/full-customization'
+    '/core/react-table/full-customization': {
+      id: '/core/react-table/full-customization'
       path: '/full-customization'
-      fullPath: '/libraries/react-table/full-customization'
-      preLoaderRoute: typeof LibrariesReactTableFullCustomizationImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/full-customization'
+      preLoaderRoute: typeof CoreReactTableFullCustomizationImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/react-table/merge-columns': {
-      id: '/libraries/react-table/merge-columns'
+    '/core/react-table/merge-columns': {
+      id: '/core/react-table/merge-columns'
       path: '/merge-columns'
-      fullPath: '/libraries/react-table/merge-columns'
-      preLoaderRoute: typeof LibrariesReactTableMergeColumnsImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/merge-columns'
+      preLoaderRoute: typeof CoreReactTableMergeColumnsImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/react-table/standard': {
-      id: '/libraries/react-table/standard'
+    '/core/react-table/standard': {
+      id: '/core/react-table/standard'
       path: '/standard'
-      fullPath: '/libraries/react-table/standard'
-      preLoaderRoute: typeof LibrariesReactTableStandardImport
-      parentRoute: typeof LibrariesReactTableRouteImport
+      fullPath: '/core/react-table/standard'
+      preLoaderRoute: typeof CoreReactTableStandardImport
+      parentRoute: typeof CoreReactTableRouteImport
     }
-    '/libraries/shadcn/button': {
-      id: '/libraries/shadcn/button'
+    '/core/shadcn/button': {
+      id: '/core/shadcn/button'
       path: '/button'
-      fullPath: '/libraries/shadcn/button'
-      preLoaderRoute: typeof LibrariesShadcnButtonImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/button'
+      preLoaderRoute: typeof CoreShadcnButtonImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/checkbox': {
-      id: '/libraries/shadcn/checkbox'
+    '/core/shadcn/checkbox': {
+      id: '/core/shadcn/checkbox'
       path: '/checkbox'
-      fullPath: '/libraries/shadcn/checkbox'
-      preLoaderRoute: typeof LibrariesShadcnCheckboxImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/checkbox'
+      preLoaderRoute: typeof CoreShadcnCheckboxImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/context-menu': {
-      id: '/libraries/shadcn/context-menu'
+    '/core/shadcn/context-menu': {
+      id: '/core/shadcn/context-menu'
       path: '/context-menu'
-      fullPath: '/libraries/shadcn/context-menu'
-      preLoaderRoute: typeof LibrariesShadcnContextMenuImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/context-menu'
+      preLoaderRoute: typeof CoreShadcnContextMenuImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/popover': {
-      id: '/libraries/shadcn/popover'
+    '/core/shadcn/popover': {
+      id: '/core/shadcn/popover'
       path: '/popover'
-      fullPath: '/libraries/shadcn/popover'
-      preLoaderRoute: typeof LibrariesShadcnPopoverImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/popover'
+      preLoaderRoute: typeof CoreShadcnPopoverImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/propose-class-name-override': {
-      id: '/libraries/shadcn/propose-class-name-override'
+    '/core/shadcn/propose-class-name-override': {
+      id: '/core/shadcn/propose-class-name-override'
       path: '/propose-class-name-override'
-      fullPath: '/libraries/shadcn/propose-class-name-override'
-      preLoaderRoute: typeof LibrariesShadcnProposeClassNameOverrideImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/propose-class-name-override'
+      preLoaderRoute: typeof CoreShadcnProposeClassNameOverrideImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/select': {
-      id: '/libraries/shadcn/select'
+    '/core/shadcn/select': {
+      id: '/core/shadcn/select'
       path: '/select'
-      fullPath: '/libraries/shadcn/select'
-      preLoaderRoute: typeof LibrariesShadcnSelectImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/select'
+      preLoaderRoute: typeof CoreShadcnSelectImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/use-debounce': {
-      id: '/libraries/shadcn/use-debounce'
+    '/core/shadcn/use-debounce': {
+      id: '/core/shadcn/use-debounce'
       path: '/use-debounce'
-      fullPath: '/libraries/shadcn/use-debounce'
-      preLoaderRoute: typeof LibrariesShadcnUseDebounceImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/use-debounce'
+      preLoaderRoute: typeof CoreShadcnUseDebounceImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
-    '/libraries/shadcn/use-reactive-state': {
-      id: '/libraries/shadcn/use-reactive-state'
+    '/core/shadcn/use-reactive-state': {
+      id: '/core/shadcn/use-reactive-state'
       path: '/use-reactive-state'
-      fullPath: '/libraries/shadcn/use-reactive-state'
-      preLoaderRoute: typeof LibrariesShadcnUseReactiveStateImport
-      parentRoute: typeof LibrariesShadcnRouteImport
+      fullPath: '/core/shadcn/use-reactive-state'
+      preLoaderRoute: typeof CoreShadcnUseReactiveStateImport
+      parentRoute: typeof CoreShadcnRouteImport
     }
     '/features/auth/': {
       id: '/features/auth/'
@@ -477,6 +487,91 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface CoreReactFormRouteRouteChildren {
+  CoreReactFormCheckboxGroupRoute: typeof CoreReactFormCheckboxGroupRoute
+  CoreReactFormCheckboxWithLabelRoute: typeof CoreReactFormCheckboxWithLabelRoute
+  CoreReactFormComboboxCheckboxGroupRoute: typeof CoreReactFormComboboxCheckboxGroupRoute
+  CoreReactFormInputDebounceRoute: typeof CoreReactFormInputDebounceRoute
+  CoreReactFormSelectRoute: typeof CoreReactFormSelectRoute
+  CoreReactFormStandardReactFormRoute: typeof CoreReactFormStandardReactFormRoute
+  CoreReactFormWithZoosFormRoute: typeof CoreReactFormWithZoosFormRoute
+}
+
+const CoreReactFormRouteRouteChildren: CoreReactFormRouteRouteChildren = {
+  CoreReactFormCheckboxGroupRoute: CoreReactFormCheckboxGroupRoute,
+  CoreReactFormCheckboxWithLabelRoute: CoreReactFormCheckboxWithLabelRoute,
+  CoreReactFormComboboxCheckboxGroupRoute:
+    CoreReactFormComboboxCheckboxGroupRoute,
+  CoreReactFormInputDebounceRoute: CoreReactFormInputDebounceRoute,
+  CoreReactFormSelectRoute: CoreReactFormSelectRoute,
+  CoreReactFormStandardReactFormRoute: CoreReactFormStandardReactFormRoute,
+  CoreReactFormWithZoosFormRoute: CoreReactFormWithZoosFormRoute,
+}
+
+const CoreReactFormRouteRouteWithChildren =
+  CoreReactFormRouteRoute._addFileChildren(CoreReactFormRouteRouteChildren)
+
+interface CoreReactQueryRouteRouteChildren {
+  CoreReactQueryUseMutationRoute: typeof CoreReactQueryUseMutationRoute
+  CoreReactQueryUseQueryRoute: typeof CoreReactQueryUseQueryRoute
+}
+
+const CoreReactQueryRouteRouteChildren: CoreReactQueryRouteRouteChildren = {
+  CoreReactQueryUseMutationRoute: CoreReactQueryUseMutationRoute,
+  CoreReactQueryUseQueryRoute: CoreReactQueryUseQueryRoute,
+}
+
+const CoreReactQueryRouteRouteWithChildren =
+  CoreReactQueryRouteRoute._addFileChildren(CoreReactQueryRouteRouteChildren)
+
+interface CoreReactTableRouteRouteChildren {
+  CoreReactTableCustomColumnsRoute: typeof CoreReactTableCustomColumnsRoute
+  CoreReactTableExpandRowsCellRoute: typeof CoreReactTableExpandRowsCellRoute
+  CoreReactTableExpandRowsControlRoute: typeof CoreReactTableExpandRowsControlRoute
+  CoreReactTableFullCustomizationRoute: typeof CoreReactTableFullCustomizationRoute
+  CoreReactTableMergeColumnsRoute: typeof CoreReactTableMergeColumnsRoute
+  CoreReactTableStandardRoute: typeof CoreReactTableStandardRoute
+}
+
+const CoreReactTableRouteRouteChildren: CoreReactTableRouteRouteChildren = {
+  CoreReactTableCustomColumnsRoute: CoreReactTableCustomColumnsRoute,
+  CoreReactTableExpandRowsCellRoute: CoreReactTableExpandRowsCellRoute,
+  CoreReactTableExpandRowsControlRoute: CoreReactTableExpandRowsControlRoute,
+  CoreReactTableFullCustomizationRoute: CoreReactTableFullCustomizationRoute,
+  CoreReactTableMergeColumnsRoute: CoreReactTableMergeColumnsRoute,
+  CoreReactTableStandardRoute: CoreReactTableStandardRoute,
+}
+
+const CoreReactTableRouteRouteWithChildren =
+  CoreReactTableRouteRoute._addFileChildren(CoreReactTableRouteRouteChildren)
+
+interface CoreShadcnRouteRouteChildren {
+  CoreShadcnButtonRoute: typeof CoreShadcnButtonRoute
+  CoreShadcnCheckboxRoute: typeof CoreShadcnCheckboxRoute
+  CoreShadcnContextMenuRoute: typeof CoreShadcnContextMenuRoute
+  CoreShadcnPopoverRoute: typeof CoreShadcnPopoverRoute
+  CoreShadcnProposeClassNameOverrideRoute: typeof CoreShadcnProposeClassNameOverrideRoute
+  CoreShadcnSelectRoute: typeof CoreShadcnSelectRoute
+  CoreShadcnUseDebounceRoute: typeof CoreShadcnUseDebounceRoute
+  CoreShadcnUseReactiveStateRoute: typeof CoreShadcnUseReactiveStateRoute
+}
+
+const CoreShadcnRouteRouteChildren: CoreShadcnRouteRouteChildren = {
+  CoreShadcnButtonRoute: CoreShadcnButtonRoute,
+  CoreShadcnCheckboxRoute: CoreShadcnCheckboxRoute,
+  CoreShadcnContextMenuRoute: CoreShadcnContextMenuRoute,
+  CoreShadcnPopoverRoute: CoreShadcnPopoverRoute,
+  CoreShadcnProposeClassNameOverrideRoute:
+    CoreShadcnProposeClassNameOverrideRoute,
+  CoreShadcnSelectRoute: CoreShadcnSelectRoute,
+  CoreShadcnUseDebounceRoute: CoreShadcnUseDebounceRoute,
+  CoreShadcnUseReactiveStateRoute: CoreShadcnUseReactiveStateRoute,
+}
+
+const CoreShadcnRouteRouteWithChildren = CoreShadcnRouteRoute._addFileChildren(
+  CoreShadcnRouteRouteChildren,
+)
+
 interface FeaturesFileBrowserRouteRouteChildren {
   FeaturesFileBrowserIndexRoute: typeof FeaturesFileBrowserIndexRoute
 }
@@ -491,168 +586,71 @@ const FeaturesFileBrowserRouteRouteWithChildren =
     FeaturesFileBrowserRouteRouteChildren,
   )
 
-interface LibrariesReactFormRouteRouteChildren {
-  LibrariesReactFormCheckboxGroupRoute: typeof LibrariesReactFormCheckboxGroupRoute
-  LibrariesReactFormCheckboxWithLabelRoute: typeof LibrariesReactFormCheckboxWithLabelRoute
-  LibrariesReactFormComboboxCheckboxGroupRoute: typeof LibrariesReactFormComboboxCheckboxGroupRoute
-  LibrariesReactFormInputDebounceRoute: typeof LibrariesReactFormInputDebounceRoute
-  LibrariesReactFormSelectRoute: typeof LibrariesReactFormSelectRoute
-  LibrariesReactFormStandardReactFormRoute: typeof LibrariesReactFormStandardReactFormRoute
-  LibrariesReactFormWithZoosFormRoute: typeof LibrariesReactFormWithZoosFormRoute
-}
-
-const LibrariesReactFormRouteRouteChildren: LibrariesReactFormRouteRouteChildren =
-  {
-    LibrariesReactFormCheckboxGroupRoute: LibrariesReactFormCheckboxGroupRoute,
-    LibrariesReactFormCheckboxWithLabelRoute:
-      LibrariesReactFormCheckboxWithLabelRoute,
-    LibrariesReactFormComboboxCheckboxGroupRoute:
-      LibrariesReactFormComboboxCheckboxGroupRoute,
-    LibrariesReactFormInputDebounceRoute: LibrariesReactFormInputDebounceRoute,
-    LibrariesReactFormSelectRoute: LibrariesReactFormSelectRoute,
-    LibrariesReactFormStandardReactFormRoute:
-      LibrariesReactFormStandardReactFormRoute,
-    LibrariesReactFormWithZoosFormRoute: LibrariesReactFormWithZoosFormRoute,
-  }
-
-const LibrariesReactFormRouteRouteWithChildren =
-  LibrariesReactFormRouteRoute._addFileChildren(
-    LibrariesReactFormRouteRouteChildren,
-  )
-
-interface LibrariesReactQueryRouteRouteChildren {
-  LibrariesReactQueryUseMutationRoute: typeof LibrariesReactQueryUseMutationRoute
-  LibrariesReactQueryUseQueryRoute: typeof LibrariesReactQueryUseQueryRoute
-}
-
-const LibrariesReactQueryRouteRouteChildren: LibrariesReactQueryRouteRouteChildren =
-  {
-    LibrariesReactQueryUseMutationRoute: LibrariesReactQueryUseMutationRoute,
-    LibrariesReactQueryUseQueryRoute: LibrariesReactQueryUseQueryRoute,
-  }
-
-const LibrariesReactQueryRouteRouteWithChildren =
-  LibrariesReactQueryRouteRoute._addFileChildren(
-    LibrariesReactQueryRouteRouteChildren,
-  )
-
-interface LibrariesReactTableRouteRouteChildren {
-  LibrariesReactTableCustomColumnsRoute: typeof LibrariesReactTableCustomColumnsRoute
-  LibrariesReactTableExpandRowsCellRoute: typeof LibrariesReactTableExpandRowsCellRoute
-  LibrariesReactTableExpandRowsControlRoute: typeof LibrariesReactTableExpandRowsControlRoute
-  LibrariesReactTableFullCustomizationRoute: typeof LibrariesReactTableFullCustomizationRoute
-  LibrariesReactTableMergeColumnsRoute: typeof LibrariesReactTableMergeColumnsRoute
-  LibrariesReactTableStandardRoute: typeof LibrariesReactTableStandardRoute
-}
-
-const LibrariesReactTableRouteRouteChildren: LibrariesReactTableRouteRouteChildren =
-  {
-    LibrariesReactTableCustomColumnsRoute:
-      LibrariesReactTableCustomColumnsRoute,
-    LibrariesReactTableExpandRowsCellRoute:
-      LibrariesReactTableExpandRowsCellRoute,
-    LibrariesReactTableExpandRowsControlRoute:
-      LibrariesReactTableExpandRowsControlRoute,
-    LibrariesReactTableFullCustomizationRoute:
-      LibrariesReactTableFullCustomizationRoute,
-    LibrariesReactTableMergeColumnsRoute: LibrariesReactTableMergeColumnsRoute,
-    LibrariesReactTableStandardRoute: LibrariesReactTableStandardRoute,
-  }
-
-const LibrariesReactTableRouteRouteWithChildren =
-  LibrariesReactTableRouteRoute._addFileChildren(
-    LibrariesReactTableRouteRouteChildren,
-  )
-
-interface LibrariesShadcnRouteRouteChildren {
-  LibrariesShadcnButtonRoute: typeof LibrariesShadcnButtonRoute
-  LibrariesShadcnCheckboxRoute: typeof LibrariesShadcnCheckboxRoute
-  LibrariesShadcnContextMenuRoute: typeof LibrariesShadcnContextMenuRoute
-  LibrariesShadcnPopoverRoute: typeof LibrariesShadcnPopoverRoute
-  LibrariesShadcnProposeClassNameOverrideRoute: typeof LibrariesShadcnProposeClassNameOverrideRoute
-  LibrariesShadcnSelectRoute: typeof LibrariesShadcnSelectRoute
-  LibrariesShadcnUseDebounceRoute: typeof LibrariesShadcnUseDebounceRoute
-  LibrariesShadcnUseReactiveStateRoute: typeof LibrariesShadcnUseReactiveStateRoute
-}
-
-const LibrariesShadcnRouteRouteChildren: LibrariesShadcnRouteRouteChildren = {
-  LibrariesShadcnButtonRoute: LibrariesShadcnButtonRoute,
-  LibrariesShadcnCheckboxRoute: LibrariesShadcnCheckboxRoute,
-  LibrariesShadcnContextMenuRoute: LibrariesShadcnContextMenuRoute,
-  LibrariesShadcnPopoverRoute: LibrariesShadcnPopoverRoute,
-  LibrariesShadcnProposeClassNameOverrideRoute:
-    LibrariesShadcnProposeClassNameOverrideRoute,
-  LibrariesShadcnSelectRoute: LibrariesShadcnSelectRoute,
-  LibrariesShadcnUseDebounceRoute: LibrariesShadcnUseDebounceRoute,
-  LibrariesShadcnUseReactiveStateRoute: LibrariesShadcnUseReactiveStateRoute,
-}
-
-const LibrariesShadcnRouteRouteWithChildren =
-  LibrariesShadcnRouteRoute._addFileChildren(LibrariesShadcnRouteRouteChildren)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
+  '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
+  '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
+  '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
-  '/libraries/react-form': typeof LibrariesReactFormRouteRouteWithChildren
-  '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
-  '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
-  '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
-  '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
-  '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
-  '/libraries/react-form/input-debounce': typeof LibrariesReactFormInputDebounceRoute
-  '/libraries/react-form/select': typeof LibrariesReactFormSelectRoute
-  '/libraries/react-form/standard-react-form': typeof LibrariesReactFormStandardReactFormRoute
-  '/libraries/react-form/with-zoos-form': typeof LibrariesReactFormWithZoosFormRoute
-  '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
-  '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
-  '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
-  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
-  '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
-  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
-  '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
-  '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
-  '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
-  '/libraries/shadcn/context-menu': typeof LibrariesShadcnContextMenuRoute
-  '/libraries/shadcn/popover': typeof LibrariesShadcnPopoverRoute
-  '/libraries/shadcn/propose-class-name-override': typeof LibrariesShadcnProposeClassNameOverrideRoute
-  '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
-  '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
-  '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/community': typeof CommunityIndexRoute
+  '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
+  '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
+  '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
+  '/core/react-form/input-debounce': typeof CoreReactFormInputDebounceRoute
+  '/core/react-form/select': typeof CoreReactFormSelectRoute
+  '/core/react-form/standard-react-form': typeof CoreReactFormStandardReactFormRoute
+  '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
+  '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
+  '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
+  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
+  '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
+  '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
+  '/core/react-table/merge-columns': typeof CoreReactTableMergeColumnsRoute
+  '/core/react-table/standard': typeof CoreReactTableStandardRoute
+  '/core/shadcn/button': typeof CoreShadcnButtonRoute
+  '/core/shadcn/checkbox': typeof CoreShadcnCheckboxRoute
+  '/core/shadcn/context-menu': typeof CoreShadcnContextMenuRoute
+  '/core/shadcn/popover': typeof CoreShadcnPopoverRoute
+  '/core/shadcn/propose-class-name-override': typeof CoreShadcnProposeClassNameOverrideRoute
+  '/core/shadcn/select': typeof CoreShadcnSelectRoute
+  '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
+  '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/libraries/react-form': typeof LibrariesReactFormRouteRouteWithChildren
-  '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
-  '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
-  '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
-  '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
-  '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
-  '/libraries/react-form/input-debounce': typeof LibrariesReactFormInputDebounceRoute
-  '/libraries/react-form/select': typeof LibrariesReactFormSelectRoute
-  '/libraries/react-form/standard-react-form': typeof LibrariesReactFormStandardReactFormRoute
-  '/libraries/react-form/with-zoos-form': typeof LibrariesReactFormWithZoosFormRoute
-  '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
-  '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
-  '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
-  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
-  '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
-  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
-  '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
-  '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
-  '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
-  '/libraries/shadcn/context-menu': typeof LibrariesShadcnContextMenuRoute
-  '/libraries/shadcn/popover': typeof LibrariesShadcnPopoverRoute
-  '/libraries/shadcn/propose-class-name-override': typeof LibrariesShadcnProposeClassNameOverrideRoute
-  '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
-  '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
-  '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
+  '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
+  '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
+  '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
+  '/community': typeof CommunityIndexRoute
+  '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
+  '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
+  '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
+  '/core/react-form/input-debounce': typeof CoreReactFormInputDebounceRoute
+  '/core/react-form/select': typeof CoreReactFormSelectRoute
+  '/core/react-form/standard-react-form': typeof CoreReactFormStandardReactFormRoute
+  '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
+  '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
+  '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
+  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
+  '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
+  '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
+  '/core/react-table/merge-columns': typeof CoreReactTableMergeColumnsRoute
+  '/core/react-table/standard': typeof CoreReactTableStandardRoute
+  '/core/shadcn/button': typeof CoreShadcnButtonRoute
+  '/core/shadcn/checkbox': typeof CoreShadcnCheckboxRoute
+  '/core/shadcn/context-menu': typeof CoreShadcnContextMenuRoute
+  '/core/shadcn/popover': typeof CoreShadcnPopoverRoute
+  '/core/shadcn/propose-class-name-override': typeof CoreShadcnProposeClassNameOverrideRoute
+  '/core/shadcn/select': typeof CoreShadcnSelectRoute
+  '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
+  '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
 }
@@ -660,34 +658,35 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
+  '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
+  '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
+  '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
-  '/libraries/react-form': typeof LibrariesReactFormRouteRouteWithChildren
-  '/libraries/react-query': typeof LibrariesReactQueryRouteRouteWithChildren
-  '/libraries/react-table': typeof LibrariesReactTableRouteRouteWithChildren
-  '/libraries/shadcn': typeof LibrariesShadcnRouteRouteWithChildren
-  '/libraries/react-form/checkbox-group': typeof LibrariesReactFormCheckboxGroupRoute
-  '/libraries/react-form/checkbox-with-label': typeof LibrariesReactFormCheckboxWithLabelRoute
-  '/libraries/react-form/combobox-checkbox-group': typeof LibrariesReactFormComboboxCheckboxGroupRoute
-  '/libraries/react-form/input-debounce': typeof LibrariesReactFormInputDebounceRoute
-  '/libraries/react-form/select': typeof LibrariesReactFormSelectRoute
-  '/libraries/react-form/standard-react-form': typeof LibrariesReactFormStandardReactFormRoute
-  '/libraries/react-form/with-zoos-form': typeof LibrariesReactFormWithZoosFormRoute
-  '/libraries/react-query/use-mutation': typeof LibrariesReactQueryUseMutationRoute
-  '/libraries/react-query/use-query': typeof LibrariesReactQueryUseQueryRoute
-  '/libraries/react-table/custom-columns': typeof LibrariesReactTableCustomColumnsRoute
-  '/libraries/react-table/expand-rows-cell': typeof LibrariesReactTableExpandRowsCellRoute
-  '/libraries/react-table/expand-rows-control': typeof LibrariesReactTableExpandRowsControlRoute
-  '/libraries/react-table/full-customization': typeof LibrariesReactTableFullCustomizationRoute
-  '/libraries/react-table/merge-columns': typeof LibrariesReactTableMergeColumnsRoute
-  '/libraries/react-table/standard': typeof LibrariesReactTableStandardRoute
-  '/libraries/shadcn/button': typeof LibrariesShadcnButtonRoute
-  '/libraries/shadcn/checkbox': typeof LibrariesShadcnCheckboxRoute
-  '/libraries/shadcn/context-menu': typeof LibrariesShadcnContextMenuRoute
-  '/libraries/shadcn/popover': typeof LibrariesShadcnPopoverRoute
-  '/libraries/shadcn/propose-class-name-override': typeof LibrariesShadcnProposeClassNameOverrideRoute
-  '/libraries/shadcn/select': typeof LibrariesShadcnSelectRoute
-  '/libraries/shadcn/use-debounce': typeof LibrariesShadcnUseDebounceRoute
-  '/libraries/shadcn/use-reactive-state': typeof LibrariesShadcnUseReactiveStateRoute
+  '/community/': typeof CommunityIndexRoute
+  '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
+  '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
+  '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
+  '/core/react-form/input-debounce': typeof CoreReactFormInputDebounceRoute
+  '/core/react-form/select': typeof CoreReactFormSelectRoute
+  '/core/react-form/standard-react-form': typeof CoreReactFormStandardReactFormRoute
+  '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
+  '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
+  '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
+  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
+  '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
+  '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
+  '/core/react-table/merge-columns': typeof CoreReactTableMergeColumnsRoute
+  '/core/react-table/standard': typeof CoreReactTableStandardRoute
+  '/core/shadcn/button': typeof CoreShadcnButtonRoute
+  '/core/shadcn/checkbox': typeof CoreShadcnCheckboxRoute
+  '/core/shadcn/context-menu': typeof CoreShadcnContextMenuRoute
+  '/core/shadcn/popover': typeof CoreShadcnPopoverRoute
+  '/core/shadcn/propose-class-name-override': typeof CoreShadcnProposeClassNameOverrideRoute
+  '/core/shadcn/select': typeof CoreShadcnSelectRoute
+  '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
+  '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
 }
@@ -696,99 +695,102 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/core/react-form'
+    | '/core/react-query'
+    | '/core/react-table'
+    | '/core/shadcn'
     | '/features/file-browser'
-    | '/libraries/react-form'
-    | '/libraries/react-query'
-    | '/libraries/react-table'
-    | '/libraries/shadcn'
-    | '/libraries/react-form/checkbox-group'
-    | '/libraries/react-form/checkbox-with-label'
-    | '/libraries/react-form/combobox-checkbox-group'
-    | '/libraries/react-form/input-debounce'
-    | '/libraries/react-form/select'
-    | '/libraries/react-form/standard-react-form'
-    | '/libraries/react-form/with-zoos-form'
-    | '/libraries/react-query/use-mutation'
-    | '/libraries/react-query/use-query'
-    | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows-cell'
-    | '/libraries/react-table/expand-rows-control'
-    | '/libraries/react-table/full-customization'
-    | '/libraries/react-table/merge-columns'
-    | '/libraries/react-table/standard'
-    | '/libraries/shadcn/button'
-    | '/libraries/shadcn/checkbox'
-    | '/libraries/shadcn/context-menu'
-    | '/libraries/shadcn/popover'
-    | '/libraries/shadcn/propose-class-name-override'
-    | '/libraries/shadcn/select'
-    | '/libraries/shadcn/use-debounce'
-    | '/libraries/shadcn/use-reactive-state'
+    | '/community'
+    | '/core/react-form/checkbox-group'
+    | '/core/react-form/checkbox-with-label'
+    | '/core/react-form/combobox-checkbox-group'
+    | '/core/react-form/input-debounce'
+    | '/core/react-form/select'
+    | '/core/react-form/standard-react-form'
+    | '/core/react-form/with-zoos-form'
+    | '/core/react-query/use-mutation'
+    | '/core/react-query/use-query'
+    | '/core/react-table/custom-columns'
+    | '/core/react-table/expand-rows-cell'
+    | '/core/react-table/expand-rows-control'
+    | '/core/react-table/full-customization'
+    | '/core/react-table/merge-columns'
+    | '/core/react-table/standard'
+    | '/core/shadcn/button'
+    | '/core/shadcn/checkbox'
+    | '/core/shadcn/context-menu'
+    | '/core/shadcn/popover'
+    | '/core/shadcn/propose-class-name-override'
+    | '/core/shadcn/select'
+    | '/core/shadcn/use-debounce'
+    | '/core/shadcn/use-reactive-state'
     | '/features/auth'
     | '/features/file-browser/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/libraries/react-form'
-    | '/libraries/react-query'
-    | '/libraries/react-table'
-    | '/libraries/shadcn'
-    | '/libraries/react-form/checkbox-group'
-    | '/libraries/react-form/checkbox-with-label'
-    | '/libraries/react-form/combobox-checkbox-group'
-    | '/libraries/react-form/input-debounce'
-    | '/libraries/react-form/select'
-    | '/libraries/react-form/standard-react-form'
-    | '/libraries/react-form/with-zoos-form'
-    | '/libraries/react-query/use-mutation'
-    | '/libraries/react-query/use-query'
-    | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows-cell'
-    | '/libraries/react-table/expand-rows-control'
-    | '/libraries/react-table/full-customization'
-    | '/libraries/react-table/merge-columns'
-    | '/libraries/react-table/standard'
-    | '/libraries/shadcn/button'
-    | '/libraries/shadcn/checkbox'
-    | '/libraries/shadcn/context-menu'
-    | '/libraries/shadcn/popover'
-    | '/libraries/shadcn/propose-class-name-override'
-    | '/libraries/shadcn/select'
-    | '/libraries/shadcn/use-debounce'
-    | '/libraries/shadcn/use-reactive-state'
+    | '/core/react-form'
+    | '/core/react-query'
+    | '/core/react-table'
+    | '/core/shadcn'
+    | '/community'
+    | '/core/react-form/checkbox-group'
+    | '/core/react-form/checkbox-with-label'
+    | '/core/react-form/combobox-checkbox-group'
+    | '/core/react-form/input-debounce'
+    | '/core/react-form/select'
+    | '/core/react-form/standard-react-form'
+    | '/core/react-form/with-zoos-form'
+    | '/core/react-query/use-mutation'
+    | '/core/react-query/use-query'
+    | '/core/react-table/custom-columns'
+    | '/core/react-table/expand-rows-cell'
+    | '/core/react-table/expand-rows-control'
+    | '/core/react-table/full-customization'
+    | '/core/react-table/merge-columns'
+    | '/core/react-table/standard'
+    | '/core/shadcn/button'
+    | '/core/shadcn/checkbox'
+    | '/core/shadcn/context-menu'
+    | '/core/shadcn/popover'
+    | '/core/shadcn/propose-class-name-override'
+    | '/core/shadcn/select'
+    | '/core/shadcn/use-debounce'
+    | '/core/shadcn/use-reactive-state'
     | '/features/auth'
     | '/features/file-browser'
   id:
     | '__root__'
     | '/'
+    | '/core/react-form'
+    | '/core/react-query'
+    | '/core/react-table'
+    | '/core/shadcn'
     | '/features/file-browser'
-    | '/libraries/react-form'
-    | '/libraries/react-query'
-    | '/libraries/react-table'
-    | '/libraries/shadcn'
-    | '/libraries/react-form/checkbox-group'
-    | '/libraries/react-form/checkbox-with-label'
-    | '/libraries/react-form/combobox-checkbox-group'
-    | '/libraries/react-form/input-debounce'
-    | '/libraries/react-form/select'
-    | '/libraries/react-form/standard-react-form'
-    | '/libraries/react-form/with-zoos-form'
-    | '/libraries/react-query/use-mutation'
-    | '/libraries/react-query/use-query'
-    | '/libraries/react-table/custom-columns'
-    | '/libraries/react-table/expand-rows-cell'
-    | '/libraries/react-table/expand-rows-control'
-    | '/libraries/react-table/full-customization'
-    | '/libraries/react-table/merge-columns'
-    | '/libraries/react-table/standard'
-    | '/libraries/shadcn/button'
-    | '/libraries/shadcn/checkbox'
-    | '/libraries/shadcn/context-menu'
-    | '/libraries/shadcn/popover'
-    | '/libraries/shadcn/propose-class-name-override'
-    | '/libraries/shadcn/select'
-    | '/libraries/shadcn/use-debounce'
-    | '/libraries/shadcn/use-reactive-state'
+    | '/community/'
+    | '/core/react-form/checkbox-group'
+    | '/core/react-form/checkbox-with-label'
+    | '/core/react-form/combobox-checkbox-group'
+    | '/core/react-form/input-debounce'
+    | '/core/react-form/select'
+    | '/core/react-form/standard-react-form'
+    | '/core/react-form/with-zoos-form'
+    | '/core/react-query/use-mutation'
+    | '/core/react-query/use-query'
+    | '/core/react-table/custom-columns'
+    | '/core/react-table/expand-rows-cell'
+    | '/core/react-table/expand-rows-control'
+    | '/core/react-table/full-customization'
+    | '/core/react-table/merge-columns'
+    | '/core/react-table/standard'
+    | '/core/shadcn/button'
+    | '/core/shadcn/checkbox'
+    | '/core/shadcn/context-menu'
+    | '/core/shadcn/popover'
+    | '/core/shadcn/propose-class-name-override'
+    | '/core/shadcn/select'
+    | '/core/shadcn/use-debounce'
+    | '/core/shadcn/use-reactive-state'
     | '/features/auth/'
     | '/features/file-browser/'
   fileRoutesById: FileRoutesById
@@ -796,21 +798,23 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoreReactFormRouteRoute: typeof CoreReactFormRouteRouteWithChildren
+  CoreReactQueryRouteRoute: typeof CoreReactQueryRouteRouteWithChildren
+  CoreReactTableRouteRoute: typeof CoreReactTableRouteRouteWithChildren
+  CoreShadcnRouteRoute: typeof CoreShadcnRouteRouteWithChildren
   FeaturesFileBrowserRouteRoute: typeof FeaturesFileBrowserRouteRouteWithChildren
-  LibrariesReactFormRouteRoute: typeof LibrariesReactFormRouteRouteWithChildren
-  LibrariesReactQueryRouteRoute: typeof LibrariesReactQueryRouteRouteWithChildren
-  LibrariesReactTableRouteRoute: typeof LibrariesReactTableRouteRouteWithChildren
-  LibrariesShadcnRouteRoute: typeof LibrariesShadcnRouteRouteWithChildren
+  CommunityIndexRoute: typeof CommunityIndexRoute
   FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoreReactFormRouteRoute: CoreReactFormRouteRouteWithChildren,
+  CoreReactQueryRouteRoute: CoreReactQueryRouteRouteWithChildren,
+  CoreReactTableRouteRoute: CoreReactTableRouteRouteWithChildren,
+  CoreShadcnRouteRoute: CoreShadcnRouteRouteWithChildren,
   FeaturesFileBrowserRouteRoute: FeaturesFileBrowserRouteRouteWithChildren,
-  LibrariesReactFormRouteRoute: LibrariesReactFormRouteRouteWithChildren,
-  LibrariesReactQueryRouteRoute: LibrariesReactQueryRouteRouteWithChildren,
-  LibrariesReactTableRouteRoute: LibrariesReactTableRouteRouteWithChildren,
-  LibrariesShadcnRouteRoute: LibrariesShadcnRouteRouteWithChildren,
+  CommunityIndexRoute: CommunityIndexRoute,
   FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
 }
 
@@ -825,16 +829,60 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/core/react-form",
+        "/core/react-query",
+        "/core/react-table",
+        "/core/shadcn",
         "/features/file-browser",
-        "/libraries/react-form",
-        "/libraries/react-query",
-        "/libraries/react-table",
-        "/libraries/shadcn",
+        "/community/",
         "/features/auth/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/core/react-form": {
+      "filePath": "core/react-form/route.tsx",
+      "children": [
+        "/core/react-form/checkbox-group",
+        "/core/react-form/checkbox-with-label",
+        "/core/react-form/combobox-checkbox-group",
+        "/core/react-form/input-debounce",
+        "/core/react-form/select",
+        "/core/react-form/standard-react-form",
+        "/core/react-form/with-zoos-form"
+      ]
+    },
+    "/core/react-query": {
+      "filePath": "core/react-query/route.tsx",
+      "children": [
+        "/core/react-query/use-mutation",
+        "/core/react-query/use-query"
+      ]
+    },
+    "/core/react-table": {
+      "filePath": "core/react-table/route.tsx",
+      "children": [
+        "/core/react-table/custom-columns",
+        "/core/react-table/expand-rows-cell",
+        "/core/react-table/expand-rows-control",
+        "/core/react-table/full-customization",
+        "/core/react-table/merge-columns",
+        "/core/react-table/standard"
+      ]
+    },
+    "/core/shadcn": {
+      "filePath": "core/shadcn/route.tsx",
+      "children": [
+        "/core/shadcn/button",
+        "/core/shadcn/checkbox",
+        "/core/shadcn/context-menu",
+        "/core/shadcn/popover",
+        "/core/shadcn/propose-class-name-override",
+        "/core/shadcn/select",
+        "/core/shadcn/use-debounce",
+        "/core/shadcn/use-reactive-state"
+      ]
     },
     "/features/file-browser": {
       "filePath": "features/file-browser/route.tsx",
@@ -842,140 +890,100 @@ export const routeTree = rootRoute
         "/features/file-browser/"
       ]
     },
-    "/libraries/react-form": {
-      "filePath": "libraries/react-form/route.tsx",
-      "children": [
-        "/libraries/react-form/checkbox-group",
-        "/libraries/react-form/checkbox-with-label",
-        "/libraries/react-form/combobox-checkbox-group",
-        "/libraries/react-form/input-debounce",
-        "/libraries/react-form/select",
-        "/libraries/react-form/standard-react-form",
-        "/libraries/react-form/with-zoos-form"
-      ]
+    "/community/": {
+      "filePath": "community/index.tsx"
     },
-    "/libraries/react-query": {
-      "filePath": "libraries/react-query/route.tsx",
-      "children": [
-        "/libraries/react-query/use-mutation",
-        "/libraries/react-query/use-query"
-      ]
+    "/core/react-form/checkbox-group": {
+      "filePath": "core/react-form/checkbox-group.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-table": {
-      "filePath": "libraries/react-table/route.tsx",
-      "children": [
-        "/libraries/react-table/custom-columns",
-        "/libraries/react-table/expand-rows-cell",
-        "/libraries/react-table/expand-rows-control",
-        "/libraries/react-table/full-customization",
-        "/libraries/react-table/merge-columns",
-        "/libraries/react-table/standard"
-      ]
+    "/core/react-form/checkbox-with-label": {
+      "filePath": "core/react-form/checkbox-with-label.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/shadcn": {
-      "filePath": "libraries/shadcn/route.tsx",
-      "children": [
-        "/libraries/shadcn/button",
-        "/libraries/shadcn/checkbox",
-        "/libraries/shadcn/context-menu",
-        "/libraries/shadcn/popover",
-        "/libraries/shadcn/propose-class-name-override",
-        "/libraries/shadcn/select",
-        "/libraries/shadcn/use-debounce",
-        "/libraries/shadcn/use-reactive-state"
-      ]
+    "/core/react-form/combobox-checkbox-group": {
+      "filePath": "core/react-form/combobox-checkbox-group.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-form/checkbox-group": {
-      "filePath": "libraries/react-form/checkbox-group.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-form/input-debounce": {
+      "filePath": "core/react-form/input-debounce.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-form/checkbox-with-label": {
-      "filePath": "libraries/react-form/checkbox-with-label.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-form/select": {
+      "filePath": "core/react-form/select.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-form/combobox-checkbox-group": {
-      "filePath": "libraries/react-form/combobox-checkbox-group.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-form/standard-react-form": {
+      "filePath": "core/react-form/standard-react-form.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-form/input-debounce": {
-      "filePath": "libraries/react-form/input-debounce.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-form/with-zoos-form": {
+      "filePath": "core/react-form/with-zoos-form.tsx",
+      "parent": "/core/react-form"
     },
-    "/libraries/react-form/select": {
-      "filePath": "libraries/react-form/select.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-query/use-mutation": {
+      "filePath": "core/react-query/use-mutation.tsx",
+      "parent": "/core/react-query"
     },
-    "/libraries/react-form/standard-react-form": {
-      "filePath": "libraries/react-form/standard-react-form.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-query/use-query": {
+      "filePath": "core/react-query/use-query.tsx",
+      "parent": "/core/react-query"
     },
-    "/libraries/react-form/with-zoos-form": {
-      "filePath": "libraries/react-form/with-zoos-form.tsx",
-      "parent": "/libraries/react-form"
+    "/core/react-table/custom-columns": {
+      "filePath": "core/react-table/custom-columns.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-query/use-mutation": {
-      "filePath": "libraries/react-query/use-mutation.tsx",
-      "parent": "/libraries/react-query"
+    "/core/react-table/expand-rows-cell": {
+      "filePath": "core/react-table/expand-rows-cell.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-query/use-query": {
-      "filePath": "libraries/react-query/use-query.tsx",
-      "parent": "/libraries/react-query"
+    "/core/react-table/expand-rows-control": {
+      "filePath": "core/react-table/expand-rows-control.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-table/custom-columns": {
-      "filePath": "libraries/react-table/custom-columns.tsx",
-      "parent": "/libraries/react-table"
+    "/core/react-table/full-customization": {
+      "filePath": "core/react-table/full-customization.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-table/expand-rows-cell": {
-      "filePath": "libraries/react-table/expand-rows-cell.tsx",
-      "parent": "/libraries/react-table"
+    "/core/react-table/merge-columns": {
+      "filePath": "core/react-table/merge-columns.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-table/expand-rows-control": {
-      "filePath": "libraries/react-table/expand-rows-control.tsx",
-      "parent": "/libraries/react-table"
+    "/core/react-table/standard": {
+      "filePath": "core/react-table/standard.tsx",
+      "parent": "/core/react-table"
     },
-    "/libraries/react-table/full-customization": {
-      "filePath": "libraries/react-table/full-customization.tsx",
-      "parent": "/libraries/react-table"
+    "/core/shadcn/button": {
+      "filePath": "core/shadcn/button.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/react-table/merge-columns": {
-      "filePath": "libraries/react-table/merge-columns.tsx",
-      "parent": "/libraries/react-table"
+    "/core/shadcn/checkbox": {
+      "filePath": "core/shadcn/checkbox.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/react-table/standard": {
-      "filePath": "libraries/react-table/standard.tsx",
-      "parent": "/libraries/react-table"
+    "/core/shadcn/context-menu": {
+      "filePath": "core/shadcn/context-menu.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/shadcn/button": {
-      "filePath": "libraries/shadcn/button.tsx",
-      "parent": "/libraries/shadcn"
+    "/core/shadcn/popover": {
+      "filePath": "core/shadcn/popover.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/shadcn/checkbox": {
-      "filePath": "libraries/shadcn/checkbox.tsx",
-      "parent": "/libraries/shadcn"
+    "/core/shadcn/propose-class-name-override": {
+      "filePath": "core/shadcn/propose-class-name-override.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/shadcn/context-menu": {
-      "filePath": "libraries/shadcn/context-menu.tsx",
-      "parent": "/libraries/shadcn"
+    "/core/shadcn/select": {
+      "filePath": "core/shadcn/select.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/shadcn/popover": {
-      "filePath": "libraries/shadcn/popover.tsx",
-      "parent": "/libraries/shadcn"
+    "/core/shadcn/use-debounce": {
+      "filePath": "core/shadcn/use-debounce.tsx",
+      "parent": "/core/shadcn"
     },
-    "/libraries/shadcn/propose-class-name-override": {
-      "filePath": "libraries/shadcn/propose-class-name-override.tsx",
-      "parent": "/libraries/shadcn"
-    },
-    "/libraries/shadcn/select": {
-      "filePath": "libraries/shadcn/select.tsx",
-      "parent": "/libraries/shadcn"
-    },
-    "/libraries/shadcn/use-debounce": {
-      "filePath": "libraries/shadcn/use-debounce.tsx",
-      "parent": "/libraries/shadcn"
-    },
-    "/libraries/shadcn/use-reactive-state": {
-      "filePath": "libraries/shadcn/use-reactive-state.tsx",
-      "parent": "/libraries/shadcn"
+    "/core/shadcn/use-reactive-state": {
+      "filePath": "core/shadcn/use-reactive-state.tsx",
+      "parent": "/core/shadcn"
     },
     "/features/auth/": {
       "filePath": "features/auth/index.tsx"

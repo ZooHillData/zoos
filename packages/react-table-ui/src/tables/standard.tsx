@@ -26,7 +26,7 @@ const Table = <TData extends object, TValue>(props: {
               key={headerGroup.id}
               {...componentProps.trHead?.({ headerGroup })}
             >
-              {headerGroup.headers.map((header: Header<TData, TValue>) => {
+              {headerGroup.headers.map((header) => {
                 return (
                   // ~ Header cell
                   <th
@@ -78,23 +78,24 @@ const Table = <TData extends object, TValue>(props: {
                 {...componentProps.trBody?.({ row, virtualRow })}
                 // Custom row click handler
               >
-                {
-                  // ! Need this type hint to avoid TS error
-                  row.getVisibleCells().map((cell: Cell<TData, TValue>) => {
-                    return (
-                      // ~ Data cell
-                      <td
-                        key={cell.id}
-                        {...componentProps.td?.({ cell, virtualRow })}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </td>
-                    );
-                  })
-                }
+                {row.getVisibleCells().map((cell) => {
+                  return (
+                    // ~ Data cell
+                    <td
+                      key={cell.id}
+                      {...componentProps.td?.({
+                        // ! Need this type hint to avoid TS error
+                        cell: cell as Cell<TData, TValue>,
+                        virtualRow,
+                      })}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}

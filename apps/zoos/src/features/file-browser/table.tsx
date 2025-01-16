@@ -1,4 +1,8 @@
-import type { Cell, Table as TTable } from "@tanstack/react-table";
+import type {
+  Cell,
+  HeaderContext,
+  Table as TTable,
+} from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 import { useVirtualization, type ComponentProps } from "@zoos/react-table";
 import { HeaderContextMenu, HeaderSortIndicator } from "@zoos/react-table-ui";
@@ -31,7 +35,10 @@ const Table = <TData extends object, TValue>(props: {
                   <th
                     key={header.id}
                     {...componentProps.th?.({
-                      headerContext: header.getContext(),
+                      headerContext: header.getContext() as HeaderContext<
+                        TData,
+                        TValue
+                      >,
                     })}
                   >
                     <HeaderContextMenu
@@ -55,7 +62,10 @@ const Table = <TData extends object, TValue>(props: {
                     <div
                       // Resize column handle
                       {...componentProps.resizeColHandle?.({
-                        headerContext: header.getContext(),
+                        headerContext: header.getContext() as HeaderContext<
+                          TData,
+                          TValue
+                        >,
                       })}
                     />
                   </th>
@@ -79,12 +89,15 @@ const Table = <TData extends object, TValue>(props: {
               >
                 {
                   // ! Need this type hint to avoid TS error
-                  row.getVisibleCells().map((cell: Cell<TData, TValue>) => {
+                  row.getVisibleCells().map((cell) => {
                     return (
                       // ~ Data cell
                       <td
                         key={cell.id}
-                        {...componentProps.td?.({ cell, virtualRow })}
+                        {...componentProps.td?.({
+                          cell: cell as Cell<TData, TValue>,
+                          virtualRow,
+                        })}
                       >
                         <CellContextMenu row={row}>
                           {flexRender(

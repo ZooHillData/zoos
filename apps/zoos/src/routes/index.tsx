@@ -23,46 +23,7 @@ import {
   cn,
 } from "@zoos/shadcn";
 
-import alex from "../assets/alex-snail.svg";
-import bryce from "../assets/bryce-dolphin.svg";
-import borst from "../assets/borst-turtle.svg";
-import brian from "../assets/brian-monkey.svg";
-
-const Icons = ({ className }: { className?: string }) => (
-  <div
-    className={cn(
-      "flex flex-wrap items-center justify-center gap-x-8",
-      className,
-    )}
-  >
-    <img src={alex} alt="Alex Snail" className="h-24 w-24" />
-    <img src={bryce} alt="Bryce Dolphin" className="h-24 w-24" />
-    <img src={brian} alt="Brian Monkey" className="h-24 w-24" />
-    <img src={borst} alt="Borst Turtle" className="h-24 w-24" />
-  </div>
-);
-
-const GetStartedButton = () => {
-  const [open, setOpen] = React.useState(false);
-  return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogTrigger asChild>
-        <Button>Get Started</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Thank you for your patience</DialogTitle>
-          <DialogDescription>
-            We are still working on this. Please check back soon!
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button onClick={() => setOpen(false)}>Ok</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
+import { TheZoo, ZoosLogo } from "../features/components";
 
 const Links = () => (
   <div className="flex items-center">
@@ -86,20 +47,77 @@ const HeaderGroup = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col items-center gap-4">{children}</div>
 );
 
+const Description = ({ children }: { children: React.ReactNode }) => (
+  <p className="max-w-[400px] text-pretty text-center text-sm italic">
+    {children}
+  </p>
+);
+
+import {
+  AlexSnail,
+  BrianMonkey,
+  BorstTurtle,
+  BryceDolphin,
+} from "../features/components/the-zoo";
+
+const products = [
+  <AlexSnail />,
+  <BorstTurtle />,
+  <BrianMonkey />,
+  <BryceDolphin />,
+];
+
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
+
+const AutoplayCarousel = (props: { components: React.ReactNode[] }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    AutoScroll({ playOnInit: true, speed: 1 }),
+  ]);
+
+  return (
+    <div className="w-full" ref={emblaRef}>
+      <div className="-ml-4 flex touch-pan-y touch-pinch-zoom">
+        {props.components.map((component, index) => (
+          <div
+            className="h-[10rem] w-[40%] min-w-0 flex-shrink-0 translate-x-0 translate-y-0 transform pl-4"
+            key={index}
+          >
+            <div className="size-20">{component}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 function RouteComponent() {
   return (
-    <div className="bg-background text-foreground relative flex h-screen w-screen flex-col items-center gap-8 overflow-auto py-8">
-      <div className="mt-auto flex flex-col items-center gap-4">
-        <h1 className="text-6xl font-bold">Zoos</h1>
-        <Links />
-        <p className="max-w-[400px] text-pretty text-center text-sm italic">
-          Simple, composable React libraries using our top Tanstack, ShadCN,
-          Zustand, Supabase patterns.
+    <div className="flex h-screen w-full flex-col items-center gap-8 overflow-auto py-8">
+      <div className="m-auto flex max-w-[500px] flex-col gap-4">
+        <div>
+          <ZoosLogo />
+        </div>
+        <p className="text-6xl font-bold">
+          Deploy apps <span className="text-primary text-pretty">fast</span>
         </p>
-        <GetStartedButton />
-      </div>
-      <div className="mt-auto">
-        <Icons />
+        <p>
+          Zoos is an experiment in building{" "}
+          <strong className="italic">and maintaining</strong> React applications
+          as efficiently as possible.
+        </p>
+        <p>
+          It is currently a collection of React libraries, patterns and examples
+          centered around Tanstack, Radix / Tailwind (Shadcn) and Supabase.
+        </p>
+        <Button className="w-fit">Explore Features</Button>
+        {/* <div className="mt-8 flex flex-wrap gap-8">
+          <TheZoo />
+        </div> */}
+        <div className="mt-16 overflow-hidden p-2">
+          <AutoplayCarousel components={products} />
+        </div>
+        {/* <Links /> */}
       </div>
     </div>
   );

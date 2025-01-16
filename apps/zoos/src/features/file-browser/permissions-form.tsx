@@ -1,7 +1,7 @@
 import React from "react";
 import { getOptions } from "@zoos/react-form";
 import { Button, Tabs, TabsList, TabsTrigger } from "@zoos/shadcn";
-import { ComboboxCheckboxGroup } from "./../../routes/libraries/react-form/combobox-checkbox-group";
+import { ComboboxCheckboxGroup } from "../../routes/core/react-form/combobox-checkbox-group";
 
 type Permissions = Record<string, string[]>;
 

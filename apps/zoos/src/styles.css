@@ -55,6 +55,12 @@ CSS Variables for Tailwind Config
     --muted-foreground: color-mix(in srgb, white 20%, var(--foreground) 80%);
 
     /*
+    ~ Zoos specific colors
+    */
+    --logo-mountain-color: hsl(218, 100%, 14%);
+    --logo-color: hsl(202, 100%, 42%);
+
+    /*
     ~ Other miscellaneous
     */
 
@@ -110,6 +116,12 @@ CSS Variables for Tailwind Config
       --accent-foreground: color-mix(in srgb, white 5%, var(--foreground) 80%);
       --muted: color-mix(in srgb, white 5%, var(--background) 95%);
       --muted-foreground: color-mix(in srgb, black 25%, var(--foreground) 75%);
+
+      /*
+    ~ Zoos specific colors
+    */
+      --logo-mountain-color: white;
+      --logo-color: hsl(202, 100%, 42%);
     }
   }
 }

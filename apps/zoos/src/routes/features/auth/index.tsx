@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/features/auth/")({
   component: RouteComponent,
   validateSearch: (search) => ({
-    formId: search.formId as FormId,
+    formId: (search.formId || "login") as FormId,
   }),
 });
 
@@ -23,6 +23,7 @@ import {
   cn,
 } from "@zoos/shadcn";
 
+import { ZooFavicon } from "../../../features/components";
 import {
   signupConfig,
   loginConfig,
@@ -104,13 +105,9 @@ function RouteComponent() {
             )}
           >
             <Card>
-              <CardHeader className="flex w-full flex-col items-center justify-center text-center">
-                <div className="h-10 w-16">
-                  <img
-                    src="./favicon-dark.svg"
-                    className="h-full w-full object-cover"
-                    alt="logo"
-                  />
+              <CardHeader className="flex w-full flex-col items-center justify-center space-y-0 text-center">
+                <div className="flex h-10 w-16 items-center">
+                  <ZooFavicon />
                 </div>
                 <CardTitle className="text-2xl">{tab.label}</CardTitle>
                 {tab.description && (
