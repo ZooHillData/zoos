@@ -109,5 +109,12 @@ function RouteComponent() {
     },
   );
 
-  return <Table {...{ table, componentProps, virtualRows }} />;
+  return (
+    <div>
+      <h1 className="absolute right-10 top-10 text-3xl font-medium uppercase text-pink-500">
+        This one is messed up :(
+      </h1>
+      <Table {...{ table, componentProps, virtualRows }} />
+    </div>
+  );
 }

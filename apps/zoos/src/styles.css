@@ -72,7 +72,7 @@ CSS Variables for Tailwind Config
       /*
       ~ Colors (Dark)
       */
-      --foreground: hsl(220, 13%, 75%);
+      --foreground: hsla(222, 13%, 75%, 0.851);
       --background: hsl(221, 59%, 11%);
 
       --border: hsl(217, 56%, 24%);

@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as GetStartedImport } from './routes/get-started'
 import { Route as IndexImport } from './routes/index'
 import { Route as CommunityIndexImport } from './routes/community/index'
 import { Route as FeaturesFileBrowserRouteImport } from './routes/features/file-browser/route'
@@ -46,6 +47,12 @@ import { Route as CoreReactFormCheckboxGroupImport } from './routes/core/react-f
 import { Route as CommunityDndKitDragAndDropSimpleImport } from './routes/community/dnd-kit/drag-and-drop-simple'
 
 // Create/Update Routes
+
+const GetStartedRoute = GetStartedImport.update({
+  id: '/get-started',
+  path: '/get-started',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -271,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/get-started': {
+      id: '/get-started'
+      path: '/get-started'
+      fullPath: '/get-started'
+      preLoaderRoute: typeof GetStartedImport
       parentRoute: typeof rootRoute
     }
     '/core/react-form': {
@@ -603,6 +617,7 @@ const FeaturesFileBrowserRouteRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/get-started': typeof GetStartedRoute
   '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
@@ -639,6 +654,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/get-started': typeof GetStartedRoute
   '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
@@ -675,6 +691,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/get-started': typeof GetStartedRoute
   '/core/react-form': typeof CoreReactFormRouteRouteWithChildren
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
@@ -713,6 +730,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/get-started'
     | '/core/react-form'
     | '/core/react-query'
     | '/core/react-table'
@@ -748,6 +766,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/get-started'
     | '/core/react-form'
     | '/core/react-query'
     | '/core/react-table'
@@ -782,6 +801,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/get-started'
     | '/core/react-form'
     | '/core/react-query'
     | '/core/react-table'
@@ -819,6 +839,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GetStartedRoute: typeof GetStartedRoute
   CoreReactFormRouteRoute: typeof CoreReactFormRouteRouteWithChildren
   CoreReactQueryRouteRoute: typeof CoreReactQueryRouteRouteWithChildren
   CoreReactTableRouteRoute: typeof CoreReactTableRouteRouteWithChildren
@@ -831,6 +852,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GetStartedRoute: GetStartedRoute,
   CoreReactFormRouteRoute: CoreReactFormRouteRouteWithChildren,
   CoreReactQueryRouteRoute: CoreReactQueryRouteRouteWithChildren,
   CoreReactTableRouteRoute: CoreReactTableRouteRouteWithChildren,
@@ -852,6 +874,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/get-started",
         "/core/react-form",
         "/core/react-query",
         "/core/react-table",
@@ -864,6 +887,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/get-started": {
+      "filePath": "get-started.tsx"
     },
     "/core/react-form": {
       "filePath": "core/react-form/route.tsx",
