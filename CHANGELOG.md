@@ -1,3 +1,9 @@
+## [1.36.6](https://github.com/zoohilldata/zoos/compare/v1.36.5...v1.36.6) (2025-01-19)
+
+### Bug Fixes
+
+* zoos table dnd example, fix react key errors ([bdb284e](https://github.com/zoohilldata/zoos/commit/bdb284e483ccffa253d6b5fd4e003aac78f01949))
+
 ## [1.36.5](https://github.com/zoohilldata/zoos/compare/v1.36.4...v1.36.5) (2025-01-16)
 
 ### Bug Fixes
