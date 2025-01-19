@@ -1,12 +1,19 @@
-import { Link } from "@tanstack/react-router";
-
 import type { ColumnDef } from "@tanstack/react-table";
 
 import React from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
 
 import { useTable, getColumns, mergeColumns } from "@zoos/react-table";
 import { features } from "@zoos/react-table-ui";
 import { getDataTree } from "@zoos/navigation";
+
+const RouterLink = (props: React.ComponentProps<typeof Link>) => {
+  const {
+    location: { pathname },
+  } = useRouterState();
+  const isActive = pathname === props.to;
+  return <Link className={isActive ? "text-primary" : ""} {...props} />;
+};
 
 const useNavTree = <T extends object>(params: {
   paths: T[];
@@ -34,9 +41,9 @@ const useNavTree = <T extends object>(params: {
               cellContext={cellContext}
               depthIndentPx={16}
             >
-              <Link to={cellContext.cell.row.original._dataTree.pathStr}>
+              <RouterLink to={cellContext.cell.row.original._dataTree.pathStr}>
                 {cellContext.cell.getValue() as string}
-              </Link>
+              </RouterLink>
             </features.expandRow.ExpandCell>
           ),
         },

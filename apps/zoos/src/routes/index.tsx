@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, createLink } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -10,20 +10,9 @@ export const Route = createFileRoute("/")({
 
 import React from "react";
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  buttonVariants,
-  cn,
-} from "@zoos/shadcn";
+import { Button, buttonVariants, cn } from "@zoos/shadcn";
 
-import { TheZoo, ZoosLogo } from "../features/components";
+import { ZoosLogo } from "../features/components";
 
 const Links = () => (
   <div className="flex items-center">
@@ -58,9 +47,19 @@ import {
   BrianMonkey,
   BorstTurtle,
   BryceDolphin,
+  SupabaseLogo,
+  TanstackLogo,
+  ReactLogo,
+  TauriLogo,
 } from "../features/components/the-zoo";
+import { ZustandLogoSvg } from "../features/components/zustand-logo-svg";
 
 const products = [
+  <ReactLogo className="p-2" />,
+  <SupabaseLogo className="p-3" />,
+  <TauriLogo className="p-3" />,
+  <TanstackLogo className="p-2" />,
+  <ZustandLogoSvg className="p-1" />,
   <AlexSnail />,
   <BorstTurtle />,
   <BrianMonkey />,
@@ -80,7 +79,7 @@ const AutoplayCarousel = (props: { components: React.ReactNode[] }) => {
       <div className="-ml-4 flex touch-pan-y touch-pinch-zoom">
         {props.components.map((component, index) => (
           <div
-            className="h-[10rem] w-[40%] min-w-0 flex-shrink-0 translate-x-0 translate-y-0 transform pl-4"
+            className="w-[40%] min-w-0 flex-shrink-0 translate-x-0 translate-y-0 transform pl-4 sm:w-[35%] md:w-[25%] lg:w-[20%]"
             key={index}
           >
             <div className="size-20">{component}</div>
@@ -93,7 +92,7 @@ const AutoplayCarousel = (props: { components: React.ReactNode[] }) => {
 
 const MountainSvg = (props: { className?: string }) => (
   <svg
-    className={cn("h-full w-full", props.className)}
+    className={cn("h-fit w-full", props.className)}
     width="4202"
     height="816"
     viewBox="0 0 4202 816"
@@ -121,10 +120,12 @@ const MountainSvg = (props: { className?: string }) => (
   </svg>
 );
 
+const ButtonLink = createLink(Button);
+
 const Hero = () => (
   <div className="z-10 space-y-4">
-    <p className="text-6xl font-bold">
-      Deploy apps <span className="text-primary text-pretty">fast</span>
+    <p className="text-pretty text-6xl font-bold">
+      Build apps <span className="text-primary">fast</span>
     </p>
     <p>
       Zoos is an experiment in building{" "}
@@ -135,28 +136,25 @@ const Hero = () => (
       It is currently a collection of React libraries, patterns and examples
       centered around Tanstack, Radix / Tailwind (Shadcn) and Supabase.
     </p>
-    <Button className="w-fit">Get Started</Button>
+    <ButtonLink className="w-fit" to="/get-started">
+      Get Started
+    </ButtonLink>
   </div>
 );
 
 function RouteComponent() {
   return (
-    <div className="flex h-screen w-full flex-col items-center gap-8 overflow-auto py-8">
+    <div className="flex h-screen w-full flex-col items-center gap-8 overflow-auto px-8 py-8">
       <div className="m-auto flex max-w-[500px] flex-col gap-4">
         <div>
           <ZoosLogo />
         </div>
         <Hero />
-        <MountainSvg className="absolute left-0 top-0 -translate-y-[10%] translate-x-[23%] opacity-20" />
-
-        {/* <div className="mt-8 flex flex-wrap gap-8">
-
-          <TheZoo />
-        </div> */}
-        <div className="mt-8 overflow-hidden p-2">
-          <AutoplayCarousel components={products} />
-        </div>
-        {/* <Links /> */}
+        <MountainSvg className="absolute left-0 top-0 translate-x-[23%] translate-y-[45%] opacity-20" />
+      </div>
+      <div className="relative mt-8 h-fit w-full max-w-[1000px] overflow-hidden rounded-3xl p-2">
+        <div className="bg-muted pointer-events-none absolute inset-0 w-full opacity-15"></div>
+        <AutoplayCarousel components={products} />
       </div>
     </div>
   );

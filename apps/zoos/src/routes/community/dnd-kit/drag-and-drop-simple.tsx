@@ -22,7 +22,7 @@ const Droppable = (props: { children: React.ReactNode }) => {
       ref={setNodeRef}
       className={cn(
         "flex h-[300px] items-center justify-center border",
-        isOver && "bg-gray-200",
+        isOver && "bg-primary-muted",
       )}
     >
       {props.children}

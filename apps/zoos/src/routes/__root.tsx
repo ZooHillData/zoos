@@ -24,9 +24,15 @@ import { cn } from "@zoos/shadcn";
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
-const SearchableNavTree = ({ className }: { className?: string }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
+const SearchableNavTree = ({
+  className,
+  open,
+  onOpenChange,
+}: {
+  className?: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => {
   const router = useRouter();
   const paths = router.flatRoutes.map((route) => ({
     path: route.fullPath,
@@ -42,7 +48,7 @@ const SearchableNavTree = ({ className }: { className?: string }) => {
     <div
       className={cn(
         "bg-popover absolute flex h-full w-fit flex-col gap-3 border-r-2 p-4 shadow-lg",
-        !isOpen ? "-translate-x-full" : "",
+        !open ? "-translate-x-full" : "",
         className,
       )}
     >
@@ -60,17 +66,20 @@ const SearchableNavTree = ({ className }: { className?: string }) => {
         table={table}
       />
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => onOpenChange(!open)}
         className={cn(
           "hover:bg-primary bg-popover absolute -right-5 top-1/2 my-auto h-fit -translate-y-1/2 rounded-full border-2 p-1",
-          !isOpen ? "translate-x-full" : "",
+          !open ? "translate-x-full" : "",
         )}
       >
-        {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </button>
-      <div className="mx-auto mt-auto translate-y-2">
+      <button
+        className="z-10 mx-auto mt-auto translate-y-2"
+        onClick={() => router.navigate({ to: "/" })}
+      >
         <ZoosLogo />
-      </div>
+      </button>
       {/* THIS IS THE IMAGE */}
       <div className="absolute bottom-0 left-0 h-36 w-full opacity-20">
         <img
@@ -84,9 +93,15 @@ const SearchableNavTree = ({ className }: { className?: string }) => {
 };
 
 function RouteFunction() {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <div className="bg-background text-foreground flex h-screen">
-      <SearchableNavTree className="z-[999]" />
+      <SearchableNavTree
+        className="z-[999]"
+        open={open}
+        onOpenChange={(open) => setOpen(open)}
+      />
       <Outlet />
       {/* <TanStackRouterDevtools  /> */}
     </div>
