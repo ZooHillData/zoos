@@ -44,6 +44,7 @@ import { Route as CoreReactFormInputDebounceImport } from './routes/core/react-f
 import { Route as CoreReactFormComboboxCheckboxGroupImport } from './routes/core/react-form/combobox-checkbox-group'
 import { Route as CoreReactFormCheckboxWithLabelImport } from './routes/core/react-form/checkbox-with-label'
 import { Route as CoreReactFormCheckboxGroupImport } from './routes/core/react-form/checkbox-group'
+import { Route as CommunityReactTableColumnDndImport } from './routes/community/react-table/column-dnd'
 import { Route as CommunityDndKitDragAndDropSimpleImport } from './routes/community/dnd-kit/drag-and-drop-simple'
 
 // Create/Update Routes
@@ -262,6 +263,13 @@ const CoreReactFormCheckboxGroupRoute = CoreReactFormCheckboxGroupImport.update(
   } as any,
 )
 
+const CommunityReactTableColumnDndRoute =
+  CommunityReactTableColumnDndImport.update({
+    id: '/community/react-table/column-dnd',
+    path: '/community/react-table/column-dnd',
+    getParentRoute: () => rootRoute,
+  } as any)
+
 const CommunityDndKitDragAndDropSimpleRoute =
   CommunityDndKitDragAndDropSimpleImport.update({
     id: '/community/dnd-kit/drag-and-drop-simple',
@@ -334,6 +342,13 @@ declare module '@tanstack/react-router' {
       path: '/community/dnd-kit/drag-and-drop-simple'
       fullPath: '/community/dnd-kit/drag-and-drop-simple'
       preLoaderRoute: typeof CommunityDndKitDragAndDropSimpleImport
+      parentRoute: typeof rootRoute
+    }
+    '/community/react-table/column-dnd': {
+      id: '/community/react-table/column-dnd'
+      path: '/community/react-table/column-dnd'
+      fullPath: '/community/react-table/column-dnd'
+      preLoaderRoute: typeof CommunityReactTableColumnDndImport
       parentRoute: typeof rootRoute
     }
     '/core/react-form/checkbox-group': {
@@ -625,6 +640,7 @@ export interface FileRoutesByFullPath {
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
+  '/community/react-table/column-dnd': typeof CommunityReactTableColumnDndRoute
   '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
   '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
   '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
@@ -661,6 +677,7 @@ export interface FileRoutesByTo {
   '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
+  '/community/react-table/column-dnd': typeof CommunityReactTableColumnDndRoute
   '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
   '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
   '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
@@ -699,6 +716,7 @@ export interface FileRoutesById {
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/community/': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
+  '/community/react-table/column-dnd': typeof CommunityReactTableColumnDndRoute
   '/core/react-form/checkbox-group': typeof CoreReactFormCheckboxGroupRoute
   '/core/react-form/checkbox-with-label': typeof CoreReactFormCheckboxWithLabelRoute
   '/core/react-form/combobox-checkbox-group': typeof CoreReactFormComboboxCheckboxGroupRoute
@@ -738,6 +756,7 @@ export interface FileRouteTypes {
     | '/features/file-browser'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
+    | '/community/react-table/column-dnd'
     | '/core/react-form/checkbox-group'
     | '/core/react-form/checkbox-with-label'
     | '/core/react-form/combobox-checkbox-group'
@@ -773,6 +792,7 @@ export interface FileRouteTypes {
     | '/core/shadcn'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
+    | '/community/react-table/column-dnd'
     | '/core/react-form/checkbox-group'
     | '/core/react-form/checkbox-with-label'
     | '/core/react-form/combobox-checkbox-group'
@@ -809,6 +829,7 @@ export interface FileRouteTypes {
     | '/features/file-browser'
     | '/community/'
     | '/community/dnd-kit/drag-and-drop-simple'
+    | '/community/react-table/column-dnd'
     | '/core/react-form/checkbox-group'
     | '/core/react-form/checkbox-with-label'
     | '/core/react-form/combobox-checkbox-group'
@@ -847,6 +868,7 @@ export interface RootRouteChildren {
   FeaturesFileBrowserRouteRoute: typeof FeaturesFileBrowserRouteRouteWithChildren
   CommunityIndexRoute: typeof CommunityIndexRoute
   CommunityDndKitDragAndDropSimpleRoute: typeof CommunityDndKitDragAndDropSimpleRoute
+  CommunityReactTableColumnDndRoute: typeof CommunityReactTableColumnDndRoute
   FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
 }
 
@@ -860,6 +882,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesFileBrowserRouteRoute: FeaturesFileBrowserRouteRouteWithChildren,
   CommunityIndexRoute: CommunityIndexRoute,
   CommunityDndKitDragAndDropSimpleRoute: CommunityDndKitDragAndDropSimpleRoute,
+  CommunityReactTableColumnDndRoute: CommunityReactTableColumnDndRoute,
   FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
 }
 
@@ -882,6 +905,7 @@ export const routeTree = rootRoute
         "/features/file-browser",
         "/community/",
         "/community/dnd-kit/drag-and-drop-simple",
+        "/community/react-table/column-dnd",
         "/features/auth/"
       ]
     },
@@ -945,6 +969,9 @@ export const routeTree = rootRoute
     },
     "/community/dnd-kit/drag-and-drop-simple": {
       "filePath": "community/dnd-kit/drag-and-drop-simple.tsx"
+    },
+    "/community/react-table/column-dnd": {
+      "filePath": "community/react-table/column-dnd.tsx"
     },
     "/core/react-form/checkbox-group": {
       "filePath": "core/react-form/checkbox-group.tsx",

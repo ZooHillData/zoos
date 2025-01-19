@@ -40,12 +40,12 @@ const OTP = ({
       }}
     >
       {Array.from({ length }).map((_, index) => (
-        <>
+        <React.Fragment key={index}>
           <InputOTPGroup key={index}>
             <InputOTPSlot index={index} />
           </InputOTPGroup>
           {index < length - 1 && <InputOTPSeparator />}
-        </>
+        </React.Fragment>
       ))}
     </InputOTP>
   );

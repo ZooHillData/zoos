@@ -15,7 +15,6 @@ declare module "@tanstack/react-table" {
 type TableOptionsControlled<TData extends RowData> = Omit<
   TableOptions<TData>,
   // Row models that are already set
-  | "onStateChange"
   | "getExpandedRowModel"
   | "getFacetedRowModel"
   | "getFilteredRowModel"
@@ -36,7 +35,15 @@ type TableOptionsControlled<TData extends RowData> = Omit<
   | "onRowPinningChange"
   | "onRowSelectionChange"
   | "onSortingChange"
+  // cleaner onStateChange API
+  | "onStateChange"
 > & {
+  // ~ onStateChange will receive full state
+  // cleans up the API
+  // - the typically required (and annoying)
+  //     `Updater` pattern is handled for you
+  // - for column resizing, delay firing onStateChange
+  //     until resizing is complete (performance)
   onStateChange?: (state: TableState) => void;
 };
 

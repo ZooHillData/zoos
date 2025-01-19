@@ -128,9 +128,9 @@ const Hero = () => (
       Build apps <span className="text-primary">fast</span>
     </p>
     <p>
-      Zoos is an experiment in building{" "}
-      <strong className="italic">and maintaining</strong> React applications as
-      efficiently as possible.
+      Zoos is an <em>experiment</em> in building{" "}
+      <span className="text-primary">flexible and maintainable</span> React
+      applications as efficiently as possible.
     </p>
     <p>
       It is currently a collection of React libraries, patterns and examples

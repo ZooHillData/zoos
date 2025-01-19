@@ -81,9 +81,10 @@ const Form = <Form extends object, Context>(props: {
       }}
       {...props.config.layout?.formContainerProps}
     >
-      {layoutData.rows.map((row) => (
+      {layoutData.rows.map((row, index) => (
         // Map over each row in the layout
         <div
+          key={index}
           {...mergeStyleProps([
             config.layout?.rowContainerProps || {},
             row.props || {},
