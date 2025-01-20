@@ -7,7 +7,6 @@ import {
   getFacetedRowModel,
   getFilteredRowModel,
   getSortedRowModel,
-  type TableState,
   getGroupedRowModel,
   getFacetedUniqueValues,
   getFacetedMinMaxValues,
@@ -19,7 +18,6 @@ import { globalFilterFn } from "../../lib/filter-fns/global-filter-fn";
 
 const useControlledTable = <TData>({
   filterFns,
-  state,
   onStateChange,
   ...options
 }: TableOptionsControlled<TData>) => {
@@ -63,16 +61,6 @@ const useControlledTable = <TData>({
       : {}),
   }));
 
-  // ~ External state change => update internal table state
-  // When controlled state changes, update in the table
-  // state. Need this separated so that we can treat the
-  // column sizing separately
-  React.useEffect(() => {
-    table.setState((prevState: TableState) => {
-      return { ...prevState, ...state };
-    });
-  }, [state, table]);
-
   // ~ only fire `onStateChange` when column resize event stops
   // Because column sizing events fire continuously while resizing by draggging,
   // we only call the `onStateChange` handler when the resizing operation stops.
@@ -87,7 +75,7 @@ const useControlledTable = <TData>({
       onStateChange?.({
         ...table.getState(),
         columnSizing: {
-          ...state?.columnSizing,
+          ...table.getState().columnSizing,
           [resizeColumnIdStr]: table.getState().columnSizing[resizeColumnIdStr],
         },
       });
@@ -103,7 +91,6 @@ const useControlledTable = <TData>({
     columnSizingInfo.columnSizingStart, // contains column ID of resizing column
     table,
     onStateChange,
-    state,
   ]);
 
   return { table };

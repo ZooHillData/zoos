@@ -31,7 +31,7 @@ import {
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import { cn, mergeStyleProps } from "@zoos/shadcn";
+import { Button, cn, mergeStyleProps } from "@zoos/shadcn";
 import {
   featureProps,
   getColumns,
@@ -53,8 +53,8 @@ const getDragProps = (params: {
   transform: Transform | null;
 }) => ({
   className: cn(
-    "relative transition-all duration-200 ease-in-out",
-    params.isDragging ? "opacity-80 z-50" : "",
+    // "relative transition-all duration-200 ease-in-out",
+    params.isDragging ? "opacity-80 z-10" : "",
   ),
   style: {
     transform: CSS.Translate.toString(params.transform),
@@ -118,16 +118,11 @@ function RouteComponent() {
     columnOrder: columns.map((col) => col.id),
   } as TableState);
 
-  const columnOrder = state.columnOrder;
-
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,
     columns,
     state,
-    onStateChange: (state) => {
-      console.log({ state });
-      setState(state);
-    },
+    onStateChange: setState,
   });
 
   const componentProps = useComponentProps(
@@ -143,8 +138,8 @@ function RouteComponent() {
           container: {
             className: "text-sm whitespace-nowrap text-left",
           },
-          th: () => ({ className: "overflow-hidden" }),
-          td: () => ({ className: "overflow-hidden" }),
+          th: () => ({ className: "overflow-hidden bg-background" }),
+          td: () => ({ className: "overflow-hidden bg-background" }),
         },
       ],
     },
@@ -157,7 +152,7 @@ function RouteComponent() {
       table.setColumnOrder((columnOrder) => {
         const oldIndex = columnOrder.indexOf(active.id as string);
         const newIndex = columnOrder.indexOf(over.id as string);
-        return arrayMove(columnOrder, oldIndex, newIndex); //this is just a splice util
+        return arrayMove(columnOrder, oldIndex, newIndex);
       });
     }
   }
@@ -169,12 +164,22 @@ function RouteComponent() {
   );
 
   return (
-    <div className="h-screen w-screen overflow-hidden p-4">
+    <div className="flex h-screen w-screen flex-col gap-2 overflow-hidden p-4">
+      <Button
+        onClick={() =>
+          setState((prev) => ({
+            ...prev,
+            columnOrder: columns.map((col) => col.id),
+          }))
+        }
+      >
+        Reset Column Order
+      </Button>
       <DndContext
+        sensors={sensors}
         collisionDetection={closestCenter}
         modifiers={[restrictToHorizontalAxis]}
         onDragEnd={handleDragEnd}
-        sensors={sensors}
       >
         <div {...componentProps.container}>
           <table {...componentProps.table}>
@@ -185,7 +190,7 @@ function RouteComponent() {
                   {...componentProps.trHead?.({ headerGroup })}
                 >
                   <SortableContext
-                    items={columnOrder}
+                    items={table.getState().columnOrder}
                     strategy={horizontalListSortingStrategy}
                   >
                     {headerGroup.headers.map((header) => (
@@ -216,30 +221,26 @@ function RouteComponent() {
                     key={virtualRow.index}
                     {...componentProps.trBody?.({ row, virtualRow })}
                   >
-                    {table
-                      .getRowModel()
-                      .rows[virtualRow.index].getVisibleCells()
-                      .map((cell) => (
-                        <SortableContext
+                    <SortableContext
+                      items={table.getState().columnOrder}
+                      strategy={horizontalListSortingStrategy}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <DragAlongCell
                           key={cell.id}
-                          items={columnOrder}
-                          strategy={horizontalListSortingStrategy}
+                          cell={cell}
+                          {...componentProps.td?.({
+                            cell,
+                            virtualRow,
+                          })}
                         >
-                          <DragAlongCell
-                            cell={cell}
-                            {...componentProps.td?.({
-                              cell,
-                              virtualRow,
-                            })}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </DragAlongCell>
-                          {/* <DragAlongCell key={cell.id} cell={cell} /> */}
-                        </SortableContext>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </DragAlongCell>
                       ))}
+                    </SortableContext>
                   </tr>
                 );
               })}
