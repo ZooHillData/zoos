@@ -6,7 +6,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.36.6",
+  "version": "1.36.7",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {

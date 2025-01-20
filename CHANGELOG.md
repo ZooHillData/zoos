@@ -1,3 +1,9 @@
+## [1.36.7](https://github.com/zoohilldata/zoos/compare/v1.36.6...v1.36.7) (2025-01-20)
+
+### Bug Fixes
+
+* fix useControlledTable double render, tweaks on `community/react-table/column-dnd` ([5a853fc](https://github.com/zoohilldata/zoos/commit/5a853fc5fe2b9ff7985a13b1afe1d1f5564cf991))
+
 ## [1.36.6](https://github.com/zoohilldata/zoos/compare/v1.36.5...v1.36.6) (2025-01-19)
 
 ### Bug Fixes
