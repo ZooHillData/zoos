@@ -1,3 +1,9 @@
+## [1.36.10](https://github.com/zoohilldata/zoos/compare/v1.36.9...v1.36.10) (2025-01-21)
+
+### Bug Fixes
+
+* **react-table:** column drag-and-drop refinements ([267e791](https://github.com/zoohilldata/zoos/commit/267e7916218112060b07112215c764f0847795be))
+
 ## [1.36.9](https://github.com/zoohilldata/zoos/compare/v1.36.8...v1.36.9) (2025-01-21)
 
 ### Bug Fixes
