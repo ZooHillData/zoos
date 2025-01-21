@@ -1,3 +1,9 @@
+## [1.36.9](https://github.com/zoohilldata/zoos/compare/v1.36.8...v1.36.9) (2025-01-21)
+
+### Bug Fixes
+
+* **react-table:** bring column dnd into react-table-ui ([485de4a](https://github.com/zoohilldata/zoos/commit/485de4aa711c83fb81080dda7c62ea962d271a28))
+
 ## [1.36.8](https://github.com/zoohilldata/zoos/compare/v1.36.7...v1.36.8) (2025-01-21)
 
 ### Bug Fixes
