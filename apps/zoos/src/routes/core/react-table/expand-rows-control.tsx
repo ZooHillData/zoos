@@ -62,11 +62,11 @@ function RouteComponent() {
           first_name: {
             cell: ({ cell }) =>
               // For name columns, show value only on child rows
-              cell.row.getCanExpand() ? cell.getValue() : undefined,
+              !cell.row.getCanExpand() ? cell.getValue() : undefined,
           },
           last_name: {
             cell: ({ cell }) =>
-              cell.row.getCanExpand() ? cell.getValue() : undefined,
+              !cell.row.getCanExpand() ? cell.getValue() : undefined,
           },
         },
         newColumns: [features.expandRow.getControlColumnDef(columnHelper)],
@@ -109,12 +109,5 @@ function RouteComponent() {
     },
   );
 
-  return (
-    <div>
-      <h1 className="absolute right-10 top-10 text-3xl font-medium uppercase text-pink-500">
-        This one is messed up :(
-      </h1>
-      <Table {...{ table, componentProps, virtualRows }} />
-    </div>
-  );
+  return <Table {...{ table, componentProps, virtualRows }} />;
 }
