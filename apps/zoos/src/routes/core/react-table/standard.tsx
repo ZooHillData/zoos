@@ -25,23 +25,22 @@ function RouteComponent() {
   const { data } = Route.useRouteContext();
 
   const [state, setState] = React.useState({});
-  const columns = React.useMemo(() => getColumns({ data })(), [data]);
+  const columns = React.useMemo(
+    () => getColumns({ data })({}),
+
+    [data],
+  );
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,
     columns,
-    initialState: {
-      columnVisibility: { first_name: false },
-      columnOrder: columns.map((col) => col.id),
-    },
+    // initialState: { columnOrder: columns.map((col) => col.id) },
     state,
     onStateChange: (state) => {
       console.log("onStateChange", state);
       setState(state);
     },
   });
-
-  // console.log({ state, tableState: table.getState() });
 
   const componentProps = useComponentProps(
     {
@@ -51,16 +50,22 @@ function RouteComponent() {
     },
     {
       mergeProps: [
-        // featureProps.borders(),
-        // featureProps.spacing.compact(),
         featureProps.utils.allCells({
-          className: "text-sm overflow-hidden bg-background",
+          className: "text-sm overflow-hidden whitespace-nowrap bg-background",
         }),
+
         {
-          // ! Required for drag and drop columns
-          // why ....
+          // ~ Drag and drop column props
+          //
+          th: () => ({
+            className: "flex items-center justify-between",
+          }),
           td: () => ({
-            className: "leading-5 whitespace-nowrap",
+            // ! Required for drag and drop columns
+            // why ....
+            // technically, leading-5 is not required if the
+            // appropriate text size is set (e.g. text-sm)
+            className: "whitespace-nowrap leading-5",
           }),
         },
       ],

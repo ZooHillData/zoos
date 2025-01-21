@@ -35,7 +35,7 @@ const getComponentProps = <TData, TValue>({
         }),
       },
     }),
-    // featureProps.borders(),
+    featureProps.borders(),
     featureProps.columnPinning({
       custom: {
         // Custom styles for the border between pinned and non-pinned columns

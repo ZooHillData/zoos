@@ -21,7 +21,6 @@ const getColumns =
   }) =>
   (params?: {
     exclude?: (columnId: keyof TData) => boolean;
-    columns?: Record<string, Partial<ColumnDef<TData, TValue>>>;
     columnHelper?: ColumnHelper<TData>;
   }) => {
     const {
@@ -41,3 +40,4 @@ const getColumns =
   };
 
 export { getColumns };
+export type { AccessorColumnDefWithId };

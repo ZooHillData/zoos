@@ -39,45 +39,59 @@ const Table = <TData extends object, TValue>(props: {
                         listeners,
                         setNodeRef,
                         transform,
-                      }) => (
-                        <th
-                          ref={setNodeRef}
-                          {...mergeStyleProps([
-                            componentProps.th?.({
-                              headerContext: header.getContext(),
-                            }) || {},
-                            getCellDragProps({ isDragging, transform }),
-                          ])}
-                        >
-                          <HeaderContextMenu
-                            header={header.getContext()}
-                            className="flex w-full justify-between"
-                            // Spread attributes and listeners onto the header context menu
-                            // (this is a <span />)
-                            {...attributes}
-                            {...listeners}
+                      }) => {
+                        const { canReorder = true } =
+                          header.column.columnDef.meta || {};
+                        const dragHandleProps = canReorder
+                          ? { ...listeners, ...attributes }
+                          : {};
+                        const dragElementProps =
+                          !header.column.getIsPinned() || isDragging
+                            ? getCellDragProps({
+                                isDragging,
+                                transform,
+                              })
+                            : {};
+
+                        return (
+                          <th
+                            ref={setNodeRef}
+                            {...mergeStyleProps([
+                              componentProps.th?.({
+                                headerContext: header.getContext(),
+                              }) || {},
+                              dragElementProps,
+                            ])}
                           >
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext(),
-                                )}
+                            <HeaderContextMenu
+                              header={header.getContext()}
+                              className="h-full w-full text-left"
+                              // Spread attributes and listeners onto the header context menu
+                              {...dragHandleProps}
+                            >
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
+                            </HeaderContextMenu>
                             <HeaderSortIndicator
                               // Sort indicator
                               header={header}
                               className="text-primary"
                               onClick={() => header.column.toggleSorting()}
                             />
-                          </HeaderContextMenu>
-                          <div
-                            // Resize column handle
-                            {...componentProps.resizeColHandle?.({
-                              headerContext: header.getContext(),
-                            })}
-                          />
-                        </th>
-                      )}
+
+                            <div
+                              // Resize column handle
+                              {...componentProps.resizeColHandle?.({
+                                headerContext: header.getContext(),
+                              })}
+                            />
+                          </th>
+                        );
+                      }}
                     </SortableItem>
                   ))}
                 </ColumnSortableContext>
@@ -98,23 +112,32 @@ const Table = <TData extends object, TValue>(props: {
                         key={cell.id}
                         options={{ id: cell.column.id }}
                       >
-                        {({ setNodeRef, isDragging, transform }) => (
-                          <td
-                            ref={setNodeRef}
-                            {...mergeStyleProps([
-                              componentProps.td?.({
-                                cell: cell as Cell<TData, TValue>,
-                                virtualRow,
-                              }) || {},
-                              getCellDragProps({ isDragging, transform }),
-                            ])}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </td>
-                        )}
+                        {({ setNodeRef, isDragging, transform }) => {
+                          const dragElementProps =
+                            !cell.column.getIsPinned() || isDragging
+                              ? getCellDragProps({
+                                  isDragging,
+                                  transform,
+                                })
+                              : {};
+                          return (
+                            <td
+                              ref={setNodeRef}
+                              {...mergeStyleProps([
+                                componentProps.td?.({
+                                  cell: cell as Cell<TData, TValue>,
+                                  virtualRow,
+                                }) || {},
+                                dragElementProps,
+                              ])}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </td>
+                          );
+                        }}
                       </SortableItem>
                     ))}
                   </ColumnSortableContext>

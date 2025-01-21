@@ -17,9 +17,18 @@ const getDragEndHandler = <TData,>(params: { table: Table<TData> }) => {
   return ({ active, over }: DragEndEvent) => {
     if (active && over && active.id !== over.id) {
       params.table.setColumnOrder((columnOrder) => {
-        const oldIndex = columnOrder.indexOf(active.id as string);
-        const newIndex = columnOrder.indexOf(over.id as string);
-        return arrayMove(columnOrder, oldIndex, newIndex);
+        // Get the current column from prev columnOrder state
+        // If that doesn't exist, use the current columns as the
+        // starting column order (so that you don't have to pass in)
+        // `initialState.columnOrder` for column ordering to work
+        const columnOrderNonNull =
+          columnOrder.length > 0
+            ? columnOrder
+            : params.table.getAllColumns().map((column) => column.id);
+
+        const oldIndex = columnOrderNonNull.indexOf(active.id as string);
+        const newIndex = columnOrderNonNull.indexOf(over.id as string);
+        return arrayMove(columnOrderNonNull, oldIndex, newIndex);
       });
     }
   };
@@ -33,6 +42,8 @@ type DndContextProps<TData> = React.ComponentProps<typeof DndContext> & {
 
 const useDndSensors = () =>
   useSensors(
+    // useSensor(PointerSensor, {}),
+    // useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
     useSensor(MouseSensor, {}),
     useSensor(TouchSensor, {}),
     useSensor(KeyboardSensor, {}),

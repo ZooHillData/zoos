@@ -6,5 +6,6 @@ declare module "@tanstack/react-table" {
     Filter?: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
     name?: string | null;
     description?: string | null;
+    canReorder?: boolean;
   }
 }

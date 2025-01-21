@@ -1,4 +1,4 @@
-import type { Table } from "@tanstack/react-table";
+import type { Column, Table } from "@tanstack/react-table";
 import {
   SortableContext,
   horizontalListSortingStrategy,
@@ -12,11 +12,23 @@ type Props<TData> = Omit<
   items?: string[];
 };
 const ColumnSortableContext = <TData,>({ table, ...props }: Props<TData>) => {
-  const { columnOrder } = table.getState();
-  const items =
+  const { columnOrder, columnPinning } = table.getState();
+
+  // All columns (from current ordering or defaulted from columns in table)
+  const columnsInOrder =
     columnOrder.length > 0
-      ? columnOrder
-      : table.getAllLeafColumns().map((column) => column.id);
+      ? columnOrder.map((id) => table.getColumn(id) as Column<TData, unknown>)
+      : table.getAllColumns();
+
+  // Final items will put pinned left columns first, then standard clumn
+  // rdering then pinned right columns last
+  const items = [
+    ...(columnPinning.left || []),
+    ...columnsInOrder
+      .filter((col) => !col?.getIsPinned())
+      .map((col) => col.id as string),
+    ...(columnPinning.right || []),
+  ];
 
   return (
     <SortableContext

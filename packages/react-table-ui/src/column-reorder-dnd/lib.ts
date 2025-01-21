@@ -1,14 +1,16 @@
-import type { Transform } from "@dnd-kit/utilities";
+import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import { cn, mergeStyleProps } from "@zoos/shadcn";
+import { cn } from "@zoos/shadcn";
 
-const getCellDragProps = (params: {
-  isDragging?: boolean;
-  transform: Transform | null;
-}) => ({
+type UseSortableResults = ReturnType<typeof useSortable>;
+type Params = {
+  isDragging: UseSortableResults["isDragging"];
+  transform: UseSortableResults["transform"];
+};
+const getCellDragProps = (params: Params) => ({
   className: cn(
-    // "relative transition-all duration-200 ease-in-out",
+    // "z-20" to get above the pinned columns at z-10
     params.isDragging ? "opacity-80 z-20" : "",
   ),
   style: {
