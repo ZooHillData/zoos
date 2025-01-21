@@ -1,5 +1,6 @@
 import React from "react";
 
+import { isDeepEqual } from "remeda";
 import {
   useReactTable,
   getCoreRowModel,
@@ -18,6 +19,10 @@ import { globalFilterFn } from "../../lib/filter-fns/global-filter-fn";
 
 const useControlledTable = <TData>({
   filterFns,
+  // We will not be passing columnSizing, columnSizingInfo into
+  // useReactTable. Column sizing is handled differently
+  // (doesn't fire `onStateChange` until resizing event ends)
+  state: { columnSizing, columnSizingInfo, ...state } = {},
   onStateChange,
   ...options
 }: TableOptionsControlled<TData>) => {
@@ -47,11 +52,22 @@ const useControlledTable = <TData>({
     // filter or column filter changes
     autoResetAll: false,
     globalFilterFn,
-    // Controlled state
-    // ...getControlledTableOptions({ state, onStateChange }),
-    // Caller options
+    // State does not include columnSizing and columnSizingInfo
+    state,
     ...options,
   });
+
+  // When external state columnSizing changes,
+  // update the internal state to match
+  // (only if the state is different)
+  React.useEffect(() => {
+    if (
+      columnSizing &&
+      !isDeepEqual(columnSizing, table.getState().columnSizing)
+    ) {
+      table.setColumnSizing(columnSizing);
+    }
+  }, [table, columnSizing]);
 
   // ~ Wire in the onChange handlers
   table.setOptions((prev) => ({
@@ -64,18 +80,20 @@ const useControlledTable = <TData>({
   // ~ only fire `onStateChange` when column resize event stops
   // Because column sizing events fire continuously while resizing by draggging,
   // we only call the `onStateChange` handler when the resizing operation stops.
-  const { columnSizingInfo } = table.getState(); // Get current sizing info
+  const tableState = table.getState(); // Get current sizing info
   const resizeColumnId = React.useRef<string | undefined>(); // Keep track of the id of the column being resized
   React.useEffect(() => {
+    const { columnSizingInfo } = tableState;
+
     // When stop resizing, call the onChange handler
     if (!columnSizingInfo.isResizingColumn && resizeColumnId.current) {
       const resizeColumnIdStr = resizeColumnId.current as string;
 
       // Call the onStateChange handler
       onStateChange?.({
-        ...table.getState(),
+        ...tableState,
         columnSizing: {
-          ...table.getState().columnSizing,
+          ...tableState.columnSizing,
           [resizeColumnIdStr]: table.getState().columnSizing[resizeColumnIdStr],
         },
       });
@@ -86,12 +104,7 @@ const useControlledTable = <TData>({
     if (columnSizingInfo.isResizingColumn && !resizeColumnId.current) {
       resizeColumnId.current = columnSizingInfo.columnSizingStart?.[0][0];
     }
-  }, [
-    columnSizingInfo.isResizingColumn,
-    columnSizingInfo.columnSizingStart, // contains column ID of resizing column
-    table,
-    onStateChange,
-  ]);
+  }, [table, onStateChange, tableState]);
 
   return { table };
 };
