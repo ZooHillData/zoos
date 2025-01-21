@@ -18,7 +18,7 @@ const getPinningStyles = <TData, TValue>(column: Column<TData, TValue>) => {
   const pinning = getPinningAttributes(column);
 
   return {
-    position: pinning.isPinned ? ("sticky" as const) : ("relative" as const),
+    position: pinning.isPinned ? ("sticky" as const) : undefined,
     zIndex: pinning.isPinned ? 10 : undefined,
     left: pinning.isPinnedLeft ? `${column.getStart("left")}px` : undefined,
     right: pinning.isPinnedRight ? `${column.getAfter("right")}px` : undefined,

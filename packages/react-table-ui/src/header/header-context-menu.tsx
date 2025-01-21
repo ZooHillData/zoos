@@ -14,22 +14,24 @@ import {
   ContextMenuPortal,
 } from "@zoos/shadcn";
 
+type HeaderContextMenuProps<TData, TValue> = React.ComponentProps<
+  typeof ContextMenuTrigger
+> & {
+  header: HeaderContext<TData, TValue>;
+};
+
 const HeaderContextMenu = <TData, TValue>({
   header,
   children,
-  className,
-}: {
-  header: HeaderContext<TData, TValue>;
-  children: React.ReactNode;
-  className?: string;
-}) => {
+  ...rest
+}: HeaderContextMenuProps<TData, TValue>) => {
   const numHiddenColumns = Object.entries(
     header.table.getState().columnVisibility,
   ).filter(([_, isVisible]) => !isVisible).length;
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger className={className}>{children}</ContextMenuTrigger>
+      <ContextMenuTrigger {...rest}>{children}</ContextMenuTrigger>
       <ContextMenuContent className="w-48">
         <ContextMenuLabel>{children}</ContextMenuLabel>
         <ContextMenuSeparator className="mx-1 border-b" />

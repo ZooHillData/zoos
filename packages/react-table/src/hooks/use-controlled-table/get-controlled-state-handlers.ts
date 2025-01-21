@@ -15,7 +15,7 @@ import type { TableState, TableOptions, Table } from "@tanstack/react-table";
  * @param onStateChange - Callback to update controlled state
  * @returns Tanstack `TableOptions` for the controlled state.
  */
-const getControlledTableOptions = <TData>(props: {
+const getControlledStateHandlers = <TData>(props: {
   table: Table<TData>;
   onStateChange: (state: TableState) => void;
 }) => {
@@ -58,11 +58,11 @@ const getControlledTableOptions = <TData>(props: {
         updater instanceof Function ? updater(state.expanded) : updater;
       onStateChange({ ...state, expanded: updated });
     },
-    // onPaginationChange: (updater) => {
-    //   const updated =
-    //     updater instanceof Function ? updater(state.pagination) : updater;
-    //   onStateChange({ ...state, pagination: updated });
-    // },
+    onPaginationChange: (updater) => {
+      const updated =
+        updater instanceof Function ? updater(state.pagination) : updater;
+      onStateChange({ ...state, pagination: updated });
+    },
     onRowPinningChange: (updater) => {
       const updated =
         updater instanceof Function ? updater(state.rowPinning) : updater;
@@ -85,4 +85,4 @@ const getControlledTableOptions = <TData>(props: {
   return controlledStateOptions;
 };
 
-export { getControlledTableOptions };
+export { getControlledStateHandlers };

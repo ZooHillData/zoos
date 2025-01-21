@@ -8,107 +8,31 @@ import React from "react";
 
 // import "./index.css";
 
-import type { Cell, Header, TableState } from "@tanstack/react-table";
+import type { TableState } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
 // Dnd
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS, Transform } from "@dnd-kit/utilities";
-import {
-  DndContext,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
-  closestCenter,
-  type DragEndEvent,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
-import {
-  arrayMove,
-  SortableContext,
-  horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
-
-import { Button, cn, mergeStyleProps } from "@zoos/shadcn";
+import { Button, mergeStyleProps } from "@zoos/shadcn";
 import {
   featureProps,
   getColumns,
   useComponentProps,
   useTable,
 } from "@zoos/react-table";
-
 import {
-  type User,
-  createData,
-  createRandomUser,
-} from "../../../community/fake-data";
+  SortableItem,
+  HeaderContextMenu,
+  HeaderSortIndicator,
+  getCellDragProps,
+  ColumnDndContext,
+  ColumnSortableContext,
+} from "@zoos/react-table-ui";
+
+import { createData, createRandomUser } from "../../../community/fake-data";
 
 const data = createData(createRandomUser, { count: 10000 });
 
 /** Helper gets the extra props to add to `<td />` given drag state */
-const getDragProps = (params: {
-  isDragging?: boolean;
-  transform: Transform | null;
-}) => ({
-  className: cn(
-    // "relative transition-all duration-200 ease-in-out",
-    params.isDragging ? "opacity-80 z-10" : "",
-  ),
-  style: {
-    transform: CSS.Translate.toString(params.transform),
-  },
-});
-
-type DraggableTableHeaderProps =
-  React.ThHTMLAttributes<HTMLTableCellElement> & {
-    header: Header<User, unknown>;
-  };
-/** `<th />` column can be dragged */
-const DraggableTableHeader = ({
-  header,
-  ...props
-}: DraggableTableHeaderProps) => {
-  const { attributes, isDragging, listeners, setNodeRef, transform } =
-    useSortable({
-      id: header.column.id,
-    });
-
-  const thProps = React.useMemo(
-    () => mergeStyleProps([getDragProps({ isDragging, transform }), props]),
-    [isDragging, transform, props],
-  );
-
-  return (
-    <th ref={setNodeRef} {...thProps} {...attributes} {...listeners}>
-      {header.isPlaceholder
-        ? null
-        : flexRender(header.column.columnDef.header, header.getContext())}
-    </th>
-  );
-};
-
-type DragAlongCellProps = React.ThHTMLAttributes<HTMLTableCellElement> & {
-  cell: Cell<User, unknown>;
-};
-/** `<td />` that follows along with dragging for preview */
-const DragAlongCell = ({ cell, ...props }: DragAlongCellProps) => {
-  const { isDragging, setNodeRef, transform } = useSortable({
-    id: cell.column.id,
-  });
-
-  const tdProps = React.useMemo(
-    () => mergeStyleProps([getDragProps({ isDragging, transform }), props]),
-    [isDragging, transform, props],
-  );
-
-  return (
-    <th ref={setNodeRef} {...tdProps}>
-      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-    </th>
-  );
-};
 
 function RouteComponent() {
   // Infer columns
@@ -138,29 +62,19 @@ function RouteComponent() {
           container: {
             className: "text-sm whitespace-nowrap text-left",
           },
-          th: () => ({ className: "overflow-hidden bg-background" }),
-          td: () => ({ className: "overflow-hidden bg-background" }),
+          th: () => ({
+            className: "overflow-hidden bg-background",
+          }),
+          td: () => ({
+            className: "overflow-hidden bg-background",
+          }),
         },
+        // ! why does adding y-padding break dnd???
+        // {
+        //   td: () => ({ className: "py-0.5" }),
+        // },
       ],
     },
-  );
-
-  // Set column order after drag and drop end
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (active && over && active.id !== over.id) {
-      table.setColumnOrder((columnOrder) => {
-        const oldIndex = columnOrder.indexOf(active.id as string);
-        const newIndex = columnOrder.indexOf(over.id as string);
-        return arrayMove(columnOrder, oldIndex, newIndex);
-      });
-    }
-  }
-
-  const sensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {}),
   );
 
   return (
@@ -175,12 +89,7 @@ function RouteComponent() {
       >
         Reset Column Order
       </Button>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        modifiers={[restrictToHorizontalAxis]}
-        onDragEnd={handleDragEnd}
-      >
+      <ColumnDndContext table={table}>
         <div {...componentProps.container}>
           <table {...componentProps.table}>
             <thead {...componentProps.thead}>
@@ -189,27 +98,58 @@ function RouteComponent() {
                   key={headerGroup.id}
                   {...componentProps.trHead?.({ headerGroup })}
                 >
-                  <SortableContext
-                    items={table.getState().columnOrder}
-                    strategy={horizontalListSortingStrategy}
-                  >
+                  <ColumnSortableContext table={table}>
                     {headerGroup.headers.map((header) => (
-                      <DraggableTableHeader
-                        key={header.id}
-                        header={header}
-                        {...componentProps.th?.({
-                          headerContext: header.getContext(),
-                        })}
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </DraggableTableHeader>
+                      <SortableItem key={header.id} options={{ id: header.id }}>
+                        {({
+                          isDragging,
+                          attributes,
+                          listeners,
+                          setNodeRef,
+                          transform,
+                        }) => (
+                          <th
+                            ref={setNodeRef}
+                            {...mergeStyleProps([
+                              componentProps.th?.({
+                                headerContext: header.getContext(),
+                              }) || {},
+                              getCellDragProps({ isDragging, transform }),
+                            ])}
+                          >
+                            <HeaderContextMenu
+                              // Header context menu provides right click
+                              header={header.getContext()}
+                              className="flex w-full justify-between"
+                              // Spread attributes and listeners onto the header context menu
+                              // (this is a <span />)
+                              {...attributes}
+                              {...listeners}
+                            >
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
+                              <HeaderSortIndicator
+                                // Sort indicator
+                                header={header}
+                                className="text-primary"
+                                onClick={() => header.column.toggleSorting()}
+                              />
+                            </HeaderContextMenu>
+                            <div
+                              // Resize column handle
+                              {...componentProps.resizeColHandle?.({
+                                headerContext: header.getContext(),
+                              })}
+                            />
+                          </th>
+                        )}
+                      </SortableItem>
                     ))}
-                  </SortableContext>
+                  </ColumnSortableContext>
                 </tr>
               ))}
             </thead>
@@ -221,26 +161,32 @@ function RouteComponent() {
                     key={virtualRow.index}
                     {...componentProps.trBody?.({ row, virtualRow })}
                   >
-                    <SortableContext
-                      items={table.getState().columnOrder}
-                      strategy={horizontalListSortingStrategy}
-                    >
+                    <ColumnSortableContext table={table}>
                       {row.getVisibleCells().map((cell) => (
-                        <DragAlongCell
+                        <SortableItem
                           key={cell.id}
-                          cell={cell}
-                          {...componentProps.td?.({
-                            cell,
-                            virtualRow,
-                          })}
+                          options={{ id: cell.column.id }}
                         >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
+                          {({ setNodeRef, isDragging, transform }) => (
+                            <td
+                              ref={setNodeRef}
+                              {...mergeStyleProps([
+                                componentProps.td?.({
+                                  cell,
+                                  virtualRow,
+                                }) || {},
+                                getCellDragProps({ isDragging, transform }),
+                              ])}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </td>
                           )}
-                        </DragAlongCell>
+                        </SortableItem>
                       ))}
-                    </SortableContext>
+                    </ColumnSortableContext>
                   </tr>
                 );
               })}
@@ -248,7 +194,7 @@ function RouteComponent() {
           </table>
           {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         </div>
-      </DndContext>
+      </ColumnDndContext>
     </div>
   );
 }

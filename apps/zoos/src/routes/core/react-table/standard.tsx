@@ -32,6 +32,7 @@ function RouteComponent() {
     columns,
     initialState: {
       columnVisibility: { first_name: false },
+      columnOrder: columns.map((col) => col.id),
     },
     state,
     onStateChange: (state) => {
@@ -50,19 +51,20 @@ function RouteComponent() {
     },
     {
       mergeProps: [
-        featureProps.borders(),
-        featureProps.rowStriping(),
-        featureProps.spacing.compact(),
-        { th: () => ({ className: "bg-muted" }) },
+        // featureProps.borders(),
+        // featureProps.spacing.compact(),
+        featureProps.utils.allCells({
+          className: "text-sm overflow-hidden bg-background",
+        }),
         {
-          td: ({ cell }) =>
-            cell.column.id === "_leaf"
-              ? { style: { paddingLeft: `${cell.row.depth * 1}rem` } }
-              : {},
+          // ! Required for drag and drop columns
+          // why ....
+          td: () => ({
+            className: "leading-5 whitespace-nowrap",
+          }),
         },
       ],
     },
   );
-
   return <Table {...{ table, virtualRows, componentProps }} />;
 }

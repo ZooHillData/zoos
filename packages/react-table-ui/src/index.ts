@@ -19,3 +19,5 @@ export * from "./module.types";
 export * from "./tables";
 
 export * as features from "./features";
+
+export * from "./column-reorder-dnd";

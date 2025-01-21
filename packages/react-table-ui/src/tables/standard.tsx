@@ -1,10 +1,17 @@
-import React from "react";
+import type { Table as TTable, Cell } from "@tanstack/react-table";
 
-import type { Table as TTable, Header, Cell } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
+import { mergeStyleProps } from "@zoos/shadcn";
 import { useVirtualization, type ComponentProps } from "@zoos/react-table";
+
 import { HeaderContextMenu, HeaderSortIndicator } from "../header";
+import {
+  ColumnDndContext,
+  ColumnSortableContext,
+  getCellDragProps,
+  SortableItem,
+} from "../column-reorder-dnd";
 
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
@@ -14,94 +21,111 @@ const Table = <TData extends object, TValue>(props: {
   const { table, virtualRows, componentProps } = props;
 
   return (
-    <div {...componentProps.container}>
-      <table {...componentProps.table}>
-        {
-          // ~ THEAD
-        }
-        <thead {...componentProps.thead}>
-          {table.getHeaderGroups().map((headerGroup) => (
-            // ~ Header row
-            <tr
-              key={headerGroup.id}
-              {...componentProps.trHead?.({ headerGroup })}
-            >
-              {headerGroup.headers.map((header) => {
-                return (
-                  // ~ Header cell
-                  <th
-                    key={header.id}
-                    {...componentProps.th?.({
-                      headerContext: header.getContext(),
-                    })}
-                  >
-                    <HeaderContextMenu
-                      // Header context menu provides right click
-                      header={header.getContext()}
-                      className="flex w-full justify-between"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                      <HeaderSortIndicator
-                        // Sort indicator
-                        header={header}
-                        className="text-primary"
-                        onClick={() => header.column.toggleSorting()}
-                      />
-                    </HeaderContextMenu>
-                    <div
-                      // Resize column handle
-                      {...componentProps.resizeColHandle?.({
-                        headerContext: header.getContext(),
-                      })}
-                    />
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        {
-          // ~ TBODY
-        }
-        <tbody {...componentProps.tbody}>
-          {virtualRows.map((virtualRow) => {
-            const row = table.getRowModel().rows[virtualRow.index];
-            return (
-              // ~ Data row
+    <ColumnDndContext table={table}>
+      <div {...componentProps.container}>
+        <table {...componentProps.table}>
+          <thead {...componentProps.thead}>
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr
-                key={virtualRow.index}
-                {...componentProps.trBody?.({ row, virtualRow })}
-                // Custom row click handler
+                key={headerGroup.id}
+                {...componentProps.trHead?.({ headerGroup })}
               >
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    // ~ Data cell
-                    <td
-                      key={cell.id}
-                      {...componentProps.td?.({
-                        // ! Need this type hint to avoid TS error
-                        cell: cell as Cell<TData, TValue>,
-                        virtualRow,
-                      })}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
+                <ColumnSortableContext table={table}>
+                  {headerGroup.headers.map((header) => (
+                    <SortableItem key={header.id} options={{ id: header.id }}>
+                      {({
+                        isDragging,
+                        attributes,
+                        listeners,
+                        setNodeRef,
+                        transform,
+                      }) => (
+                        <th
+                          ref={setNodeRef}
+                          {...mergeStyleProps([
+                            componentProps.th?.({
+                              headerContext: header.getContext(),
+                            }) || {},
+                            getCellDragProps({ isDragging, transform }),
+                          ])}
+                        >
+                          <HeaderContextMenu
+                            header={header.getContext()}
+                            className="flex w-full justify-between"
+                            // Spread attributes and listeners onto the header context menu
+                            // (this is a <span />)
+                            {...attributes}
+                            {...listeners}
+                          >
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
+                            <HeaderSortIndicator
+                              // Sort indicator
+                              header={header}
+                              className="text-primary"
+                              onClick={() => header.column.toggleSorting()}
+                            />
+                          </HeaderContextMenu>
+                          <div
+                            // Resize column handle
+                            {...componentProps.resizeColHandle?.({
+                              headerContext: header.getContext(),
+                            })}
+                          />
+                        </th>
                       )}
-                    </td>
-                  );
-                })}
+                    </SortableItem>
+                  ))}
+                </ColumnSortableContext>
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            ))}
+          </thead>
+          <tbody {...componentProps.tbody}>
+            {virtualRows.map((virtualRow) => {
+              const row = table.getRowModel().rows[virtualRow.index];
+              return (
+                <tr
+                  key={virtualRow.index}
+                  {...componentProps.trBody?.({ row, virtualRow })}
+                >
+                  <ColumnSortableContext table={table}>
+                    {row.getVisibleCells().map((cell) => (
+                      <SortableItem
+                        key={cell.id}
+                        options={{ id: cell.column.id }}
+                      >
+                        {({ setNodeRef, isDragging, transform }) => (
+                          <td
+                            ref={setNodeRef}
+                            {...mergeStyleProps([
+                              componentProps.td?.({
+                                cell: cell as Cell<TData, TValue>,
+                                virtualRow,
+                              }) || {},
+                              getCellDragProps({ isDragging, transform }),
+                            ])}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </td>
+                        )}
+                      </SortableItem>
+                    ))}
+                  </ColumnSortableContext>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      </div>
+    </ColumnDndContext>
   );
 };
 

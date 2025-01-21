@@ -13,12 +13,11 @@ import {
   getFacetedMinMaxValues,
 } from "@tanstack/react-table";
 
-import { getControlledTableOptions } from "./get-controlled-table-options";
+import { getControlledStateHandlers } from "./get-controlled-state-handlers";
 import { type TableOptionsControlled } from "./types";
 import { globalFilterFn } from "../../lib/filter-fns/global-filter-fn";
 
 const useControlledTable = <TData>({
-  filterFns,
   // We will not be passing columnSizing, columnSizingInfo into
   // useReactTable. Column sizing is handled differently
   // (doesn't fire `onStateChange` until resizing event ends)
@@ -69,11 +68,11 @@ const useControlledTable = <TData>({
     }
   }, [table, columnSizing]);
 
-  // ~ Wire in the onChange handlers
+  // ~ Add the onChange handlers
   table.setOptions((prev) => ({
     ...prev,
     ...(onStateChange
-      ? getControlledTableOptions({ table, onStateChange })
+      ? getControlledStateHandlers({ table, onStateChange })
       : {}),
   }));
 
