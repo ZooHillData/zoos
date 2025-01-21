@@ -1,3 +1,9 @@
+## [1.36.8](https://github.com/zoohilldata/zoos/compare/v1.36.7...v1.36.8) (2025-01-21)
+
+### Bug Fixes
+
+* **react-table:** fix column resizing state management connections in useControlledTable ([7ef96a9](https://github.com/zoohilldata/zoos/commit/7ef96a9a29ca224e029c689af2413d507e569b91))
+
 ## [1.36.7](https://github.com/zoohilldata/zoos/compare/v1.36.6...v1.36.7) (2025-01-20)
 
 ### Bug Fixes
