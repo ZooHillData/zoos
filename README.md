@@ -1,70 +1,198 @@
 # What is Zoos?
 
-[Docs](./docs) | [Ideas, Feedback, Bugs](https://github.com/ZooHillData/zoos/discussions/new?category=ideas) | [NPM Packages](https://www.npmjs.com/~alexryanterry)
+Menu of independent features, methods and libraries provide building blocks for delivering fully customizable _and maintainable_ React applications.
 
-[Tanstack](https://tanstack.com) and [ShadCN (Tailwind / Radix)](https://ui.shadcn.com/) are very powerful and flexible libraries for building React apps. Because they are so flexible, it takes a bit of experimentation to figure out how to use them most effectively.
+## Quickstart
 
-Zoos is a monorepo of small building blocks (functions, hooks, components, examples) that capture the way we've learned to build apps with these core libraries. In general, the libraries are small and highly focused, typically built to work with a single 3p library, e.g. `@tanstack/react-table` => `@zoos/react-table`.
+```bash
+# Install dependencies
+npm install
+# Start Zoos app in development
+npm run dev
+```
 
-The libraries do their best to stay true to the design principles and feel of the core libraries. Acting as a simple layer of examples, helper functions and components that can be pieced together at a slightly high level of abstraction.
+Alternatively, visit the Zoos prod / dev apps:
 
-## Architecture
+- prod: https://zoos.zoohilldata.com
+- dev: https://dev--zoos-app.netlify.app
 
-- **Zoos App -** The entrypoint into the functionality provided by Zoos. A Vite, Tanstack Router app composing core React libraries into features - lots of examples and documentation.
-- **React Libraries -** Small, focused libraries provide patterns for using
-  - @tanstack/react-query
-  - @tanstack/react-table
-  - @tanstack/react-form
-  - shadcn
-  - _(COMING SOON)_
-    - supabase
-    - zustand
-    - react-grid-layout
-    - excalidraw
-    - mdxeditor
-    - recharts
-    - plotly
-    - @tanstack/react-router
-    - @tanstack/start
+## Core problem
 
-## Zoos App
+How to package re-usable code and methods for use amongst many **_diverse and evolving_** applications?
 
-Entrypoint into core libraries.
+### Apps served by Zoos:
 
-### Quick Start
+- are built incrementally. Many times, start small without a full understanding of the final product
+- require unique, extremely specific optimizations and UX, branding and styles.
+- experiment with new features and patterns rapidly
+- are maintained by a very small engineering team (no dedicated support)
+- need flexibility to pick-and-choose the methods for their specific use case (feature/library indpendence)
 
-1. `npm install`
-2. `npm run dev`
-3. Go to: [http://localhost:2005](http://localhost:2005)
+### Picking the right level of abstraction
 
-### Features
+![Abstraction Continuum](./docs/what-is-zoos/abstraction-continuum.excalidraw.png)
 
-#### Routes Examples
+#### Library Examples at different abstraction levels
 
-Defined in `apps/zoos/src/routes`. They provide:
+- [Copy-and-paste (styled), Shadcn UI](https://ui.shadcn.com/docs/components/accordion)
+- [Headless (unstyled), library, Radix UI](https://www.radix-ui.com/primitives)
+- [Headless (unstyled), library, Tanstack](https://www.tanstack.com)
+- [Fully-styled ibrary, Material UI](https://mui.com/material-ui)
 
-- Playgrounds and documentation for the core Zoos libraries
-- Examples composing Zoos libraries into standard features
+## Introducing Zoos
 
-## React Libraries
+### No one-size-fits-all solution
 
-- `@zoos/shadcn` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/shadcn) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/shadcn) | [NPM](https://www.npmjs.com/package/@zoos/shadcn)) - Simple wrapper around shadcn/ui
+- After trying the full spectrum of abstraction levels, we've found there's no 1-size fits all.
+- Each core feature will require different abstraction levels (even within the same feature).
 
-- `@zoos/react-form` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-form) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Render forms with Tanstack Form, input components composing primitives from @zoos/shadcn
+### Zoos - an abstraction experiment
 
-- `@zoos/react-query` ([Examples](https://github.com/ZooHillData/zoos/tree/main/apps/zoos/src/routes/react-query) | [Code](https://github.com/ZooHillData/zoos/tree/main/packages/react-form) | [NPM](https://www.npmjs.com/package/@zoos/react-form)) - Simple helper functions for generating queries and mutations with type inference
+Zoos is a centralized collection, or "menu" of building blocks (libraries, copy-paste examples, patterns, philosophies, etc.) that can be used to build enterprise-grade apps efficiently.
 
-## Intentions, Request for Feedback
+Easily pull in completely customizable core features into your app like:
 
-Libraries are designed specifically for incremental, low effort adoption, wide version interoperability, flexibility, developer experience and simplicity.
+- auth / user management
+- forms
+- navigation
+- dialogs / alerts
+- data tables, filtering, aggregation, charts and visualizations
+- cloud storage
+- sharing, permissions, security, encryption
+- realtime collaboration
+- ...
 
-If you have ideas to...
+## Zoos - Before and After
 
-- remove an assumption so your use case is met
-- reduce friction in adopting this library
-- make upgrading to take advantage of latest features easy
-- make the library simpler or more flexible
-- improve documentation or code readability
-- make an API easier to understand
+### Forms - without Zoos
 
-, please [start a discussion](https://github.com/ZooHillData/zoos/discussions/new?category=ideas).
+- Manually connect `FormData` to inputs in the UI to modify the data
+- Even in the extremely simple case below without inter-field dependencies, validation or dynamic options, there's a lot of boilerplate
+
+```tsx
+import { useForm } from "@tanstack/react-form";
+
+const signupOptions = {
+  defaultValues: {
+    email: "",
+    password: "",
+    confirmPassword: "",
+  },
+  handleSubmit: ({ value }) => {
+    console.log({ value });
+  },
+};
+
+const SignupForm = () => {
+  const form = useForm(signupOptions);
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      <form.Field name="email">
+        {(field) => (
+          <div>
+            <label htmlFor="email">Email</label>
+            <input id="email" value={field.state.value} onChange={(e) => field.onChange(e.target.value)} />
+          </div>
+        )}
+      </form.Field>
+      <form.Field name="password">
+        {(field) => (
+          <div>
+            <label htmlFor="password">Password</label>
+            <input id="password" type="password" value={field.state.value} onChange={(e) => field.onChange(e.target.value)} />
+          </div>
+        )}
+      </form.Field>
+      <form.Field name="confirmPassword">
+        {(field) => (
+          <div>
+            <label htmlFor="confirmPassword">Password</label>
+            <input id="confirmPassword" type="password" value={field.state.value} onChange={(e) => field.onChange(e.target.value)} />
+          </div>
+        )}
+      </form.Field>
+      <button type="submit">Sign Up</button>
+    </form>
+  );
+};
+```
+
+### Forms - with Zoos
+
+- Data is parsed, validated and input fields are inferred for you
+- You can override field types as needed, e.g.
+  - string will default to "string.regular", a standard text input
+  - we can override "password" and "confirmPassword" to "string.password" to get a password input with a show/hide toggle
+
+```tsx
+import { Form, getFormConfig } from "@zoos/react-form";
+
+const signupConfig = getFormCOnfig({
+  defaultValues: {
+    email: "",
+    password: "",
+    confirmPassword: "",
+  },
+})({
+  fields: { password: { type: "string.password" }, confirmPassword: { type: "string.password" } },
+});
+
+const SignupForm = () => {
+  return <Form config={signupConfig} />;
+};
+```
+
+### Table - without Zoos
+
+You can see examples on [Tanstack Table docs](https://tanstack.com/table/v8/docs/framework/react/examples/column-dnd)
+
+- Each feature requires careful wiring of application logic, state, styling and event handlers.
+- It's very tedious, especially when you combine multiple features together (e.g. row virtualization and drag-and-drop column ordering)
+
+Zoos provides helpers to make wiring in these different features much easier without losing the flexibility to fully customize the implementation details of that feature.
+
+### Table - with Zoos
+
+- Higher level abstraction makes building a full-featured table very fast
+- Hardest parts => state / data management are handled
+- An opinion for how to style is provided but can be easily overridden or completely taken over and replaced with custom implementation
+
+```tsx
+import { getColumns, useTable, useComponentProps, Table } from "@zoos/react-table-ui";
+
+const data: Data[] = getData();
+
+const ZoosTable = () => {
+  // Column type inference
+  const columns = React.useMemo(() => getColumns({ data })(), []);
+
+  // Standard table state / data management
+  const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
+    data,
+    columns,
+  });
+
+  // Standard styles / props
+  // (optional overrides)
+  const componentProps = useComponentProps(
+    {
+      table,
+      rowVirtualizer,
+      scrollContainerRef,
+    },
+    {
+      // Merge in fully custom styles
+      mergeProps: [{ container: { className: "text-sm" } }],
+    },
+  );
+
+  return <Table {...{ table, virtualRows, coponentProps }} />;
+};
+```
