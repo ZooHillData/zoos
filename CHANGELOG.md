@@ -1,3 +1,9 @@
+## [1.36.11](https://github.com/zoohilldata/zoos/compare/v1.36.10...v1.36.11) (2025-01-26)
+
+### Bug Fixes
+
+* **react-form,zoos:** allow passing onSubmit into Form component, add auth to zoos ([6571028](https://github.com/zoohilldata/zoos/commit/6571028c6fcb7e27b82aa300a02a674e16730f4f))
+
 ## [1.36.10](https://github.com/zoohilldata/zoos/compare/v1.36.9...v1.36.10) (2025-01-21)
 
 ### Bug Fixes
