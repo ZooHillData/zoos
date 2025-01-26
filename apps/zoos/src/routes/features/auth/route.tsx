@@ -4,12 +4,12 @@ export const Route = createFileRoute("/features/auth")({
   component: RouteComponent,
 });
 
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { cn } from "@zoos/shadcn";
 import { queries, mutations } from "../../../features/auth";
 
 function RouteComponent() {
-  const { data: user, isLoading } = useQuery(queries.getUser({ params: {} }));
+  const { data: user, isLoading } = queries.useUser();
 
   const { queryClient } = Route.useRouteContext();
   const { mutate: logout } = useMutation(mutations.logout({ queryClient }));

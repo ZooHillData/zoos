@@ -1,5 +1,5 @@
 import { createMutationOptions } from "@zoos/react-query";
-import { getClient, getQueryKey } from "../supabase";
+import { getClient, getQueryKey } from "../../lib/supabase";
 
 const login = createMutationOptions({
   mutationKey: getQueryKey(["login"]),

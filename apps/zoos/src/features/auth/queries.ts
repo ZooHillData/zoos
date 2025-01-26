@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { createQueryOptions } from "@zoos/react-query";
-import { getClient, getQueryKey } from "../supabase";
+import { getClient, getQueryKey } from "../../lib/supabase";
 
 const getUser = createQueryOptions({
   queryKey: getQueryKey(["user"]),
@@ -9,4 +10,6 @@ const getUser = createQueryOptions({
   },
 });
 
-export { getUser };
+const useUser = () => useQuery(getUser({ params: {} }));
+
+export { getUser, useUser };
