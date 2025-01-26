@@ -15,10 +15,12 @@ import { Route as GetStartedImport } from './routes/get-started'
 import { Route as IndexImport } from './routes/index'
 import { Route as CommunityIndexImport } from './routes/community/index'
 import { Route as FeaturesFileBrowserRouteImport } from './routes/features/file-browser/route'
+import { Route as FeaturesAuthRouteImport } from './routes/features/auth/route'
 import { Route as CoreShadcnRouteImport } from './routes/core/shadcn/route'
 import { Route as CoreReactTableRouteImport } from './routes/core/react-table/route'
 import { Route as CoreReactQueryRouteImport } from './routes/core/react-query/route'
 import { Route as CoreReactFormRouteImport } from './routes/core/react-form/route'
+import { Route as FeaturesObjectsIndexImport } from './routes/features/objects/index'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
 import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
 import { Route as CoreShadcnUseReactiveStateImport } from './routes/core/shadcn/use-reactive-state'
@@ -74,6 +76,12 @@ const FeaturesFileBrowserRouteRoute = FeaturesFileBrowserRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FeaturesAuthRouteRoute = FeaturesAuthRouteImport.update({
+  id: '/features/auth',
+  path: '/features/auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CoreShadcnRouteRoute = CoreShadcnRouteImport.update({
   id: '/core/shadcn',
   path: '/core/shadcn',
@@ -98,6 +106,12 @@ const CoreReactFormRouteRoute = CoreReactFormRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FeaturesObjectsIndexRoute = FeaturesObjectsIndexImport.update({
+  id: '/features/objects/',
+  path: '/features/objects/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const FeaturesFileBrowserIndexRoute = FeaturesFileBrowserIndexImport.update({
   id: '/',
   path: '/',
@@ -105,9 +119,9 @@ const FeaturesFileBrowserIndexRoute = FeaturesFileBrowserIndexImport.update({
 } as any)
 
 const FeaturesAuthIndexRoute = FeaturesAuthIndexImport.update({
-  id: '/features/auth/',
-  path: '/features/auth/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => FeaturesAuthRouteRoute,
 } as any)
 
 const CoreShadcnUseReactiveStateRoute = CoreShadcnUseReactiveStateImport.update(
@@ -331,6 +345,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreShadcnRouteImport
       parentRoute: typeof rootRoute
     }
+    '/features/auth': {
+      id: '/features/auth'
+      path: '/features/auth'
+      fullPath: '/features/auth'
+      preLoaderRoute: typeof FeaturesAuthRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/features/file-browser': {
       id: '/features/file-browser'
       path: '/features/file-browser'
@@ -529,10 +550,10 @@ declare module '@tanstack/react-router' {
     }
     '/features/auth/': {
       id: '/features/auth/'
-      path: '/features/auth'
-      fullPath: '/features/auth'
+      path: '/'
+      fullPath: '/features/auth/'
       preLoaderRoute: typeof FeaturesAuthIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof FeaturesAuthRouteImport
     }
     '/features/file-browser/': {
       id: '/features/file-browser/'
@@ -540,6 +561,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/features/file-browser/'
       preLoaderRoute: typeof FeaturesFileBrowserIndexImport
       parentRoute: typeof FeaturesFileBrowserRouteImport
+    }
+    '/features/objects/': {
+      id: '/features/objects/'
+      path: '/features/objects'
+      fullPath: '/features/objects'
+      preLoaderRoute: typeof FeaturesObjectsIndexImport
+      parentRoute: typeof rootRoute
     }
   }
 }
@@ -631,6 +659,17 @@ const CoreShadcnRouteRouteWithChildren = CoreShadcnRouteRoute._addFileChildren(
   CoreShadcnRouteRouteChildren,
 )
 
+interface FeaturesAuthRouteRouteChildren {
+  FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
+}
+
+const FeaturesAuthRouteRouteChildren: FeaturesAuthRouteRouteChildren = {
+  FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
+}
+
+const FeaturesAuthRouteRouteWithChildren =
+  FeaturesAuthRouteRoute._addFileChildren(FeaturesAuthRouteRouteChildren)
+
 interface FeaturesFileBrowserRouteRouteChildren {
   FeaturesFileBrowserIndexRoute: typeof FeaturesFileBrowserIndexRoute
 }
@@ -652,6 +691,7 @@ export interface FileRoutesByFullPath {
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
   '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
+  '/features/auth': typeof FeaturesAuthRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
@@ -680,8 +720,9 @@ export interface FileRoutesByFullPath {
   '/core/shadcn/select': typeof CoreShadcnSelectRoute
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
-  '/features/auth': typeof FeaturesAuthIndexRoute
+  '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
+  '/features/objects': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -720,6 +761,7 @@ export interface FileRoutesByTo {
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
+  '/features/objects': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -730,6 +772,7 @@ export interface FileRoutesById {
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
   '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
+  '/features/auth': typeof FeaturesAuthRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/community/': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
@@ -760,6 +803,7 @@ export interface FileRoutesById {
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
+  '/features/objects/': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -771,6 +815,7 @@ export interface FileRouteTypes {
     | '/core/react-query'
     | '/core/react-table'
     | '/core/shadcn'
+    | '/features/auth'
     | '/features/file-browser'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
@@ -799,8 +844,9 @@ export interface FileRouteTypes {
     | '/core/shadcn/select'
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
-    | '/features/auth'
+    | '/features/auth/'
     | '/features/file-browser/'
+    | '/features/objects'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -838,6 +884,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-reactive-state'
     | '/features/auth'
     | '/features/file-browser'
+    | '/features/objects'
   id:
     | '__root__'
     | '/'
@@ -846,6 +893,7 @@ export interface FileRouteTypes {
     | '/core/react-query'
     | '/core/react-table'
     | '/core/shadcn'
+    | '/features/auth'
     | '/features/file-browser'
     | '/community/'
     | '/community/dnd-kit/drag-and-drop-simple'
@@ -876,6 +924,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-reactive-state'
     | '/features/auth/'
     | '/features/file-browser/'
+    | '/features/objects/'
   fileRoutesById: FileRoutesById
 }
 
@@ -886,12 +935,13 @@ export interface RootRouteChildren {
   CoreReactQueryRouteRoute: typeof CoreReactQueryRouteRouteWithChildren
   CoreReactTableRouteRoute: typeof CoreReactTableRouteRouteWithChildren
   CoreShadcnRouteRoute: typeof CoreShadcnRouteRouteWithChildren
+  FeaturesAuthRouteRoute: typeof FeaturesAuthRouteRouteWithChildren
   FeaturesFileBrowserRouteRoute: typeof FeaturesFileBrowserRouteRouteWithChildren
   CommunityIndexRoute: typeof CommunityIndexRoute
   CommunityDndKitDragAndDropSimpleRoute: typeof CommunityDndKitDragAndDropSimpleRoute
   CommunityDndKitDragAndDropTabsRoute: typeof CommunityDndKitDragAndDropTabsRoute
   CommunityReactTableColumnDndRoute: typeof CommunityReactTableColumnDndRoute
-  FeaturesAuthIndexRoute: typeof FeaturesAuthIndexRoute
+  FeaturesObjectsIndexRoute: typeof FeaturesObjectsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -901,12 +951,13 @@ const rootRouteChildren: RootRouteChildren = {
   CoreReactQueryRouteRoute: CoreReactQueryRouteRouteWithChildren,
   CoreReactTableRouteRoute: CoreReactTableRouteRouteWithChildren,
   CoreShadcnRouteRoute: CoreShadcnRouteRouteWithChildren,
+  FeaturesAuthRouteRoute: FeaturesAuthRouteRouteWithChildren,
   FeaturesFileBrowserRouteRoute: FeaturesFileBrowserRouteRouteWithChildren,
   CommunityIndexRoute: CommunityIndexRoute,
   CommunityDndKitDragAndDropSimpleRoute: CommunityDndKitDragAndDropSimpleRoute,
   CommunityDndKitDragAndDropTabsRoute: CommunityDndKitDragAndDropTabsRoute,
   CommunityReactTableColumnDndRoute: CommunityReactTableColumnDndRoute,
-  FeaturesAuthIndexRoute: FeaturesAuthIndexRoute,
+  FeaturesObjectsIndexRoute: FeaturesObjectsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -925,12 +976,13 @@ export const routeTree = rootRoute
         "/core/react-query",
         "/core/react-table",
         "/core/shadcn",
+        "/features/auth",
         "/features/file-browser",
         "/community/",
         "/community/dnd-kit/drag-and-drop-simple",
         "/community/dnd-kit/drag-and-drop-tabs",
         "/community/react-table/column-dnd",
-        "/features/auth/"
+        "/features/objects/"
       ]
     },
     "/": {
@@ -980,6 +1032,12 @@ export const routeTree = rootRoute
         "/core/shadcn/select",
         "/core/shadcn/use-debounce",
         "/core/shadcn/use-reactive-state"
+      ]
+    },
+    "/features/auth": {
+      "filePath": "features/auth/route.tsx",
+      "children": [
+        "/features/auth/"
       ]
     },
     "/features/file-browser": {
@@ -1093,11 +1151,15 @@ export const routeTree = rootRoute
       "parent": "/core/shadcn"
     },
     "/features/auth/": {
-      "filePath": "features/auth/index.tsx"
+      "filePath": "features/auth/index.tsx",
+      "parent": "/features/auth"
     },
     "/features/file-browser/": {
       "filePath": "features/file-browser/index.tsx",
       "parent": "/features/file-browser"
+    },
+    "/features/objects/": {
+      "filePath": "features/objects/index.tsx"
     }
   }
 }

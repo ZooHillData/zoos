@@ -7,8 +7,10 @@ export const Route = createFileRoute("/features/auth/")({
   }),
 });
 
+import type { QueryClient } from "@tanstack/react-query";
 import type { FormConfig } from "@zoos/react-form";
 
+import { useMutation } from "@tanstack/react-query";
 import { Form } from "@zoos/react-form";
 import {
   Card,
@@ -24,63 +26,94 @@ import {
 } from "@zoos/shadcn";
 
 import { ZooFavicon } from "../../../features/components";
-import {
-  signupConfig,
-  loginConfig,
-  forgotPasswordConfig,
-  resetPasswordConfig,
-  confirmOtpConfig,
-} from "../../../features/auth/form-configs";
+import { forms, mutations } from "../../../features/auth";
 
-const tabs = [
-  {
+const tabs = {
+  login: {
     value: "login",
     label: "Login",
     description: "Login in to access your custom experience",
-    formConfig: loginConfig,
+    formConfig: forms.login,
     submitButtonLabel: "Login",
+    useMutation: (queryClient: QueryClient) =>
+      useMutation(mutations.login({ queryClient })),
   },
-  {
+  signup: {
     value: "signup",
     label: "Signup",
     description: "Welcome to our platform! Signup to get started",
-    formConfig: signupConfig,
+    formConfig: forms.signup,
     submitButtonLabel: "Signup",
+    useMutation: (queryClient: QueryClient) =>
+      useMutation(mutations.signup({ queryClient })),
   },
 
-  {
-    value: "forgot-password",
+  forgotPassword: {
+    value: "forgotPassword",
     label: "Forgot Password",
     description:
       "Don't worry, it happens. Enter your email to reset your password",
-    formConfig: forgotPasswordConfig,
+    formConfig: forms.forgotPassword,
     submitButtonLabel: "Reset Password",
+    useMutation: (queryClient: QueryClient) =>
+      useMutation(mutations.signup({ queryClient })),
   },
-  {
-    value: "reset-password",
+  resetPassword: {
+    value: "resetPassword",
     label: "Reset Password",
     description:
       "Choose a strong password and store it in your password manager ❤️",
-    formConfig: resetPasswordConfig,
+    formConfig: forms.resetPassword,
     submitButtonLabel: "Reset password",
+    useMutation: (queryClient: QueryClient) =>
+      useMutation(mutations.signup({ queryClient })),
   },
-  {
-    value: "confirm-otp",
+  confirmOtp: {
+    value: "confirmOtp",
     label: "Confirm Code",
     description: "Enter the 6-digit code sent to your email",
-    formConfig: confirmOtpConfig,
+    formConfig: forms.confirmOtp,
     submitButtonLabel: "Confirm OTP",
+    useMutation: (queryClient: QueryClient) =>
+      useMutation(mutations.signup({ queryClient })),
   },
-] as const;
+} as const;
 
-type FormId = (typeof tabs)[number]["value"];
+const useAuthMutations = () => {
+  const { queryClient } = Route.useRouteContext();
+  return {
+    login: useMutation(
+      mutations.login({
+        queryClient,
+        // Optional custom onSuccess that will run
+        // after standard query invalidations
+        options: {
+          // onSuccess: () =>
+          //   window.alert("yea, we're doing custom stuff after login!"),
+        },
+      }),
+    ),
+    logout: useMutation(mutations.logout({ queryClient })),
+    signup: useMutation(mutations.signup({ queryClient })),
+    confirmOtp: useMutation(mutations.login({ queryClient })),
+    forgotPassword: useMutation(mutations.login({ queryClient })),
+    resetPassword: useMutation(mutations.login({ queryClient })),
+  };
+};
+
+type FormId = (typeof tabs)[keyof typeof tabs]["value"];
 
 function RouteComponent() {
   const formId = Route.useSearch({ select: (search) => search.formId });
   const navigate = Route.useNavigate();
 
+  // Pull the mutation function and form config
+  const mutations = useAuthMutations();
+  const { mutate } = mutations[formId];
+  const { formConfig } = tabs[formId];
+
   return (
-    <div className="h-screen w-screen py-36">
+    <div className="h-full w-full py-36">
       <Tabs
         className="mx-auto w-fit"
         value={formId}
@@ -89,19 +122,19 @@ function RouteComponent() {
         }
       >
         <TabsList>
-          {tabs.map((tab) => (
+          {Object.values(tabs).map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>
               {tab.label}
             </TabsTrigger>
           ))}
         </TabsList>
-        {tabs.map((tab) => (
+        {Object.values(tabs).map((tab) => (
           <TabsContent
             key={tab.value}
             value={tab.value}
             className={cn(
               "mx-auto mt-16 max-w-[350px]",
-              tab.value === "confirm-otp" && "max-w-fit",
+              tab.value === "confirmOtp" && "max-w-fit",
             )}
           >
             <Card>
@@ -118,11 +151,11 @@ function RouteComponent() {
               </CardHeader>
               <CardContent>
                 <Form
-                  // ! we're re-writing the form ;)
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  config={tab.formConfig as FormConfig<any, any>}
+                  config={formConfig as FormConfig<any, any>}
                   context={{}}
                   submitButtonLabel={tab.submitButtonLabel}
+                  onSubmit={({ value }) => mutate(value)}
                 />
               </CardContent>
             </Card>

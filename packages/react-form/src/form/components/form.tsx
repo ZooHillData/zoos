@@ -1,11 +1,13 @@
 "use client";
 
+import type { FormApi } from "@tanstack/react-form";
+import type { FormConfig } from "../types/form-config";
+
 import React from "react";
 
 import { useForm } from "@tanstack/react-form";
 import { Button, mergeStyleProps } from "@zoos/shadcn";
 
-import type { FormConfig } from "../types/form-config";
 import {
   getInputComponents,
   getFormConfig,
@@ -25,11 +27,13 @@ const Form = <Form extends object, Context>(props: {
   config: FormConfig<Form, Context>;
   context: Partial<Context>;
   submitButtonLabel?: string;
+  onSubmit?: (params: { value: Form; formApi: FormApi<Form> }) => void;
 }) => {
   const { submitButtonLabel = "Submit", config } = props;
 
   const form = useForm({
     ...config.formOptions,
+    ...(props.onSubmit ? { onSubmit: props.onSubmit } : {}),
   });
 
   // ~ Context - merged
@@ -78,6 +82,7 @@ const Form = <Form extends object, Context>(props: {
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        form.handleSubmit();
       }}
       {...props.config.layout?.formContainerProps}
     >
@@ -143,7 +148,7 @@ const Form = <Form extends object, Context>(props: {
           })}
         </div>
       ))}
-      <Button className="w-full" onClick={() => form.handleSubmit()}>
+      <Button className="w-full" type="submit">
         {submitButtonLabel}
       </Button>
     </form>

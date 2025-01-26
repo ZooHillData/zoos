@@ -45,3 +45,5 @@ vite.config.*.timestamp*
 vitest.config.*.timestamp*
 # Local Netlify folder
 .netlify
+
+.env.local

@@ -9,7 +9,6 @@ import React from "react";
 import { shuffle } from "remeda";
 
 import { FileBrowser, ownerOptions } from "../../../features/file-browser";
-
 import { files } from "./-data";
 
 const pickRandomElement = (arr: string[]) =>

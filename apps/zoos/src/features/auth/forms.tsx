@@ -41,7 +41,7 @@ const loginData = {
   email: "",
   password: "",
 };
-const loginConfig = getFormConfig({
+const login = getFormConfig({
   defaultValues: loginData,
   context: {},
 })({
@@ -62,7 +62,7 @@ const signupData = {
   password: "",
   confirmPassword: "",
 };
-const signupConfig = getFormConfig({
+const signup = getFormConfig({
   defaultValues: signupData,
   context: {},
 })({
@@ -84,7 +84,7 @@ const resetPasswordData = {
   newPassword: "",
   confirmNewPassword: "",
 };
-const resetPasswordConfig = getFormConfig({
+const resetPassword = getFormConfig({
   defaultValues: resetPasswordData,
   context: {},
 })({
@@ -104,7 +104,7 @@ const resetPasswordConfig = getFormConfig({
 const forgotPasswordData = {
   email: "",
 };
-const forgotPasswordConfig = getFormConfig({
+const forgotPassword = getFormConfig({
   defaultValues: forgotPasswordData,
   context: {},
 })({
@@ -118,7 +118,7 @@ const forgotPasswordConfig = getFormConfig({
  */
 
 const confirmOtpData = { otp: "" };
-const confirmOtpConfig = getFormConfig({
+const confirmOtp = getFormConfig({
   defaultValues: confirmOtpData,
   context: {},
 })({
@@ -131,10 +131,4 @@ const confirmOtpConfig = getFormConfig({
   },
 });
 
-export {
-  loginConfig,
-  signupConfig,
-  resetPasswordConfig,
-  forgotPasswordConfig,
-  confirmOtpConfig,
-};
+export { login, signup, resetPassword, forgotPassword, confirmOtp };
