@@ -15,7 +15,7 @@ function RouteComponent() {
   const { mutate: logout } = useMutation(mutations.logout({ queryClient }));
 
   return (
-    <div className="h-screen w-screen">
+    <div className="flex h-screen w-screen flex-col overflow-auto">
       <div className="p-2 text-sm">
         <span className="font-medium">Email: </span>
         <div className={cn("inline-flex gap-1", isLoading ? "invisible" : "")}>

@@ -113,7 +113,7 @@ function RouteComponent() {
   const { formConfig } = tabs[formId];
 
   return (
-    <div className="h-full w-full py-36">
+    <div className="my-[10%] h-full w-full">
       <Tabs
         className="mx-auto w-fit"
         value={formId}
