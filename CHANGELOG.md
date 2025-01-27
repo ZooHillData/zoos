@@ -1,3 +1,9 @@
+## [1.37.1](https://github.com/zoohilldata/zoos/compare/v1.37.0...v1.37.1) (2025-01-27)
+
+### Bug Fixes
+
+* standard Table takes in optional contextMenuContent, continue configuring obects components in zoos ([4326792](https://github.com/zoohilldata/zoos/commit/432679203bde6c3ed97a392afddfb35f4391e42a))
+
 ## [1.37.0](https://github.com/zoohilldata/zoos/compare/v1.36.11...v1.37.0) (2025-01-27)
 
 ### Features
