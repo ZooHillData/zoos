@@ -21,3 +21,5 @@ export * from "./tables";
 export * as features from "./features";
 
 export * from "./column-reorder-dnd";
+
+export * from "./context-menus";

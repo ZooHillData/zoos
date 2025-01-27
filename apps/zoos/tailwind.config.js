@@ -17,6 +17,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         label: { foreground: "var(--label-foreground)" },
+        "dialog-overlay": "var(--dialog-overlay)",
         popover: {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",

@@ -1,8 +1,13 @@
-import type { Table as TTable, Cell } from "@tanstack/react-table";
+import type {
+  Table as TTable,
+  Cell,
+  CellContext,
+  HeaderContext,
+} from "@tanstack/react-table";
 
 import { flexRender } from "@tanstack/react-table";
 
-import { mergeStyleProps } from "@zoos/shadcn";
+import { ContextMenu, ContextMenuTrigger, mergeStyleProps } from "@zoos/shadcn";
 import { useVirtualization, type ComponentProps } from "@zoos/react-table";
 
 import { HeaderContextMenu, HeaderSortIndicator } from "../header";
@@ -17,6 +22,10 @@ const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
   virtualRows: ReturnType<typeof useVirtualization>["virtualRows"];
   componentProps: ComponentProps<TData, TValue>;
+  contextMenuContent?: Partial<{
+    td: (cellContext: CellContext<TData, TValue>) => React.ReactNode;
+    // th: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
+  }>;
 }) => {
   const { table, virtualRows, componentProps } = props;
 
@@ -120,6 +129,23 @@ const Table = <TData extends object, TValue>(props: {
                                   transform,
                                 })
                               : {};
+                          const tdChildrenMarkup = props.contextMenuContent
+                            ?.td ? (
+                            <ContextMenu>
+                              <ContextMenuTrigger className="flex h-full w-full">
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </ContextMenuTrigger>
+                              {props.contextMenuContent?.td(cell.getContext())}
+                            </ContextMenu>
+                          ) : (
+                            flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )
+                          );
                           return (
                             <td
                               ref={setNodeRef}
@@ -131,10 +157,11 @@ const Table = <TData extends object, TValue>(props: {
                                 dragElementProps,
                               ])}
                             >
-                              {flexRender(
+                              {tdChildrenMarkup}
+                              {/* {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext(),
-                              )}
+                              )} */}
                             </td>
                           );
                         }}

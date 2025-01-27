@@ -23,6 +23,7 @@ CSS Variables for Tailwind Config
     --card: var(--popover);
     --card-foreground: var(--popover-foreground);
     --label-foreground: color-mix(in srgb, white 10%, var(--foreground) 90%);
+    --dialog-overlay: hsla(0, 0%, 0%, 0.5);
 
     --input: var(--background);
     --input-foreground: var(--foreground);
@@ -81,6 +82,7 @@ CSS Variables for Tailwind Config
       --card: var(--popover);
       --card-foreground: var(--foreground);
       --label-foreground: color-mix(in srgb, black 10%, var(--foreground) 90%);
+      --dialog-overlay: hsla(0, 0%, 0%, 0.5);
 
       --primary-foreground: hsl(220, 13%, 91%);
       --primary: hsl(212, 80%, 42%);
