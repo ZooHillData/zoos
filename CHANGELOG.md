@@ -1,3 +1,9 @@
+## [1.37.0](https://github.com/zoohilldata/zoos/compare/v1.36.11...v1.37.0) (2025-01-27)
+
+### Features
+
+* add zustand package, add controlled dialog to zoos features ([ddaac97](https://github.com/zoohilldata/zoos/commit/ddaac971ffeb2ea81a36af18c41d467b83c7d161))
+
 ## [1.36.11](https://github.com/zoohilldata/zoos/compare/v1.36.10...v1.36.11) (2025-01-26)
 
 ### Bug Fixes
