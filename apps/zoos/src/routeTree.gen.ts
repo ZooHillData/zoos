@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as GetStartedImport } from './routes/get-started'
 import { Route as IndexImport } from './routes/index'
 import { Route as CommunityIndexImport } from './routes/community/index'
+import { Route as FeaturesControlledDialogImport } from './routes/features/controlled-dialog'
 import { Route as FeaturesObjectsRouteImport } from './routes/features/objects/route'
 import { Route as FeaturesFileBrowserRouteImport } from './routes/features/file-browser/route'
 import { Route as FeaturesAuthRouteImport } from './routes/features/auth/route'
@@ -69,6 +70,12 @@ const IndexRoute = IndexImport.update({
 const CommunityIndexRoute = CommunityIndexImport.update({
   id: '/community/',
   path: '/community/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FeaturesControlledDialogRoute = FeaturesControlledDialogImport.update({
+  id: '/features/controlled-dialog',
+  path: '/features/controlled-dialog',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -378,6 +385,13 @@ declare module '@tanstack/react-router' {
       path: '/features/objects'
       fullPath: '/features/objects'
       preLoaderRoute: typeof FeaturesObjectsRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/features/controlled-dialog': {
+      id: '/features/controlled-dialog'
+      path: '/features/controlled-dialog'
+      fullPath: '/features/controlled-dialog'
+      preLoaderRoute: typeof FeaturesControlledDialogImport
       parentRoute: typeof rootRoute
     }
     '/community/': {
@@ -735,6 +749,7 @@ export interface FileRoutesByFullPath {
   '/features/auth': typeof FeaturesAuthRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/features/objects': typeof FeaturesObjectsRouteRouteWithChildren
+  '/features/controlled-dialog': typeof FeaturesControlledDialogRoute
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
   '/community/dnd-kit/drag-and-drop-tabs': typeof CommunityDndKitDragAndDropTabsRoute
@@ -775,6 +790,7 @@ export interface FileRoutesByTo {
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
   '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
+  '/features/controlled-dialog': typeof FeaturesControlledDialogRoute
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
   '/community/dnd-kit/drag-and-drop-tabs': typeof CommunityDndKitDragAndDropTabsRoute
@@ -819,6 +835,7 @@ export interface FileRoutesById {
   '/features/auth': typeof FeaturesAuthRouteRouteWithChildren
   '/features/file-browser': typeof FeaturesFileBrowserRouteRouteWithChildren
   '/features/objects': typeof FeaturesObjectsRouteRouteWithChildren
+  '/features/controlled-dialog': typeof FeaturesControlledDialogRoute
   '/community/': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
   '/community/dnd-kit/drag-and-drop-tabs': typeof CommunityDndKitDragAndDropTabsRoute
@@ -864,6 +881,7 @@ export interface FileRouteTypes {
     | '/features/auth'
     | '/features/file-browser'
     | '/features/objects'
+    | '/features/controlled-dialog'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
     | '/community/dnd-kit/drag-and-drop-tabs'
@@ -903,6 +921,7 @@ export interface FileRouteTypes {
     | '/core/react-query'
     | '/core/react-table'
     | '/core/shadcn'
+    | '/features/controlled-dialog'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
     | '/community/dnd-kit/drag-and-drop-tabs'
@@ -945,6 +964,7 @@ export interface FileRouteTypes {
     | '/features/auth'
     | '/features/file-browser'
     | '/features/objects'
+    | '/features/controlled-dialog'
     | '/community/'
     | '/community/dnd-kit/drag-and-drop-simple'
     | '/community/dnd-kit/drag-and-drop-tabs'
@@ -989,6 +1009,7 @@ export interface RootRouteChildren {
   FeaturesAuthRouteRoute: typeof FeaturesAuthRouteRouteWithChildren
   FeaturesFileBrowserRouteRoute: typeof FeaturesFileBrowserRouteRouteWithChildren
   FeaturesObjectsRouteRoute: typeof FeaturesObjectsRouteRouteWithChildren
+  FeaturesControlledDialogRoute: typeof FeaturesControlledDialogRoute
   CommunityIndexRoute: typeof CommunityIndexRoute
   CommunityDndKitDragAndDropSimpleRoute: typeof CommunityDndKitDragAndDropSimpleRoute
   CommunityDndKitDragAndDropTabsRoute: typeof CommunityDndKitDragAndDropTabsRoute
@@ -1005,6 +1026,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesAuthRouteRoute: FeaturesAuthRouteRouteWithChildren,
   FeaturesFileBrowserRouteRoute: FeaturesFileBrowserRouteRouteWithChildren,
   FeaturesObjectsRouteRoute: FeaturesObjectsRouteRouteWithChildren,
+  FeaturesControlledDialogRoute: FeaturesControlledDialogRoute,
   CommunityIndexRoute: CommunityIndexRoute,
   CommunityDndKitDragAndDropSimpleRoute: CommunityDndKitDragAndDropSimpleRoute,
   CommunityDndKitDragAndDropTabsRoute: CommunityDndKitDragAndDropTabsRoute,
@@ -1030,6 +1052,7 @@ export const routeTree = rootRoute
         "/features/auth",
         "/features/file-browser",
         "/features/objects",
+        "/features/controlled-dialog",
         "/community/",
         "/community/dnd-kit/drag-and-drop-simple",
         "/community/dnd-kit/drag-and-drop-tabs",
@@ -1103,6 +1126,9 @@ export const routeTree = rootRoute
         "/features/objects/admin",
         "/features/objects/"
       ]
+    },
+    "/features/controlled-dialog": {
+      "filePath": "features/controlled-dialog.tsx"
     },
     "/community/": {
       "filePath": "community/index.tsx"

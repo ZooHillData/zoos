@@ -1,0 +1,16 @@
+{
+  "name": "zustand",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/zustand/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project zustand --web",
+  "targets": {
+    "release": {
+      "executor": "nx-release:build-update-publish",
+      "options": {
+        "libName": "zustand"
+      }
+    }
+  }
+}

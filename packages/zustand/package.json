@@ -1,0 +1,23 @@
+{
+  "name": "@zoos/zustand",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/zoohilldata/zoos.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js"
+    }
+  },
+  "dependencies": {
+    "deepmerge": "^4.3.1",
+    "immer": "^10.1.1",
+    "zustand": "^5.0.3"
+  }
+}

@@ -21,7 +21,8 @@
       "@zoos/react-query": ["packages/react-query/src/index.ts"],
       "@zoos/react-table": ["packages/react-table/src/index.ts"],
       "@zoos/react-table-ui": ["packages/react-table-ui/src/index.ts"],
-      "@zoos/shadcn": ["packages/shadcn/src/index.ts"]
+      "@zoos/shadcn": ["packages/shadcn/src/index.ts"],
+      "@zoos/zustand": ["packages/zustand/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
