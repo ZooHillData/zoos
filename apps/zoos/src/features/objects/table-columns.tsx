@@ -21,7 +21,10 @@ const columnOverrides: { [key: string]: Partial<AccessorColumnDef<Object>> } = {
     accessorFn: (row) => formatDate(row.created_at),
   },
   updated_at: {
-    accessorFn: (row) => formatDate(row.updated_at),
+    accessorFn: (row) => formatDate(row.last_updated_at),
+  },
+  metadata: {
+    accessorFn: (row) => JSON.stringify(row.metadata),
   },
 };
 

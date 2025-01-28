@@ -2,31 +2,42 @@ type ObjectType = "data";
 
 // This is how the Object is stored in the database
 type ObjectInDb = {
-  id: string;
+  id: number;
+  folder_id?: number;
   name: string;
   description?: string;
-  owner_email: string;
-  object_type: string;
-  access_read: string[];
-  access_write: string[];
-  access_manage: string[];
+  object_type: ObjectType;
   object_data: Record<string, unknown>;
+  metadata: Record<string, unknown>;
+  owner_email: string;
   created_at: string;
-  updated_at: string;
-  update_email: string;
+  last_updated_at: string;
+  last_updated_email: string;
+  access_read_emails: string[];
+  access_write_emails: string[];
+  access_manage_emails: string[];
+  access_read_group_ids: number[];
+  access_write_group_ids: number[];
+  access_manage_group_ids: number[];
 };
 
 // This is the Object type we will work with internally
-type Object = Omit<ObjectInDb, "created_at" | "updated_at"> & {
+type Object = Omit<ObjectInDb, "created_at" | "last_updated_at"> & {
   created_at: Date;
-  updated_at: Date;
+  last_updated_at: Date;
+};
+
+type User = {
+  email: string;
+  user_type: string;
+  group_ids: number[];
 };
 
 const parseObject = (object: ObjectInDb): Object => ({
   ...object,
   created_at: new Date(object.created_at),
-  updated_at: new Date(object.updated_at),
+  last_updated_at: new Date(object.last_updated_at),
 });
 
-export type { ObjectType, Object, ObjectInDb };
+export type { ObjectType, Object, ObjectInDb, User };
 export { parseObject };

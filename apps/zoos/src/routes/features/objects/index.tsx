@@ -5,7 +5,7 @@ export const Route = createFileRoute("/features/objects/")({
 });
 
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import {
   useComponentProps,
   useTable,
@@ -13,36 +13,53 @@ import {
   mergeColumns,
   getColumns,
 } from "@zoos/react-table";
-import { contextMenuItems, Table } from "@zoos/react-table-ui";
-
-import { ContextMenuContent, ContextMenuSeparator } from "@zoos/shadcn";
+import { Table } from "@zoos/react-table-ui";
+import {
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+} from "@zoos/shadcn";
 
 import {
   queries,
   columnOverrides,
   objectsContextMenuItems,
+  mutations,
 } from "../../../features/objects";
-import { getQueryKey } from "../../../lib/supabase";
+
+const useObjectMutations = () => {
+  const { queryClient } = Route.useRouteContext();
+  return {
+    deleteObject: useMutation(
+      mutations.deleteObject({
+        queryClient,
+        options: {
+          onSuccess: ({ data }) => {
+            console.log(`Deleted ${data.length} objects`);
+          },
+        },
+      }),
+    ),
+    updateObject: useMutation(mutations.updateObject({ queryClient })),
+  };
+};
 
 function RouteComponent() {
   const { data: objects, isLoading: isObjectsLoading } = useQuery(
     queries.getObjects({ params: {} }),
   );
 
-  const { data: users } = useQuery({
-    queryKey: getQueryKey(["users"]),
-    queryFn: async () => {
-      return [
-        "art@zoohilldata.com",
-        "arterry1618@gmail.com",
-        "bk@zoohilldata.com",
-      ];
-    },
-  });
+  const { data: users } = useQuery(queries.getUsersEmails({ params: {} }));
+  const { deleteObject, updateObject } = useObjectMutations();
+  // const { delete } =  useObjectMutations();
 
   const columns = React.useMemo(() => {
     const columns =
-      (objects?.length || 0) > 0 ? getColumns({ data: objects || [] })() : [];
+      (objects?.length || 0) > 0
+        ? getColumns({ data: objects || [] })({
+            exclude: (columnId) => columnId.includes("group_ids"),
+          })
+        : [];
     if (columns.length > 0) {
       return mergeColumns({ base: columns })({ overrides: columnOverrides });
     }
@@ -62,7 +79,8 @@ function RouteComponent() {
     {
       mergeProps: [
         featureProps.utils.allCells({
-          className: "text-sm overflow-hidden whitespace-nowrap bg-background",
+          className:
+            "text-sm hover:cursor-default overflow-hidden whitespace-nowrap bg-background",
         }),
         {
           trBody: ({ row }) => ({
@@ -89,12 +107,32 @@ function RouteComponent() {
                 // the <tr /> onClick passed in componentProps
                 onClick={(e) => e.stopPropagation()}
               >
-                {contextMenuItems.expand(cell.getContext())}
+                {/* {contextMenuItems.expand(cell.getContext())} */}
+                {/* <ContextMenuItem onSelect={() => } */}
+                <ContextMenuItem
+                  onSelect={() => {
+                    deleteObject.mutate({ id: cell.row.original.id });
+                  }}
+                >
+                  Delete
+                </ContextMenuItem>
                 <ContextMenuSeparator className="mx-1 border-b" />
                 {objectsContextMenuItems({
                   cellContext: cell.getContext(),
                   users: users || [],
+                  onSaveMetadata: ({ id, metadata }) =>
+                    updateObject.mutate({ id, metadata }),
+                  onSaveObject: ({ id, data }) =>
+                    updateObject.mutate({ id, object_data: data }),
+                  onSavePermissions: ({ id, permissions }) =>
+                    updateObject.mutate({
+                      id,
+                      access_read_emails: permissions.read,
+                      access_write_emails: permissions.write,
+                      access_manage_emails: permissions.manage,
+                    }),
                 })}
+                <ContextMenuSeparator className="mx-1 border-b" />
               </ContextMenuContent>
             ),
           }}
