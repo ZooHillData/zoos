@@ -64,7 +64,7 @@ const objectsContextMenuItems = <TValue,>({
           content: (
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Edit Metadat</DialogTitle>
+                <DialogTitle>Edit Metadata</DialogTitle>
                 <DialogDescription>
                   Edit metadata surrounding the object, not the object itself
                 </DialogDescription>
@@ -84,7 +84,7 @@ const objectsContextMenuItems = <TValue,>({
         });
       }}
     >
-      Edit Metadata
+      Metadata
     </ContextMenuItem>
     <ContextMenuItem
       onSelect={(e) => {
@@ -96,7 +96,7 @@ const objectsContextMenuItems = <TValue,>({
                 <DialogTitle>Edit Object</DialogTitle>
                 <DialogDescription>
                   Edit the object data itself (the most basic form of editing is
-                  editing a JSON blob)
+                  editing the JSON blob directly)
                 </DialogDescription>
               </DialogHeader>
               <JsonForm
@@ -111,7 +111,7 @@ const objectsContextMenuItems = <TValue,>({
         });
       }}
     >
-      Edit Object
+      Object
     </ContextMenuItem>
     <ContextMenuItem
       onSelect={(e) => {
