@@ -97,7 +97,7 @@ const getMutationOptions = createMutationOptions({
 /// Use in component
 ///
 
-import { Button } from "@zoohilldata/ui";
+import { Button } from "@zoos/shadcn";
 
 const App = () => {
   // Get the query client to pass to the `getMutationOptions` function.

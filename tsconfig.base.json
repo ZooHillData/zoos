@@ -18,6 +18,7 @@
       "@zoos/navigation": ["packages/navigation/src/index.ts"],
       "@zoos/navigation-ui": ["packages/navigation-ui/src/index.ts"],
       "@zoos/react-form": ["packages/react-form/src/index.ts"],
+      "@zoos/react-grid-layout": ["packages/react-grid-layout/src/index.ts"],
       "@zoos/react-query": ["packages/react-query/src/index.ts"],
       "@zoos/react-table": ["packages/react-table/src/index.ts"],
       "@zoos/react-table-ui": ["packages/react-table-ui/src/index.ts"],

@@ -25,6 +25,7 @@ import { Route as CoreReactFormRouteImport } from './routes/core/react-form/rout
 import { Route as FeaturesObjectsIndexImport } from './routes/features/objects/index'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
 import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
+import { Route as CoreReactGridLayoutIndexImport } from './routes/core/react-grid-layout/index'
 import { Route as FeaturesObjectsScratchImport } from './routes/features/objects/scratch'
 import { Route as FeaturesObjectsAdminImport } from './routes/features/objects/admin'
 import { Route as CoreShadcnUseReactiveStateImport } from './routes/core/shadcn/use-reactive-state'
@@ -138,6 +139,12 @@ const FeaturesAuthIndexRoute = FeaturesAuthIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => FeaturesAuthRouteRoute,
+} as any)
+
+const CoreReactGridLayoutIndexRoute = CoreReactGridLayoutIndexImport.update({
+  id: '/core/react-grid-layout/',
+  path: '/core/react-grid-layout/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const FeaturesObjectsScratchRoute = FeaturesObjectsScratchImport.update({
@@ -604,6 +611,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesObjectsScratchImport
       parentRoute: typeof FeaturesObjectsRouteImport
     }
+    '/core/react-grid-layout/': {
+      id: '/core/react-grid-layout/'
+      path: '/core/react-grid-layout'
+      fullPath: '/core/react-grid-layout'
+      preLoaderRoute: typeof CoreReactGridLayoutIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/features/auth/': {
       id: '/features/auth/'
       path: '/'
@@ -795,6 +809,7 @@ export interface FileRoutesByFullPath {
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
   '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/core/react-grid-layout': typeof CoreReactGridLayoutIndexRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/objects/': typeof FeaturesObjectsIndexRoute
@@ -837,6 +852,7 @@ export interface FileRoutesByTo {
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
   '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/core/react-grid-layout': typeof CoreReactGridLayoutIndexRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
   '/features/objects': typeof FeaturesObjectsIndexRoute
@@ -883,6 +899,7 @@ export interface FileRoutesById {
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
   '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/core/react-grid-layout/': typeof CoreReactGridLayoutIndexRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/objects/': typeof FeaturesObjectsIndexRoute
@@ -930,6 +947,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
     | '/features/objects/scratch'
+    | '/core/react-grid-layout'
     | '/features/auth/'
     | '/features/file-browser/'
     | '/features/objects/'
@@ -971,6 +989,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
     | '/features/objects/scratch'
+    | '/core/react-grid-layout'
     | '/features/auth'
     | '/features/file-browser'
     | '/features/objects'
@@ -1015,6 +1034,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
     | '/features/objects/scratch'
+    | '/core/react-grid-layout/'
     | '/features/auth/'
     | '/features/file-browser/'
     | '/features/objects/'
@@ -1036,6 +1056,7 @@ export interface RootRouteChildren {
   CommunityDndKitDragAndDropSimpleRoute: typeof CommunityDndKitDragAndDropSimpleRoute
   CommunityDndKitDragAndDropTabsRoute: typeof CommunityDndKitDragAndDropTabsRoute
   CommunityReactTableColumnDndRoute: typeof CommunityReactTableColumnDndRoute
+  CoreReactGridLayoutIndexRoute: typeof CoreReactGridLayoutIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -1053,6 +1074,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommunityDndKitDragAndDropSimpleRoute: CommunityDndKitDragAndDropSimpleRoute,
   CommunityDndKitDragAndDropTabsRoute: CommunityDndKitDragAndDropTabsRoute,
   CommunityReactTableColumnDndRoute: CommunityReactTableColumnDndRoute,
+  CoreReactGridLayoutIndexRoute: CoreReactGridLayoutIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -1078,7 +1100,8 @@ export const routeTree = rootRoute
         "/community/",
         "/community/dnd-kit/drag-and-drop-simple",
         "/community/dnd-kit/drag-and-drop-tabs",
-        "/community/react-table/column-dnd"
+        "/community/react-table/column-dnd",
+        "/core/react-grid-layout/"
       ]
     },
     "/": {
@@ -1264,6 +1287,9 @@ export const routeTree = rootRoute
     "/features/objects/scratch": {
       "filePath": "features/objects/scratch.tsx",
       "parent": "/features/objects"
+    },
+    "/core/react-grid-layout/": {
+      "filePath": "core/react-grid-layout/index.tsx"
     },
     "/features/auth/": {
       "filePath": "features/auth/index.tsx",

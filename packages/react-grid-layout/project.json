@@ -1,0 +1,16 @@
+{
+  "name": "react-grid-layout",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-grid-layout/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project react-grid-layout --web",
+  "targets": {
+    "release": {
+      "executor": "nx-release:build-update-publish",
+      "options": {
+        "libName": "react-grid-layout"
+      }
+    }
+  }
+}
