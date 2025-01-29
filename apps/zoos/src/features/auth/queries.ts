@@ -10,6 +10,6 @@ const getUser = createQueryOptions({
   },
 });
 
-const useUser = () => useQuery(getUser({ params: {} }));
+const useUserQuery = () => useQuery(getUser({ params: {} }));
 
-export { getUser, useUser };
+export { getUser, useUserQuery };

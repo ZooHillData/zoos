@@ -25,6 +25,7 @@ import { Route as CoreReactFormRouteImport } from './routes/core/react-form/rout
 import { Route as FeaturesObjectsIndexImport } from './routes/features/objects/index'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
 import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
+import { Route as FeaturesObjectsScratchImport } from './routes/features/objects/scratch'
 import { Route as FeaturesObjectsAdminImport } from './routes/features/objects/admin'
 import { Route as CoreShadcnUseReactiveStateImport } from './routes/core/shadcn/use-reactive-state'
 import { Route as CoreShadcnUseDebounceImport } from './routes/core/shadcn/use-debounce'
@@ -137,6 +138,12 @@ const FeaturesAuthIndexRoute = FeaturesAuthIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => FeaturesAuthRouteRoute,
+} as any)
+
+const FeaturesObjectsScratchRoute = FeaturesObjectsScratchImport.update({
+  id: '/scratch',
+  path: '/scratch',
+  getParentRoute: () => FeaturesObjectsRouteRoute,
 } as any)
 
 const FeaturesObjectsAdminRoute = FeaturesObjectsAdminImport.update({
@@ -590,6 +597,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesObjectsAdminImport
       parentRoute: typeof FeaturesObjectsRouteImport
     }
+    '/features/objects/scratch': {
+      id: '/features/objects/scratch'
+      path: '/scratch'
+      fullPath: '/features/objects/scratch'
+      preLoaderRoute: typeof FeaturesObjectsScratchImport
+      parentRoute: typeof FeaturesObjectsRouteImport
+    }
     '/features/auth/': {
       id: '/features/auth/'
       path: '/'
@@ -728,11 +742,13 @@ const FeaturesFileBrowserRouteRouteWithChildren =
 
 interface FeaturesObjectsRouteRouteChildren {
   FeaturesObjectsAdminRoute: typeof FeaturesObjectsAdminRoute
+  FeaturesObjectsScratchRoute: typeof FeaturesObjectsScratchRoute
   FeaturesObjectsIndexRoute: typeof FeaturesObjectsIndexRoute
 }
 
 const FeaturesObjectsRouteRouteChildren: FeaturesObjectsRouteRouteChildren = {
   FeaturesObjectsAdminRoute: FeaturesObjectsAdminRoute,
+  FeaturesObjectsScratchRoute: FeaturesObjectsScratchRoute,
   FeaturesObjectsIndexRoute: FeaturesObjectsIndexRoute,
 }
 
@@ -778,6 +794,7 @@ export interface FileRoutesByFullPath {
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
+  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/objects/': typeof FeaturesObjectsIndexRoute
@@ -819,6 +836,7 @@ export interface FileRoutesByTo {
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
+  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
   '/features/objects': typeof FeaturesObjectsIndexRoute
@@ -864,6 +882,7 @@ export interface FileRoutesById {
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
   '/features/objects/admin': typeof FeaturesObjectsAdminRoute
+  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
   '/features/objects/': typeof FeaturesObjectsIndexRoute
@@ -910,6 +929,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
+    | '/features/objects/scratch'
     | '/features/auth/'
     | '/features/file-browser/'
     | '/features/objects/'
@@ -950,6 +970,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
+    | '/features/objects/scratch'
     | '/features/auth'
     | '/features/file-browser'
     | '/features/objects'
@@ -993,6 +1014,7 @@ export interface FileRouteTypes {
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
     | '/features/objects/admin'
+    | '/features/objects/scratch'
     | '/features/auth/'
     | '/features/file-browser/'
     | '/features/objects/'
@@ -1124,6 +1146,7 @@ export const routeTree = rootRoute
       "filePath": "features/objects/route.tsx",
       "children": [
         "/features/objects/admin",
+        "/features/objects/scratch",
         "/features/objects/"
       ]
     },
@@ -1236,6 +1259,10 @@ export const routeTree = rootRoute
     },
     "/features/objects/admin": {
       "filePath": "features/objects/admin.tsx",
+      "parent": "/features/objects"
+    },
+    "/features/objects/scratch": {
+      "filePath": "features/objects/scratch.tsx",
       "parent": "/features/objects"
     },
     "/features/auth/": {

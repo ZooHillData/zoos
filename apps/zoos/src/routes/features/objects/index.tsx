@@ -20,11 +20,14 @@ import {
   ContextMenuSeparator,
 } from "@zoos/shadcn";
 
+import { useUserQuery } from "../../../features/auth/queries";
 import {
   queries,
-  columnOverrides,
   objectsContextMenuItems,
   mutations,
+  DEFAULT_OBJECT,
+  columnOverrides,
+  extraColumns,
 } from "../../../features/objects";
 
 const useObjectMutations = () => {
@@ -35,23 +38,24 @@ const useObjectMutations = () => {
         queryClient,
         options: {
           onSuccess: ({ data }) => {
-            console.log(`Deleted ${data.length} objects`);
+            console.log(`Deleted ${data?.length} objects`);
           },
         },
       }),
     ),
     updateObject: useMutation(mutations.updateObject({ queryClient })),
+    addObject: useMutation(mutations.addObject({ queryClient })),
   };
 };
 
 function RouteComponent() {
+  const { data: user } = useUserQuery();
   const { data: objects, isLoading: isObjectsLoading } = useQuery(
     queries.getObjects({ params: {} }),
   );
 
   const { data: users } = useQuery(queries.getUsersEmails({ params: {} }));
-  const { deleteObject, updateObject } = useObjectMutations();
-  // const { delete } =  useObjectMutations();
+  const { deleteObject, updateObject, addObject } = useObjectMutations();
 
   const columns = React.useMemo(() => {
     const columns =
@@ -61,7 +65,10 @@ function RouteComponent() {
           })
         : [];
     if (columns.length > 0) {
-      return mergeColumns({ base: columns })({ overrides: columnOverrides });
+      return mergeColumns({ base: columns })({
+        overrides: columnOverrides,
+        newColumns: extraColumns,
+      });
     }
     return [];
   }, [objects]);
@@ -97,7 +104,7 @@ function RouteComponent() {
 
   if ((objects?.length || 0) > 0) {
     return (
-      <div className="flex h-full flex-col">
+      <div className="flex h-full flex-col gap-2">
         <Table
           {...{ componentProps, virtualRows, table }}
           contextMenuContent={{
@@ -107,12 +114,20 @@ function RouteComponent() {
                 // the <tr /> onClick passed in componentProps
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* {contextMenuItems.expand(cell.getContext())} */}
-                {/* <ContextMenuItem onSelect={() => } */}
                 <ContextMenuItem
-                  onSelect={() => {
-                    deleteObject.mutate({ id: cell.row.original.id });
-                  }}
+                  onSelect={() =>
+                    addObject.mutate({
+                      object: DEFAULT_OBJECT,
+                      authedEmail: user?.email || "",
+                    })
+                  }
+                >
+                  New
+                </ContextMenuItem>
+                <ContextMenuItem
+                  onSelect={() =>
+                    deleteObject.mutate({ id: cell.row.original.id })
+                  }
                 >
                   Delete
                 </ContextMenuItem>
@@ -120,19 +135,12 @@ function RouteComponent() {
                 {objectsContextMenuItems({
                   cellContext: cell.getContext(),
                   users: users || [],
-                  onSaveMetadata: ({ id, metadata }) =>
-                    updateObject.mutate({ id, metadata }),
-                  onSaveObject: ({ id, data }) =>
-                    updateObject.mutate({ id, object_data: data }),
-                  onSavePermissions: ({ id, permissions }) =>
-                    updateObject.mutate({
-                      id,
-                      access_read_emails: permissions.read,
-                      access_write_emails: permissions.write,
-                      access_manage_emails: permissions.manage,
-                    }),
+                  onUpdateObject: (object) => {
+                    if (user?.email) {
+                      updateObject.mutate({ object, authedEmail: user.email });
+                    }
+                  },
                 })}
-                <ContextMenuSeparator className="mx-1 border-b" />
               </ContextMenuContent>
             ),
           }}

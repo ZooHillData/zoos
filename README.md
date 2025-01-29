@@ -4,12 +4,23 @@ Menu of independent features, methods and libraries provide building blocks for 
 
 ## Quickstart
 
+### Local Dev (preferred)
+
 ```bash
-# Install dependencies
 npm install
-# Start Zoos app in development
-npm run dev
 ```
+
+If using supabase, copy `apps/zoos/.env.example` to `apps/zoos/.env.local` and update environment variables if not using 1Password CLI.
+
+```bash
+# Without 1Password CLI
+npm run dev
+
+# With `Password CLI
+op run --env-file=./apps/zoos/.env.local --no-masking -- npm run dev
+```
+
+### Zoos on Netlify
 
 Alternatively, visit the Zoos prod / dev apps:
 

@@ -9,7 +9,7 @@ import { cn } from "@zoos/shadcn";
 import { queries, mutations } from "../../../features/auth";
 
 function RouteComponent() {
-  const { data: user, isLoading } = queries.useUser();
+  const { data: user, isLoading } = queries.useUserQuery();
 
   const { queryClient } = Route.useRouteContext();
   const { mutate: logout } = useMutation(mutations.logout({ queryClient }));

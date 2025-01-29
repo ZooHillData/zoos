@@ -1,5 +1,5 @@
 import { AccessorColumnDef } from "@tanstack/react-table";
-import type { Object } from "./db-interface";
+import type { Object } from "../types";
 
 const formatDate = (date: Date) => {
   const pad = (num: number) => String(num).padStart(2, "0");
@@ -28,4 +28,18 @@ const columnOverrides: { [key: string]: Partial<AccessorColumnDef<Object>> } = {
   },
 };
 
-export { columnOverrides };
+const extraColumns: AccessorColumnDef<Object>[] = [
+  {
+    id: "folder_path",
+    accessorFn: (row) => row.objects_folders?.path,
+  },
+  {
+    id: "version_history",
+    accessorFn: (row) =>
+      row.objects_history.length > 0
+        ? `${row.objects_history.length} versions`
+        : "",
+  },
+];
+
+export { columnOverrides, extraColumns };
