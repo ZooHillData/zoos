@@ -1,6 +1,6 @@
 {
   "name": "@zoos/react-table-ui",
-  "version": "1.37.1",
+  "version": "1.38.0",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {

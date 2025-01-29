@@ -1,6 +1,6 @@
 {
   "name": "@zoos/shadcn",
-  "version": "1.37.1",
+  "version": "1.38.0",
   "repository": {
     "url": "https://github.com/zoohilldata/zoos.git",
     "directory": "packages/shadcn"

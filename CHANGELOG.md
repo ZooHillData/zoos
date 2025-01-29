@@ -1,3 +1,9 @@
+## [1.38.0](https://github.com/zoohilldata/zoos/compare/v1.37.1...v1.38.0) (2025-01-29)
+
+### Features
+
+* **react-grid-layout:** pushing initial version of react-grid-layout ([f32acd6](https://github.com/zoohilldata/zoos/commit/f32acd69be862221a87ac308f026232e666bc83a))
+
 ## [1.37.1](https://github.com/zoohilldata/zoos/compare/v1.37.0...v1.37.1) (2025-01-27)
 
 ### Bug Fixes
