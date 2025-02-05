@@ -86,9 +86,9 @@ const columns = [
     cell: (cellContext) => (
       <TooltipProvider>
         <Tooltip delayDuration={200}>
-          {/* 
-          `className="w-full text-left"` 
-            => makes sure alignment is still left but the tooltip takes up the full cell 
+          {/*
+          `className="w-full text-left"`
+            => makes sure alignment is still left but the tooltip takes up the full cell
           */}
           <TooltipTrigger className="w-full text-left">
             {String(cellContext.getValue())}
@@ -131,11 +131,61 @@ const columns = [
       ),
     },
   }),
-  columnHelper.accessor("zip", {}),
+  columnHelper.accessor("states", {
+    filterFn: filters.array.includes.filterFn,
+    meta: {
+      Filter: (headerContext) => {
+        const tableRows = headerContext.table.getPreFilteredRowModel().rows;
+        const allStates = tableRows.flatMap((row) => row.original.states);
+        // Remove duplicates
+        const uniqueStates = [...new Set(allStates)];
+        // Map to options with { value, label }:
+        const options = uniqueStates.map((state) => ({
+          value: state,
+          label: state,
+        }));
+
+        return (
+          <FilterContainer>
+            <Label>
+              <FormattedId headerContext={headerContext} /> is in:
+            </Label>
+            <filters.array.includes.FilterInput
+              headerContext={headerContext}
+              inputProps={{
+                className: createCn("max-h-[300px]"),
+                // Full control over props passed to input
+                // (other than those required to connect to
+                // `headerContext.column.setFilterValue()`)
+                options: options,
+              }}
+            />
+            <ClearFilterButton headerContext={headerContext} />
+          </FilterContainer>
+        );
+      },
+    },
+  }),
+  columnHelper.accessor("zip", {
+    filterFn: filters.string.includes.filterFn,
+    meta: {
+      Filter: (headerContext) => (
+        <FilterContainer>
+          <Label>
+            <FormattedId headerContext={headerContext} />
+          </Label>
+          <filters.string.includes.FilterInput headerContext={headerContext} />
+          <ClearFilterButton headerContext={headerContext} />
+        </FilterContainer>
+      ),
+    },
+  }),
+  columnHelper.accessor("phone", {}),
 ];
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
+
   const [state, setState] = React.useState({});
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
@@ -145,6 +195,7 @@ function RouteComponent() {
     onStateChange: (state) => setState(state),
   });
 
+  console.log("rowCount: ", table.getRowCount());
   const componentProps = useComponentProps(
     {
       table,

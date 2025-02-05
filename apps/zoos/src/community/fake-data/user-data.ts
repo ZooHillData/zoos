@@ -9,8 +9,21 @@ function createRandomUser() {
     street: faker.location.streetAddress(),
     city: faker.location.city(),
     state: faker.location.state(),
+    states: faker.helpers.arrayElements(
+      [
+        faker.location.state(),
+        faker.location.state(),
+        faker.location.state(),
+        faker.location.state(),
+        faker.location.state(),
+      ],
+      { min: 1, max: 2 },
+    ),
     zip: faker.location.zipCode(),
-    phone: faker.helpers.arrayElement([null, faker.phone.number()]),
+    phone: faker.helpers.arrayElements(
+      [faker.phone.number(), faker.phone.number()],
+      { min: 1, max: 2 },
+    ),
     user_id: String(Math.round(Math.random() * 100000000000)),
   };
 }
