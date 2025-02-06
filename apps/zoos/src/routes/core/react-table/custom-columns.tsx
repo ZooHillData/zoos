@@ -35,8 +35,38 @@ const columns = [
   columnHelper.group({
     header: "User",
     columns: [
-      columnHelper.accessor("first_name", {}),
-      columnHelper.accessor("last_name", {}),
+      columnHelper.accessor("first_name", {
+        filterFn: filters.string.includes.filterFn,
+        meta: {
+          Filter: (headerContext) => (
+            <FilterContainer>
+              <Label>
+                <FormattedId headerContext={headerContext} />
+              </Label>
+              <filters.string.includes.FilterInput
+                headerContext={headerContext}
+              />
+              <ClearFilterButton headerContext={headerContext} />
+            </FilterContainer>
+          ),
+        },
+      }),
+      columnHelper.accessor("last_name", {
+        filterFn: filters.string.inArrayDynamic.filterFn,
+        meta: {
+          Filter: (headerContext) => (
+            <FilterContainer>
+              <Label>
+                <FormattedId headerContext={headerContext} />
+              </Label>
+              <filters.string.inArrayDynamic.FilterInput
+                headerContext={headerContext}
+              />
+              <ClearFilterButton headerContext={headerContext} />
+            </FilterContainer>
+          ),
+        },
+      }),
       columnHelper.accessor("age", {
         filterFn: filters.number.range.filterFn,
         meta: {
@@ -132,32 +162,40 @@ const columns = [
     },
   }),
   columnHelper.accessor("states", {
-    filterFn: filters.array.includes.filterFn,
+    filterFn: filters.array.includesAll.filterFn,
     meta: {
       Filter: (headerContext) => {
-        const tableRows = headerContext.table.getPreFilteredRowModel().rows;
-        const allStates = tableRows.flatMap((row) => row.original.states);
-        // Remove duplicates
-        const uniqueStates = [...new Set(allStates)];
-        // Map to options with { value, label }:
-        const options = uniqueStates.map((state) => ({
-          value: state,
-          label: state,
-        }));
+        // array of arrays of keys
+        const optionsKeys = headerContext.column
+          .getFacetedUniqueValues()
+          .keys();
 
+        // Flatten the arrays of keys
+        const flattenedOptions = Array.from(optionsKeys).flat();
+
+        // Remove duplicates and sort
+        const uniqueOptions = [...new Set(flattenedOptions)].sort((a, b) =>
+          a.localeCompare(b),
+        );
+
+        // Map to the options format.
+        const options = uniqueOptions.map((option) => ({
+          value: option,
+          label: option,
+        }));
         return (
           <FilterContainer>
             <Label>
-              <FormattedId headerContext={headerContext} /> is in:
+              <FormattedId headerContext={headerContext} /> includes all:
             </Label>
-            <filters.array.includes.FilterInput
+            <filters.array.includesAll.FilterInput
               headerContext={headerContext}
               inputProps={{
                 className: createCn("max-h-[300px]"),
                 // Full control over props passed to input
                 // (other than those required to connect to
                 // `headerContext.column.setFilterValue()`)
-                options: options,
+                options,
               }}
             />
             <ClearFilterButton headerContext={headerContext} />

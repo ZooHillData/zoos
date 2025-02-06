@@ -17,7 +17,7 @@ function createRandomUser() {
         faker.location.state(),
         faker.location.state(),
       ],
-      { min: 1, max: 2 },
+      { min: 1, max: 5 },
     ),
     zip: faker.location.zipCode(),
     phone: faker.helpers.arrayElements(
