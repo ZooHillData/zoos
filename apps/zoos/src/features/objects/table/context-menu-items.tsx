@@ -28,6 +28,8 @@ import {
   getEditableInfoFields,
 } from "../db/parse-objects";
 
+import { EditObjectForm } from "../components/edit-object";
+
 const JsonForm = (props: {
   value: Record<string, unknown>;
   onSubmit: (value: Record<string, unknown>) => void;
@@ -79,29 +81,9 @@ const objectsContextMenuItems = <TValue,>({
                     {cell.row.original.name}
                   </DialogDescription>
                 </DialogHeader>
-                {/* Uneditable fields when updating an object */}
-                <div className="bg-muted rounded p-2 text-xs">
-                  <p className="text-sm font-medium">Uneditable by user</p>
-                  {Object.entries(uneditableInfoFields).map(([k, v]) => (
-                    <p className="" key={k}>
-                      <strong className="font-medium">{k}: </strong>
-                      <span>
-                        {!["string", "number"].includes(typeof v)
-                          ? JSON.stringify(v)
-                          : String(v)}
-                      </span>
-                    </p>
-                  ))}
-                </div>
-                <JsonForm
-                  value={editableInfoFields}
-                  onSubmit={(value) => {
-                    props.onUpdateObject({
-                      id: cell.row.original.id,
-                      ...value,
-                    });
-                    closeDialog();
-                  }}
+                <EditObjectForm
+                  object={cell.row.original}
+                  onUpdateObject={props.onUpdateObject}
                 />
               </DialogContent>
             ),

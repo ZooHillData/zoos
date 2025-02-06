@@ -30,6 +30,7 @@ const getEditableInfoFields = (object: Object) => {
     created_at,
     last_updated_at,
     last_updated_email,
+    objects_history,
     ...editableInfoFields
   } = getInfoFields(object);
 

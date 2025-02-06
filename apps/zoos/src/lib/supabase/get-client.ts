@@ -1,9 +1,11 @@
+import type { Database } from "./database.types";
+
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "";
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_KEY || "";
 
-let client: SupabaseClient | undefined = undefined;
+let client: SupabaseClient<Database> | undefined = undefined;
 const isMissingEnvVars =
   !supabaseUrl ||
   !supabaseAnonKey ||

@@ -27,6 +27,33 @@ import {
   createCn,
 } from "@zoos/shadcn";
 
+const mapping = {
+  text: {
+    filters: [
+      {
+        filterFn: "string.includes",
+        label: "Includes",
+        meta: { Filter: (headerContext) => <div></div> },
+      },
+      "string.regex",
+    ],
+    cells: [{}],
+  },
+  // Probably doesn't mater  for now
+  "protected-text": ["string.inArray", "string.includes", "string.regex"],
+  date: ["date.range"],
+  longText: ["string.includes", "string.regex"],
+  // Boolean not used by FCS, is used elsewhere
+  // previously, have converted boolean to string
+  // and used string.inArray ["true", "false"]
+  // "boolean": []
+  selectAll: ["array.includesSome", "array.includesAll"],
+  multipleChoice: ["string.inArray", "string.includes", "string.regex"],
+  currency: ["number.range"],
+  number: ["number.range"],
+  select: ["string.inArray", "string.includes", "string.regex"],
+};
+
 // ~ Manual column definitions
 // Using `getColumns` to infer all columns
 import { type User } from "../../../community/fake-data";

@@ -64,6 +64,17 @@ const getFolderPaths = createQueryOptions({
   },
 });
 
+const getFolders = createQueryOptions({
+  queryKey: keyFactory.folders.all,
+  queryFn: async () => {
+    const { data } = await getClient()
+      .schema("zoos")
+      .from("objects_folders")
+      .select("*");
+    return data;
+  },
+});
+
 const getObjectHistory = createQueryOptions({
   queryKey: keyFactory.objects.history(),
   queryFn: async (params: { id: number }) => {
@@ -79,6 +90,7 @@ const getObjectHistory = createQueryOptions({
 
 export {
   getObjects,
+  getFolders,
   getFolderPaths,
   getUsersEmails,
   keyFactory,
