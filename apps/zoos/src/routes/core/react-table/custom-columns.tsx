@@ -233,7 +233,6 @@ function RouteComponent() {
     onStateChange: (state) => setState(state),
   });
 
-  console.log("rowCount: ", table.getRowCount());
   const componentProps = useComponentProps(
     {
       table,
