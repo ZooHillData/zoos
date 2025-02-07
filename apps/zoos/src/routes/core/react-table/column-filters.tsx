@@ -253,7 +253,7 @@ function RouteComponent() {
         featureProps.spacing.compact(),
         featureProps.rowStriping(),
         featureProps.borders(),
-        { th: () => ({ className: "bg-muted" }) },
+        { th: () => ({ className: "bg-muted flex" }) },
       ],
     },
   );
