@@ -2,7 +2,7 @@ import { createCn, Input } from "@zoos/shadcn";
 import { CheckboxGroupVirtual } from "./checkbox-group-virtual";
 import { useVirtualCombobox } from "../hooks/use-virtual-combobox";
 
-const Combobox = ({
+const ComboboxCheckboxGroup = ({
   options,
   inputClassName,
   ...props
@@ -46,4 +46,4 @@ const Combobox = ({
   );
 };
 
-export { Combobox };
+export { ComboboxCheckboxGroup };

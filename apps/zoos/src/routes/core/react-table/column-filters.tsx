@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/core/react-table/custom-columns")({
+export const Route = createFileRoute("/core/react-table/column-filters")({
   component: RouteComponent,
 });
 
@@ -38,6 +38,7 @@ const columns = [
       columnHelper.accessor("first_name", {
         filterFn: filters.string.includes.filterFn,
         meta: {
+          filterType: "Dynamic List",
           Filter: (headerContext) => (
             <FilterContainer>
               <Label>

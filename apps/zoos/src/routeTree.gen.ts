@@ -41,7 +41,7 @@ import { Route as CoreReactTableMergeColumnsImport } from './routes/core/react-t
 import { Route as CoreReactTableFullCustomizationImport } from './routes/core/react-table/full-customization'
 import { Route as CoreReactTableExpandRowsControlImport } from './routes/core/react-table/expand-rows-control'
 import { Route as CoreReactTableExpandRowsCellImport } from './routes/core/react-table/expand-rows-cell'
-import { Route as CoreReactTableCustomColumnsImport } from './routes/core/react-table/custom-columns'
+import { Route as CoreReactTableColumnFiltersImport } from './routes/core/react-table/column-filters'
 import { Route as CoreReactQueryUseQueryImport } from './routes/core/react-query/use-query'
 import { Route as CoreReactQueryUseMutationImport } from './routes/core/react-query/use-mutation'
 import { Route as CoreReactFormWithZoosFormImport } from './routes/core/react-form/with-zoos-form'
@@ -245,10 +245,10 @@ const CoreReactTableExpandRowsCellRoute =
     getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
-const CoreReactTableCustomColumnsRoute =
-  CoreReactTableCustomColumnsImport.update({
-    id: '/custom-columns',
-    path: '/custom-columns',
+const CoreReactTableColumnFiltersRoute =
+  CoreReactTableColumnFiltersImport.update({
+    id: '/column-filters',
+    path: '/column-filters',
     getParentRoute: () => CoreReactTableRouteRoute,
   } as any)
 
@@ -499,11 +499,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreReactQueryUseQueryImport
       parentRoute: typeof CoreReactQueryRouteImport
     }
-    '/core/react-table/custom-columns': {
-      id: '/core/react-table/custom-columns'
-      path: '/custom-columns'
-      fullPath: '/core/react-table/custom-columns'
-      preLoaderRoute: typeof CoreReactTableCustomColumnsImport
+    '/core/react-table/column-filters': {
+      id: '/core/react-table/column-filters'
+      path: '/column-filters'
+      fullPath: '/core/react-table/column-filters'
+      preLoaderRoute: typeof CoreReactTableColumnFiltersImport
       parentRoute: typeof CoreReactTableRouteImport
     }
     '/core/react-table/expand-rows-cell': {
@@ -682,7 +682,7 @@ const CoreReactQueryRouteRouteWithChildren =
   CoreReactQueryRouteRoute._addFileChildren(CoreReactQueryRouteRouteChildren)
 
 interface CoreReactTableRouteRouteChildren {
-  CoreReactTableCustomColumnsRoute: typeof CoreReactTableCustomColumnsRoute
+  CoreReactTableColumnFiltersRoute: typeof CoreReactTableColumnFiltersRoute
   CoreReactTableExpandRowsCellRoute: typeof CoreReactTableExpandRowsCellRoute
   CoreReactTableExpandRowsControlRoute: typeof CoreReactTableExpandRowsControlRoute
   CoreReactTableFullCustomizationRoute: typeof CoreReactTableFullCustomizationRoute
@@ -691,7 +691,7 @@ interface CoreReactTableRouteRouteChildren {
 }
 
 const CoreReactTableRouteRouteChildren: CoreReactTableRouteRouteChildren = {
-  CoreReactTableCustomColumnsRoute: CoreReactTableCustomColumnsRoute,
+  CoreReactTableColumnFiltersRoute: CoreReactTableColumnFiltersRoute,
   CoreReactTableExpandRowsCellRoute: CoreReactTableExpandRowsCellRoute,
   CoreReactTableExpandRowsControlRoute: CoreReactTableExpandRowsControlRoute,
   CoreReactTableFullCustomizationRoute: CoreReactTableFullCustomizationRoute,
@@ -793,7 +793,7 @@ export interface FileRoutesByFullPath {
   '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
   '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
   '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
-  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/column-filters': typeof CoreReactTableColumnFiltersRoute
   '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
   '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
   '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
@@ -836,7 +836,7 @@ export interface FileRoutesByTo {
   '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
   '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
   '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
-  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/column-filters': typeof CoreReactTableColumnFiltersRoute
   '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
   '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
   '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
@@ -883,7 +883,7 @@ export interface FileRoutesById {
   '/core/react-form/with-zoos-form': typeof CoreReactFormWithZoosFormRoute
   '/core/react-query/use-mutation': typeof CoreReactQueryUseMutationRoute
   '/core/react-query/use-query': typeof CoreReactQueryUseQueryRoute
-  '/core/react-table/custom-columns': typeof CoreReactTableCustomColumnsRoute
+  '/core/react-table/column-filters': typeof CoreReactTableColumnFiltersRoute
   '/core/react-table/expand-rows-cell': typeof CoreReactTableExpandRowsCellRoute
   '/core/react-table/expand-rows-control': typeof CoreReactTableExpandRowsControlRoute
   '/core/react-table/full-customization': typeof CoreReactTableFullCustomizationRoute
@@ -931,7 +931,7 @@ export interface FileRouteTypes {
     | '/core/react-form/with-zoos-form'
     | '/core/react-query/use-mutation'
     | '/core/react-query/use-query'
-    | '/core/react-table/custom-columns'
+    | '/core/react-table/column-filters'
     | '/core/react-table/expand-rows-cell'
     | '/core/react-table/expand-rows-control'
     | '/core/react-table/full-customization'
@@ -973,7 +973,7 @@ export interface FileRouteTypes {
     | '/core/react-form/with-zoos-form'
     | '/core/react-query/use-mutation'
     | '/core/react-query/use-query'
-    | '/core/react-table/custom-columns'
+    | '/core/react-table/column-filters'
     | '/core/react-table/expand-rows-cell'
     | '/core/react-table/expand-rows-control'
     | '/core/react-table/full-customization'
@@ -1018,7 +1018,7 @@ export interface FileRouteTypes {
     | '/core/react-form/with-zoos-form'
     | '/core/react-query/use-mutation'
     | '/core/react-query/use-query'
-    | '/core/react-table/custom-columns'
+    | '/core/react-table/column-filters'
     | '/core/react-table/expand-rows-cell'
     | '/core/react-table/expand-rows-control'
     | '/core/react-table/full-customization'
@@ -1132,7 +1132,7 @@ export const routeTree = rootRoute
     "/core/react-table": {
       "filePath": "core/react-table/route.tsx",
       "children": [
-        "/core/react-table/custom-columns",
+        "/core/react-table/column-filters",
         "/core/react-table/expand-rows-cell",
         "/core/react-table/expand-rows-control",
         "/core/react-table/full-customization",
@@ -1224,8 +1224,8 @@ export const routeTree = rootRoute
       "filePath": "core/react-query/use-query.tsx",
       "parent": "/core/react-query"
     },
-    "/core/react-table/custom-columns": {
-      "filePath": "core/react-table/custom-columns.tsx",
+    "/core/react-table/column-filters": {
+      "filePath": "core/react-table/column-filters.tsx",
       "parent": "/core/react-table"
     },
     "/core/react-table/expand-rows-cell": {
