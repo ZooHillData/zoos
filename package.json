@@ -1,6 +1,6 @@
 {
   "name": "@zoos/source",
-  "version": "1.38.0",
+  "version": "1.38.1",
   "license": "MIT",
   "scripts": {
     "dev": "nx serve zoos",
