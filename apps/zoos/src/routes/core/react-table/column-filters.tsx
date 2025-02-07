@@ -38,11 +38,11 @@ const columns = [
       columnHelper.accessor("first_name", {
         filterFn: filters.string.includes.filterFn,
         meta: {
-          filterType: "Dynamic List",
           Filter: (headerContext) => (
             <FilterContainer>
               <Label>
                 <FormattedId headerContext={headerContext} />
+                <span className="text-secondary ml-1">(string.includes)</span>
               </Label>
               <filters.string.includes.FilterInput
                 headerContext={headerContext}
@@ -59,6 +59,9 @@ const columns = [
             <FilterContainer>
               <Label>
                 <FormattedId headerContext={headerContext} />
+                <span className="text-secondary ml-1">
+                  (string.includesDynamic)
+                </span>
               </Label>
               <filters.string.inArrayDynamic.FilterInput
                 headerContext={headerContext}
@@ -83,6 +86,7 @@ const columns = [
                 </div>
                 <Label>
                   <FormattedId headerContext={headerContext} /> Range
+                  <span className="text-secondary ml-1">(number.range)</span>
                 </Label>
                 <filters.number.range.FilterInput
                   headerContext={headerContext}
@@ -103,6 +107,7 @@ const columns = [
         <FilterContainer>
           <Label>
             <FormattedId headerContext={headerContext} /> Range
+            <span className="text-secondary ml-1">(date.range)</span>
           </Label>
           <filters.date.range.FilterInput headerContext={headerContext} />
           <ClearFilterButton headerContext={headerContext} />
@@ -142,6 +147,7 @@ const columns = [
         <FilterContainer>
           <Label>
             <FormattedId headerContext={headerContext} /> is in:
+            <span className="text-secondary ml-1">(string.inArray)</span>
           </Label>
           <filters.string.inArray.FilterInput
             headerContext={headerContext}
@@ -188,6 +194,7 @@ const columns = [
           <FilterContainer>
             <Label>
               <FormattedId headerContext={headerContext} /> includes all:
+              <span className="text-secondary ml-1">(array.includesAll)</span>
             </Label>
             <filters.array.includesAll.FilterInput
               headerContext={headerContext}
@@ -212,6 +219,7 @@ const columns = [
         <FilterContainer>
           <Label>
             <FormattedId headerContext={headerContext} />
+            <span className="text-secondary ml-1">(string.includes)</span>
           </Label>
           <filters.string.includes.FilterInput headerContext={headerContext} />
           <ClearFilterButton headerContext={headerContext} />

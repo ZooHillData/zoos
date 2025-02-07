@@ -29,7 +29,6 @@ const HeaderContextMenu = <TData, TValue>({
     header.table.getState().columnVisibility,
   ).filter(([_, isVisible]) => !isVisible).length;
 
-  console.log("header filter type", header.column.columnDef.meta?.filterType);
   return (
     <ContextMenu>
       <ContextMenuTrigger {...rest}>
@@ -110,14 +109,7 @@ const HeaderContextMenu = <TData, TValue>({
         }
         {header.column.getCanFilter() && (
           <ContextMenuSub>
-            <ContextMenuSubTrigger>
-              Filter
-              {header.column.columnDef.meta?.filterType && (
-                <span className="text-primary ml-1">
-                  ({header.column.columnDef.meta?.filterType})
-                </span>
-              )}
-            </ContextMenuSubTrigger>
+            <ContextMenuSubTrigger>Filter</ContextMenuSubTrigger>
             <ContextMenuPortal>
               <ContextMenuContent>
                 {header.column.columnDef.meta?.Filter?.(header)}
