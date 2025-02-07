@@ -1,3 +1,6 @@
+//ComboBox
+export * from "./combobox-checkbox-group";
+
 // Checkboxes
 export * from "./checkbox-with-label";
 export * from "./checkbox-group";

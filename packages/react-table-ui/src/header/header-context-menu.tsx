@@ -31,7 +31,9 @@ const HeaderContextMenu = <TData, TValue>({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger {...rest}>{children}</ContextMenuTrigger>
+      <ContextMenuTrigger {...rest}>
+        <div>{children}</div>
+      </ContextMenuTrigger>
       <ContextMenuContent className="w-48">
         <ContextMenuLabel>{children}</ContextMenuLabel>
         <ContextMenuSeparator className="mx-1 border-b" />
