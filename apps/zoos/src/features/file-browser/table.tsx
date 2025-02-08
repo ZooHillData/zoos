@@ -84,7 +84,7 @@ const Table = <TData extends object, TValue>(props: {
               // ~ Data row
               <tr
                 key={virtualRow.index}
-                {...componentProps.trBody?.({ row, virtualRow })}
+                {...componentProps.trBody?.({ table, row, virtualRow })}
                 // Custom row click handler
               >
                 {

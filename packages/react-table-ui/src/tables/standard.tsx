@@ -18,14 +18,16 @@ import {
   SortableItem,
 } from "../column-reorder-dnd";
 
+type ContextMenuContentProp<TData, TValue> = Partial<{
+  td: (cellContext: CellContext<TData, TValue>) => React.ReactNode;
+  // th: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
+}>;
+
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
   virtualRows: ReturnType<typeof useVirtualization>["virtualRows"];
   componentProps: ComponentProps<TData, TValue>;
-  contextMenuContent?: Partial<{
-    td: (cellContext: CellContext<TData, TValue>) => React.ReactNode;
-    // th: (headerContext: HeaderContext<TData, TValue>) => React.ReactNode;
-  }>;
+  contextMenuContent?: ContextMenuContentProp<TData, TValue>;
 }) => {
   const { table, virtualRows, componentProps } = props;
 
@@ -113,7 +115,7 @@ const Table = <TData extends object, TValue>(props: {
               return (
                 <tr
                   key={virtualRow.index}
-                  {...componentProps.trBody?.({ row, virtualRow })}
+                  {...componentProps.trBody?.({ table, row, virtualRow })}
                 >
                   <ColumnSortableContext table={table}>
                     {row.getVisibleCells().map((cell) => (
@@ -158,10 +160,6 @@ const Table = <TData extends object, TValue>(props: {
                               ])}
                             >
                               {tdChildrenMarkup}
-                              {/* {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )} */}
                             </td>
                           );
                         }}
@@ -180,3 +178,4 @@ const Table = <TData extends object, TValue>(props: {
 };
 
 export { Table };
+export type { ContextMenuContentProp };

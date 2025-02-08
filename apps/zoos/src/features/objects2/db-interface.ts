@@ -53,9 +53,12 @@ type ObjectFolderInsert =
 type ObjectFolderUpdate =
   Database[ObjectsSchema]["Tables"]["objects_folders"]["Update"];
 
+// From objects view that joins objects to folders
+type ObjectView = Database[ObjectsSchema]["Views"]["objects_view"]["Row"];
+
 // Objects enhanced by joining on `objects_history` and `objects_folders`
 // tables (see `getObjects`)
-type ObjectSelectJoin = ObjectSelect & {
+type ObjectSelectJoin = ObjectView & {
   objects_history:
     | Pick<ObjectHistorySelect, "tag" | "update_email" | "updated_at">[]
     | null;
@@ -164,10 +167,9 @@ const parseObject = (object: ObjectSelectJoin): Object => ({
 });
 
 const getObjects = () =>
-  getObjectsClient().from("objects").select(`
+  getObjectsClient().from("objects_view").select(`
     *,
-    objects_history(update_email, tag, updated_at),
-    objects_folders(path)
+    objects_history(update_email, tag, updated_at)
     `);
 
 const getFolders = () => getObjectsClient().from("objects_folders").select("*");
