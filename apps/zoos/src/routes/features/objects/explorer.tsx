@@ -23,7 +23,7 @@ import {
   DetailsPanel,
   getObjectsTdContext,
   SelectedBreadcrumb,
-} from "../../../features/objects2";
+} from "../../../features/objects";
 import { LocationBreadcrumb } from "@zoos/navigation-ui";
 
 function RouteComponent() {
