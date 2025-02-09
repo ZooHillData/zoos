@@ -1,11 +1,12 @@
 import type { Table as TableType } from "@tanstack/react-table";
-import type { ObjectsTableData } from "./types";
+import type { ObjectsTableData } from "./db-interface";
 
 import { InfoIcon } from "lucide-react";
 import { Button } from "@zoos/shadcn";
+import { LocationBreadcrumb } from "@zoos/navigation-ui";
 
 const ToggleDetailsButton = (props: React.ComponentProps<"button">) => (
-  <Button size="icon" variant="outline" {...props}>
+  <Button size="icon" variant="ghost" {...props}>
     <InfoIcon />
   </Button>
 );
@@ -37,4 +38,25 @@ const DetailsPanel = ({ table, ...props }: DetailsPanelProps) => {
   );
 };
 
-export { ToggleDetailsButton, DetailsPanel };
+const SelectedBreadcrumb = (props: {
+  table: TableType<ObjectsTableData>;
+  onBreadcrumbClick?: (path: string) => void;
+}) => {
+  const selectedRows = props.table.getSelectedRowModel().flatRows;
+  if (selectedRows.length === 1) {
+    const row = selectedRows[0];
+    const fullPath = row.original._dataTree.pathStr;
+    return (
+      <LocationBreadcrumb
+        location={fullPath}
+        onBreadcrumbClick={(location) => {
+          if (location.split("/").length < fullPath.split("/").length) {
+            props.onBreadcrumbClick?.(location);
+          }
+        }}
+      />
+    );
+  }
+};
+
+export { ToggleDetailsButton, DetailsPanel, SelectedBreadcrumb };

@@ -85,5 +85,13 @@ const searchDataTree = <T extends object>({
   }
 };
 
-export { getDataTree, searchDataTree };
+/** Strips the extra data-tree data and returns the original object */
+const getBaseObject = <T extends object>(
+  node: TreeNode<T> | NodeData<T>,
+): T => {
+  const { _dataTree, ...rest } = node;
+  return rest as T;
+};
+
+export { getDataTree, searchDataTree, getBaseObject };
 export type { NodeData, TreeNode };

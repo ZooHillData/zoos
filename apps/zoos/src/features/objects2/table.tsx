@@ -1,12 +1,47 @@
+import type { ContextMenuContentProp } from "@zoos/react-table-ui";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Object, ObjectsTableData } from "./types";
+import type { Object, ObjectsTableData } from "./db-interface";
 
 import React from "react";
 
+import {
+  ArrowDownToLineIcon,
+  BombIcon,
+  BoxIcon,
+  BracesIcon,
+  CopyIcon,
+  ExternalLinkIcon,
+  FolderInputIcon,
+  FolderPenIcon,
+  FolderPlusIcon,
+  InfoIcon,
+  TrashIcon,
+  UserPlusIcon,
+} from "lucide-react";
 import { createColumnHelper } from "@tanstack/react-table";
+import { getDataTree, searchDataTree, getBaseObject } from "@zoos/navigation";
 import { useTable, featureProps, ComponentProps } from "@zoos/react-table";
 import { features } from "@zoos/react-table-ui";
-import { getDataTree, searchDataTree } from "@zoos/navigation";
+import {
+  Button,
+  ContextMenuItem,
+  ContextMenuPortal,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  DialogContent,
+} from "@zoos/shadcn";
+
+import { openDialog, closeDialog, openAlertDialog } from "../../lib/dialog";
+
+import {
+  FormDialog,
+  FolderForm,
+  PermissionsForm,
+  RawObjectForm,
+  DeleteObjectDialog,
+} from "./forms";
 
 /*
 start: column-defs
@@ -56,7 +91,8 @@ start: use-objects-table
 --------------------
 */
 
-type Params = Omit<Parameters<typeof useTable>[0], "columns" | "data"> & {
+type TableParams = Parameters<typeof useTable<ObjectsTableData>>[0];
+type Params = Omit<TableParams, "columns" | "data"> & {
   columns?: ColumnDef<ObjectsTableData>[];
   data?: Object[];
   location: string;
@@ -170,5 +206,170 @@ export { getFeatureProps };
 /*
 start: context-menu-content
 */
+
+/**
+ *
+ * @param showDetails call this function to show the details panel
+ * @returns
+ */
+const getObjectsTdContext =
+  (params: {
+    showDetails: () => void;
+  }): ContextMenuContentProp<ObjectsTableData, unknown>["td"] =>
+  (cellContext) => {
+    const { table, row } = cellContext;
+    const rowId = row.original.id;
+
+    return (
+      <>
+        {/* New object / folder */}
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>New</ContextMenuSubTrigger>
+          <ContextMenuPortal>
+            <ContextMenuSubContent>
+              <ContextMenuItem className="gap-2" disabled>
+                <BoxIcon className="size-4" />
+                Object
+              </ContextMenuItem>
+              <ContextMenuItem
+                className="gap-2"
+                onSelect={() => {
+                  openDialog({
+                    content: (
+                      <FormDialog
+                        title="New Folder"
+                        description="Create a new folder"
+                      >
+                        <FolderForm
+                          mutationOptions={{ onSuccess: () => closeDialog() }}
+                        />
+                      </FormDialog>
+                    ),
+                  });
+                }}
+              >
+                <FolderPlusIcon className="size-4" />
+                Folder
+              </ContextMenuItem>
+            </ContextMenuSubContent>
+          </ContextMenuPortal>
+        </ContextMenuSub>
+        {/* Opening the object */}
+        <ContextMenuSeparator className="mx-1 border-b" />
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => console.log("Open")}
+          disabled
+        >
+          <ExternalLinkIcon className="size-4" /> Open
+        </ContextMenuItem>
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => {
+            openDialog({
+              content: (
+                <FormDialog
+                  title="New Folder"
+                  description="Create a new folder"
+                >
+                  <RawObjectForm
+                    object={getBaseObject(row.original)}
+                    mutationOptions={{
+                      onSuccess: () => closeDialog(),
+                    }}
+                  />
+                </FormDialog>
+              ),
+            });
+          }}
+        >
+          <BracesIcon className="size-4" /> Open Raw
+        </ContextMenuItem>
+        {/* */}
+        <ContextMenuSeparator className="mx-1 border-b" />
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => console.log("Rename")}
+          disabled
+        >
+          <FolderPenIcon className="size-4" />
+          Rename
+        </ContextMenuItem>
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => console.log("Download")}
+          disabled
+        >
+          <ArrowDownToLineIcon className="size-4" /> Download
+        </ContextMenuItem>
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => console.log("Duplicate")}
+          disabled
+        >
+          <CopyIcon className="size-4" />
+          Duplicate
+        </ContextMenuItem>
+        {/* Share / Organize / Details*/}
+        <ContextMenuSeparator className="mx-1 border-b" />
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => {
+            openDialog({
+              content: (
+                <FormDialog
+                  title="New Folder"
+                  description="Create a new folder"
+                >
+                  <PermissionsForm
+                    object={getBaseObject(row.original)}
+                    mutationOptions={{ onSuccess: () => closeDialog() }}
+                  />
+                </FormDialog>
+              ),
+            });
+          }}
+        >
+          <UserPlusIcon className="size-4" />
+          Share
+        </ContextMenuItem>
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => console.log("Organize")}
+          disabled
+        >
+          <FolderInputIcon className="size-4" />
+          Move
+        </ContextMenuItem>
+        <ContextMenuItem
+          className="gap-2"
+          onSelect={() => {
+            table.setRowSelection({ [rowId]: true });
+            params.showDetails();
+          }}
+        >
+          <InfoIcon className="size-4" />
+          Details
+        </ContextMenuItem>
+        {/* Delete */}
+        <ContextMenuSeparator className="mx-1 border-b" />
+        <ContextMenuItem
+          className="focus:bg-destructive focus:text-destructive-foreground gap-2"
+          onSelect={() =>
+            openAlertDialog({
+              content: (
+                <DeleteObjectDialog object={getBaseObject(row.original)} />
+              ),
+            })
+          }
+        >
+          <TrashIcon className="size-4" />
+          Delete
+        </ContextMenuItem>
+      </>
+    );
+  };
+
+export { getObjectsTdContext };
 
 // ----------- context-menu-content

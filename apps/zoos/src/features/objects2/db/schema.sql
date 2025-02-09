@@ -9,7 +9,7 @@ drop type if exists zoos.objects_user_type_enum cascade;
 ---------
 -- tables
 ---------
-drop table if exists zoos.objects_folder cascade;
+drop table if exists zoos.objects_folders cascade;
 drop table if exists zoos.objects cascade;
 drop table if exists zoos.objects_users cascade;
 drop table if exists zoos.objects_groups cascade;

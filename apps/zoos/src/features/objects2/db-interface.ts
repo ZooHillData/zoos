@@ -1,3 +1,4 @@
+import type { TreeNode } from "@zoos/navigation";
 import type { Database } from "../../lib/supabase";
 
 import { getClient, getQueryKey } from "../../lib/supabase";
@@ -55,14 +56,10 @@ type ObjectFolderUpdate =
 
 // From objects view that joins objects to folders
 type ObjectView = Database[ObjectsSchema]["Views"]["objects_view"]["Row"];
-
-// Objects enhanced by joining on `objects_history` and `objects_folders`
-// tables (see `getObjects`)
-type ObjectSelectJoin = ObjectView & {
+type ObjectViewJoin = ObjectView & {
   objects_history:
     | Pick<ObjectHistorySelect, "tag" | "update_email" | "updated_at">[]
     | null;
-  objects_folders?: { path: string } | null;
 };
 
 // Users
@@ -74,18 +71,20 @@ type User = {
 };
 
 // ! Main `Object` type within application
-type Object = Omit<ObjectSelectJoin, "created_at" | "last_updated_at"> & {
+type Object = Omit<ObjectViewJoin, "created_at" | "last_updated_at"> & {
   created_at: Date;
   last_updated_at: Date;
 };
 
+type ObjectsTableData = TreeNode<Object>;
+
 export type {
+  ObjectsTableData,
   ObjectsSchema,
   User,
   ObjectTypes,
   Object,
   ObjectSelect,
-  ObjectSelectJoin,
   ObjectInsert,
   ObjectUpdate,
   ObjectHistorySelect,
@@ -105,11 +104,14 @@ start: supabase-write
 e.g. move, delete, add
 */
 
-const dumpObjectUpdate = (object: Object): ObjectUpdate => ({
-  ...object,
-  created_at: object.created_at.toISOString(),
-  last_updated_at: object.last_updated_at.toISOString(),
-});
+const dumpObjectUpdate = (object: Object): ObjectUpdate => {
+  const { objects_history, folder_path, folder_owner_email, ...rest } = object;
+  return {
+    ...rest,
+    created_at: object.created_at.toISOString(),
+    last_updated_at: object.last_updated_at.toISOString(),
+  };
+};
 
 const dumpObjectInsert = (object: Object): ObjectInsert => ({
   ...object,
@@ -138,6 +140,9 @@ const addObject = ({ object }: { object: Object }) =>
     .insert(dumpObjectInsert(object))
     .select("*");
 
+const addObjectFolder = ({ folder }: { folder: ObjectFolderInsert }) =>
+  getObjectsClient().from("objects_folders").insert(folder).select("*");
+
 const updateObject = ({
   objectId,
   object,
@@ -151,7 +156,7 @@ const updateObject = ({
     .match({ id: objectId })
     .select("*");
 
-export { moveObject, deleteObject, addObject, updateObject };
+export { moveObject, deleteObject, addObject, updateObject, addObjectFolder };
 
 // --------------- supabase-write
 
@@ -160,7 +165,7 @@ export { moveObject, deleteObject, addObject, updateObject };
  --------------------
  */
 
-const parseObject = (object: ObjectSelectJoin): Object => ({
+const parseObject = (object: ObjectViewJoin): Object => ({
   ...object,
   created_at: new Date(object.created_at),
   last_updated_at: new Date(object.last_updated_at),
@@ -173,6 +178,8 @@ const getObjects = () =>
     `);
 
 const getFolders = () => getObjectsClient().from("objects_folders").select("*");
+const getFolder = ({ id }: { id: number }) =>
+  getObjectsClient().from("objects_folders").select("*").match({ id });
 
 const getUsers = () => getObjectsClient().from("objects_users").select("*");
 
@@ -215,14 +222,46 @@ const getObjectsQuery = createQueryOptions({
   },
 });
 
-export { keyFactory, getObjectsQuery };
+const getFoldersQuery = createQueryOptions({
+  queryKey: keyFactory.folders.all,
+  queryFn: async () => {
+    const { data } = await getFolders();
+    return data;
+  },
+});
+
+const getFolderQuery = createQueryOptions({
+  queryKey: keyFactory.folders.all,
+  queryFn: async ({ id }: { id: number }) => {
+    const { data } = await getFolder({ id });
+    return data;
+  },
+});
+
+const getUsersQuery = createQueryOptions({
+  queryKey: keyFactory.users.all,
+  queryFn: async () => {
+    const { data } = await getUsers();
+    return data;
+  },
+});
+
+export {
+  keyFactory,
+  getFolderQuery,
+  getObjectsQuery,
+  getFoldersQuery,
+  getUsersQuery,
+};
 
 // -------------- queries
 
 /*
-start: mutations
+start: mutations 
 ----------------
 */
+
+// table: objects
 
 const moveObjectMutation = createMutationOptions({
   mutationKey: getQueryKey(["move-object"]),
@@ -235,6 +274,58 @@ const moveObjectMutation = createMutationOptions({
   },
 });
 
-export { moveObjectMutation };
+const deleteObjectMutation = createMutationOptions({
+  mutationKey: getQueryKey(["delete-object"]),
+  mutationFn: async (params: Parameters<typeof deleteObject>[0]) =>
+    await deleteObject(params),
+  options: {
+    onSuccess: ({ queryClient }) => {
+      queryClient.invalidateQueries({ queryKey: keyFactory.objects.all });
+    },
+  },
+});
+
+const addObjectMutation = createMutationOptions({
+  mutationKey: getQueryKey(["add-object"]),
+  mutationFn: async (params: Parameters<typeof addObject>[0]) =>
+    await addObject(params),
+  options: {
+    onSuccess: ({ queryClient }) => {
+      queryClient.invalidateQueries({ queryKey: keyFactory.objects.all });
+    },
+  },
+});
+
+const updateObjectMutation = createMutationOptions({
+  mutationKey: getQueryKey(["update-object"]),
+  mutationFn: async (params: Parameters<typeof updateObject>[0]) =>
+    await updateObject(params),
+  options: {
+    onSuccess: ({ queryClient }) => {
+      queryClient.invalidateQueries({ queryKey: keyFactory.objects.all });
+    },
+  },
+});
+
+// table: objects_folders
+
+const addObjectFolderMutation = createMutationOptions({
+  mutationKey: getQueryKey(["add-object-folder"]),
+  mutationFn: async (params: Parameters<typeof addObjectFolder>[0]) =>
+    await addObjectFolder(params),
+  options: {
+    onSuccess: ({ queryClient }) => {
+      queryClient.invalidateQueries({ queryKey: keyFactory.folders.all });
+    },
+  },
+});
+
+export {
+  moveObjectMutation,
+  deleteObjectMutation,
+  addObjectMutation,
+  updateObjectMutation,
+  addObjectFolderMutation,
+};
 
 // -------------- mutations

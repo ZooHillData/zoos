@@ -20,8 +20,8 @@ insert into zoos.objects (name, owner_email, object_type, object_data, last_upda
     -- My object, no permissions
     ('Mine', 'art@zoohilldata.com', 'data', '{"key1": "value1"}', 'art@zoohilldata.com', array[]::text[], array[]::text[], array[]::text[], 1),
     ('Someones (read)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array['art@zoohilldata.com'], array[]::text[], array[]::text[], 2),
-    ('Someones (read/write)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array['art@zoohilldata.com'], array['art@zoohilldata.com'], array[]::text[], 2),
-    ('Someones (read/write/manage)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array['art@zoohilldata.com'], array['art@zoohilldata.com'], array['art@zoohilldata.com'], 3),
+    ('Someones (read, write)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array['art@zoohilldata.com'], array['art@zoohilldata.com'], array[]::text[], 2),
+    ('Someones (read, write, manage)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array['art@zoohilldata.com'], array['art@zoohilldata.com'], array['art@zoohilldata.com'], 3),
     ('Someones (none)', 'arterry1618@gmail.com', 'data', '{"key1": "value1"}', 'arterry1618@gmail.com', array[]::text[], array[]::text[], array[]::text[], 4)
 ;
 

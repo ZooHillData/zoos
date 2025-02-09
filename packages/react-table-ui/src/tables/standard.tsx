@@ -74,19 +74,25 @@ const Table = <TData extends object, TValue>(props: {
                               dragElementProps,
                             ])}
                           >
-                            <HeaderContextMenu
-                              header={header.getContext()}
-                              className="h-full w-full text-left"
-                              // Spread attributes and listeners onto the header context menu
-                              {...dragHandleProps}
-                            >
-                              {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext(),
-                                  )}
-                            </HeaderContextMenu>
+                            {
+                              // See the `ContextMenu` comments in `td` for information on `modal={false}`
+                              // ? (SEE BELOW)
+                            }
+                            <ContextMenu modal={false}>
+                              <HeaderContextMenu
+                                header={header.getContext()}
+                                className="h-full w-full text-left"
+                                // Spread attributes and listeners onto the header context menu
+                                {...dragHandleProps}
+                              >
+                                {header.isPlaceholder
+                                  ? null
+                                  : flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext(),
+                                    )}
+                              </HeaderContextMenu>
+                            </ContextMenu>
                             <HeaderSortIndicator
                               // Sort indicator
                               header={header}
@@ -133,7 +139,16 @@ const Table = <TData extends object, TValue>(props: {
                               : {};
                           const tdChildrenMarkup = props.contextMenuContent
                             ?.td ? (
-                            <ContextMenu>
+                            /*
+                             ! Workaround to allow spawning <AlertDialog /> from context menu
+                            [link to radix issue](https://github.com/radix-ui/primitives/issues/1836#issuecomment-1547607143)
+
+                            I believe this is required because when the AlertDialog closes,
+                            the context menu is still open and capturing the focus
+
+                            `modal={false}` makes it so that ContextMenu does not capture the entire focus
+                            */
+                            <ContextMenu modal={false}>
                               <ContextMenuTrigger className="flex h-full w-full">
                                 {flexRender(
                                   cell.column.columnDef.cell,

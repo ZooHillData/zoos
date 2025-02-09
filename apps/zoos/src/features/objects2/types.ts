@@ -49,10 +49,7 @@ type Object = Omit<ObjectViewJoined, "created_at" | "last_updated_at"> & {
   last_updated_at: Date;
 };
 
-type ObjectsTableData = TreeNode<Object>;
-
 export type {
-  ObjectsTableData,
   ObjectsSchema,
   User,
   ObjectTypes,

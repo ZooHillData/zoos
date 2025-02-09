@@ -1,6 +1,16 @@
-import { Dialog, DialogOverlay } from "@zoos/shadcn";
+import {
+  AlertDialog,
+  AlertDialogOverlay,
+  Dialog,
+  DialogOverlay,
+} from "@zoos/shadcn";
 
-import { useDialog, closeDialog } from "./dialog-store";
+import {
+  useDialog,
+  closeDialog,
+  useAlertDialog,
+  closeAlertDialog,
+} from "./dialog-store";
 
 const ControlledDialog = () => {
   const { isOpen, content } = useDialog();
@@ -20,4 +30,22 @@ const ControlledDialog = () => {
   );
 };
 
-export { ControlledDialog };
+const ControlledAlertDialog = () => {
+  const { isOpen, content } = useAlertDialog();
+
+  return (
+    <AlertDialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          closeAlertDialog();
+        }
+      }}
+    >
+      <AlertDialogOverlay />
+      {content}
+    </AlertDialog>
+  );
+};
+
+export { ControlledDialog, ControlledAlertDialog };
