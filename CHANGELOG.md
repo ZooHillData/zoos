@@ -1,3 +1,13 @@
+## [1.38.1](https://github.com/zoohilldata/zoos/compare/v1.38.0...v1.38.1) (2025-02-07)
+
+### Bug Fixes
+
+* **react-form, react-table:** adding additional column filters, combobox-checkbox-group, headercontext menu layout updates ([52d0018](https://github.com/zoohilldata/zoos/commit/52d0018bfa112e661dcc5b85686199066179921f))
+
+### Chores
+
+* add roadmap, add obects design doc ([39d4bbd](https://github.com/zoohilldata/zoos/commit/39d4bbd3cebd675cf61529bdabd4cae2c12c2596))
+
 ## [1.38.0](https://github.com/zoohilldata/zoos/compare/v1.37.1...v1.38.0) (2025-01-29)
 
 ### Features

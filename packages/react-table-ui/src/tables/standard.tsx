@@ -1,9 +1,4 @@
-import type {
-  Table as TTable,
-  Cell,
-  CellContext,
-  HeaderContext,
-} from "@tanstack/react-table";
+import type { Table as TTable, Cell, CellContext } from "@tanstack/react-table";
 
 import { flexRender } from "@tanstack/react-table";
 
