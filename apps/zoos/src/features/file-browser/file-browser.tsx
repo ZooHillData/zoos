@@ -116,7 +116,7 @@ const FileBrowser = (props: {
       <div className="flex items-center justify-between">
         <LocationBreadcrumb
           location={location}
-          onClick={(path) => {
+          onBreadcrumbClick={(path) => {
             onLocationChange(path);
           }}
         />

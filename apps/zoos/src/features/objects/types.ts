@@ -1,8 +1,9 @@
 // From supabase `supabase gen types` command
 // npx supabase gen types --lang=typescript \ --project-id $PROJECT_ID --schema zoos > ~/Downloads/database.types.ts
-import type { Database } from "./db/objects-database.types";
-import { OBJECTS_SCHEMA } from "./db/constants";
+import type { Database } from "../../lib/supabase";
+import type { TreeNode } from "@zoos/navigation";
 
+const OBJECTS_SCHEMA = "zoos";
 type ObjectsSchema = typeof OBJECTS_SCHEMA;
 
 // Object types in database
@@ -29,9 +30,9 @@ type ObjectFolderInsert =
 type ObjectFolderUpdate =
   Database[ObjectsSchema]["Tables"]["objects_folders"]["Update"];
 
-type ObjectSelectJoin = ObjectSelect & {
+type ObjectView = Database[ObjectsSchema]["Views"]["objects_view"]["Row"];
+type ObjectViewJoined = ObjectView & {
   objects_history: ObjectHistorySelect[];
-  objects_folders?: ObjectFolderSelect;
 };
 
 // Users
@@ -43,7 +44,7 @@ type User = {
 };
 
 // Objects (in application) result of `parseObject`
-type Object = Omit<ObjectSelectJoin, "created_at" | "last_updated_at"> & {
+type Object = Omit<ObjectViewJoined, "created_at" | "last_updated_at"> & {
   created_at: Date;
   last_updated_at: Date;
 };
@@ -54,7 +55,6 @@ export type {
   ObjectTypes,
   Object,
   ObjectSelect,
-  ObjectSelectJoin,
   ObjectInsert,
   ObjectUpdate,
   ObjectHistorySelect,

@@ -28,7 +28,7 @@ const getColumns =
       columnHelper = createColumnHelper<TData>(),
     } = params || {};
 
-    const filteredInferred = Object.keys(data[0]).filter(
+    const filteredInferred = Object.keys(data[0] || {}).filter(
       (columnId) => !exclude(columnId),
     );
 

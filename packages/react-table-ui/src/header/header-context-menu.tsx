@@ -3,7 +3,6 @@ import React from "react";
 import { type HeaderContext } from "@tanstack/react-table";
 
 import {
-  ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuLabel,
@@ -30,7 +29,7 @@ const HeaderContextMenu = <TData, TValue>({
   ).filter(([_, isVisible]) => !isVisible).length;
 
   return (
-    <ContextMenu>
+    <>
       <ContextMenuTrigger {...rest}>
         <div>{children}</div>
       </ContextMenuTrigger>
@@ -118,7 +117,7 @@ const HeaderContextMenu = <TData, TValue>({
           </ContextMenuSub>
         )}
       </ContextMenuContent>
-    </ContextMenu>
+    </>
   );
 };
 

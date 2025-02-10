@@ -127,3 +127,23 @@ CSS Variables for Tailwind Config
     }
   }
 }
+
+/*
+React grid layout
+TODO - Find a way to style with Tailwind in Components
+*/
+.react-grid-item.react-grid-placeholder {
+  /* Background color of the placeholder when dragging / resizing */
+  background-color: var(--primary-muted);
+}
+
+.react-grid-item > .react-resizable-handle {
+  /* z-index above table header row */
+  z-index: 20;
+  /* When dragging, don't allow selecting text */
+  user-select: none;
+}
+.react-grid-item > .react-resizable-handle::after {
+  /* Make the resize handle border fainter */
+  border-color: hsla(0, 0%, 32%, 0.008);
+}

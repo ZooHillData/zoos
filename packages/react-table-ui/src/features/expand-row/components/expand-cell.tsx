@@ -33,7 +33,12 @@ const ExpandCell = <TData, TValue>(props: {
       }}
     >
       {hasChildren && (
-        <button onClick={() => row.toggleExpanded()}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            row.toggleExpanded();
+          }}
+        >
           {row.getIsExpanded() ? (
             <ChevronDownIcon
               style={{ width: chevronSizePx, height: chevronSizePx }}

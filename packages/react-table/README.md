@@ -135,7 +135,7 @@ return (
         {virtualRows.map((virtualRow) => {
           const row = table.getRowModel().rows[virtualRow.index];
           return (
-            <tr key={virtualRow.index} {...componentProps.trBody?.({ row, virtualRow })}>
+            <tr key={virtualRow.index} {...componentProps.trBody?.({ table, row, virtualRow })}>
               {row.getVisibleCells().map((cell) => {
                 return (
                   <td key={cell.id} {...componentProps.td?.({ cell, virtualRow })}>
