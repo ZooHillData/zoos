@@ -134,11 +134,8 @@ const moveObject = ({
 const deleteObject = async ({ objectId }: { objectId: number }) =>
   getObjectsClient().from("objects").delete().match({ id: objectId });
 
-const addObject = ({ object }: { object: Object }) =>
-  getObjectsClient()
-    .from("objects")
-    .insert(dumpObjectInsert(object))
-    .select("*");
+const addObject = ({ object }: { object: ObjectInsert }) =>
+  getObjectsClient().from("objects").insert(object).select("*");
 
 const addObjectFolder = ({ folder }: { folder: ObjectFolderInsert }) =>
   getObjectsClient().from("objects_folders").insert(folder).select("*");

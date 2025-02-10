@@ -1,8 +1,7 @@
-import type { Row } from "@tanstack/react-table";
 import type { FormConfig } from "@zoos/react-form";
-import type { Object, ObjectsTableData } from "./db-interface";
+import { moveObjectMutation, Object } from "./db-interface";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toKebabCase } from "remeda";
 import {
   AlertDialogAction,
@@ -20,11 +19,9 @@ import {
   buttonVariants,
 } from "@zoos/shadcn";
 import { getFormConfig, Form } from "@zoos/react-form";
-import { useQuery } from "@tanstack/react-query";
 
 import { useQueryClient } from "../../lib/use-query-client";
 import { queries } from "../auth";
-import { closeAlertDialog } from "../../lib/dialog";
 
 import { PermissionsForm as PermissionsFormBase } from "./permissions-form";
 import {
@@ -34,6 +31,7 @@ import {
   getUsersQuery,
   updateObjectMutation,
   ObjectFolderSelect,
+  addObjectMutation,
 } from "./db-interface";
 
 /**
@@ -193,7 +191,7 @@ const PermissionsForm = (props: {
   const queryClient = useQueryClient();
   const { data: users } = useQuery(getUsersQuery({ params: {} }));
   const { mutateAsync: updateObject } = useMutation(
-    updateObjectMutation({ queryClient }),
+    updateObjectMutation({ queryClient, options: props.mutationOptions }),
   );
 
   return (
@@ -260,13 +258,117 @@ const DeleteObjectDialog = (props: {
 export { DeleteObjectDialog };
 
 /*
+start: add-object
+*/
+
+const addObjectDefaultValues = {
+  name: "",
+  description: "",
+  object_data: "{}",
+};
+const addObjectFormConfig = getFormConfig({
+  defaultValues: addObjectDefaultValues,
+  context: {},
+})({
+  formOptions: {},
+  fields: [
+    { name: "name", type: "string" },
+    { name: "description", type: "string.long" },
+    { name: "object_data", type: "string.long" },
+  ],
+  layout: {
+    ...getSharedLayout(),
+  },
+});
+const AddObjectForm = (props: {
+  mutationOptions?: Parameters<typeof addObjectMutation>[0]["options"];
+}) => {
+  const queryClient = useQueryClient();
+  const { data: user } = queries.useUserQuery();
+  const { mutateAsync: addObject } = useMutation(
+    addObjectMutation({ queryClient, options: props.mutationOptions }),
+  );
+
+  return (
+    <Form
+      config={addObjectFormConfig}
+      context={{}}
+      onSubmit={async ({ value }) => {
+        if (!user?.email) return;
+
+        await addObject({
+          object: {
+            ...value,
+            object_type: "data",
+            owner_email: user.email,
+            last_updated_email: user.email,
+          },
+        });
+      }}
+    />
+  );
+};
+
+export { AddObjectForm };
+
+// ---------------- end: add-object
+
+/*
 start: move-object
 */
 
 const moveObjectDefaultValues = {
-  folderId: 0,
+  folderPath: "",
 };
 type MoveObjectFormContext = { folders: ObjectFolderSelect[] };
+const moveObjectFormConfig = getFormConfig({
+  defaultValues: moveObjectDefaultValues,
+  context: {} as MoveObjectFormContext,
+})({
+  formOptions: {},
+  fields: [
+    {
+      name: "folderPath",
+      type: "array-string.single",
+      options: ({ context }) => context.folders.map((folder) => folder.path),
+    },
+  ],
+  layout: {
+    ...getSharedLayout(),
+  },
+});
+const MoveObjectForm = (props: {
+  object: Object;
+  mutationOptions?: Parameters<typeof moveObjectMutation>[0]["options"];
+}) => {
+  const queryClient = useQueryClient();
+  const { data: user } = queries.useUserQuery();
+  const { data: folders } = useQuery(getFoldersQuery({ params: {} }));
+  const { mutateAsync: moveObject } = useMutation(
+    moveObjectMutation({ queryClient, options: props.mutationOptions }),
+  );
+
+  return (
+    <Form
+      config={moveObjectFormConfig}
+      context={{ folders: folders || [] }}
+      onSubmit={async ({ value }) => {
+        if (!user?.email) return;
+        const folderId = folders?.find(
+          (folder) => folder.path === value.folderPath,
+        )?.id;
+        if (!folderId) return;
+
+        await moveObject({
+          objectId: props.object.id,
+          folderId,
+        });
+      }}
+    />
+  );
+};
+
+export { MoveObjectForm };
 
 // ---------------- end: move-object
 

@@ -6,7 +6,6 @@ import React from "react";
 
 import {
   ArrowDownToLineIcon,
-  BombIcon,
   BoxIcon,
   BracesIcon,
   CopyIcon,
@@ -23,14 +22,12 @@ import { getDataTree, searchDataTree, getBaseObject } from "@zoos/navigation";
 import { useTable, featureProps, ComponentProps } from "@zoos/react-table";
 import { features } from "@zoos/react-table-ui";
 import {
-  Button,
   ContextMenuItem,
   ContextMenuPortal,
   ContextMenuSeparator,
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,
-  DialogContent,
 } from "@zoos/shadcn";
 
 import { openDialog, closeDialog, openAlertDialog } from "../../lib/dialog";
@@ -41,6 +38,8 @@ import {
   PermissionsForm,
   RawObjectForm,
   DeleteObjectDialog,
+  AddObjectForm,
+  MoveObjectForm,
 } from "./forms";
 
 /*
@@ -227,7 +226,25 @@ const getObjectsTdContext =
           <ContextMenuSubTrigger>New</ContextMenuSubTrigger>
           <ContextMenuPortal>
             <ContextMenuSubContent>
-              <ContextMenuItem className="gap-2" disabled>
+              <ContextMenuItem
+                className="gap-2"
+                onSelect={() => {
+                  openDialog({
+                    content: (
+                      <FormDialog
+                        title="New Object"
+                        description="Create a new object"
+                      >
+                        <AddObjectForm
+                          mutationOptions={{
+                            onSuccess: () => closeDialog(),
+                          }}
+                        />
+                      </FormDialog>
+                    ),
+                  });
+                }}
+              >
                 <BoxIcon className="size-4" />
                 Object
               </ContextMenuItem>
@@ -335,8 +352,21 @@ const getObjectsTdContext =
         </ContextMenuItem>
         <ContextMenuItem
           className="gap-2"
-          onSelect={() => console.log("Organize")}
-          disabled
+          onSelect={() => {
+            openDialog({
+              content: (
+                <FormDialog
+                  title={`Move ${row.original.name}`}
+                  description="Create a new folder"
+                >
+                  <MoveObjectForm
+                    object={getBaseObject(row.original)}
+                    mutationOptions={{ onSuccess: () => closeDialog() }}
+                  />
+                </FormDialog>
+              ),
+            });
+          }}
         >
           <FolderInputIcon className="size-4" />
           Move
