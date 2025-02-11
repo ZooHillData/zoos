@@ -3,7 +3,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 // Create random user data and attach to route loader
 import { createData, createRandomUser } from "../../../community/fake-data";
 const data = createData(createRandomUser, {
-  count: 10000,
+  count: 100,
 });
 
 export const Route = createFileRoute("/core/react-table")({
