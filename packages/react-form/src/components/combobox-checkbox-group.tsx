@@ -60,7 +60,6 @@ const ComboboxCheckboxGroup = ({
         <CheckboxGroupVirtual
           options={optionsFiltered}
           virtualizer={virtualizer}
-          className={createCn("mt-2 flex flex-col gap-3 p-2")}
           {...props}
         />
       </div>
