@@ -28,6 +28,12 @@ import {
   ContextMenuSub,
   ContextMenuSubContent,
   ContextMenuSubTrigger,
+  Avatar,
+  AvatarFallback,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@zoos/shadcn";
 
 import { openDialog, closeDialog, openAlertDialog } from "../../lib/dialog";
@@ -75,13 +81,88 @@ const columns = [
     {
       id: "owner",
       header: "Owner",
+      size: 100,
+      cell: (cellContext) => {
+        const email = cellContext.getValue();
+        if (!email) return null;
+
+        const initial = email[0].toUpperCase();
+        return (
+          <TooltipProvider>
+            <Tooltip delayDuration={200}>
+              <TooltipTrigger>
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback>{initial}</AvatarFallback>
+                </Avatar>
+              </TooltipTrigger>
+              <TooltipContent>{email}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
+      },
     },
   ),
   columnHelper.accessor(
     (row) =>
       // If row is a folder, don't show the updated at
       row._dataTree.children?.length > 0 ? "" : row.last_updated_at,
-    { id: "last_updated_at", header: "Updated" },
+    {
+      id: "last_updated_at",
+      header: "Updated",
+      cell: (cellContext) => {
+        const value = cellContext.getValue();
+        if (!value) return null;
+
+        /**
+         * Formats a date based on how recent it is:
+         * - If today: shows time (e.g. "2:30 PM")
+         * - If yesterday: shows "yesterday"
+         * - Otherwise: shows date (e.g. "Mar 15, 2024")
+         */
+        const formatLastUpdated = (value: Date) => {
+          const date = new Date(value);
+          const now = new Date();
+
+          // Normalize both dates to start of day in local timezone
+          const normalizedDate = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+          );
+          const normalizedToday = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+          );
+
+          // Calculate days difference
+          const diffTime = normalizedDate.getTime() - normalizedToday.getTime();
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          const dateFormatter = new Intl.DateTimeFormat("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          });
+
+          let displayText;
+          if (diffDays === 0) {
+            displayText = date.toLocaleTimeString();
+          } else if (diffDays === -1) {
+            displayText = "yesterday";
+          } else {
+            displayText = dateFormatter.format(date);
+          }
+          return displayText;
+        };
+
+        return (
+          <div className="flex flex-col">
+            <span className="text-sm">{formatLastUpdated(value)}</span>
+          </div>
+        );
+      },
+    },
   ),
 ];
 
@@ -98,20 +179,6 @@ type Params = Omit<TableParams, "columns" | "data"> & {
   onLocationChange: (location: string) => void;
 };
 const useObjectsTable = ({ data, ...params }: Params) => {
-  // Columns
-  // const { columns } = React.useMemo(() => {
-  //   if (!data || data.length === 0) {
-  //     return { columns: [], dataTree: [] };
-  //   }
-  //   const dataTree = getDataTree({ data })({
-  //     getPath: (row) => (row.objects_folders?.path || "/").split("/"),
-  //   })._dataTree.children;
-  //   return {
-  //     columns: getColumns({ data: dataTree })(),
-  //     dataTree,
-  //   };
-  // }, [data]);
-
   // Data tree
   const dataTree = React.useMemo(() => {
     if (data && data.length > 0) {
@@ -165,8 +232,21 @@ start: get-feature-props
 const getFeatureProps = (params: {
   onLocationChange: (location: string) => void;
 }): ComponentProps<ObjectsTableData, unknown>[] => [
-  featureProps.spacing.compact(),
-  { th: () => ({ className: "bg-muted flex" }) },
+  featureProps.utils.allCells({ className: "whitespace-nowrap" }),
+  {
+    container: { className: "border text-sm" },
+    tdContextMenu: () => ({
+      className: "whitespace-nowrap px-3 py-2 bg-background flex items-center",
+    }),
+    th: () => ({
+      className: "whitespace-nowrap px-3 py-2 flex bg-background",
+    }),
+    td: () => ({ className: "p-0" }),
+    trHead: () => ({ className: "border-b-2" }),
+    trBody: () => ({
+      className: "border-b",
+    }),
+  },
   {
     // Row hover accent
     trBody: ({ row }) => ({ className: "hover:cursor-default group" }),
@@ -174,7 +254,7 @@ const getFeatureProps = (params: {
   },
   {
     // Directory row get bolder font
-    td: ({ cell: { row } }) => ({
+    td: ({ cellContext: { row } }) => ({
       className: row.subRows.length > 0 ? "font-medium" : "",
     }),
   },
@@ -211,8 +291,9 @@ start: context-menu-content
  * @param showDetails call this function to show the details panel
  * @returns
  */
-const getObjectsTdContext =
+const getObjectsTdContextMenu =
   (params: {
+    location: string;
     showDetails: () => void;
   }): ContextMenuContentProp<ObjectsTableData, unknown>["td"] =>
   (cellContext) => {
@@ -255,7 +336,7 @@ const getObjectsTdContext =
                     content: (
                       <FormDialog
                         title="New Folder"
-                        description="Create a new folder"
+                        description={`Create folder in ${params.location}`}
                       >
                         <FolderForm
                           mutationOptions={{ onSuccess: () => closeDialog() }}
@@ -400,6 +481,6 @@ const getObjectsTdContext =
     );
   };
 
-export { getObjectsTdContext };
+export { getObjectsTdContextMenu };
 
 // ----------- context-menu-content

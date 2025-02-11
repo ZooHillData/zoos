@@ -1,5 +1,5 @@
 import type {
-  Cell,
+  CellContext,
   HeaderGroup,
   HeaderContext,
   Row,
@@ -17,6 +17,9 @@ type ComponentProps<TData, TValue> = Partial<{
   thead: Partial<{ className: string; style: React.CSSProperties }>;
   trHead: (params: {
     headerGroup: HeaderGroup<TData>;
+  }) => Partial<{ className: string; style: React.CSSProperties }>;
+  thContextMenu: (params: {
+    headerContext: HeaderContext<TData, TValue>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
   th: (params: {
     headerContext: HeaderContext<TData, TValue>;
@@ -38,8 +41,14 @@ type ComponentProps<TData, TValue> = Partial<{
     }
   >;
   td: (params: {
-    cell: Cell<TData, TValue>;
+    cellContext: CellContext<TData, TValue>;
     virtualRow: VirtualItem;
+  }) => Partial<{
+    style: React.CSSProperties;
+    className: string;
+  }>;
+  tdContextMenu: (params: {
+    cellContext: CellContext<TData, TValue>;
   }) => Partial<{
     style: React.CSSProperties;
     className: string;

@@ -35,7 +35,7 @@ const getComponentProps = <TData, TValue>({
         }),
       },
     }),
-    featureProps.borders(),
+    // featureProps.borders(),
     featureProps.columnPinning({
       custom: {
         // Custom styles for the border between pinned and non-pinned columns
@@ -50,8 +50,10 @@ const getComponentProps = <TData, TValue>({
                 : "",
           };
         },
-        td: ({ cell: { column } }) => {
-          const { isLastLeft, isFirstRight } = getPinningAttributes(column);
+        td: ({ cellContext: { cell } }) => {
+          const { isLastLeft, isFirstRight } = getPinningAttributes(
+            cell.column,
+          );
           return {
             className: isLastLeft
               ? "border-r-4"

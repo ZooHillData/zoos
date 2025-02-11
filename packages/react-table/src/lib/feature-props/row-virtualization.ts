@@ -30,7 +30,7 @@ const rowVirtualization = <TData, TValue>(params: {
         transform: `translateY(${virtualRow.start}px)`,
       },
     }),
-    td: ({ cell }) => ({
+    td: ({ cellContext: { cell } }) => ({
       style: {
         width: cell.column.getSize(),
       },

@@ -37,12 +37,13 @@ const columnPinning = <TData, TValue>(params?: {
         params?.custom?.th?.({ headerContext }) || {},
       ]);
     },
-    td: ({ cell, virtualRow }) => {
+    td: ({ cellContext: { cell }, virtualRow }) => {
       return mergeStyleProps([
         {
           style: getPinningStyles(cell.column),
         },
-        params?.custom?.td?.({ cell, virtualRow }) || {},
+        params?.custom?.td?.({ cellContext: cell.getContext(), virtualRow }) ||
+          {},
       ]);
     },
   }) satisfies ComponentProps<TData, TValue>;

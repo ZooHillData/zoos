@@ -12,11 +12,12 @@ import {
 const LocationBreadcrumb = (props: {
   location: string;
   onBreadcrumbClick?: (location: string) => void;
+  className?: string;
 }) => {
   const parts = props.location.split("/").filter(Boolean);
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className={props.className}>
         <BreadcrumbItem>
           <BreadcrumbLink
             className="hover:cursor-pointer"

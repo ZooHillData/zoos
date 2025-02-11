@@ -76,7 +76,12 @@ const Table = <TData extends object, TValue>(props: {
                             <ContextMenu modal={false}>
                               <HeaderContextMenu
                                 header={header.getContext()}
-                                className="h-full w-full text-left"
+                                {...mergeStyleProps([
+                                  { className: "flex h-full w-full" },
+                                  props.componentProps.thContextMenu?.({
+                                    headerContext: header.getContext(),
+                                  }) || {},
+                                ])}
                                 // Spread attributes and listeners onto the header context menu
                                 {...dragHandleProps}
                               >
@@ -144,7 +149,14 @@ const Table = <TData extends object, TValue>(props: {
                             `modal={false}` makes it so that ContextMenu does not capture the entire focus
                             */
                             <ContextMenu modal={false}>
-                              <ContextMenuTrigger className="flex h-full w-full">
+                              <ContextMenuTrigger
+                                {...mergeStyleProps([
+                                  { className: "flex h-full w-full" },
+                                  props.componentProps.tdContextMenu?.({
+                                    cellContext: cell.getContext(),
+                                  }) || {},
+                                ])}
+                              >
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext(),
@@ -163,7 +175,7 @@ const Table = <TData extends object, TValue>(props: {
                               ref={setNodeRef}
                               {...mergeStyleProps([
                                 componentProps.td?.({
-                                  cell: cell as Cell<TData, TValue>,
+                                  cellContext: cell.getContext(),
                                   virtualRow,
                                 }) || {},
                                 dragElementProps,

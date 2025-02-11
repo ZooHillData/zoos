@@ -172,7 +172,7 @@ function RouteComponent() {
                               ref={setNodeRef}
                               {...mergeStyleProps([
                                 componentProps.td?.({
-                                  cell,
+                                  cellContext: cell.getContext(),
                                   virtualRow,
                                 }) || {},
                                 getCellDragProps({ isDragging, transform }),

@@ -83,7 +83,7 @@ const FileBrowser = (props: {
         },
         {
           // Directory row get bolder font
-          td: ({ cell: { row } }) => ({
+          td: ({ cellContext: { row } }) => ({
             className: row.subRows.length > 0 ? "font-medium" : "",
           }),
         },

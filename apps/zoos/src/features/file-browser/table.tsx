@@ -95,7 +95,7 @@ const Table = <TData extends object, TValue>(props: {
                       <td
                         key={cell.id}
                         {...componentProps.td?.({
-                          cell: cell as Cell<TData, TValue>,
+                          cellContext: cell.getContext(),
                           virtualRow,
                         })}
                       >

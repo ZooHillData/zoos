@@ -4,7 +4,6 @@ import { getClient, getQueryKey } from "../../lib/supabase";
 const login = createMutationOptions({
   mutationKey: getQueryKey(["login"]),
   mutationFn: async (credentials: { email: string; password: string }) => {
-    console.log({ credentials });
     const response = await getClient().auth.signInWithPassword(credentials);
     return response;
   },

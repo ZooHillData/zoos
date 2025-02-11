@@ -113,12 +113,6 @@ const dumpObjectUpdate = (object: Object): ObjectUpdate => {
   };
 };
 
-const dumpObjectInsert = (object: Object): ObjectInsert => ({
-  ...object,
-  created_at: object.created_at.toISOString(),
-  last_updated_at: object.last_updated_at.toISOString(),
-});
-
 const moveObject = ({
   objectId,
   folderId,

@@ -3,6 +3,7 @@ import type { ObjectsTableData } from "./db-interface";
 
 import { InfoIcon } from "lucide-react";
 import { Button } from "@zoos/shadcn";
+import { InputDebounce } from "@zoos/react-form";
 import { LocationBreadcrumb } from "@zoos/navigation-ui";
 
 /*
@@ -81,3 +82,31 @@ end: selected-breadcrumb
 */
 
 export { ToggleDetailsButton, DetailsPanel, SelectedBreadcrumb };
+
+/*
+start: global-search
+*/
+const GlobalSearch = ({
+  delay = 300,
+  ...props
+}: Omit<
+  React.ComponentProps<typeof InputDebounce>,
+  "value" | "onChange" | "delay"
+> & {
+  delay?: number;
+  table: TableType<ObjectsTableData>;
+}) => (
+  <InputDebounce
+    placeholder="Search objects"
+    value={props.table.getState().globalFilter || ""}
+    onChange={(value) => props.table.setGlobalFilter(value)}
+    delay={300}
+    {...props}
+  />
+);
+
+export { GlobalSearch };
+
+/*
+end: global-search
+*/

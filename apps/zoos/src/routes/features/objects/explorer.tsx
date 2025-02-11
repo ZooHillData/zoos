@@ -21,11 +21,11 @@ import {
   getFeatureProps,
   ToggleDetailsButton,
   DetailsPanel,
-  getObjectsTdContext,
+  getObjectsTdContextMenu,
   SelectedBreadcrumb,
 } from "../../../features/objects";
 import { LocationBreadcrumb } from "@zoos/navigation-ui";
-
+import { GlobalSearch } from "../../../features/objects/objects-explorer";
 function RouteComponent() {
   const { data: objects, isLoading: isObjectsLoading } = useQuery(
     getObjectsQuery({ params: {} }),
@@ -66,13 +66,19 @@ function RouteComponent() {
   }
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="gap-2">
-      <ResizablePanel id="objects-table" order={1} className="space-y-2">
-        <div className="flex items-center justify-between">
+    <ResizablePanelGroup direction="horizontal" className="mx-auto gap-2">
+      <ResizablePanel
+        id="objects-table"
+        order={1}
+        className="max-w-6xl space-y-2"
+      >
+        <div className="flex items-center gap-2 py-0.5">
           <LocationBreadcrumb
+            className="flex-nowrap"
             location={location}
             onBreadcrumbClick={setLocation}
           />
+          <GlobalSearch table={table} className="ml-auto w-[300px]" />
           <ToggleDetailsButton onClick={() => setDetailsOpen(!detailsOpen)} />
         </div>
         <Table
@@ -81,7 +87,8 @@ function RouteComponent() {
             td: (cellContext) => {
               return (
                 <ContextMenuContent>
-                  {getObjectsTdContext?.({
+                  {getObjectsTdContextMenu?.({
+                    location,
                     showDetails: () => setDetailsOpen(true),
                   })?.(cellContext)}
                 </ContextMenuContent>
