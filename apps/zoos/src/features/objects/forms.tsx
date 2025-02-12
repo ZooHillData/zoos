@@ -1,5 +1,5 @@
 import type { FormConfig } from "@zoos/react-form";
-import { moveObjectMutation, Object } from "./db-interface";
+import type { ObjectFolderSelect, Object } from "./db-interface";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toKebabCase } from "remeda";
@@ -26,12 +26,13 @@ import { queries } from "../auth";
 import { PermissionsForm as PermissionsFormBase } from "./permissions-form";
 import {
   addObjectFolderMutation,
+  addObjectMutation,
   deleteObjectMutation,
   getFoldersQuery,
   getUsersQuery,
+  moveObjectMutation,
+  objectTypes,
   updateObjectMutation,
-  ObjectFolderSelect,
-  addObjectMutation,
 } from "./db-interface";
 
 /**
@@ -263,6 +264,7 @@ start: add-object
 
 const addObjectDefaultValues = {
   name: "",
+  object_type: "data",
   description: "",
   object_data: "{}",
 };
@@ -272,6 +274,12 @@ const addObjectFormConfig = getFormConfig({
 })({
   formOptions: {},
   fields: [
+    {
+      name: "object_type",
+      type: "array-string.single",
+      // This is a hack to get it back into the expected type
+      options: () => [...objectTypes],
+    },
     { name: "name", type: "string" },
     { name: "description", type: "string.long" },
     { name: "object_data", type: "string.long" },

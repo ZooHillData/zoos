@@ -1,6 +1,6 @@
 import type { ContextMenuContentProp } from "@zoos/react-table-ui";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { Object, ObjectsTableData } from "./db-interface";
+import type { Object, ObjectsTableData, ObjectTypes } from "./db-interface";
 
 import React from "react";
 
@@ -34,10 +34,12 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  cn,
 } from "@zoos/shadcn";
 
 import { openDialog, closeDialog, openAlertDialog } from "../../lib/dialog";
 
+import { OBJECT_TYPE_OPTIONS } from "./objects-options";
 import {
   FormDialog,
   FolderForm,
@@ -52,24 +54,45 @@ import {
 start: column-defs
 -------------------
 */
+
 const columnHelper = createColumnHelper<ObjectsTableData>();
 const columns = [
+  columnHelper.accessor("object_type", {}),
   columnHelper.accessor((row) => row._dataTree.leaf, {
     id: "name",
-    header: (headerContext) => (
-      <features.expandRow.ExpandAllHeader headerContext={headerContext}>
-        Name
-      </features.expandRow.ExpandAllHeader>
-    ),
+    // header: (headerContext) => (
+    //   <features.expandRow.ExpandAllHeader headerContext={headerContext}>
+    //     Name
+    //   </features.expandRow.ExpandAllHeader>
+    // ),
     size: 300,
-    cell: (cellContext) => (
-      <features.expandRow.ExpandCell
-        cellContext={cellContext}
-        depthIndentPx={16}
-      >
-        {cellContext.cell.getValue()}
-      </features.expandRow.ExpandCell>
-    ),
+    cell: (cellContext) => {
+      const Icon =
+        OBJECT_TYPE_OPTIONS[cellContext.row.original.object_type as ObjectTypes]
+          .Icon;
+      return (
+        <div
+          style={{ paddingLeft: cellContext.row.depth * 16 }}
+          className="flex items-center gap-2"
+        >
+          <features.expandRow.ExpandRowChevronButton
+            cellContext={cellContext}
+            chevronProps={{
+              className: cn(
+                "size-4",
+                cellContext.row.subRows.length === 0 ? "invisible" : "",
+              ),
+            }}
+          />
+          <div className="flex items-center gap-2">
+            {cellContext.row.subRows.length === 0 && (
+              <Icon className="size-4" />
+            )}
+            {cellContext.cell.getValue()}
+          </div>
+        </div>
+      );
+    },
   }),
   columnHelper.accessor(
     (row) =>
@@ -91,8 +114,10 @@ const columns = [
           <TooltipProvider>
             <Tooltip delayDuration={200}>
               <TooltipTrigger>
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback>{initial}</AvatarFallback>
+                <Avatar className="h-6 w-6">
+                  <AvatarFallback className="bg-secondary-muted text-xs">
+                    {initial}
+                  </AvatarFallback>
                 </Avatar>
               </TooltipTrigger>
               <TooltipContent>{email}</TooltipContent>
@@ -231,25 +256,26 @@ start: get-feature-props
 
 const getFeatureProps = (params: {
   onLocationChange: (location: string) => void;
+  openObject?: (object: Object) => void;
 }): ComponentProps<ObjectsTableData, unknown>[] => [
   featureProps.utils.allCells({ className: "whitespace-nowrap" }),
   {
     container: { className: "border text-sm" },
-    tdContextMenu: () => ({
-      className: "whitespace-nowrap px-3 py-2 bg-background flex items-center",
-    }),
-    th: () => ({
-      className: "whitespace-nowrap px-3 py-2 flex bg-background",
-    }),
     td: () => ({ className: "p-0" }),
-    trHead: () => ({ className: "border-b-2" }),
-    trBody: () => ({
-      className: "border-b",
+    tdContextMenu: () => ({
+      className:
+        "group-hover:bg-muted whitespace-nowrap px-3 py-2 bg-background flex items-center",
     }),
+    th: () => ({ className: "p-0 w-full bg-green-500" }),
+    thContextMenu: () => ({
+      className:
+        "whitespace-nowrap bg-muted px-3 py-2 flex w-full justify-between",
+    }),
+    trHead: () => ({ className: "border-b" }),
+    trBody: () => ({ className: "hover:cursor-default group border-b" }),
   },
   {
     // Row hover accent
-    trBody: ({ row }) => ({ className: "hover:cursor-default group" }),
     td: () => ({ className: "group-hover:bg-accent" }),
   },
   {
@@ -272,6 +298,8 @@ const getFeatureProps = (params: {
       onDoubleClick: () => {
         if (row.subRows.length > 0) {
           params.onLocationChange(row.original._dataTree.pathStr);
+        } else {
+          params.openObject?.(row.original);
         }
       },
     }),
@@ -295,6 +323,7 @@ const getObjectsTdContextMenu =
   (params: {
     location: string;
     showDetails: () => void;
+    openObject?: (object: Object) => void;
   }): ContextMenuContentProp<ObjectsTableData, unknown>["td"] =>
   (cellContext) => {
     const { table, row } = cellContext;
@@ -318,7 +347,9 @@ const getObjectsTdContextMenu =
                       >
                         <AddObjectForm
                           mutationOptions={{
-                            onSuccess: () => closeDialog(),
+                            onSuccess: ({ data }) => {
+                              closeDialog();
+                            },
                           }}
                         />
                       </FormDialog>
@@ -356,8 +387,10 @@ const getObjectsTdContextMenu =
         <ContextMenuSeparator className="mx-1 border-b" />
         <ContextMenuItem
           className="gap-2"
-          onSelect={() => console.log("Open")}
-          disabled
+          onSelect={() => {
+            params.openObject?.(row.original);
+          }}
+          disabled={!params.openObject}
         >
           <ExternalLinkIcon className="size-4" /> Open
         </ContextMenuItem>

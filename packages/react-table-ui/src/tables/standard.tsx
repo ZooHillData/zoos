@@ -77,7 +77,10 @@ const Table = <TData extends object, TValue>(props: {
                               <HeaderContextMenu
                                 header={header.getContext()}
                                 {...mergeStyleProps([
-                                  { className: "flex h-full w-full" },
+                                  {
+                                    className:
+                                      "flex items-center justify-between h-full w-full",
+                                  },
                                   props.componentProps.thContextMenu?.({
                                     headerContext: header.getContext(),
                                   }) || {},
@@ -85,20 +88,22 @@ const Table = <TData extends object, TValue>(props: {
                                 // Spread attributes and listeners onto the header context menu
                                 {...dragHandleProps}
                               >
-                                {header.isPlaceholder
-                                  ? null
-                                  : flexRender(
-                                      header.column.columnDef.header,
-                                      header.getContext(),
-                                    )}
+                                <span>
+                                  {header.isPlaceholder
+                                    ? null
+                                    : flexRender(
+                                        header.column.columnDef.header,
+                                        header.getContext(),
+                                      )}
+                                </span>
+                                <HeaderSortIndicator
+                                  // Sort indicator
+                                  header={header}
+                                  className="text-primary"
+                                  onClick={() => header.column.toggleSorting()}
+                                />
                               </HeaderContextMenu>
                             </ContextMenu>
-                            <HeaderSortIndicator
-                              // Sort indicator
-                              header={header}
-                              className="text-primary"
-                              onClick={() => header.column.toggleSorting()}
-                            />
 
                             <div
                               // Resize column handle

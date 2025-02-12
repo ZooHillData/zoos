@@ -1,3 +1,4 @@
+import type { Object } from "../../../features/objects";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/features/objects/explorer")({
@@ -42,6 +43,10 @@ function RouteComponent() {
       onLocationChange: setLocation,
     });
 
+  const openObject = (object: Object) => {
+    console.log("open object", object);
+  };
+
   const componentProps = useComponentProps(
     {
       table,
@@ -52,10 +57,13 @@ function RouteComponent() {
       mergeProps: [
         ...getFeatureProps({
           onLocationChange: (location) => setLocation(location),
+          openObject: openObject,
         }),
       ],
     },
   );
+
+  const navigate = Route.useNavigate();
 
   if (isObjectsLoading) {
     return <div>Loading...</div>;
@@ -90,6 +98,7 @@ function RouteComponent() {
                   {getObjectsTdContextMenu?.({
                     location,
                     showDetails: () => setDetailsOpen(true),
+                    openObject,
                   })?.(cellContext)}
                 </ContextMenuContent>
               );

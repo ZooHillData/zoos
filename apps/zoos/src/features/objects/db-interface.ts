@@ -25,13 +25,14 @@ export { OBJECTS_SCHEMA, getObjectsClient };
 
 /*
 start: types
- ------------
- */
+------------
+*/
 
 type ObjectsSchema = typeof OBJECTS_SCHEMA;
 
 // Object types in database
-type ObjectTypes = "data";
+const objectTypes = ["data", "tableData", "tableState"] as const;
+type ObjectTypes = (typeof objectTypes)[number];
 
 // Objects table
 type ObjectSelect = Database[ObjectsSchema]["Tables"]["objects"]["Row"];
@@ -78,6 +79,7 @@ type Object = Omit<ObjectViewJoin, "created_at" | "last_updated_at"> & {
 
 type ObjectsTableData = TreeNode<Object>;
 
+export { objectTypes };
 export type {
   ObjectsTableData,
   ObjectsSchema,
@@ -167,6 +169,16 @@ const getObjects = () =>
     *,
     objects_history(update_email, tag, updated_at)
     `);
+const getObject = ({ id }: { id: number }) =>
+  getObjectsClient()
+    .from("objects_view")
+    .select(
+      `
+    *,
+    objects_history(update_email, tag, updated_at)
+    `,
+    )
+    .match({ id });
 
 const getFolders = () => getObjectsClient().from("objects_folders").select("*");
 const getFolder = ({ id }: { id: number }) =>
@@ -213,6 +225,16 @@ const getObjectsQuery = createQueryOptions({
   },
 });
 
+const getObjectQuery = createQueryOptions({
+  queryKey: keyFactory.objects.all,
+  queryFn: async ({ id }: { id: number }) => {
+    const { data } = await getObject({ id });
+    if (data?.length === 1) {
+      return parseObject(data[0]);
+    }
+  },
+});
+
 const getFoldersQuery = createQueryOptions({
   queryKey: keyFactory.folders.all,
   queryFn: async () => {
@@ -241,6 +263,7 @@ export {
   keyFactory,
   getFolderQuery,
   getObjectsQuery,
+  getObjectQuery,
   getFoldersQuery,
   getUsersQuery,
 };
