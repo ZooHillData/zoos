@@ -27,13 +27,14 @@ import {
   Filter,
   GripVertical,
 } from "lucide-react";
-import { Settings } from "lucide-react";
 import { getHeaderContext } from "@zoos/react-table";
 import { Input } from "@zoos/shadcn";
 import { useVirtualCombobox } from "@zoos/react-form";
+import { FormattedId } from "../header/formatted-id";
 
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
+  icon: React.ReactNode;
 };
 
 type FilterRendererProps<TData> = {
@@ -99,7 +100,9 @@ const SortableColumn = <TData,>({
       <button className="mr-2 cursor-grab p-1" {...listeners}>
         <GripVertical className="h-4 w-4" />
       </button>
-      <span>{column.id}</span>
+      <span className="max-w-[200px] truncate whitespace-nowrap">
+        <FormattedId headerContext={getHeaderContext(table, column)} />
+      </span>
       <div className="ml-auto flex gap-1">
         <button onClick={() => column.toggleVisibility()}>
           {column.getIsVisible() ? (
@@ -146,7 +149,10 @@ const SortableColumn = <TData,>({
   );
 };
 
-const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
+const ColumnControls = <TData,>({
+  table,
+  icon,
+}: ColumnControlsProps<TData>) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
@@ -162,12 +168,6 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
       gap: 5,
     },
   });
-
-  React.useEffect(() => {
-    if (isOpen) {
-      virtualizer.measure();
-    }
-  }, [isOpen, virtualizer]);
 
   const filteredColumns = allOrderedColumns.filter((col) =>
     col.label.toLowerCase().includes(query.toLowerCase()),
@@ -198,11 +198,9 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <button>
-          <Settings className="text-gray-500 hover:text-gray-800" />
-        </button>
+        <button>{icon}</button>
       </PopoverTrigger>
-      <PopoverContent className="w-[350px] p-0" align="end">
+      <PopoverContent forceMount={true} className="w-[350px] p-0" align="end">
         <div className="p-4 pb-0">
           <div className="mb-2 text-sm font-medium">Column Controls</div>
           <Input
