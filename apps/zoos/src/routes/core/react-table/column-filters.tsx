@@ -24,9 +24,6 @@ import {
   createCn,
 } from "@zoos/shadcn";
 import { Settings } from "lucide-react";
-export const Route = createFileRoute("/core/react-table/column-filters")({
-  component: RouteComponent,
-});
 
 export const Route = createFileRoute("/core/react-table/column-filters")({
   component: RouteComponent,
