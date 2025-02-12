@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/core/react-table/column-filters")({
-  component: RouteComponent,
-});
-
 import React from "react";
 
 import { createColumnHelper } from "@tanstack/react-table";
@@ -15,6 +11,7 @@ import {
   FilterContainer,
   FormattedId,
   Table,
+  ColumnControls,
 } from "@zoos/react-table-ui";
 import { useTable, useComponentProps, featureProps } from "@zoos/react-table";
 
@@ -27,80 +24,82 @@ import {
   createCn,
 } from "@zoos/shadcn";
 
+export const Route = createFileRoute("/core/react-table/column-filters")({
+  component: RouteComponent,
+});
+
 // ~ Manual column definitions
 // Using `getColumns` to infer all columns
 import { type User } from "../../../community/fake-data";
+
 const columnHelper = createColumnHelper<User>();
 const columns = [
-  columnHelper.group({
-    header: "User",
-    columns: [
-      columnHelper.accessor("first_name", {
-        filterFn: filters.string.includes.filterFn,
-        meta: {
-          Filter: (headerContext) => (
-            <FilterContainer>
-              <Label>
-                <FormattedId headerContext={headerContext} />
-                <span className="text-secondary ml-1">(string.includes)</span>
-              </Label>
-              <filters.string.includes.FilterInput
-                headerContext={headerContext}
+  columnHelper.accessor("first_name", {
+    id: "first_name",
+    filterFn: filters.string.includes.filterFn,
+    meta: {
+      Filter: (headerContext) => (
+        <FilterContainer>
+          <Label>
+            <FormattedId headerContext={headerContext} />
+            <span className="text-secondary ml-1">(string.includes)</span>
+          </Label>
+          <filters.string.includes.FilterInput headerContext={headerContext} />
+          <ClearFilterButton headerContext={headerContext} />
+        </FilterContainer>
+      ),
+    },
+  }),
+  columnHelper.accessor("last_name", {
+    id: "last_name",
+    filterFn: filters.string.inArrayDynamic.filterFn,
+    meta: {
+      Filter: (headerContext) => (
+        <FilterContainer>
+          <Label>
+            <FormattedId headerContext={headerContext} />
+            <span className="text-secondary ml-1">
+              (string.includesDynamic)
+            </span>
+          </Label>
+          <filters.string.inArrayDynamic.FilterInput
+            headerContext={headerContext}
+          />
+          <ClearFilterButton headerContext={headerContext} />
+        </FilterContainer>
+      ),
+    },
+  }),
+  columnHelper.accessor("age", {
+    id: "age",
+    filterFn: filters.number.range.filterFn,
+    meta: {
+      Filter: (headerContext) => {
+        const [autoRefresh, setAutoRefresh] = React.useState(true);
+        return (
+          <FilterContainer>
+            <div className="ml-auto">
+              <AutoRefreshToggle
+                pressed={autoRefresh}
+                onPressedChange={setAutoRefresh}
               />
-              <ClearFilterButton headerContext={headerContext} />
-            </FilterContainer>
-          ),
-        },
-      }),
-      columnHelper.accessor("last_name", {
-        filterFn: filters.string.inArrayDynamic.filterFn,
-        meta: {
-          Filter: (headerContext) => (
-            <FilterContainer>
-              <Label>
-                <FormattedId headerContext={headerContext} />
-                <span className="text-secondary ml-1">
-                  (string.includesDynamic)
-                </span>
-              </Label>
-              <filters.string.inArrayDynamic.FilterInput
-                headerContext={headerContext}
-              />
-              <ClearFilterButton headerContext={headerContext} />
-            </FilterContainer>
-          ),
-        },
-      }),
-      columnHelper.accessor("age", {
-        filterFn: filters.number.range.filterFn,
-        meta: {
-          Filter: (headerContext) => {
-            const [autoRefresh, setAutoRefresh] = React.useState(true);
-            return (
-              <FilterContainer>
-                <div className="ml-auto">
-                  <AutoRefreshToggle
-                    pressed={autoRefresh}
-                    onPressedChange={setAutoRefresh}
-                  />
-                </div>
-                <Label>
-                  <FormattedId headerContext={headerContext} /> Range
-                  <span className="text-secondary ml-1">(number.range)</span>
-                </Label>
-                <filters.number.range.FilterInput
-                  headerContext={headerContext}
-                  autoRefresh={autoRefresh}
-                />
-                <ClearFilterButton headerContext={headerContext} />
-              </FilterContainer>
-            );
-          },
-        },
-      }),
-    ],
+            </div>
+            <Label>
+              <FormattedId headerContext={headerContext} /> Range
+              <span className="text-secondary ml-1">(number.range)</span>
+            </Label>
+            <filters.number.range.FilterInput
+              headerContext={headerContext}
+              autoRefresh={autoRefresh}
+            />
+            <ClearFilterButton headerContext={headerContext} />
+          </FilterContainer>
+        );
+      },
+    },
   }),
   columnHelper.accessor("join_date", {
+    id: "join_date",
     filterFn: filters.date.range.filterFn,
     meta: {
       Filter: (headerContext) => (
@@ -116,6 +115,7 @@ const columns = [
     },
   }),
   columnHelper.accessor("street", {
+    id: "street",
     // ~ Custom cell (tooltip for previewing long text)
     // This does have performance impacts, so recommend
     // using on a per-column basis instead of setting in `defaultColumn`
@@ -134,8 +134,11 @@ const columns = [
       </TooltipProvider>
     ),
   }),
-  columnHelper.accessor("city", {}),
+  columnHelper.accessor("city", {
+    id: "city",
+  }),
   columnHelper.accessor("state", {
+    id: "state",
     // ~ Custom filter
     // specify:
     // - `filterFn` (method)
@@ -169,6 +172,7 @@ const columns = [
     },
   }),
   columnHelper.accessor("states", {
+    id: "states",
     filterFn: filters.array.includesAll.filterFn,
     meta: {
       Filter: (headerContext) => {
@@ -213,6 +217,7 @@ const columns = [
     },
   }),
   columnHelper.accessor("zip", {
+    id: "zip",
     filterFn: filters.string.includes.filterFn,
     meta: {
       Filter: (headerContext) => (
@@ -227,13 +232,18 @@ const columns = [
       ),
     },
   }),
-  columnHelper.accessor("phone", {}),
+  columnHelper.accessor("phone", {
+    id: "phone",
+  }),
 ];
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
 
-  const [state, setState] = React.useState({});
+  const [state, setState] = React.useState({
+    // needed to set initial column order
+    columnOrder: columns.map((col) => col.id!),
+  });
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,
@@ -258,5 +268,12 @@ function RouteComponent() {
     },
   );
 
-  return <Table {...{ table, virtualRows, componentProps }} />;
+  return (
+    <div className="flex h-full flex-col overflow-auto">
+      <div className="self-end">
+        <ColumnControls {...{ table }} />
+      </div>
+      <Table {...{ table, virtualRows, componentProps }} />
+    </div>
+  );
 }

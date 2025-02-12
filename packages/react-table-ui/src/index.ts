@@ -9,7 +9,7 @@ export * from "./header";
 export * from "./filters";
 
 // Column definitions / cells
-export * as columns from "./columns";
+export * from "./columns";
 
 // For tanstack table module declarations
 // Do I need to export this? Don't know..

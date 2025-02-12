@@ -9,3 +9,5 @@ export * from "./lib/filter-fns/global-filter-fn";
 export * from "./lib/utils";
 
 export * from "./module.types";
+
+export * from "./utils";
