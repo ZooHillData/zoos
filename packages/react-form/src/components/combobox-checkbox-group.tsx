@@ -1,5 +1,5 @@
 import React from "react";
-import { cn, createCn, Input } from "@zoos/shadcn";
+import { cn, Input } from "@zoos/shadcn";
 import { CheckboxGroupVirtual } from "./checkbox-group-virtual";
 import { useVirtualCombobox } from "../hooks/use-virtual-combobox";
 

@@ -1,5 +1,5 @@
+import React from "react";
 import type { Column, Table } from "@tanstack/react-table";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,9 +34,9 @@ import {
   GripVertical,
 } from "lucide-react";
 import { Settings } from "lucide-react";
-import { InputDebounce } from "@zoos/react-form";
-import React from "react";
 import { getHeaderContext } from "@zoos/react-table";
+import { Input } from "@zoos/shadcn";
+import { useVirtualCombobox } from "@zoos/react-form";
 
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
@@ -153,10 +153,9 @@ const SortableColumn = <TData,>({
 };
 
 const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
-  const [columnSearch, setColumnSearch] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const allOrderedColumns = table.getState().columnOrder.map((colId) => {
-    // Use table.getColumn(colId) to retrieve the column object.
     return {
       id: colId,
       label: colId,
@@ -164,8 +163,23 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
     };
   });
 
+  const { query, setQuery, virtualizer, scrollRef } = useVirtualCombobox({
+    options: allOrderedColumns,
+    virtualizerOptions: {
+      estimateSize: () => 34,
+      gap: 5,
+    },
+  });
+
+  // Recalculate virtualization when dropdown opens
+  React.useEffect(() => {
+    if (isOpen) {
+      virtualizer.measure();
+    }
+  }, [isOpen, virtualizer]);
+
   const filteredColumns = allOrderedColumns.filter((col) =>
-    col.label.toLowerCase().includes(columnSearch.toLowerCase()),
+    col.label.toLowerCase().includes(query.toLowerCase()),
   );
 
   const sensors = useSensors(
@@ -191,52 +205,63 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <button>
           <Settings className="text-gray-500 hover:text-gray-800" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-[50vh] w-[350px] overflow-auto">
+      <DropdownMenuContent className="w-[350px] overflow-auto">
         <DropdownMenuLabel>Column Controls</DropdownMenuLabel>
 
-        <InputDebounce
+        <Input
           placeholder={"Search Columns"}
-          value={columnSearch}
-          onChange={(value) => setColumnSearch(value)}
-          delay={300}
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
         />
         <DropdownMenuGroup>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext
-              items={filteredColumns}
-              strategy={verticalListSortingStrategy}
+          <div ref={scrollRef} className="mt-2 max-h-[300px] overflow-auto">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
             >
-              <div className="mt-2 flex flex-col gap-1">
-                {filteredColumns.map((col) => {
-                  const column = table.getColumn(col.id);
+              <SortableContext
+                items={filteredColumns}
+                strategy={verticalListSortingStrategy}
+              >
+                <div
+                  className={"relative w-full"}
+                  style={{
+                    height: `${virtualizer.getTotalSize()}px`,
+                  }}
+                >
+                  {virtualizer.getVirtualItems().map((virtualItem) => {
+                    const col = filteredColumns[virtualItem.index];
+                    const column = table.getColumn(col.id);
 
-                  if (!column) return null;
-                  return (
-                    <div
-                      className="flex w-full items-center gap-1"
-                      key={column?.id}
-                    >
-                      <SortableColumn
-                        key={column?.id}
-                        column={column}
-                        table={table}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </SortableContext>
-          </DndContext>
+                    if (!column) return null;
+                    return (
+                      <div
+                        className="absolute left-0 top-0 w-full"
+                        key={column.id}
+                        style={{
+                          height: `${virtualItem.size}px`,
+                          transform: `translateY(${virtualItem.start}px)`,
+                        }}
+                      >
+                        <SortableColumn
+                          key={column.id}
+                          column={column}
+                          table={table}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </SortableContext>
+            </DndContext>
+          </div>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
