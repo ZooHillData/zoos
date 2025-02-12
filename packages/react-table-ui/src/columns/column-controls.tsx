@@ -1,12 +1,6 @@
 import React from "react";
 import type { Column, Table } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@zoos/shadcn";
+import { Popover, PopoverContent, PopoverTrigger } from "@zoos/shadcn";
 import {
   DndContext,
   closestCenter,
@@ -118,18 +112,18 @@ const SortableColumn = <TData,>({
             />
           )}
         </button>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <Popover>
+          <PopoverTrigger asChild>
             <button>
               <Filter
                 className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
               />
             </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          </PopoverTrigger>
+          <PopoverContent>
             <FilterRenderer column={column} table={table} />
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </PopoverContent>
+        </Popover>
         <button onClick={() => column.toggleSorting()}>
           {column.getIsSorted() === "desc" && (
             <ArrowDownNarrowWide
@@ -155,13 +149,11 @@ const SortableColumn = <TData,>({
 const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const allOrderedColumns = table.getState().columnOrder.map((colId) => {
-    return {
-      id: colId,
-      label: colId,
-      value: colId,
-    };
-  });
+  const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
+    id: colId,
+    label: colId,
+    value: colId,
+  }));
 
   const { query, setQuery, virtualizer, scrollRef } = useVirtualCombobox({
     options: allOrderedColumns,
@@ -171,7 +163,6 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
     },
   });
 
-  // Recalculate virtualization when dropdown opens
   React.useEffect(() => {
     if (isOpen) {
       virtualizer.measure();
@@ -205,66 +196,65 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   };
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
         <button>
           <Settings className="text-gray-500 hover:text-gray-800" />
         </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[350px] overflow-auto">
-        <DropdownMenuLabel>Column Controls</DropdownMenuLabel>
-
-        <Input
-          placeholder={"Search Columns"}
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-        <DropdownMenuGroup>
-          <div ref={scrollRef} className="mt-2 max-h-[300px] overflow-auto">
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
+      </PopoverTrigger>
+      <PopoverContent className="w-[350px] p-0" align="end">
+        <div className="p-4 pb-0">
+          <div className="mb-2 text-sm font-medium">Column Controls</div>
+          <Input
+            placeholder="Search Columns"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+          />
+        </div>
+        <div ref={scrollRef} className="mt-2 max-h-[300px] overflow-auto p-1">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={filteredColumns}
+              strategy={verticalListSortingStrategy}
             >
-              <SortableContext
-                items={filteredColumns}
-                strategy={verticalListSortingStrategy}
+              <div
+                className="relative w-full"
+                style={{
+                  height: `${virtualizer.getTotalSize()}px`,
+                }}
               >
-                <div
-                  className={"relative w-full"}
-                  style={{
-                    height: `${virtualizer.getTotalSize()}px`,
-                  }}
-                >
-                  {virtualizer.getVirtualItems().map((virtualItem) => {
-                    const col = filteredColumns[virtualItem.index];
-                    const column = table.getColumn(col.id);
+                {virtualizer.getVirtualItems().map((virtualItem) => {
+                  const col = filteredColumns[virtualItem.index];
+                  const column = table.getColumn(col.id);
 
-                    if (!column) return null;
-                    return (
-                      <div
-                        className="absolute left-0 top-0 w-full"
+                  if (!column) return null;
+                  return (
+                    <div
+                      className="absolute left-0 top-0 w-full"
+                      key={column.id}
+                      style={{
+                        height: `${virtualItem.size}px`,
+                        transform: `translateY(${virtualItem.start}px)`,
+                      }}
+                    >
+                      <SortableColumn
                         key={column.id}
-                        style={{
-                          height: `${virtualItem.size}px`,
-                          transform: `translateY(${virtualItem.start}px)`,
-                        }}
-                      >
-                        <SortableColumn
-                          key={column.id}
-                          column={column}
-                          table={table}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </SortableContext>
-            </DndContext>
-          </div>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+                        column={column}
+                        table={table}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </SortableContext>
+          </DndContext>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 

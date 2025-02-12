@@ -241,6 +241,7 @@ function RouteComponent() {
   const { data } = Route.useRouteContext();
 
   const [state, setState] = React.useState({
+    // needed to set initial column order
     columnOrder: columns.map((col) => col.id!),
   });
 
