@@ -1,3 +1,9 @@
+## [1.39.2](https://github.com/zoohilldata/zoos/compare/v1.39.1...v1.39.2) (2025-02-12)
+
+### Bug Fixes
+
+* **react-table:** Borst/table controls updates ([#42](https://github.com/zoohilldata/zoos/issues/42)) ([2847c75](https://github.com/zoohilldata/zoos/commit/2847c75b1afb65146caa84ea470214dac72f0dba))
+
 ## [1.39.1](https://github.com/zoohilldata/zoos/compare/v1.39.0...v1.39.1) (2025-02-12)
 
 ### Bug Fixes
