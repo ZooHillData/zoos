@@ -255,11 +255,6 @@ function RouteComponent() {
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
     data,
     columns,
-    defaultColumn: {
-      meta: {
-        canReorder: true,
-      },
-    },
     state,
     onStateChange: (state) => setState(state),
   });
