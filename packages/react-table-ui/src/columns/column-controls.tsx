@@ -35,7 +35,7 @@ import { FormattedId } from "../header/formatted-id";
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
   icon: React.ReactNode;
-};
+
 
 type FilterRendererProps<TData> = {
   column: Column<TData, unknown>;
@@ -153,6 +153,7 @@ const ColumnControls = <TData,>({
   table,
   icon,
 }: ColumnControlsProps<TData>) => {
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
@@ -163,7 +164,6 @@ const ColumnControls = <TData,>({
 
   const { query, setQuery, virtualizer, scrollRef } = useVirtualCombobox({
     options: allOrderedColumns,
-
     virtualizerOptions: {
       estimateSize: () => 34,
       gap: 5,

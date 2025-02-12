@@ -28,6 +28,10 @@ export const Route = createFileRoute("/core/react-table/column-filters")({
   component: RouteComponent,
 });
 
+export const Route = createFileRoute("/core/react-table/column-filters")({
+  component: RouteComponent,
+});
+
 // ~ Manual column definitions
 // Using `getColumns` to infer all columns
 import { type User } from "../../../community/fake-data";
