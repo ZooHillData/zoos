@@ -38,7 +38,11 @@ const columns = [
   columnHelper.accessor("first_name", {
     id: "first_name",
     filterFn: filters.string.includes.filterFn,
+    enableSorting: false,
+    enableHiding: false,
+    enableColumnFilter: false,
     meta: {
+      canReorder: false,
       Filter: (headerContext) => (
         <FilterContainer>
           <Label>
@@ -53,6 +57,8 @@ const columns = [
   }),
   columnHelper.accessor("last_name", {
     id: "last_name",
+    enableSorting: false,
+    enableHiding: false,
     filterFn: filters.string.inArrayDynamic.filterFn,
     meta: {
       Filter: (headerContext) => (
