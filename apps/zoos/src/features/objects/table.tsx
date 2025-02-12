@@ -258,7 +258,6 @@ const getFeatureProps = (params: {
   onLocationChange: (location: string) => void;
   openObject?: (object: Object) => void;
 }): ComponentProps<ObjectsTableData, unknown>[] => [
-  featureProps.utils.allCells({ className: "whitespace-nowrap" }),
   {
     container: { className: "border text-sm" },
     td: () => ({ className: "p-0" }),
@@ -266,14 +265,14 @@ const getFeatureProps = (params: {
       className:
         "group-hover:bg-muted whitespace-nowrap px-3 py-2 bg-background flex items-center",
     }),
-    th: () => ({ className: "p-0 w-full bg-green-500" }),
+    th: () => ({ className: "p-0 w-full bg-muted" }),
     thContextMenu: () => ({
-      className:
-        "whitespace-nowrap bg-muted px-3 py-2 flex w-full justify-between",
+      className: "whitespace-nowrap bg-muted px-3 py-2 w-full text-left",
     }),
     trHead: () => ({ className: "border-b" }),
     trBody: () => ({ className: "hover:cursor-default group border-b" }),
   },
+  featureProps.headerIndicators(),
   {
     // Row hover accent
     td: () => ({ className: "group-hover:bg-accent" }),

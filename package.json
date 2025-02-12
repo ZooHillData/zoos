@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nx serve zoos",
-    "build": "nx build zoos"
+    "build": "nx build zoos",
+    "preview": "nx run zoos:preview"
   },
   "private": false,
   "repository": "https://github.com/zoohilldata/zoos",

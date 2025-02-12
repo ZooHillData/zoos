@@ -20,6 +20,7 @@ import {
   featureProps,
 } from "@zoos/react-table";
 import { Table } from "@zoos/react-table-ui";
+import { ContextMenuContent, ContextMenuItem } from "@zoos/shadcn";
 
 function RouteComponent() {
   const { data } = Route.useRouteContext();
@@ -50,26 +51,64 @@ function RouteComponent() {
     },
     {
       mergeProps: [
-        featureProps.utils.allCells({
-          className: "text-sm overflow-hidden whitespace-nowrap bg-background",
-        }),
-
         {
-          // ~ Drag and drop column props
-          //
-          th: () => ({
-            className: "flex items-center justify-between",
+          container: { className: "border text-sm" },
+          td: () => ({ className: "p-0" }),
+          tdContextMenu: () => ({
+            className:
+              "group-hover:bg-muted whitespace-nowrap px-3 py-2 bg-background flex items-center",
           }),
-          td: () => ({
-            // ! Required for drag and drop columns
-            // why ....
-            // technically, leading-5 is not required if the
-            // appropriate text size is set (e.g. text-sm)
-            className: "whitespace-nowrap leading-5",
+          th: () => ({ className: "p-0 w-full bg-muted" }),
+          thContextMenu: () => ({
+            className: "whitespace-nowrap bg-muted px-3 py-2 w-full text-left",
+          }),
+          trHead: () => ({ className: "border-b" }),
+          trBody: () => ({ className: "hover:cursor-default group border-b" }),
+        },
+        featureProps.headerIndicators(),
+        {
+          // Row hover accent
+          td: () => ({ className: "group-hover:bg-accent" }),
+        },
+        {
+          // Directory row get bolder font
+          td: ({ cellContext: { row } }) => ({
+            className: row.subRows.length > 0 ? "font-medium" : "",
+          }),
+        },
+        {
+          // Double-click row sets location
+          trBody: ({ row, table }) => ({
+            className: row.getIsSelected() ? "bg-accent" : "",
+            onClick: (event) => {
+              if (event.ctrlKey || event.metaKey || event.shiftKey) {
+                row.getToggleSelectedHandler()(event);
+              } else {
+                table.setRowSelection({ [row.id]: !row.getIsSelected() });
+              }
+            },
+            // onDoubleClick: () => {
+            //   if (row.subRows.length > 0) {
+            //     params.onLocationChange(row.original._dataTree.pathStr);
+            //   } else {
+            //     params.openObject?.(row.original);
+            //   }
+            // },
           }),
         },
       ],
     },
   );
-  return <Table {...{ table, virtualRows, componentProps }} />;
+  return (
+    <Table
+      {...{ table, virtualRows, componentProps }}
+      contextMenuContent={{
+        td: () => (
+          <ContextMenuContent>
+            <ContextMenuItem>Test</ContextMenuItem>
+          </ContextMenuContent>
+        ),
+      }}
+    />
+  );
 }

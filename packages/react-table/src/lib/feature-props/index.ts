@@ -11,7 +11,8 @@ import { rowStriping } from "./row-striping";
 import * as utils from "./utils";
 import * as spacing from "./spacing";
 import { indentSubrows } from "./indent-subrows";
-
+import { headerIndicators } from "./header-indicators";
+import { cellPadding } from "./padding";
 const featureProps = {
   resizeColumn,
   stickyHeader,
@@ -22,6 +23,8 @@ const featureProps = {
   rowStriping,
   utils,
   indentSubrows,
+  headerIndicators,
+  cellPadding,
 };
 
 export { featureProps, mergeFeatureProps, type ComponentProps };

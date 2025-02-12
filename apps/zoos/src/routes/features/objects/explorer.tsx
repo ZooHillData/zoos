@@ -74,55 +74,55 @@ function RouteComponent() {
   }
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="mx-auto gap-2">
-      <ResizablePanel
-        id="objects-table"
-        order={1}
-        className="max-w-6xl space-y-2"
-      >
-        <div className="flex items-center gap-2 py-0.5">
-          <LocationBreadcrumb
-            className="flex-nowrap"
-            location={location}
-            onBreadcrumbClick={setLocation}
-          />
-          <GlobalSearch table={table} className="ml-auto w-[300px]" />
-          <ToggleDetailsButton onClick={() => setDetailsOpen(!detailsOpen)} />
-        </div>
-        <Table
-          {...{ table, virtualRows, componentProps }}
-          contextMenuContent={{
-            td: (cellContext) => {
-              return (
-                <ContextMenuContent>
-                  {getObjectsTdContextMenu?.({
-                    location,
-                    showDetails: () => setDetailsOpen(true),
-                    openObject,
-                  })?.(cellContext)}
-                </ContextMenuContent>
-              );
-            },
-          }}
-        />
-        <SelectedBreadcrumb table={table} onBreadcrumbClick={setLocation} />
-      </ResizablePanel>
-      {detailsOpen && (
-        <>
-          <ResizableHandle />
-          <ResizablePanel
-            id="objects-details"
-            order={2}
-            defaultSize={25}
-            minSize={10}
-          >
-            <DetailsPanel
-              table={table}
-              className="bg-accent h-full overflow-auto p-2"
-            />
-          </ResizablePanel>
-        </>
-      )}
-    </ResizablePanelGroup>
+    // <ResizablePanelGroup direction="horizontal" className="mx-auto gap-2">
+    //   <ResizablePanel
+    //     id="objects-table"
+    //     order={1}
+    //     className="max-w-6xl space-y-2"
+    //   >
+    //     <div className="flex items-center gap-2 py-0.5">
+    //       <LocationBreadcrumb
+    //         className="flex-nowrap"
+    //         location={location}
+    //         onBreadcrumbClick={setLocation}
+    //       />
+    //       <GlobalSearch table={table} className="ml-auto w-[300px]" />
+    //       <ToggleDetailsButton onClick={() => setDetailsOpen(!detailsOpen)} />
+    //     </div>
+    <Table
+      {...{ table, virtualRows, componentProps }}
+      contextMenuContent={{
+        td: (cellContext) => {
+          return (
+            <ContextMenuContent>
+              {getObjectsTdContextMenu?.({
+                location,
+                showDetails: () => setDetailsOpen(true),
+                openObject,
+              })?.(cellContext)}
+            </ContextMenuContent>
+          );
+        },
+      }}
+    />
+    //     <SelectedBreadcrumb table={table} onBreadcrumbClick={setLocation} />
+    //   </ResizablePanel>
+    //   {detailsOpen && (
+    //     <>
+    //       <ResizableHandle />
+    //       <ResizablePanel
+    //         id="objects-details"
+    //         order={2}
+    //         defaultSize={25}
+    //         minSize={10}
+    //       >
+    //         <DetailsPanel
+    //           table={table}
+    //           className="bg-accent h-full overflow-auto p-2"
+    //         />
+    //       </ResizablePanel>
+    //     </>
+    //   )}
+    // </ResizablePanelGroup>
   );
 }

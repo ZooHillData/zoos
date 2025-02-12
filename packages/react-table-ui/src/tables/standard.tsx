@@ -70,40 +70,32 @@ const Table = <TData extends object, TValue>(props: {
                             ])}
                           >
                             {
-                              // See the `ContextMenu` comments in `td` for information on `modal={false}`
-                              // ? (SEE BELOW)
+                              // (See below) comments for `ContextMenu` on `<td />`
+                              // for info on `modal={false}`
                             }
                             <ContextMenu modal={false}>
                               <HeaderContextMenu
                                 header={header.getContext()}
-                                {...mergeStyleProps([
-                                  {
-                                    className:
-                                      "flex items-center justify-between h-full w-full",
-                                  },
-                                  props.componentProps.thContextMenu?.({
-                                    headerContext: header.getContext(),
-                                  }) || {},
-                                ])}
-                                // Spread attributes and listeners onto the header context menu
+                                {...componentProps.thContextMenu?.({
+                                  headerContext: header.getContext(),
+                                })}
+                                // Spread attributes, listeners onto the header context menu
                                 {...dragHandleProps}
                               >
-                                <span>
-                                  {header.isPlaceholder
-                                    ? null
-                                    : flexRender(
-                                        header.column.columnDef.header,
-                                        header.getContext(),
-                                      )}
-                                </span>
-                                <HeaderSortIndicator
-                                  // Sort indicator
-                                  header={header}
-                                  className="text-primary"
-                                  onClick={() => header.column.toggleSorting()}
-                                />
+                                {header.isPlaceholder
+                                  ? null
+                                  : flexRender(
+                                      header.column.columnDef.header,
+                                      header.getContext(),
+                                    )}
                               </HeaderContextMenu>
                             </ContextMenu>
+                            <HeaderSortIndicator
+                              // Sort indicator
+                              header={header}
+                              className="text-primary"
+                              onClick={() => header.column.toggleSorting()}
+                            />
 
                             <div
                               // Resize column handle
@@ -142,39 +134,6 @@ const Table = <TData extends object, TValue>(props: {
                                   transform,
                                 })
                               : {};
-                          const tdChildrenMarkup = props.contextMenuContent
-                            ?.td ? (
-                            /*
-                             ! Workaround to allow spawning <AlertDialog /> from context menu
-                            [link to radix issue](https://github.com/radix-ui/primitives/issues/1836#issuecomment-1547607143)
-
-                            I believe this is required because when the AlertDialog closes,
-                            the context menu is still open and capturing the focus
-
-                            `modal={false}` makes it so that ContextMenu does not capture the entire focus
-                            */
-                            <ContextMenu modal={false}>
-                              <ContextMenuTrigger
-                                {...mergeStyleProps([
-                                  { className: "flex h-full w-full" },
-                                  props.componentProps.tdContextMenu?.({
-                                    cellContext: cell.getContext(),
-                                  }) || {},
-                                ])}
-                              >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </ContextMenuTrigger>
-                              {props.contextMenuContent?.td(cell.getContext())}
-                            </ContextMenu>
-                          ) : (
-                            flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )
-                          );
                           return (
                             <td
                               ref={setNodeRef}
@@ -186,7 +145,32 @@ const Table = <TData extends object, TValue>(props: {
                                 dragElementProps,
                               ])}
                             >
-                              {tdChildrenMarkup}
+                              {
+                                // ! Workaround to allow spawning <AlertDialog /> from context menu
+                                // [link to radix issue](https://github.com/radix-ui/primitives/issues/1836#issuecomment-1547607143)
+                                // I believe this is required because when the AlertDialog closes,
+                                // the context menu is still open and capturing the focus
+                                // `modal={false}` makes it so that ContextMenu does not capture the entire focus
+                              }
+                              <ContextMenu modal={false}>
+                                <ContextMenuTrigger
+                                  // Disable the context menu if there is no content
+                                  // we leave the context menu because it is used
+                                  // a standard entrypoint into styling the component
+                                  disabled={!props.contextMenuContent?.td}
+                                  {...props.componentProps.tdContextMenu?.({
+                                    cellContext: cell.getContext(),
+                                  })}
+                                >
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </ContextMenuTrigger>
+                                {props.contextMenuContent?.td?.(
+                                  cell.getContext(),
+                                )}
+                              </ContextMenu>
                             </td>
                           );
                         }}
