@@ -23,7 +23,7 @@ import {
   TooltipContent,
   createCn,
 } from "@zoos/shadcn";
-
+import { Settings } from "lucide-react";
 export const Route = createFileRoute("/core/react-table/column-filters")({
   component: RouteComponent,
 });
@@ -271,7 +271,10 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col overflow-auto">
       <div className="self-end">
-        <ColumnControls {...{ table }} />
+        <ColumnControls
+          table={table}
+          icon={<Settings className="text-gray-500 hover:text-gray-800" />}
+        />
       </div>
       <Table {...{ table, virtualRows, componentProps }} />
     </div>

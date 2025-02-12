@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 
 import {
   type VirtualizerOptions,
@@ -23,13 +23,19 @@ const useVirtualCombobox = ({
   >;
 }) => {
   const combobox = useCombobox({ options });
-
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [scrollElement, setScrollElement] = useState<HTMLDivElement | null>(
+    null,
+  );
+  const scrollRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      setScrollElement(node);
+    }
+  }, []);
   const virtualizer = useVirtualizer({
     count: combobox.optionsFiltered.length,
-    getScrollElement: () => scrollRef.current,
-    estimateSize,
-    overscan,
+    getScrollElement: () => scrollElement,
+    estimateSize: () => 35,
+    overscan: 5,
     ...virtualizerOptions,
   });
 
