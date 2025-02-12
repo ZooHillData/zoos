@@ -77,7 +77,6 @@ const SortableColumn = <TData,>({
     backgroundColor: isDragging ? "bg-primary" : "bg-background",
   };
   const iconOpacity = isHovered ? "opacity-100" : "opacity-0";
-  const { canReorder = true } = column.columnDef.meta || {};
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     const relatedTarget = e.relatedTarget;
@@ -274,7 +273,7 @@ const ColumnControls = <TData,>({
       <PopoverTrigger asChild>
         <button>{icon}</button>
       </PopoverTrigger>
-      <PopoverContent forceMount={true} className="w-[400px] p-0" align="end">
+      <PopoverContent forceMount={true} className="w-96 p-0" align="end">
         <div className="p-4">
           <div className="text-md mb-2 font-medium">Column Controls</div>
           <Input
@@ -283,7 +282,7 @@ const ColumnControls = <TData,>({
             onChange={(event) => setQuery(event.target.value)}
           />
         </div>
-        <div ref={scrollRef} className="max-h-[350px] overflow-auto p-4">
+        <div ref={scrollRef} className="h-80 overflow-auto p-4">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
