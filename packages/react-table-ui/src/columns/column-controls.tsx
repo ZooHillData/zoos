@@ -36,6 +36,8 @@ import { FormattedId } from "../header/formatted-id";
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
   icon: React.ReactNode;
+  containerClassName?: string;
+  contentClassName?: string;
 };
 
 type FilterRendererProps<TData> = {
@@ -225,6 +227,8 @@ const SortableColumn = <TData,>({
 const ColumnControls = <TData,>({
   table,
   icon,
+  containerClassName,
+  contentClassName,
 }: ColumnControlsProps<TData>) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -273,16 +277,19 @@ const ColumnControls = <TData,>({
       <PopoverTrigger asChild>
         <button>{icon}</button>
       </PopoverTrigger>
-      <PopoverContent forceMount={true} className="w-96 p-0" align="end">
-        <div className="p-4">
-          <div className="text-md mb-2 font-medium">Column Controls</div>
-          <Input
-            placeholder="Search Columns"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-        </div>
-        <div ref={scrollRef} className="h-80 overflow-auto p-4">
+      <PopoverContent
+        forceMount={true}
+        className={containerClassName}
+        align="end"
+      >
+        <div className="text-md mb-2 font-medium">Column Controls</div>
+        <Input
+          placeholder="Search Columns"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+
+        <div ref={scrollRef} className={contentClassName}>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
