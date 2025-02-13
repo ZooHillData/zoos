@@ -280,6 +280,8 @@ function RouteComponent() {
       <div className="self-end">
         <ColumnControls
           table={table}
+          containerClassName={"w-[300px]"}
+          contentClassName={"max-h-[350px] overflow-auto mt-8"}
           icon={<Settings className="text-gray-500 hover:text-gray-800" />}
         />
       </div>
