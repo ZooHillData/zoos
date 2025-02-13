@@ -1,3 +1,9 @@
+## [1.41.0](https://github.com/zoohilldata/zoos/compare/v1.40.0...v1.41.0) (2025-02-13)
+
+### Features
+
+* **react-table,feat/objects:** redesigned / more complete objects implementation ([4b92385](https://github.com/zoohilldata/zoos/commit/4b92385729017411aab00b2202996eaf97adefbe))
+
 ## [1.40.0](https://github.com/zoohilldata/zoos/compare/v1.39.2...v1.40.0) (2025-02-13)
 
 ### Features
