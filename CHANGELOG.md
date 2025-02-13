@@ -1,3 +1,34 @@
+## [1.40.0](https://github.com/zoohilldata/zoos/compare/v1.39.2...v1.40.0) (2025-02-13)
+
+### Features
+
+* **react-table-ui:** testing version bump ([#48](https://github.com/zoohilldata/zoos/issues/48)) ([0de7f20](https://github.com/zoohilldata/zoos/commit/0de7f20a0e918473709338fd51e4bef91851f5ff))
+
+### Bug Fixes
+
+* **package-lock:** testing updating package log... ([0571736](https://github.com/zoohilldata/zoos/commit/057173604a60335b683c45feaa4fb88e59ac6139))
+* **react-table-ui:** Add configurable container and content classes to ColumnControls ([#44](https://github.com/zoohilldata/zoos/issues/44)) ([38d0494](https://github.com/zoohilldata/zoos/commit/38d049493f95bb23d5d6217b62259049e2bf0ffe))
+* **react-table-ui:** Borst/tailwind test 2 ([#45](https://github.com/zoohilldata/zoos/issues/45)) ([467e530](https://github.com/zoohilldata/zoos/commit/467e5306584f57751a700ea0c1079ba0047fd17a))
+* **react-table-ui:** testing tailwind classes ([#43](https://github.com/zoohilldata/zoos/issues/43)) ([2159b83](https://github.com/zoohilldata/zoos/commit/2159b83ee7c9cc33d7f43adca59f5e63ad282f49))
+* **react-table-ui:** testing version bump ([#47](https://github.com/zoohilldata/zoos/issues/47)) ([eeb9b81](https://github.com/zoohilldata/zoos/commit/eeb9b81706c08fbca7d4979ed38bdfaedafe7142))
+
+### Chores
+
+* **release:** -v1.39.3 [skip ci] ([291c2ef](https://github.com/zoohilldata/zoos/commit/291c2efb161e69c4593c73b85cbaf3ff6101af61))
+* **release:** -v1.39.3 [skip ci] ([a770663](https://github.com/zoohilldata/zoos/commit/a770663ae6007c474e25f36b84d65b9bd8968c5e))
+
+## [1.39.2](https://github.com/zoohilldata/zoos/compare/v1.39.1...v1.39.2) (2025-02-12)
+
+### Bug Fixes
+
+* **react-table:** Borst/table controls updates ([#42](https://github.com/zoohilldata/zoos/issues/42)) ([2847c75](https://github.com/zoohilldata/zoos/commit/2847c75b1afb65146caa84ea470214dac72f0dba))
+
+## [1.39.1](https://github.com/zoohilldata/zoos/compare/v1.39.0...v1.39.1) (2025-02-12)
+
+### Bug Fixes
+
+* **react-table-ui:** Borst/table controls updates ([#41](https://github.com/zoohilldata/zoos/issues/41)) ([2176d0a](https://github.com/zoohilldata/zoos/commit/2176d0a911954a3f1f5d9991fb5d4d481a930858))
+
 ## [1.38.1](https://github.com/zoohilldata/zoos/compare/v1.38.0...v1.39.0) (2025-02-07)
 
 ### Bug Fixes

@@ -26,14 +26,18 @@ import {
   EyeOff,
   Filter,
   GripVertical,
+  Pin,
 } from "lucide-react";
-import { Settings } from "lucide-react";
 import { getHeaderContext } from "@zoos/react-table";
 import { Input } from "@zoos/shadcn";
 import { useVirtualCombobox } from "@zoos/react-form";
+import { FormattedId } from "../header/formatted-id";
 
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
+  icon: React.ReactNode;
+  containerClassName?: string;
+  contentClassName?: string;
 };
 
 type FilterRendererProps<TData> = {
@@ -85,68 +89,147 @@ const SortableColumn = <TData,>({
       setIsHovered(false);
     }
   };
-  return (
-    <div
-      ref={setNodeRef}
-      {...attributes}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      style={style}
-      className={`flex w-full items-center rounded-md border p-1 ${
-        isDragging && "bg-primary-muted z-50"
-      }`}
-    >
-      <button className="mr-2 cursor-grab p-1" {...listeners}>
-        <GripVertical className="h-4 w-4" />
-      </button>
-      <span>{column.id}</span>
-      <div className="ml-auto flex gap-1">
-        <button onClick={() => column.toggleVisibility()}>
-          {column.getIsVisible() ? (
-            <EyeIcon
-              className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-            />
-          ) : (
-            <EyeOff
-              className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-            />
-          )}
+
+  if (column.getIsPinned()) {
+    return (
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        className={`p- flex w-full items-center rounded-md border p-2`}
+      >
+        <button onClick={() => column.pin(false)} className="mr-2 p-1">
+          <Pin className="h-4 w-4" />
         </button>
-        <Popover>
-          <PopoverTrigger asChild>
-            <button>
-              <Filter
-                className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-              />
+        <span className="max-w-[200px] truncate whitespace-nowrap">
+          <FormattedId headerContext={getHeaderContext(table, column)} />
+        </span>
+        <div className="ml-auto flex gap-1">
+          {column.getCanHide() && (
+            <button onClick={() => column.toggleVisibility()}>
+              {column.getIsVisible() ? (
+                <EyeIcon
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              ) : (
+                <EyeOff
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
             </button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <FilterRenderer column={column} table={table} />
-          </PopoverContent>
-        </Popover>
-        <button onClick={() => column.toggleSorting()}>
-          {column.getIsSorted() === "desc" && (
-            <ArrowDownNarrowWide
-              className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-            />
           )}
-          {column.getIsSorted() === "asc" && (
-            <ArrowUpNarrowWide
-              className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-            />
+          {column.getCanFilter() && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button>
+                  <Filter
+                    className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                  />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <FilterRenderer column={column} table={table} />
+              </PopoverContent>
+            </Popover>
           )}
-          {column.getIsSorted() === false && (
-            <ArrowDownUp
-              className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
-            />
+          {column.getCanSort() && (
+            <button onClick={() => column.toggleSorting()}>
+              {column.getIsSorted() === "desc" && (
+                <ArrowDownNarrowWide
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+              {column.getIsSorted() === "asc" && (
+                <ArrowUpNarrowWide
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+              {column.getIsSorted() === false && (
+                <ArrowDownUp
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+            </button>
           )}
-        </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        ref={setNodeRef}
+        {...attributes}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        style={style}
+        className={`flex w-full items-center rounded-md border p-2 ${
+          isDragging && "bg-primary-muted z-50"
+        }`}
+      >
+        <button className="mr-2 cursor-grab p-1" {...listeners}>
+          <GripVertical className="h-4 w-4" />
+        </button>
+        <span className="max-w-[200px] truncate whitespace-nowrap">
+          <FormattedId headerContext={getHeaderContext(table, column)} />
+        </span>
+        <div className="ml-auto flex gap-1">
+          {column.getCanHide() && (
+            <button onClick={() => column.toggleVisibility()}>
+              {column.getIsVisible() ? (
+                <EyeIcon
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              ) : (
+                <EyeOff
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+            </button>
+          )}
+          {column.getCanFilter() && (
+            <Popover>
+              <PopoverTrigger asChild>
+                <button>
+                  <Filter
+                    className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                  />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <FilterRenderer column={column} table={table} />
+              </PopoverContent>
+            </Popover>
+          )}
+          {column.getCanSort() && (
+            <button onClick={() => column.toggleSorting()}>
+              {column.getIsSorted() === "desc" && (
+                <ArrowDownNarrowWide
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+              {column.getIsSorted() === "asc" && (
+                <ArrowUpNarrowWide
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+              {column.getIsSorted() === false && (
+                <ArrowDownUp
+                  className={`h-5 w-5 transition-opacity duration-200 ${iconOpacity}`}
+                />
+              )}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
 };
 
-const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
+const ColumnControls = <TData,>({
+  table,
+  icon,
+  containerClassName,
+  contentClassName,
+}: ColumnControlsProps<TData>) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
@@ -158,16 +241,10 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   const { query, setQuery, virtualizer, scrollRef } = useVirtualCombobox({
     options: allOrderedColumns,
     virtualizerOptions: {
-      estimateSize: () => 34,
-      gap: 5,
+      estimateSize: () => 42,
+      gap: 15,
     },
   });
-
-  React.useEffect(() => {
-    if (isOpen) {
-      virtualizer.measure();
-    }
-  }, [isOpen, virtualizer]);
 
   const filteredColumns = allOrderedColumns.filter((col) =>
     col.label.toLowerCase().includes(query.toLowerCase()),
@@ -198,20 +275,21 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <button>
-          <Settings className="text-gray-500 hover:text-gray-800" />
-        </button>
+        <button>{icon}</button>
       </PopoverTrigger>
-      <PopoverContent className="w-[350px] p-0" align="end">
-        <div className="p-4 pb-0">
-          <div className="mb-2 text-sm font-medium">Column Controls</div>
-          <Input
-            placeholder="Search Columns"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-        </div>
-        <div ref={scrollRef} className="mt-2 max-h-[300px] overflow-auto p-1">
+      <PopoverContent
+        forceMount={true}
+        className={containerClassName}
+        align="end"
+      >
+        <div className="text-md mb-2 font-medium">Column Controls</div>
+        <Input
+          placeholder="Search Columns"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+
+        <div ref={scrollRef} className={contentClassName}>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -230,7 +308,7 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
                 {virtualizer.getVirtualItems().map((virtualItem) => {
                   const col = filteredColumns[virtualItem.index];
                   const column = table.getColumn(col.id);
-
+                  const { canReorder = true } = column?.columnDef.meta || {};
                   if (!column) return null;
                   return (
                     <div
@@ -241,11 +319,21 @@ const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
                         transform: `translateY(${virtualItem.start}px)`,
                       }}
                     >
-                      <SortableColumn
-                        key={column.id}
-                        column={column}
-                        table={table}
-                      />
+                      {canReorder ? (
+                        <SortableColumn
+                          key={column.id}
+                          column={column}
+                          table={table}
+                        />
+                      ) : (
+                        <div className="flex w-full items-center rounded-md border p-2 opacity-45">
+                          <div className="ml-8">
+                            <FormattedId
+                              headerContext={getHeaderContext(table, column)}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}

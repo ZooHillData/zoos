@@ -23,6 +23,7 @@ import {
   TooltipContent,
   createCn,
 } from "@zoos/shadcn";
+import { Settings } from "lucide-react";
 
 export const Route = createFileRoute("/core/react-table/column-filters")({
   component: RouteComponent,
@@ -37,7 +38,11 @@ const columns = [
   columnHelper.accessor("first_name", {
     id: "first_name",
     filterFn: filters.string.includes.filterFn,
+    enableSorting: false,
+    enableHiding: false,
+    enableColumnFilter: false,
     meta: {
+      canReorder: false,
       Filter: (headerContext) => (
         <FilterContainer>
           <Label>
@@ -52,6 +57,8 @@ const columns = [
   }),
   columnHelper.accessor("last_name", {
     id: "last_name",
+    enableSorting: false,
+    enableHiding: false,
     filterFn: filters.string.inArrayDynamic.filterFn,
     meta: {
       Filter: (headerContext) => (
@@ -271,7 +278,12 @@ function RouteComponent() {
   return (
     <div className="flex h-full flex-col overflow-auto">
       <div className="self-end">
-        <ColumnControls {...{ table }} />
+        <ColumnControls
+          table={table}
+          containerClassName={"w-[300px]"}
+          contentClassName={"max-h-[350px] overflow-auto mt-8"}
+          icon={<Settings className="text-gray-500 hover:text-gray-800" />}
+        />
       </div>
       <Table {...{ table, virtualRows, componentProps }} />
     </div>
