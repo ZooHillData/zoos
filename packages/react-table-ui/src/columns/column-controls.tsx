@@ -326,7 +326,7 @@ const ColumnControls = <TData,>({
                           table={table}
                         />
                       ) : (
-                        <div className="flex w-full items-center rounded-md border p-2 opacity-50">
+                        <div className="flex w-full items-center rounded-md border p-2 opacity-45">
                           <div className="ml-8">
                             <FormattedId
                               headerContext={getHeaderContext(table, column)}
