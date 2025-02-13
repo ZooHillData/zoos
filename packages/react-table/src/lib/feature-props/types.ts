@@ -1,8 +1,9 @@
 import type {
+  CellContext,
   HeaderGroup,
   HeaderContext,
   Row,
-  Cell,
+  Table,
 } from "@tanstack/react-table";
 import { type VirtualItem } from "@tanstack/react-virtual";
 
@@ -17,11 +18,18 @@ type ComponentProps<TData, TValue> = Partial<{
   trHead: (params: {
     headerGroup: HeaderGroup<TData>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
+  thContextMenu: (params: {
+    headerContext: HeaderContext<TData, TValue>;
+  }) => Partial<{ className: string; style: React.CSSProperties }>;
   th: (params: {
     headerContext: HeaderContext<TData, TValue>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
   tbody: Partial<{ className: string; style: React.CSSProperties }>;
-  trBody: (params: { row: Row<TData>; virtualRow: VirtualItem }) => Partial<
+  trBody: (params: {
+    table: Table<TData>;
+    row: Row<TData>;
+    virtualRow: VirtualItem;
+  }) => Partial<
     Omit<
       React.HTMLAttributes<HTMLTableRowElement>,
       "data-index" | "ref" | "style" | "className"
@@ -33,8 +41,14 @@ type ComponentProps<TData, TValue> = Partial<{
     }
   >;
   td: (params: {
-    cell: Cell<TData, TValue>;
+    cellContext: CellContext<TData, TValue>;
     virtualRow: VirtualItem;
+  }) => Partial<{
+    style: React.CSSProperties;
+    className: string;
+  }>;
+  tdContextMenu: (params: {
+    cellContext: CellContext<TData, TValue>;
   }) => Partial<{
     style: React.CSSProperties;
     className: string;

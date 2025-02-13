@@ -1,3 +1,4 @@
+import type { LucideProps } from "lucide-react";
 import { type CellContext } from "@tanstack/react-table";
 
 import { ChevronRightIcon, ChevronDownIcon } from "lucide-react";
@@ -33,7 +34,12 @@ const ExpandCell = <TData, TValue>(props: {
       }}
     >
       {hasChildren && (
-        <button onClick={() => row.toggleExpanded()}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            row.toggleExpanded();
+          }}
+        >
           {row.getIsExpanded() ? (
             <ChevronDownIcon
               style={{ width: chevronSizePx, height: chevronSizePx }}
@@ -45,9 +51,33 @@ const ExpandCell = <TData, TValue>(props: {
           )}
         </button>
       )}
-      <span>{children}</span>
+      {children}
     </div>
   );
 };
 
-export { ExpandCell };
+const ExpandRowChevronButton = <TData, TValue>(props: {
+  cellContext: CellContext<TData, TValue>;
+  chevronProps?: LucideProps;
+}) => {
+  const {
+    cellContext: { row },
+  } = props;
+
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        row.toggleExpanded();
+      }}
+    >
+      {row.getIsExpanded() ? (
+        <ChevronDownIcon {...props.chevronProps} />
+      ) : (
+        <ChevronRightIcon {...props.chevronProps} />
+      )}
+    </button>
+  );
+};
+
+export { ExpandCell, ExpandRowChevronButton };

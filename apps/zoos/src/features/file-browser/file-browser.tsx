@@ -83,7 +83,7 @@ const FileBrowser = (props: {
         },
         {
           // Directory row get bolder font
-          td: ({ cell: { row } }) => ({
+          td: ({ cellContext: { row } }) => ({
             className: row.subRows.length > 0 ? "font-medium" : "",
           }),
         },
@@ -116,7 +116,7 @@ const FileBrowser = (props: {
       <div className="flex items-center justify-between">
         <LocationBreadcrumb
           location={location}
-          onClick={(path) => {
+          onBreadcrumbClick={(path) => {
             onLocationChange(path);
           }}
         />

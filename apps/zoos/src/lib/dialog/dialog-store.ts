@@ -27,21 +27,22 @@ const creator: Creator<Store> = () => (set) => ({
   },
 });
 
+// Standard Dialog
 const dialogStore = createStore({ creator });
-
-///
-// Main Interface
-///
-
-// const useDialogStore = <T>(selector: (state: Store) => T): T => {
-//   return useStore(dialogStore, selector);
-// };
-
 const useDialog = () => {
   const content = useStore(dialogStore, ({ state }) => state.content);
   return { content, isOpen: !!content };
 };
-
 const { open: openDialog, close: closeDialog } = dialogStore.getState().events;
 
+// Alert Dialog
+const alertDialogStore = createStore({ creator });
+const useAlertDialog = () => {
+  const content = useStore(alertDialogStore, ({ state }) => state.content);
+  return { content, isOpen: !!content };
+};
+const { open: openAlertDialog, close: closeAlertDialog } =
+  alertDialogStore.getState().events;
+
 export { useDialog, openDialog, closeDialog };
+export { useAlertDialog, openAlertDialog, closeAlertDialog };

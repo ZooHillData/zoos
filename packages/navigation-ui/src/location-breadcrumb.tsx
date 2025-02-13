@@ -11,16 +11,17 @@ import {
 
 const LocationBreadcrumb = (props: {
   location: string;
-  onClick?: (path: string) => void;
+  onBreadcrumbClick?: (location: string) => void;
+  className?: string;
 }) => {
   const parts = props.location.split("/").filter(Boolean);
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className={props.className}>
         <BreadcrumbItem>
           <BreadcrumbLink
             className="hover:cursor-pointer"
-            onClick={() => props.onClick?.("/")}
+            onClick={() => props.onBreadcrumbClick?.("/")}
           >
             <HomeIcon className="size-5" />
           </BreadcrumbLink>
@@ -36,7 +37,7 @@ const LocationBreadcrumb = (props: {
                   if (path !== "/") {
                     path = `/${path}/`;
                   }
-                  props.onClick?.(path);
+                  props.onBreadcrumbClick?.(path);
                 }}
               >
                 {part}

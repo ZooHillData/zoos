@@ -22,12 +22,10 @@ import { Route as CoreShadcnRouteImport } from './routes/core/shadcn/route'
 import { Route as CoreReactTableRouteImport } from './routes/core/react-table/route'
 import { Route as CoreReactQueryRouteImport } from './routes/core/react-query/route'
 import { Route as CoreReactFormRouteImport } from './routes/core/react-form/route'
-import { Route as FeaturesObjectsIndexImport } from './routes/features/objects/index'
 import { Route as FeaturesFileBrowserIndexImport } from './routes/features/file-browser/index'
 import { Route as FeaturesAuthIndexImport } from './routes/features/auth/index'
 import { Route as CoreReactGridLayoutIndexImport } from './routes/core/react-grid-layout/index'
-import { Route as FeaturesObjectsScratchImport } from './routes/features/objects/scratch'
-import { Route as FeaturesObjectsAdminImport } from './routes/features/objects/admin'
+import { Route as FeaturesObjectsExplorerImport } from './routes/features/objects/explorer'
 import { Route as CoreShadcnUseReactiveStateImport } from './routes/core/shadcn/use-reactive-state'
 import { Route as CoreShadcnUseDebounceImport } from './routes/core/shadcn/use-debounce'
 import { Route as CoreShadcnSelectImport } from './routes/core/shadcn/select'
@@ -123,12 +121,6 @@ const CoreReactFormRouteRoute = CoreReactFormRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const FeaturesObjectsIndexRoute = FeaturesObjectsIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => FeaturesObjectsRouteRoute,
-} as any)
-
 const FeaturesFileBrowserIndexRoute = FeaturesFileBrowserIndexImport.update({
   id: '/',
   path: '/',
@@ -147,15 +139,9 @@ const CoreReactGridLayoutIndexRoute = CoreReactGridLayoutIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const FeaturesObjectsScratchRoute = FeaturesObjectsScratchImport.update({
-  id: '/scratch',
-  path: '/scratch',
-  getParentRoute: () => FeaturesObjectsRouteRoute,
-} as any)
-
-const FeaturesObjectsAdminRoute = FeaturesObjectsAdminImport.update({
-  id: '/admin',
-  path: '/admin',
+const FeaturesObjectsExplorerRoute = FeaturesObjectsExplorerImport.update({
+  id: '/explorer',
+  path: '/explorer',
   getParentRoute: () => FeaturesObjectsRouteRoute,
 } as any)
 
@@ -597,18 +583,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoreShadcnUseReactiveStateImport
       parentRoute: typeof CoreShadcnRouteImport
     }
-    '/features/objects/admin': {
-      id: '/features/objects/admin'
-      path: '/admin'
-      fullPath: '/features/objects/admin'
-      preLoaderRoute: typeof FeaturesObjectsAdminImport
-      parentRoute: typeof FeaturesObjectsRouteImport
-    }
-    '/features/objects/scratch': {
-      id: '/features/objects/scratch'
-      path: '/scratch'
-      fullPath: '/features/objects/scratch'
-      preLoaderRoute: typeof FeaturesObjectsScratchImport
+    '/features/objects/explorer': {
+      id: '/features/objects/explorer'
+      path: '/explorer'
+      fullPath: '/features/objects/explorer'
+      preLoaderRoute: typeof FeaturesObjectsExplorerImport
       parentRoute: typeof FeaturesObjectsRouteImport
     }
     '/core/react-grid-layout/': {
@@ -631,13 +610,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/features/file-browser/'
       preLoaderRoute: typeof FeaturesFileBrowserIndexImport
       parentRoute: typeof FeaturesFileBrowserRouteImport
-    }
-    '/features/objects/': {
-      id: '/features/objects/'
-      path: '/'
-      fullPath: '/features/objects/'
-      preLoaderRoute: typeof FeaturesObjectsIndexImport
-      parentRoute: typeof FeaturesObjectsRouteImport
     }
   }
 }
@@ -755,15 +727,11 @@ const FeaturesFileBrowserRouteRouteWithChildren =
   )
 
 interface FeaturesObjectsRouteRouteChildren {
-  FeaturesObjectsAdminRoute: typeof FeaturesObjectsAdminRoute
-  FeaturesObjectsScratchRoute: typeof FeaturesObjectsScratchRoute
-  FeaturesObjectsIndexRoute: typeof FeaturesObjectsIndexRoute
+  FeaturesObjectsExplorerRoute: typeof FeaturesObjectsExplorerRoute
 }
 
 const FeaturesObjectsRouteRouteChildren: FeaturesObjectsRouteRouteChildren = {
-  FeaturesObjectsAdminRoute: FeaturesObjectsAdminRoute,
-  FeaturesObjectsScratchRoute: FeaturesObjectsScratchRoute,
-  FeaturesObjectsIndexRoute: FeaturesObjectsIndexRoute,
+  FeaturesObjectsExplorerRoute: FeaturesObjectsExplorerRoute,
 }
 
 const FeaturesObjectsRouteRouteWithChildren =
@@ -807,12 +775,10 @@ export interface FileRoutesByFullPath {
   '/core/shadcn/select': typeof CoreShadcnSelectRoute
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
-  '/features/objects/admin': typeof FeaturesObjectsAdminRoute
-  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/features/objects/explorer': typeof FeaturesObjectsExplorerRoute
   '/core/react-grid-layout': typeof CoreReactGridLayoutIndexRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
-  '/features/objects/': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -822,6 +788,7 @@ export interface FileRoutesByTo {
   '/core/react-query': typeof CoreReactQueryRouteRouteWithChildren
   '/core/react-table': typeof CoreReactTableRouteRouteWithChildren
   '/core/shadcn': typeof CoreShadcnRouteRouteWithChildren
+  '/features/objects': typeof FeaturesObjectsRouteRouteWithChildren
   '/features/controlled-dialog': typeof FeaturesControlledDialogRoute
   '/community': typeof CommunityIndexRoute
   '/community/dnd-kit/drag-and-drop-simple': typeof CommunityDndKitDragAndDropSimpleRoute
@@ -850,12 +817,10 @@ export interface FileRoutesByTo {
   '/core/shadcn/select': typeof CoreShadcnSelectRoute
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
-  '/features/objects/admin': typeof FeaturesObjectsAdminRoute
-  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/features/objects/explorer': typeof FeaturesObjectsExplorerRoute
   '/core/react-grid-layout': typeof CoreReactGridLayoutIndexRoute
   '/features/auth': typeof FeaturesAuthIndexRoute
   '/features/file-browser': typeof FeaturesFileBrowserIndexRoute
-  '/features/objects': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -897,12 +862,10 @@ export interface FileRoutesById {
   '/core/shadcn/select': typeof CoreShadcnSelectRoute
   '/core/shadcn/use-debounce': typeof CoreShadcnUseDebounceRoute
   '/core/shadcn/use-reactive-state': typeof CoreShadcnUseReactiveStateRoute
-  '/features/objects/admin': typeof FeaturesObjectsAdminRoute
-  '/features/objects/scratch': typeof FeaturesObjectsScratchRoute
+  '/features/objects/explorer': typeof FeaturesObjectsExplorerRoute
   '/core/react-grid-layout/': typeof CoreReactGridLayoutIndexRoute
   '/features/auth/': typeof FeaturesAuthIndexRoute
   '/features/file-browser/': typeof FeaturesFileBrowserIndexRoute
-  '/features/objects/': typeof FeaturesObjectsIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -945,12 +908,10 @@ export interface FileRouteTypes {
     | '/core/shadcn/select'
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
-    | '/features/objects/admin'
-    | '/features/objects/scratch'
+    | '/features/objects/explorer'
     | '/core/react-grid-layout'
     | '/features/auth/'
     | '/features/file-browser/'
-    | '/features/objects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -959,6 +920,7 @@ export interface FileRouteTypes {
     | '/core/react-query'
     | '/core/react-table'
     | '/core/shadcn'
+    | '/features/objects'
     | '/features/controlled-dialog'
     | '/community'
     | '/community/dnd-kit/drag-and-drop-simple'
@@ -987,12 +949,10 @@ export interface FileRouteTypes {
     | '/core/shadcn/select'
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
-    | '/features/objects/admin'
-    | '/features/objects/scratch'
+    | '/features/objects/explorer'
     | '/core/react-grid-layout'
     | '/features/auth'
     | '/features/file-browser'
-    | '/features/objects'
   id:
     | '__root__'
     | '/'
@@ -1032,12 +992,10 @@ export interface FileRouteTypes {
     | '/core/shadcn/select'
     | '/core/shadcn/use-debounce'
     | '/core/shadcn/use-reactive-state'
-    | '/features/objects/admin'
-    | '/features/objects/scratch'
+    | '/features/objects/explorer'
     | '/core/react-grid-layout/'
     | '/features/auth/'
     | '/features/file-browser/'
-    | '/features/objects/'
   fileRoutesById: FileRoutesById
 }
 
@@ -1168,9 +1126,7 @@ export const routeTree = rootRoute
     "/features/objects": {
       "filePath": "features/objects/route.tsx",
       "children": [
-        "/features/objects/admin",
-        "/features/objects/scratch",
-        "/features/objects/"
+        "/features/objects/explorer"
       ]
     },
     "/features/controlled-dialog": {
@@ -1280,12 +1236,8 @@ export const routeTree = rootRoute
       "filePath": "core/shadcn/use-reactive-state.tsx",
       "parent": "/core/shadcn"
     },
-    "/features/objects/admin": {
-      "filePath": "features/objects/admin.tsx",
-      "parent": "/features/objects"
-    },
-    "/features/objects/scratch": {
-      "filePath": "features/objects/scratch.tsx",
+    "/features/objects/explorer": {
+      "filePath": "features/objects/explorer.tsx",
       "parent": "/features/objects"
     },
     "/core/react-grid-layout/": {
@@ -1298,10 +1250,6 @@ export const routeTree = rootRoute
     "/features/file-browser/": {
       "filePath": "features/file-browser/index.tsx",
       "parent": "/features/file-browser"
-    },
-    "/features/objects/": {
-      "filePath": "features/objects/index.tsx",
-      "parent": "/features/objects"
     }
   }
 }

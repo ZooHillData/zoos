@@ -159,7 +159,7 @@ function RouteComponent() {
                 return (
                   <tr
                     key={virtualRow.index}
-                    {...componentProps.trBody?.({ row, virtualRow })}
+                    {...componentProps.trBody?.({ table, row, virtualRow })}
                   >
                     <ColumnSortableContext table={table}>
                       {row.getVisibleCells().map((cell) => (
@@ -172,7 +172,7 @@ function RouteComponent() {
                               ref={setNodeRef}
                               {...mergeStyleProps([
                                 componentProps.td?.({
-                                  cell,
+                                  cellContext: cell.getContext(),
                                   virtualRow,
                                 }) || {},
                                 getCellDragProps({ isDragging, transform }),

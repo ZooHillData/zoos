@@ -1,5 +1,6 @@
 /* Components */
 export * from "./components/accordion";
+export * from "./components/alert-dialog";
 export * from "./components/avatar";
 export * from "./components/badge";
 export * from "./components/breadcrumb";
@@ -17,6 +18,7 @@ export * from "./components/input";
 export * from "./components/label";
 export * from "./components/popover";
 export * from "./components/radio-group";
+export * from "./components/resizable";
 export * from "./components/select";
 export * from "./components/skeleton";
 export * from "./components/slider";

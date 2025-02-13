@@ -18,6 +18,14 @@ const mergeFeatureProps = <TData, TValue>(
     mergeStyleProps(featureProps.map((props) => props.trBody?.(params) || {})),
   td: (params) =>
     mergeStyleProps(featureProps.map((props) => props.td?.(params) || {})),
+  tdContextMenu: (params) =>
+    mergeStyleProps(
+      featureProps.map((props) => props.tdContextMenu?.(params) || {}),
+    ),
+  thContextMenu: (params) =>
+    mergeStyleProps(
+      featureProps.map((props) => props.thContextMenu?.(params) || {}),
+    ),
   resizeColHandle: (params) =>
     mergeStyleProps(
       featureProps.map((props) => props.resizeColHandle?.(params) || {}),

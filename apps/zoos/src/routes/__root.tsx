@@ -6,7 +6,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { type QueryClient } from "@tanstack/react-query";
 
-import { ControlledDialog } from "../lib/dialog";
+import { ControlledDialog, ControlledAlertDialog } from "../lib/dialog";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
@@ -106,6 +106,7 @@ function RouteFunction() {
       />
       <Outlet />
       <ControlledDialog />
+      <ControlledAlertDialog />
       {/* <TanStackRouterDevtools  /> */}
     </div>
   );

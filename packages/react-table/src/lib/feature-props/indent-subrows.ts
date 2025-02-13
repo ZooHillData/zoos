@@ -6,7 +6,7 @@ const indentSubrows = <TData, TValue>(params?: {
 }) => {
   const { indentPx = 16, baseLeftPadPx = 0 } = params || {};
   return {
-    td: ({ cell }) => ({
+    td: ({ cellContext: { cell } }) => ({
       style:
         cell.row.depth > 0
           ? { paddingLeft: `${cell.row.depth * indentPx + baseLeftPadPx}px` }
