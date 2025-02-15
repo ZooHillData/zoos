@@ -1,3 +1,13 @@
+## [1.42.0](https://github.com/zoohilldata/zoos/compare/v1.41.0...v1.42.0) (2025-02-15)
+
+### Features
+
+* **react-table:** add rowVirtualizer and table to `tbody` in component props ([4f7b2df](https://github.com/zoohilldata/zoos/commit/4f7b2df9898626378c2e774ea5f0ad5c644cce26))
+
+### Chores
+
+* add zoos styling instructions [skip ci] ([40506fe](https://github.com/zoohilldata/zoos/commit/40506fe970d12b5af5a170efb60bcd21f870dd89))
+
 ## [1.41.0](https://github.com/zoohilldata/zoos/compare/v1.40.0...v1.41.0) (2025-02-13)
 
 ### Features
