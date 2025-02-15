@@ -5,7 +5,8 @@ import type {
   Row,
   Table,
 } from "@tanstack/react-table";
-import { type VirtualItem } from "@tanstack/react-virtual";
+import type { RowVirtualizer } from "../../hooks/use-virtualization";
+import type { VirtualItem } from "@tanstack/react-virtual";
 
 type ComponentProps<TData, TValue> = Partial<{
   container: Partial<{
@@ -24,7 +25,10 @@ type ComponentProps<TData, TValue> = Partial<{
   th: (params: {
     headerContext: HeaderContext<TData, TValue>;
   }) => Partial<{ className: string; style: React.CSSProperties }>;
-  tbody: Partial<{ className: string; style: React.CSSProperties }>;
+  tbody: (params: {
+    table: Table<TData>;
+    rowVirtualizer: RowVirtualizer;
+  }) => Partial<{ className: string; style: React.CSSProperties }>;
   trBody: (params: {
     table: Table<TData>;
     row: Row<TData>;

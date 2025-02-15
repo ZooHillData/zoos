@@ -90,7 +90,7 @@ function RouteComponent() {
     //       <ToggleDetailsButton onClick={() => setDetailsOpen(!detailsOpen)} />
     //     </div>
     <Table
-      {...{ table, virtualRows, componentProps }}
+      {...{ table, virtualRows, rowVirtualizer, componentProps }}
       contextMenuContent={{
         td: (cellContext) => {
           return (

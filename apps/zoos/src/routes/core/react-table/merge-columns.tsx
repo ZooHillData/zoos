@@ -117,7 +117,7 @@ function RouteComponent() {
             .join(", ")}
         </div>
       </div>
-      <Table {...{ table, virtualRows, componentProps }} />
+      <Table {...{ table, virtualRows, rowVirtualizer, componentProps }} />
     </div>
   );
 }

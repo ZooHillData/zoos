@@ -20,11 +20,12 @@ type ContextMenuContentProp<TData, TValue> = Partial<{
 
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
+  rowVirtualizer: ReturnType<typeof useVirtualization>["rowVirtualizer"];
   virtualRows: ReturnType<typeof useVirtualization>["virtualRows"];
   componentProps: ComponentProps<TData, TValue>;
   contextMenuContent?: ContextMenuContentProp<TData, TValue>;
 }) => {
-  const { table, virtualRows, componentProps } = props;
+  const { table, rowVirtualizer, virtualRows, componentProps } = props;
 
   return (
     <ColumnDndContext table={table}>
@@ -112,7 +113,7 @@ const Table = <TData extends object, TValue>(props: {
               </tr>
             ))}
           </thead>
-          <tbody {...componentProps.tbody}>
+          <tbody {...componentProps.tbody?.({ table, rowVirtualizer })}>
             {virtualRows.map((virtualRow) => {
               const row = table.getRowModel().rows[virtualRow.index];
               return (
@@ -152,7 +153,7 @@ const Table = <TData extends object, TValue>(props: {
                                 // the context menu is still open and capturing the focus
                                 // `modal={false}` makes it so that ContextMenu does not capture the entire focus
                               }
-                              <ContextMenu modal={false}>
+                              <ContextMenu modal={true}>
                                 <ContextMenuTrigger
                                   // Disable the context menu if there is no content
                                   // we leave the context menu because it is used

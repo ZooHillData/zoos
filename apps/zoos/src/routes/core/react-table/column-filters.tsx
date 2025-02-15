@@ -285,7 +285,7 @@ function RouteComponent() {
           icon={<Settings className="text-gray-500 hover:text-gray-800" />}
         />
       </div>
-      <Table {...{ table, virtualRows, componentProps }} />
+      <Table {...{ table, virtualRows, rowVirtualizer, componentProps }} />
     </div>
   );
 }

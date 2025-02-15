@@ -98,5 +98,5 @@ function RouteComponent() {
     },
   );
 
-  return <Table {...{ table, componentProps, virtualRows }} />;
+  return <Table {...{ table, componentProps, virtualRows, rowVirtualizer }} />;
 }

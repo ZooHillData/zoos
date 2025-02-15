@@ -101,7 +101,7 @@ function RouteComponent() {
   );
   return (
     <Table
-      {...{ table, virtualRows, componentProps }}
+      {...{ table, virtualRows, rowVirtualizer, componentProps }}
       contextMenuContent={{
         td: () => (
           <ContextMenuContent>

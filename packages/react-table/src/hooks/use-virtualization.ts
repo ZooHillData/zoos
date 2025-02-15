@@ -1,6 +1,10 @@
+import type { Table } from "@tanstack/react-table";
+import type { Virtualizer } from "@tanstack/react-virtual";
+
 import React from "react";
-import { type Table } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
+
+type RowVirtualizer = Virtualizer<HTMLDivElement, Element>;
 
 type TableVirtualizerOptionsRow = Omit<
   Parameters<typeof useVirtualizer<HTMLDivElement, Element>>[0],
@@ -73,3 +77,4 @@ const useVirtualization = <TData>({
 };
 
 export { useVirtualization };
+export type { RowVirtualizer };

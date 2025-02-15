@@ -21,7 +21,9 @@ const rowVirtualization = <TData, TValue>(params: {
         width: headerContext.header.getSize(),
       },
     }),
-    tbody: { style: { height: `${params.rowVirtualizer.getTotalSize()}px` } },
+    tbody: ({ rowVirtualizer }) => ({
+      style: { height: `${rowVirtualizer.getTotalSize()}px` },
+    }),
     trBody: ({ row: _row, virtualRow }) => ({
       "data-index": virtualRow.index,
       ref: (node) => params.rowVirtualizer.measureElement(node),
