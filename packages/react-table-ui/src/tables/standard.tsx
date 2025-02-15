@@ -1,17 +1,18 @@
-import type { Table as TTable, Cell, CellContext } from "@tanstack/react-table";
+import type { Table as TTable, CellContext } from "@tanstack/react-table";
+import type { RowVirtualizer, ComponentProps } from "@zoos/react-table";
 
 import { flexRender } from "@tanstack/react-table";
 
 import { ContextMenu, ContextMenuTrigger, mergeStyleProps } from "@zoos/shadcn";
-import { useVirtualization, type ComponentProps } from "@zoos/react-table";
+import { useVirtualization } from "@zoos/react-table";
 
-import { HeaderContextMenu, HeaderSortIndicator } from "../header";
 import {
   ColumnDndContext,
   ColumnSortableContext,
   getCellDragProps,
   SortableItem,
 } from "../column-reorder-dnd";
+import { HeaderSortIndicator, HeaderContextMenu } from "../header";
 
 type ContextMenuContentProp<TData, TValue> = Partial<{
   td: (cellContext: CellContext<TData, TValue>) => React.ReactNode;
@@ -20,12 +21,16 @@ type ContextMenuContentProp<TData, TValue> = Partial<{
 
 const Table = <TData extends object, TValue>(props: {
   table: TTable<TData>;
-  rowVirtualizer: ReturnType<typeof useVirtualization>["rowVirtualizer"];
   virtualRows: ReturnType<typeof useVirtualization>["virtualRows"];
+  rowVirtualizer: RowVirtualizer;
   componentProps: ComponentProps<TData, TValue>;
   contextMenuContent?: ContextMenuContentProp<TData, TValue>;
+  emptyDataRow?: (props: {
+    table: TTable<TData>;
+    rowVirtualizer: ReturnType<typeof useVirtualization>["rowVirtualizer"];
+  }) => React.ReactNode;
 }) => {
-  const { table, rowVirtualizer, virtualRows, componentProps } = props;
+  const { table, virtualRows, rowVirtualizer, componentProps } = props;
 
   return (
     <ColumnDndContext table={table}>
@@ -113,7 +118,15 @@ const Table = <TData extends object, TValue>(props: {
               </tr>
             ))}
           </thead>
-          <tbody {...componentProps.tbody?.({ table, rowVirtualizer })}>
+          <tbody
+            {...componentProps.tbody?.({ table, rowVirtualizer })}
+            // ! If there no rows, we will add an empty row
+            // This "fit-content" will allow the empty row to take
+            // up the height it needs for its contents
+            {...(virtualRows.length === 0
+              ? { style: { height: "fit-content" } }
+              : {})}
+          >
             {virtualRows.map((virtualRow) => {
               const row = table.getRowModel().rows[virtualRow.index];
               return (
@@ -181,6 +194,16 @@ const Table = <TData extends object, TValue>(props: {
                 </tr>
               );
             })}
+            {virtualRows.length === 0 && (
+              <tr className="flex w-full">
+                <td
+                  colSpan={table.getVisibleFlatColumns().length}
+                  className="flex w-full"
+                >
+                  {props.emptyDataRow?.({ table, rowVirtualizer })}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}

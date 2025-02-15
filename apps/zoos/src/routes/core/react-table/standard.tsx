@@ -20,9 +20,16 @@ import {
   featureProps,
 } from "@zoos/react-table";
 import { Table } from "@zoos/react-table-ui";
-import { ContextMenuContent, ContextMenuItem } from "@zoos/shadcn";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@zoos/shadcn";
+import { CheckboxWithLabel } from "@zoos/react-form";
 
 function RouteComponent() {
+  const [showEmpty, setShowEmpty] = React.useState(false);
   const { data } = Route.useRouteContext();
 
   const [state, setState] = React.useState({});
@@ -33,7 +40,7 @@ function RouteComponent() {
   );
 
   const { table, virtualRows, rowVirtualizer, scrollContainerRef } = useTable({
-    data,
+    data: showEmpty ? data.filter((row) => false) : data,
     columns,
     // initialState: { columnOrder: columns.map((col) => col.id) },
     state,
@@ -100,15 +107,33 @@ function RouteComponent() {
     },
   );
   return (
-    <Table
-      {...{ table, virtualRows, rowVirtualizer, componentProps }}
-      contextMenuContent={{
-        td: () => (
-          <ContextMenuContent>
-            <ContextMenuItem>Test</ContextMenuItem>
-          </ContextMenuContent>
-        ),
-      }}
-    />
+    <div className="flex h-full flex-col gap-4 overflow-hidden">
+      <CheckboxWithLabel
+        label="Show table with no rows?"
+        checked={showEmpty}
+        onCheckedChange={() => setShowEmpty(!showEmpty)}
+      />
+      <Table
+        {...{ table, virtualRows, rowVirtualizer, componentProps }}
+        emptyDataRow={() => (
+          <ContextMenu>
+            <ContextMenuTrigger className="flex h-full w-full px-3 py-2">
+              No data available
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>Empty row context menu 1</ContextMenuItem>
+              <ContextMenuItem>Empty row context menu 2</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+        )}
+        contextMenuContent={{
+          td: () => (
+            <ContextMenuContent>
+              <ContextMenuItem>Test</ContextMenuItem>
+            </ContextMenuContent>
+          ),
+        }}
+      />
+    </div>
   );
 }
