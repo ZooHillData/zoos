@@ -1,3 +1,9 @@
+## [1.42.1](https://github.com/zoohilldata/zoos/compare/v1.42.0...v1.42.1) (2025-02-15)
+
+### Bug Fixes
+
+* **react-table-ui:** modify standard react table UI to include `rowVirtualizer` and `emptyDataRow` ([77bc2da](https://github.com/zoohilldata/zoos/commit/77bc2da4c8a5070ac61cce297f50961d98a237e5))
+
 ## [1.42.0](https://github.com/zoohilldata/zoos/compare/v1.41.0...v1.42.0) (2025-02-15)
 
 ### Features

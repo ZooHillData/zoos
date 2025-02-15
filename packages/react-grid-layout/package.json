@@ -1,6 +1,6 @@
 {
   "name": "@zoos/react-grid-layout",
-  "version": "1.42.0",
+  "version": "1.42.1",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
