@@ -5,8 +5,20 @@ Menu of independent features, methods and libraries provide building blocks for 
 ## Using Zoos in your project
 
 1. Integrate the [css variable definitions](https://github.com/ZooHillData/zoos/blob/main/apps/zoos/src/styles.css) into your app's CSS solution
-2. Integrate the `theme` attribute from [tailwind.config.js](https://github.com/ZooHillData/zoos/blob/main/apps/zoos/tailwind.config.js) into your app's tailwind config
-3. Update `content` in your Tailwind config to include `"node_modules/@zoos/*/index.mjs"`:
+1. Integrate the `theme` attribute from [tailwind.config.js](https://github.com/ZooHillData/zoos/blob/main/apps/zoos/tailwind.config.js) into your app's tailwind config
+1. Update `content` in your Tailwind config to include `"node_modules/@zoos/*/index.mjs"`:
+1. For Tanstack Start, had to add `"@zoos/*"` to paths in `tsconfig.json`:
+
+   ```json
+   // tsconfig.json
+   {
+     "compilerOptions": {
+       "paths": {
+         "@zoos/*": ["./node_modules/@zoos/*"]
+       }
+     }
+   }
+   ```
 
 ## Quickstart
 
