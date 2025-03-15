@@ -1,12 +1,7 @@
-import React from "react";
-
 import type { Row, HeaderContext } from "@tanstack/react-table";
+import type { NumberRange2InputProps, NumberRange } from "@zoos/react-form";
 
-import {
-  NumberRange2Input,
-  type NumberRange2InputProps,
-  type NumberRange,
-} from "@zoos/react-form";
+import { NumberRange2Input } from "@zoos/react-form";
 
 import { evaluateRangeFilter } from "../filter/lib/evaluate-range-filter";
 
@@ -24,36 +19,22 @@ function filterFn<TData>(
 const FilterInput = <TData, TValue>(props: {
   headerContext: HeaderContext<TData, TValue>;
   inputProps?: NumberRange2InputProps;
-  autoRefresh?: boolean;
 }) => {
   const {
     headerContext: { column },
-    autoRefresh = true,
   } = props;
-  const filterValue = column.getFilterValue();
-  const range = (filterValue || {}) as NumberRange;
-  const [value, setValue] = React.useState(range);
-
-  // When autoRefresh is re-enabled, set the value in the column
-  React.useEffect(() => {
-    if (autoRefresh) {
-      column.setFilterValue(value);
-    }
-  }, [autoRefresh, column, value]);
-
-  React.useEffect(() => {
-    setValue(filterValue ? { ...filterValue } : {});
-  }, [filterValue]);
+  const filterValue = column.getFilterValue() as NumberRange;
+  const minMax = column.getFacetedMinMaxValues();
+  const range = {
+    from: minMax?.[0] || filterValue?.from,
+    to: minMax?.[1] || filterValue?.to,
+  } as NumberRange;
 
   return (
     <NumberRange2Input
-      value={value}
+      value={range}
       onChange={(value) => {
-        if (autoRefresh) {
-          column.setFilterValue(value);
-        } else {
-          setValue(value);
-        }
+        column.setFilterValue(value);
       }}
       {...props.inputProps}
     />

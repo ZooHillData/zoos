@@ -79,7 +79,7 @@ const Table = <TData extends object, TValue>(props: {
                               // (See below) comments for `ContextMenu` on `<td />`
                               // for info on `modal={false}`
                             }
-                            <ContextMenu modal={false}>
+                            <ContextMenu modal={true}>
                               <HeaderContextMenu
                                 header={header.getContext()}
                                 {...componentProps.thContextMenu?.({
