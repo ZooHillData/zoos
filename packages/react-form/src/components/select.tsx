@@ -16,13 +16,18 @@ const Select = (props: {
   className?: string;
   placeholder?: string;
   sort?: boolean;
+  disabled?: boolean;
 }) => {
   const options = props.sort
     ? props.options.sort((a, b) => a.label.localeCompare(b.label))
     : props.options;
 
   return (
-    <SelectPrimitive value={props.value} onValueChange={props.onChange}>
+    <SelectPrimitive
+      disabled={props.disabled}
+      value={props.value}
+      onValueChange={props.onChange}
+    >
       <SelectTrigger className={props.className}>
         <SelectValue placeholder={props.placeholder} />
       </SelectTrigger>

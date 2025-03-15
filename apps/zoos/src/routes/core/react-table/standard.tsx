@@ -1,3 +1,5 @@
+import type { ValueType } from "@zoos/react-table";
+
 import { createFileRoute } from "@tanstack/react-router";
 
 const metadata = {
@@ -19,14 +21,81 @@ import {
   getColumns,
   featureProps,
 } from "@zoos/react-table";
-import { Table } from "@zoos/react-table-ui";
+import {
+  filters,
+  Table,
+  FilterContainer,
+  FormattedId,
+} from "@zoos/react-table-ui";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
+  Label,
 } from "@zoos/shadcn";
 import { CheckboxWithLabel } from "@zoos/react-form";
+import { AccessorColumnDef } from "@tanstack/react-table";
+
+/**
+ *
+ * Maps column types (returned from inference)
+ * to default column defs
+ *
+ * You will define this in your implementation
+ */
+const getDefaultColumnDef = <TData,>(params: {
+  inferredType: ValueType;
+  columnId: string;
+}): Partial<AccessorColumnDef<TData>> => {
+  const { inferredType, columnId } = params;
+  if (inferredType === "number") {
+    return {
+      filterFn: filters.number.range.filterFn,
+      meta: {
+        Filter: (headerContext) => (
+          <FilterContainer className="space-y-2">
+            <Label>
+              <FormattedId headerContext={headerContext} />
+            </Label>
+            <filters.number.range.FilterInput headerContext={headerContext} />
+          </FilterContainer>
+        ),
+      },
+    };
+  }
+  if (inferredType === "date") {
+    return {
+      filterFn: filters.date.range.filterFn,
+      meta: {
+        Filter: (headerContext) => (
+          <FilterContainer className="space-y-2">
+            <Label>
+              <FormattedId headerContext={headerContext} />
+            </Label>
+            <filters.date.range.FilterInput headerContext={headerContext} />
+          </FilterContainer>
+        ),
+      },
+    };
+  } else {
+    return {
+      filterFn: filters.string.inArrayDynamic.filterFn,
+      meta: {
+        Filter: (headerContext) => (
+          <FilterContainer className="space-y-2">
+            <Label>
+              <FormattedId headerContext={headerContext} />
+            </Label>
+            <filters.string.inArrayDynamic.FilterInput
+              headerContext={headerContext}
+            />
+          </FilterContainer>
+        ),
+      },
+    };
+  }
+};
 
 function RouteComponent() {
   const [showEmpty, setShowEmpty] = React.useState(false);
@@ -34,7 +103,11 @@ function RouteComponent() {
 
   const [state, setState] = React.useState({});
   const columns = React.useMemo(
-    () => getColumns({ data })({}),
+    () =>
+      getColumns({ data })({
+        // The result of this function is merged into the column def
+        getColumnDef: getDefaultColumnDef,
+      }),
 
     [data],
   );
@@ -57,10 +130,11 @@ function RouteComponent() {
       scrollContainerRef,
     },
     {
+      // TODO: this is a lot of custom styling for the "standard" table !!!
       mergeProps: [
         {
           container: { className: "border text-sm" },
-          td: () => ({ className: "p-0" }),
+          td: () => ({ className: "p-0 overflow-hidden" }),
           tdContextMenu: () => ({
             className:
               "group-hover:bg-muted whitespace-nowrap px-3 py-2 bg-background flex items-center",

@@ -82,23 +82,13 @@ const columns = [
     filterFn: filters.number.range.filterFn,
     meta: {
       Filter: (headerContext) => {
-        const [autoRefresh, setAutoRefresh] = React.useState(true);
         return (
           <FilterContainer>
-            <div className="ml-auto">
-              <AutoRefreshToggle
-                pressed={autoRefresh}
-                onPressedChange={setAutoRefresh}
-              />
-            </div>
             <Label>
               <FormattedId headerContext={headerContext} /> Range
               <span className="text-secondary ml-1">(number.range)</span>
             </Label>
-            <filters.number.range.FilterInput
-              headerContext={headerContext}
-              autoRefresh={autoRefresh}
-            />
+            <filters.number.range.FilterInput headerContext={headerContext} />
             <ClearFilterButton headerContext={headerContext} />
           </FilterContainer>
         );

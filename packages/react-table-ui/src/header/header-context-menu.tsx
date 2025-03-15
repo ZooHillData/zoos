@@ -116,6 +116,13 @@ const HeaderContextMenu = <TData, TValue>({
             </ContextMenuPortal>
           </ContextMenuSub>
         )}
+        {header.column.getIsFiltered() && (
+          <ContextMenuItem
+            onClick={() => header.column.setFilterValue(undefined)}
+          >
+            Clear Filter
+          </ContextMenuItem>
+        )}
       </ContextMenuContent>
     </>
   );
