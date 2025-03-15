@@ -1,6 +1,13 @@
 import React from "react";
 import type { Column, Table } from "@tanstack/react-table";
-import { Popover, PopoverContent, PopoverTrigger } from "@zoos/shadcn";
+import {
+  Button,
+  buttonVariants,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  cn,
+} from "@zoos/shadcn";
 import {
   DndContext,
   closestCenter,
@@ -38,6 +45,7 @@ type ColumnControlsProps<TData> = {
   icon: React.ReactNode;
   containerClassName?: string;
   contentClassName?: string;
+  className?: string;
 };
 
 type FilterRendererProps<TData> = {
@@ -229,9 +237,8 @@ const ColumnControls = <TData,>({
   icon,
   containerClassName,
   contentClassName,
+  className,
 }: ColumnControlsProps<TData>) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
   const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
     id: colId,
     label: colId,
@@ -273,9 +280,16 @@ const ColumnControls = <TData,>({
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <button>{icon}</button>
+    <Popover>
+      <PopoverTrigger
+        className={cn(
+          buttonVariants({
+            variant: "ghost",
+          }),
+          className,
+        )}
+      >
+        {icon}
       </PopoverTrigger>
       <PopoverContent
         forceMount={true}

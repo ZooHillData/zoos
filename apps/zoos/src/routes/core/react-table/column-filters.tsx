@@ -266,13 +266,14 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex h-full flex-col overflow-auto">
+    <div className="flex h-full flex-col gap-1 overflow-auto">
       <div className="self-end">
         <ColumnControls
           table={table}
           containerClassName={"w-[300px]"}
           contentClassName={"max-h-[350px] overflow-auto mt-8"}
-          icon={<Settings className="text-gray-500 hover:text-gray-800" />}
+          icon={<Settings className="stroke-1.5 !h-6 !w-6" />}
+          className="data-[state=open]:bg-muted h-fit w-fit p-1.5"
         />
       </div>
       <Table {...{ table, virtualRows, rowVirtualizer, componentProps }} />
