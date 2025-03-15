@@ -58,7 +58,10 @@ const getDefaultColumnDef = <TData,>(params: {
             <Label>
               <FormattedId headerContext={headerContext} />
             </Label>
-            <filters.number.range.FilterInput headerContext={headerContext} />
+            <filters.number.range.FilterInput
+              headerContext={headerContext}
+              debounceDelay={300}
+            />
           </FilterContainer>
         ),
       },
