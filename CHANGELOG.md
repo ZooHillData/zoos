@@ -1,3 +1,9 @@
+## [1.42.3](https://github.com/zoohilldata/zoos/compare/v1.42.2...v1.42.3) (2025-03-15)
+
+### Bug Fixes
+
+* fix number range react-table-ui ([f726d05](https://github.com/zoohilldata/zoos/commit/f726d055fe2a0b7ec9403f074a1b6762296a1461))
+
 ## [1.42.2](https://github.com/zoohilldata/zoos/compare/v1.42.1...v1.42.2) (2025-03-15)
 
 ### Bug Fixes
