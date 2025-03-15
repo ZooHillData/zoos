@@ -1,3 +1,9 @@
+## [1.43.1](https://github.com/zoohilldata/zoos/compare/v1.43.0...v1.43.1) (2025-03-15)
+
+### Bug Fixes
+
+* **react-table:** column controls separate from popover ([3e0363f](https://github.com/zoohilldata/zoos/commit/3e0363f05ca4ce6ccccbe98013ef7d106fb2d831))
+
 ## [1.43.0](https://github.com/zoohilldata/zoos/compare/v1.42.2...v1.43.0) (2025-03-15)
 
 ### Bug Fixes
