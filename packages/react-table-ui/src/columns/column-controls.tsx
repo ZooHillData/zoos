@@ -35,9 +35,6 @@ import { FormattedId } from "../header/formatted-id";
 
 type ColumnControlsProps<TData> = {
   table: Table<TData>;
-  icon: React.ReactNode;
-  containerClassName?: string;
-  contentClassName?: string;
 };
 
 type FilterRendererProps<TData> = {
@@ -224,14 +221,7 @@ const SortableColumn = <TData,>({
   }
 };
 
-const ColumnControls = <TData,>({
-  table,
-  icon,
-  containerClassName,
-  contentClassName,
-}: ColumnControlsProps<TData>) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-
+const ColumnControls = <TData,>({ table }: ColumnControlsProps<TData>) => {
   const allOrderedColumns = table.getState().columnOrder.map((colId) => ({
     id: colId,
     label: colId,
@@ -273,76 +263,67 @@ const ColumnControls = <TData,>({
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <button>{icon}</button>
-      </PopoverTrigger>
-      <PopoverContent
-        forceMount={true}
-        className={containerClassName}
-        align="end"
-      >
-        <div className="text-md mb-2 font-medium">Column Controls</div>
-        <Input
-          placeholder="Search Columns"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
+    <>
+      <Input
+        className="h-fit min-h-fit px-3 py-2"
+        placeholder="Search Columns"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+      />
 
-        <div ref={scrollRef} className={contentClassName}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+      <div ref={scrollRef} className="flex h-full flex-col overflow-auto">
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={filteredColumns}
+            strategy={verticalListSortingStrategy}
           >
-            <SortableContext
-              items={filteredColumns}
-              strategy={verticalListSortingStrategy}
+            <div
+              className="relative w-full"
+              style={{
+                height: `${virtualizer.getTotalSize()}px`,
+              }}
             >
-              <div
-                className="relative w-full"
-                style={{
-                  height: `${virtualizer.getTotalSize()}px`,
-                }}
-              >
-                {virtualizer.getVirtualItems().map((virtualItem) => {
-                  const col = filteredColumns[virtualItem.index];
-                  const column = table.getColumn(col.id);
-                  const { canReorder = true } = column?.columnDef.meta || {};
-                  if (!column) return null;
-                  return (
-                    <div
-                      className="absolute left-0 top-0 w-full"
-                      key={column.id}
-                      style={{
-                        height: `${virtualItem.size}px`,
-                        transform: `translateY(${virtualItem.start}px)`,
-                      }}
-                    >
-                      {canReorder ? (
-                        <SortableColumn
-                          key={column.id}
-                          column={column}
-                          table={table}
-                        />
-                      ) : (
-                        <div className="flex w-full items-center rounded-md border p-2 opacity-45">
-                          <div className="ml-8">
-                            <FormattedId
-                              headerContext={getHeaderContext(table, column)}
-                            />
-                          </div>
+              {virtualizer.getVirtualItems().map((virtualItem) => {
+                const col = filteredColumns[virtualItem.index];
+                const column = table.getColumn(col.id);
+                const { canReorder = true } = column?.columnDef.meta || {};
+                if (!column) return null;
+                return (
+                  <div
+                    className="absolute left-0 top-0 w-full"
+                    key={column.id}
+                    style={{
+                      height: `${virtualItem.size}px`,
+                      transform: `translateY(${virtualItem.start}px)`,
+                    }}
+                  >
+                    {canReorder ? (
+                      <SortableColumn
+                        key={column.id}
+                        column={column}
+                        table={table}
+                      />
+                    ) : (
+                      <div className="flex w-full items-center rounded-md border p-2 opacity-45">
+                        <div className="ml-8">
+                          <FormattedId
+                            headerContext={getHeaderContext(table, column)}
+                          />
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </SortableContext>
-          </DndContext>
-        </div>
-      </PopoverContent>
-    </Popover>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </SortableContext>
+        </DndContext>
+      </div>
+    </>
   );
 };
 

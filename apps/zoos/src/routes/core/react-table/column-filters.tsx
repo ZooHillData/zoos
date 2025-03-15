@@ -7,7 +7,6 @@ import { createColumnHelper } from "@tanstack/react-table";
 import {
   filters,
   ClearFilterButton,
-  AutoRefreshToggle,
   FilterContainer,
   FormattedId,
   Table,
@@ -22,6 +21,10 @@ import {
   Tooltip,
   TooltipContent,
   createCn,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Button,
 } from "@zoos/shadcn";
 import { Settings } from "lucide-react";
 
@@ -234,6 +237,27 @@ const columns = [
   }),
 ];
 
+const ColumnControlsPopover = <TData,>(
+  props: React.ComponentProps<typeof ColumnControls<TData>> & {
+    children?: React.ReactNode;
+  },
+) => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="ghost"
+          className="data-[state=open]:bg-muted h-fit w-fit p-1.5"
+        >
+          {props.children}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="flex h-full max-h-[500px] min-h-[300px] flex-col gap-8">
+        <ColumnControls {...props} />
+      </PopoverContent>
+    </Popover>
+  );
+};
 function RouteComponent() {
   const { data } = Route.useRouteContext();
 
@@ -266,14 +290,11 @@ function RouteComponent() {
   );
 
   return (
-    <div className="flex h-full flex-col overflow-auto">
-      <div className="self-end">
-        <ColumnControls
-          table={table}
-          containerClassName={"w-[300px]"}
-          contentClassName={"max-h-[350px] overflow-auto mt-8"}
-          icon={<Settings className="text-gray-500 hover:text-gray-800" />}
-        />
+    <div className="flex h-full flex-col gap-1 overflow-auto">
+      <div className="text-right">
+        <ColumnControlsPopover table={table}>
+          <Settings className="stroke-1.5 !h-6 !w-6" />
+        </ColumnControlsPopover>
       </div>
       <Table {...{ table, virtualRows, rowVirtualizer, componentProps }} />
     </div>

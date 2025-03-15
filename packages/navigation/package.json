@@ -1,6 +1,6 @@
 {
   "name": "@zoos/navigation",
-  "version": "1.42.3",
+  "version": "1.43.0",
   "main": "./index.js",
   "types": "./index.d.ts",
   "exports": {
