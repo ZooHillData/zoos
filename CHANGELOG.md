@@ -1,3 +1,13 @@
+## [1.42.2](https://github.com/zoohilldata/zoos/compare/v1.42.1...v1.42.2) (2025-03-15)
+
+### Bug Fixes
+
+* table column inference and a few other goodies ([#56](https://github.com/zoohilldata/zoos/issues/56)) ([512c823](https://github.com/zoohilldata/zoos/commit/512c823b9f30d0b3587e1213a4af00b949bed9a2))
+
+### Chores
+
+* add tsconfig.json note in README [skip ci] ([30188f3](https://github.com/zoohilldata/zoos/commit/30188f3c411f7d859f1503cc25436151090b4412))
+
 ## [1.42.1](https://github.com/zoohilldata/zoos/compare/v1.42.0...v1.42.1) (2025-02-15)
 
 ### Bug Fixes
